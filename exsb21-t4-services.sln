@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.810.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "exsb21-t4-services", "exsb21-t4-services\exsb21-t4-services.csproj", "{A2142097-C1CE-4736-A55F-AE1091721C82}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "exsb21-t4-services", "exsb21-t4-services\exsb21-t4-services.csproj", "{053B6BAE-6009-4DD5-9962-746CB2775AE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A2142097-C1CE-4736-A55F-AE1091721C82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A2142097-C1CE-4736-A55F-AE1091721C82}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A2142097-C1CE-4736-A55F-AE1091721C82}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A2142097-C1CE-4736-A55F-AE1091721C82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{053B6BAE-6009-4DD5-9962-746CB2775AE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{053B6BAE-6009-4DD5-9962-746CB2775AE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{053B6BAE-6009-4DD5-9962-746CB2775AE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{053B6BAE-6009-4DD5-9962-746CB2775AE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
