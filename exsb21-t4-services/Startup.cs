@@ -1,6 +1,7 @@
 ﻿using exsb21_t4_services.Data;
 using exsb21_t4_services.Repository;
 using exsb21_t4_services.Repository.IRepository;
+using exsb21_t4_services.Repository.RestRepository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +23,7 @@ namespace exsb21_t4_services
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<DapperDbContext>();
+            services.AddScoped<IRestRepository, RestCountryRepository>();
             services.AddScoped<ICandidateRepository, CandidateRepository>();
             services.AddScoped<ISkillRepository, SkillRepository>();
             services.AddScoped<ISpecializationRepository, SpecializationRepository>();

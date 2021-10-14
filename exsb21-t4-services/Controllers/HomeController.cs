@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using exsb21_t4_services.Models;
+using exsb21_t4_services.Models.RestModels;
 using exsb21_t4_services.Repository;
 using exsb21_t4_services.Repository.IRepository;
+using exsb21_t4_services.Repository.RestRepository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace exsb21_t4_services.Controllers
@@ -15,12 +17,15 @@ namespace exsb21_t4_services.Controllers
         private readonly ISkillRepository _skillRepository;
         private readonly ISpecializationRepository _specializationRepository;
         private readonly ICandidateRepository _candidateRepository;
+        private readonly IRestRepository _restRepository;
 
-        public HomeController(ISkillRepository skillRepository, ISpecializationRepository specializationRepository, ICandidateRepository candidateRepository)
+
+        public HomeController(ISkillRepository skillRepository, ISpecializationRepository specializationRepository, ICandidateRepository candidateRepository, IRestRepository restRepository)
         {
             _skillRepository = skillRepository;
             _specializationRepository = specializationRepository;
             _candidateRepository = candidateRepository;
+            _restRepository = restRepository;
         }
 
         [HttpGet("skills")]
@@ -60,6 +65,13 @@ namespace exsb21_t4_services.Controllers
         {
             return _candidateRepository.Add(candidate); ;
         }
+
+        [HttpGet("regions")]
+        public ActionResult<RestCountryResponse> GetRegions()
+        {
+            return  _restRepository.GetCountry();
+        }
+
         //Hello World!!!
 
     }
