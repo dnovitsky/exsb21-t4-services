@@ -7,9 +7,6 @@ namespace EF_Plus_Migration
     {
         public DbSet<User> Users { get; set; }
 
-        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options): base(options)
-        {
-            Database.EnsureCreated();
-        }
+        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options): base(options) {}
     }
 }

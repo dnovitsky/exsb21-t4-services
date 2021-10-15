@@ -29,7 +29,7 @@ namespace EF_Plus_Migration
             Console.WriteLine("Users List:");
             foreach (User u in users)
             {
-                Console.WriteLine($"{u.Id}.{u.Name} - {u.Surname} - {u.PrimarySkill} - {u.Location}");
+                Console.WriteLine($"{u.Id}.{u.Name} - {u.Surname} - {u.PrimarySkill} - {u.Location} - {u.CourseName}");
             }
             Console.Read();
         }
