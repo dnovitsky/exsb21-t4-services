@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace exsb21_t4_services.Models
+namespace exsb21_t4_services.Data
 {
     public class Country
     {
-
-        public int CountryId { get; set; }
+        public int Id{ get; set;}
         public string CountryName { get; set; }
-        public List<Country> cities { get; set; }
+
+        List<Region> Regions { get; set; }
+
         public Country()
         {
         }
