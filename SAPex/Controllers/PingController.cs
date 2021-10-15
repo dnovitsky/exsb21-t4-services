@@ -2,7 +2,7 @@
 
 namespace SAPex.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/ping")]
     [ApiController]
     public class PingController : ControllerBase
     {
