@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EF_Plus_Migration.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20211015205204_InitialCreate")]
+    [Migration("20211016084228_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

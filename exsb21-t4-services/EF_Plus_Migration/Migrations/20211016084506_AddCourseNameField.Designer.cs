@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EF_Plus_Migration.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20211015205432_AddCourseNameField")]
+    [Migration("20211016084506_AddCourseNameField")]
     partial class AddCourseNameField
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
