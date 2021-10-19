@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=DESKTOP-4AVOV83\\SQLEXPRESS;Database=SAPExDb;Trusted_Connection=True;MultipleActiveResultSets=true"
+  }
+}
