@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DbMigrations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -21,7 +22,10 @@ namespace SAPex
         {
             confStringDb = new ConfigurationBuilder().SetBasePath(hostEnv.ContentRootPath).AddJsonFile("dbsettings.json").Build();
         }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
