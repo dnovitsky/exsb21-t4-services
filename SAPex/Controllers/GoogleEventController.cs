@@ -14,8 +14,8 @@ namespace SAPex.Controllers
     public class GoogleEventController: ControllerBase
     {
 
-        private const string GOOGLE_CLIENT_SECRET_PATH = @"/Users/mybook/Projects/SAPex/SAPex/GoogleFiles/client_secret.json";
-        private const string GOOGLE_TOKEN_PATH = @"/Users/mybook/Projects/SAPex/SAPex/GoogleFiles/tokens.json";
+        private const string GOOGLE_CLIENT_SECRET_PATH = @"GoogleFiles/client_secret.json";
+        private const string GOOGLE_TOKEN_PATH = @"GoogleFiles/tokens.json";
         private readonly RestClient restClient = new();
         private readonly RestRequest request = new();
         
