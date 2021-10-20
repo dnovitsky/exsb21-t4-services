@@ -47,13 +47,7 @@ namespace SAPex.Controllers
         public ActionResult CreateEvent([FromBody] EventModel eventModel)
         {
             var tokens = JObject.Parse(System.IO.File.ReadAllText(GOOGLE_TOKEN_PATH));
-            /*
-           eventModel.Summary = "Summary Something";
-           eventModel.Description = "Description Something";
-           eventModel.Start.DateTime = "11-11-2021 6:00PM";
-           eventModel.End.DateTime = "11-11-2021 7:00PM";
-          */
-
+           
             eventModel.Start.DateTime = DateTime.Parse(eventModel.Start.DateTime).ToString("yyyy-MM-dd'T'HH:mm:ss.fffK");
             eventModel.End.DateTime = DateTime.Parse(eventModel.End.DateTime).ToString("yyyy-MM-dd'T'HH:mm:ss.fffK");
 
@@ -65,11 +59,11 @@ namespace SAPex.Controllers
             request.AddHeader("Authorization", "Bearer " + tokens["access_token"]);
             request.AddHeader("Accept", "application/json");
             request.AddHeader("Content-Type", "application/json");
+
             request.AddParameter("application/json", model, ParameterType.RequestBody);
 
-            restClient.BaseUrl = new System.Uri("https://www.googleapis.com/calendar/v3/calendars/primary/events");
+            restClient.BaseUrl = new System.Uri("https://www.googleapis.com/calendar/v3/calendars/primary/events?sendUpdates=all");
             var response = restClient.Post(request);
-            System.IO.File.WriteAllText("response.json", response.Content);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 
