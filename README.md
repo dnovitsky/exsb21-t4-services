@@ -7,10 +7,15 @@ swagger-ui you can use from this url: https://localhost:5001/swagger/index.html
 Please, could you check service in your computer
 
 for registration: [GET] https://localhost:5001/oauth
+
 for new token:  [GET] https://localhost:5001/oauth/refresh
+
 for delete permission: [GET]  https://localhost:5001/oauth/revoke
+
 for get events : [GET] https://localhost:5001/api/google/events
+
 for create new event : [POST] https://localhost:5001/api/google/events/create
+                                      
                                       body=>{
         "summary": "Simple Test Summary",
         "description": "Simple description",
