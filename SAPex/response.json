@@ -1,0 +1,33 @@
+{
+ "kind": "calendar#event",
+ "etag": "\"3269453701030000\"",
+ "id": "v55l59ke3t7bqn3hue8i36fskk",
+ "status": "confirmed",
+ "htmlLink": "https://www.google.com/calendar/event?eid=djU1bDU5a2UzdDdicW4zaHVlOGkzNmZza2sgbnVybXVraGFtbWFkLnN1bmF0dWxsYWV2QG0",
+ "created": "2021-10-20T10:47:30.000Z",
+ "updated": "2021-10-20T10:47:30.515Z",
+ "summary": "Simple Test Summary",
+ "description": "Simple description",
+ "creator": {
+  "email": "nurmukhammad.sunatullaev@gmail.com",
+  "self": true
+ },
+ "organizer": {
+  "email": "nurmukhammad.sunatullaev@gmail.com",
+  "self": true
+ },
+ "start": {
+  "dateTime": "2021-11-13T09:30:00+03:00",
+  "timeZone": "Europe/Minsk"
+ },
+ "end": {
+  "dateTime": "2021-11-13T09:50:00+03:00",
+  "timeZone": "Europe/Minsk"
+ },
+ "iCalUID": "v55l59ke3t7bqn3hue8i36fskk@google.com",
+ "sequence": 0,
+ "reminders": {
+  "useDefault": true
+ },
+ "eventType": "default"
+}
