@@ -28,3 +28,5 @@ for create new event : [POST] https://localhost:5001/api/google/events/create
             "timeZone": "Europe/Minsk"
         }
 }
+
+Please, can you change GOOGLE_CLIENT_SECRET_PATH and GOOGLE_TOKEN_PATH in the code before run project   
