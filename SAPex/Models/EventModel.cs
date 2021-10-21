@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace SAPex.Models
 {
     public class EventModel
@@ -23,7 +25,12 @@ namespace SAPex.Models
         public EventDateTime Start { get; set; }
 
         public EventDateTime End { get; set; }
+
+        public List<Attendees> Attendees { get; set; }
     }
+}
+public class Attendees {
+    public string Email { get; set; }
 }
 
 public class EventDateTime
