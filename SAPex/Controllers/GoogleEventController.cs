@@ -26,7 +26,7 @@ namespace SAPex.Controllers
             var tokens = JObject.Parse(System.IO.File.ReadAllText(GOOGLE_TOKEN_PATH));
 
           
-            request.AddQueryParameter("key", "AIzaSyDLw8Ppi4WPpjbqh3e7P0i6eWehV5YT8iY");
+            request.AddQueryParameter("key", "AIzaSyAxAw_wO6NwJchMksGz3VK4Z81EMjHT3vE");
             request.AddHeader("Authorization", "Bearer " + tokens["access_token"]);
             request.AddHeader("Accept", "application/json");
 
@@ -55,7 +55,7 @@ namespace SAPex.Controllers
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             });
-            request.AddQueryParameter("key", "AIzaSyDLw8Ppi4WPpjbqh3e7P0i6eWehV5YT8iY");
+            request.AddQueryParameter("key", "AIzaSyAxAw_wO6NwJchMksGz3VK4Z81EMjHT3vE");
             request.AddHeader("Authorization", "Bearer " + tokens["access_token"]);
             request.AddHeader("Accept", "application/json");
             request.AddHeader("Content-Type", "application/json");
