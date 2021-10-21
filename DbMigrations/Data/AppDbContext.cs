@@ -1,6 +1,5 @@
-﻿using DbMigrations.Models;
+﻿using DbMigrations.EntityModels;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace DbMigrations.Data
 {
@@ -9,6 +8,5 @@ namespace DbMigrations.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<TestModel> TestTable { get; set; }
-
     }
 }
