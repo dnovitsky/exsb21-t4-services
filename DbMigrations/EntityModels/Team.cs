@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DbMigrations.Models
+namespace DbMigrations.EntityModels
 {
     public class Team
     {
+        public int Id { get; set; }
+        public List<Sandbox> SandboxId { get; set; }
+        public string Name { get; set; }
+       
     }
 }

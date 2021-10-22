@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace DbMigrations.EntityModels
 {
-    public class Skill
+    public class CandidateLanguage
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public List<Candidate> CandidateId { get; set; }
+        public List<Language> LanguageId { get; set; }
+        public int Level  { get; set; }
     }
 }

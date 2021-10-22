@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DbMigrations.Models
+namespace DbMigrations.EntityModels
 {
     public class Rating
     {

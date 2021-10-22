@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace DbMigrations.EntityModels
 {
-    public class Skill
+    public class SandBoxTechSkill
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+
+        public List<Skill> CandidateId { get; set; }
+
+        public List<Sandbox> LanguageId { get; set; }
+
     }
 }

@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DbMigrations.Models
+namespace DbMigrations.EntityModels
 {
     public class Feedback
     {
         public int Id { get; set; }
-        public User UserId { get; set; }
+        public List<User> UserId { get; set; }
+        public DateTime CreateDate { get; set; }
         public string UserReview { get; set; }
-        public Rating RatingId { get; set; }
+        public List<Rating> RatingId { get; set; }
     }
 }
