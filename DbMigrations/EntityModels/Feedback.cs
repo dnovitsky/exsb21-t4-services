@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace DbMigrations.Models
 {
-    public class TestModel
+    public class Feedback
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public User UserId { get; set; }
+        public string UserReview { get; set; }
+        public Rating RatingId { get; set; }
     }
 }

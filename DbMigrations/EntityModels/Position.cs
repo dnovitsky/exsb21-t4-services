@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace DbMigrations.Models
 {
-    public class TestModel
+    public class Position
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
     }
 }

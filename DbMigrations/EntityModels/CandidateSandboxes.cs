@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace DbMigrations.Models
 {
-    public class TestModel
+    public class CandidateSandboxes
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public CandidatesProcces CandidateProccesId { get; set; }
+        public ProjectRole ProjectRoleId { get; set; }
+        public Team TeamId { get; set; }
     }
 }
