@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace DbMigrations.Models
+namespace DbMigrations.EntityModels
 {
     public class UserTechSkill
     {
         [Key]
         public int Id { get; set; }
         [Required]
-        public User UserId { get; set; }
+        public List<User> UserId { get; set; }
         [Required]
-        public Skill SkillId { get; set; }
+        public List<Skill> SkillId { get; set; }
     }
 }

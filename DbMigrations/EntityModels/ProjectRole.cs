@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace DbMigrations.Models
+namespace DbMigrations.EntityModels
 {
     public class ProjectRole
     {
@@ -14,10 +14,10 @@ namespace DbMigrations.Models
         [Required]
         public string Name { get; set; }
         [Required]
-        public MentorRole Access { get; set; }
+        public Role Access { get; set; }
     }
 
-    public enum MentorRole
+    public enum Role
     {
         Admin,
         EducationManager,
