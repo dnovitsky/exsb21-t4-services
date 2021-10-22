@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using DbMigrations.Models;
 
-namespace DbMigrations.Models
+namespace DbMigrations.EntityModels
 {
-    public class Position
+    public class MentorSandBox
     {
         [Key]
         public int Id { get; set; }
-
         [Required]
-        public string Name { get; set; }
+        public Sandbox SandBoxId {get;set;}
         [Required]
-        public string Access { get; set; }
+        public User UserId { get; set; }
     }
 }
