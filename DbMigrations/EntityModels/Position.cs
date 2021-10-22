@@ -1,28 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 
 namespace DbMigrations.Models
 {
-    public class ProjectRole
+    public class Position
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
         public string Name { get; set; }
         [Required]
-        public MentorRole Access { get; set; }
-    }
-
-    public enum MentorRole
-    {
-        Admin,
-        EducationManager,
-        Recruiter,
-        Interviewer,
-        Mentor
+        public string Access { get; set; }
     }
 }
