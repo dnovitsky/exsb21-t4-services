@@ -6,82 +6,50 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using RestSharp;
 using SAPex.Models;
+using SAPex.Services.Google.IGoogleSevices;
 
 namespace SAPex.Controllers
 {
 
     [Route("api/google/calendars")]
     [ApiController]
-    public class GoogleCalendarController:ControllerBase
+    public class GoogleCalendarController : ControllerBase
     {
-        private const string GOOGLE_TOKEN_PATH = @"GoogleFiles/tokens.json";
-        private readonly RestClient restClient = new();
-        private readonly RestRequest request = new();
+        private IGoogleCalendarService calendarService;
 
-        [HttpGet]
-        public ActionResult<IEnumerable<GoogleCalendar>> Get()
+        public GoogleCalendarController(IGoogleCalendarService calendarService)
         {
-            var tokens = JObject.Parse(System.IO.File.ReadAllText(GOOGLE_TOKEN_PATH));
+            this.calendarService = calendarService;
+        }
 
-            request.AddQueryParameter("key", "AIzaSyAxAw_wO6NwJchMksGz3VK4Z81EMjHT3vE");
-            request.AddHeader("Authorization", "Bearer " + tokens["access_token"]);
-            request.AddHeader("Accept", "application/json");
-
-            restClient.BaseUrl = new System.Uri("https://www.googleapis.com/calendar/v3/users/me/calendarList");
-            var response = restClient.Get(request);
-
-             if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                JObject events = JObject.Parse(response.Content);
-                var allEvents = events["items"].ToObject<IEnumerable<GoogleCalendar>>();
-                return Ok(allEvents);
+        [HttpGet("{email}")]
+        public ActionResult<IEnumerable<GoogleCalendar>> Get(string email)
+        {
+            List<GoogleCalendar> calendars = calendarService.Get(email);
+            if (calendars != null) {
+                return Ok(calendars);
             }
+            return BadRequest();
+        }
 
+        [HttpGet("{email}/{id}")]
+        public ActionResult<GoogleCalendar> Get(string email, string id)
+        {
+
+            GoogleCalendar calendar = calendarService.Get(email, id);
+            if (calendar != null)
+            {
+                return Ok(calendar);
+            }
             return BadRequest();
 
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<GoogleCalendar> Get(string id)
+        [HttpPost("{email}")]
+        public ActionResult Post(string email,[FromBody] GoogleCalendar calendar)
         {
-
-            var tokens = JObject.Parse(System.IO.File.ReadAllText(GOOGLE_TOKEN_PATH));
-
-
-            request.AddQueryParameter("key", "AIzaSyAxAw_wO6NwJchMksGz3VK4Z81EMjHT3vE");
-            request.AddHeader("Authorization", "Bearer " + tokens["access_token"]);
-            request.AddHeader("Accept", "application/json");
-
-            restClient.BaseUrl = new System.Uri("https://www.googleapis.com/calendar/v3/calendars/" + id);
-            var response = restClient.Get(request);
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                JObject events = JObject.Parse(response.Content);
-                return events.ToObject<GoogleCalendar>();
-            }
-
-            return BadRequest();
-
-        }
-
-        [HttpPost]
-        public ActionResult Post([FromBody] GoogleCalendar calendarModel)
-        {
-            var tokens = JObject.Parse(System.IO.File.ReadAllText(GOOGLE_TOKEN_PATH));
-
-            request.AddQueryParameter("key", "AIzaSyAxAw_wO6NwJchMksGz3VK4Z81EMjHT3vE");
-            request.AddHeader("Authorization", "Bearer " + tokens["access_token"]);
-            request.AddHeader("Accept", "application/json");
-            request.AddHeader("Content-Type", "application/json");
-            var model = JsonConvert.SerializeObject(calendarModel, new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            });
-            request.AddParameter("application/json", model, ParameterType.RequestBody);
-
-            restClient.BaseUrl = new System.Uri("https://www.googleapis.com/calendar/v3/calendars");
-            var response = restClient.Post(request);
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            bool added = calendarService.Add(email, calendar);
+            if (added)
             {
                 return Ok();
             }
@@ -89,53 +57,26 @@ namespace SAPex.Controllers
 
         }
 
-        [HttpDelete("{id}")]
-        public ActionResult<GoogleCalendar> Delete(string id)
+        [HttpDelete("{email}/{id}")]
+        public ActionResult Delete(string email,string id)
         {
-
-            var tokens = JObject.Parse(System.IO.File.ReadAllText(GOOGLE_TOKEN_PATH));
-
-
-            request.AddQueryParameter("key", "AIzaSyAxAw_wO6NwJchMksGz3VK4Z81EMjHT3vE");
-            request.AddHeader("Authorization", "Bearer " + tokens["access_token"]);
-            request.AddHeader("Accept", "application/json");
-
-            restClient.BaseUrl = new System.Uri("https://www.googleapis.com/calendar/v3/calendars/" + id);
-            var response = restClient.Delete(request);
-            if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+            bool deleted = calendarService.Delete(email, id);
+            if (deleted)
             {
                 return Ok();
             }
-
             return BadRequest();
-
         }
 
-        [HttpPatch("{id}")]
-        public ActionResult Patch(string id, [FromBody] GoogleCalendar calendarModel)
+        [HttpPatch("{email}")]
+        public ActionResult Patch(string email, [FromBody] GoogleCalendar calendar)
         {
-            var tokens = JObject.Parse(System.IO.File.ReadAllText(GOOGLE_TOKEN_PATH));
-
-            var model = JsonConvert.SerializeObject(calendarModel, new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            });
-            request.AddQueryParameter("key", "AIzaSyAxAw_wO6NwJchMksGz3VK4Z81EMjHT3vE");
-            request.AddHeader("Authorization", "Bearer " + tokens["access_token"]);
-            request.AddHeader("Accept", "application/json");
-            request.AddHeader("Content-Type", "application/json");
-
-            request.AddParameter("application/json", model, ParameterType.RequestBody);
-
-            restClient.BaseUrl = new System.Uri("https://www.googleapis.com/calendar/v3/calendars/" + id);
-            var response = restClient.Patch(request);
-            System.IO.File.WriteAllText("response.json", response.Content);
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            bool updated = calendarService.Update(email, calendar);
+            if (updated)
             {
                 return Ok();
             }
             return BadRequest();
-
         }
     }
 }

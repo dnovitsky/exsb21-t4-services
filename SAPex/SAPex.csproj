@@ -10,26 +10,44 @@
     <None Remove="JObject" />
     <None Remove="RestSharp" />
     <None Remove="Google.Apis.Calendar.v3" />
-    <None Remove="GoogleFiles\" />
     <None Remove="Repository\" />
     <None Remove="Repository\Google\" />
     <None Remove="Repository\Google\BaseRepository\" />
     <None Remove="Models\Google\" />
     <None Remove="Repository\Google\IRepository\" />
+    <None Remove="Services\" />
+    <None Remove="Data\" />
+    <None Remove="Dapper" />
+    <None Remove="Microsoft.EntityFrameworkCore.Tools" />
+    <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
+    <None Remove="Services\IService\" />
+    <None Remove="Services\Google\" />
+    <None Remove="Services\Google\IServices\" />
+    <None Remove="Services\Google\BaseServices\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="GoogleFiles\" />
-    <Folder Include="Repository\" />
-    <Folder Include="Repository\Google\" />
-    <Folder Include="Repository\Google\BaseRepository\" />
+    <Folder Include="Repositories\" />
+    <Folder Include="Repositories\Google\" />
+    <Folder Include="Repositories\Google\BaseRepositories\" />
     <Folder Include="Models\Google\" />
-    <Folder Include="Repository\Google\IGoogleRepository\" />
+    <Folder Include="Repositories\Google\IGoogleRepositories\" />
+    <Folder Include="Services\" />
+    <Folder Include="Data\" />
+    <Folder Include="Services\Google\" />
+    <Folder Include="Services\Google\IGoogleServices\" />
+    <Folder Include="Services\Google\BaseServices\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="JObject" Version="1.0.0" />
     <PackageReference Include="RestSharp" Version="106.12.0" />
+    <PackageReference Include="Dapper" Version="2.0.90" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.11">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.11" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="tokens.json" />
