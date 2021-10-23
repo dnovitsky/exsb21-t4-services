@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace SAPex.Models
 {
-    public class EventModel
+    public class GoogleCalendarEvent
     {
-        public EventModel()
+        public GoogleCalendarEvent()
         {
             this.Start = new EventDateTime ()
             {

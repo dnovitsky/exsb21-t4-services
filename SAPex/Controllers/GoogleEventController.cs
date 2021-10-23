@@ -18,7 +18,7 @@ namespace SAPex.Controllers
         private readonly RestRequest request = new();
 
         [HttpGet]
-        public IEnumerable<EventModel> Get()
+        public IEnumerable<GoogleCalendarEvent> Get()
         {
 
             var tokens = JObject.Parse(System.IO.File.ReadAllText(GOOGLE_TOKEN_PATH));
@@ -32,7 +32,7 @@ namespace SAPex.Controllers
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 JObject events = JObject.Parse(response.Content);
-                var allEvents = events["items"].ToObject<IEnumerable<EventModel>>();
+                var allEvents = events["items"].ToObject<IEnumerable<GoogleCalendarEvent>>();
                 return allEvents;
             }
 
@@ -41,7 +41,7 @@ namespace SAPex.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<EventModel> Get(string id)
+        public ActionResult<GoogleCalendarEvent> Get(string id)
         {
 
             var tokens = JObject.Parse(System.IO.File.ReadAllText(GOOGLE_TOKEN_PATH));
@@ -56,7 +56,7 @@ namespace SAPex.Controllers
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 JObject events = JObject.Parse(response.Content);
-                return events.ToObject<EventModel>();
+                return events.ToObject<GoogleCalendarEvent>();
             }
 
             return null;
@@ -64,7 +64,7 @@ namespace SAPex.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] EventModel eventModel)
+        public ActionResult Post([FromBody] GoogleCalendarEvent eventModel)
         {
             var tokens = JObject.Parse(System.IO.File.ReadAllText(GOOGLE_TOKEN_PATH));
            
@@ -94,7 +94,7 @@ namespace SAPex.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<EventModel> Delete(string id)
+        public ActionResult<GoogleCalendarEvent> Delete(string id)
         {
 
             var tokens = JObject.Parse(System.IO.File.ReadAllText(GOOGLE_TOKEN_PATH));
@@ -108,7 +108,6 @@ namespace SAPex.Controllers
             var response = restClient.Delete(request);
             if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
             {
-                
                 return Ok();
             }
 
@@ -117,7 +116,7 @@ namespace SAPex.Controllers
         }
 
         [HttpPatch("{id}")]
-        public ActionResult Patch(string id, [FromBody] EventModel eventModel)
+        public ActionResult Patch(string id, [FromBody] GoogleCalendarEvent eventModel)
         {
             var tokens = JObject.Parse(System.IO.File.ReadAllText(GOOGLE_TOKEN_PATH));
 
@@ -140,7 +139,6 @@ namespace SAPex.Controllers
             System.IO.File.WriteAllText("response.json", response.Content);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-
                 return Ok();
             }
             return BadRequest();

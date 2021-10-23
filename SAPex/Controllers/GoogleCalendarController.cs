@@ -19,7 +19,7 @@ namespace SAPex.Controllers
         private readonly RestRequest request = new();
 
         [HttpGet]
-        public ActionResult<IEnumerable<CalendarModel>> Get()
+        public ActionResult<IEnumerable<GoogleCalendar>> Get()
         {
             var tokens = JObject.Parse(System.IO.File.ReadAllText(GOOGLE_TOKEN_PATH));
 
@@ -33,7 +33,7 @@ namespace SAPex.Controllers
              if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 JObject events = JObject.Parse(response.Content);
-                var allEvents = events["items"].ToObject<IEnumerable<CalendarModel>>();
+                var allEvents = events["items"].ToObject<IEnumerable<GoogleCalendar>>();
                 return Ok(allEvents);
             }
 
@@ -42,7 +42,7 @@ namespace SAPex.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<CalendarModel> Get(string id)
+        public ActionResult<GoogleCalendar> Get(string id)
         {
 
             var tokens = JObject.Parse(System.IO.File.ReadAllText(GOOGLE_TOKEN_PATH));
@@ -57,7 +57,7 @@ namespace SAPex.Controllers
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 JObject events = JObject.Parse(response.Content);
-                return events.ToObject<CalendarModel>();
+                return events.ToObject<GoogleCalendar>();
             }
 
             return BadRequest();
@@ -65,7 +65,7 @@ namespace SAPex.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] CalendarModel calendarModel)
+        public ActionResult Post([FromBody] GoogleCalendar calendarModel)
         {
             var tokens = JObject.Parse(System.IO.File.ReadAllText(GOOGLE_TOKEN_PATH));
 
@@ -90,7 +90,7 @@ namespace SAPex.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<EventModel> Delete(string id)
+        public ActionResult<GoogleCalendar> Delete(string id)
         {
 
             var tokens = JObject.Parse(System.IO.File.ReadAllText(GOOGLE_TOKEN_PATH));
@@ -112,7 +112,7 @@ namespace SAPex.Controllers
         }
 
         [HttpPatch("{id}")]
-        public ActionResult Patch(string id, [FromBody] CalendarModel calendarModel)
+        public ActionResult Patch(string id, [FromBody] GoogleCalendar calendarModel)
         {
             var tokens = JObject.Parse(System.IO.File.ReadAllText(GOOGLE_TOKEN_PATH));
 

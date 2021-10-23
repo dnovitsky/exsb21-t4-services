@@ -1,7 +1,7 @@
 ﻿using System;
 namespace SAPex.Models
 {
-    public class CalendarModel
+    public class GoogleCalendar
     {
         public string Id { get;set; }
         public string Summary { get;set; }

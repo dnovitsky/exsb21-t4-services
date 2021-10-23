@@ -11,10 +11,20 @@
     <None Remove="RestSharp" />
     <None Remove="Google.Apis.Calendar.v3" />
     <None Remove="GoogleFiles\" />
+    <None Remove="Repository\" />
+    <None Remove="Repository\Google\" />
+    <None Remove="Repository\Google\BaseRepository\" />
+    <None Remove="Models\Google\" />
+    <None Remove="Repository\Google\IRepository\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="GoogleFiles\" />
+    <Folder Include="Repository\" />
+    <Folder Include="Repository\Google\" />
+    <Folder Include="Repository\Google\BaseRepository\" />
+    <Folder Include="Models\Google\" />
+    <Folder Include="Repository\Google\IGoogleRepository\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
