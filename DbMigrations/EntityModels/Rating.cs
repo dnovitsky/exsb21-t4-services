@@ -14,6 +14,6 @@ namespace DbMigrations.EntityModels
         [Required]
         public int Mark { get; set; }
         [Required]
-        public List<Skill> SkillId { get; set; }
+        public List<Skill> Skills { get; set; }
     }
 }

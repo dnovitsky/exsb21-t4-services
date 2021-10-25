@@ -12,19 +12,11 @@ namespace DbMigrations.EntityModels
         [Key]
         public int Id { get; set; }
         [Required]
-        public User UserId { get; set; }
+        public List<User> Users { get; set; }
         [Required]
-        public Language LanguageId { get; set; }
+        public List<Language> Languages { get; set; }
         [Required]
-        public Level CurrentLevel { get; set; }
+        public List<LanguageLevel> LanguageLevels { get; set; }
     }
-    public enum Level
-    {
-        A1,
-        A2,
-        B1,
-        B2,
-        C1,
-        C2
-    }
+    
 }

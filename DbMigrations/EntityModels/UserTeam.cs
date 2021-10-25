@@ -7,13 +7,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DbMigrations.EntityModels
 {
-    public class MentorTeam
+    public class UserTeam
     {
         [Key]
         public int Id { get; set; }
         [Required]
-        public List<MentorSandBox> MentorSandBoxId { get; set; }
+        public List<UserSandBox> UserSandBoxes { get; set; }
         [Required]
-        public List<Team> TeamId { get; set; }
+        public List<Team> Teams { get; set; }
     }
 }

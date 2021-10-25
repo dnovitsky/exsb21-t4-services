@@ -12,10 +12,9 @@ namespace DbMigrations.EntityModels
         [Key]
         public int Id { get; set; }
         [Required]
-        public List<Sandbox> SandboxId { get; set; }
-        [Required]
-        public CandidatesProcces CandidateProccesId { get; set; }
-        public List<ProjectRole> ProjectRoleId { get; set; }
-        public Team TeamId { get; set; }
+        public List<Sandbox> Sandboxes { get; set; }
+        public CandidatesProcces CandidateProcces { get; set; }
+        public List<CandidateProjectRole> ProjectRoles { get; set; }
+        public Team Team { get; set; }
     }
 }

@@ -8,13 +8,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DbMigrations.EntityModels
 {
-    public class MentorRole
+    public class UserRole
     {
         [Key]
         public int Id { get; set; }
-        [Required]
-        public ProjectRole ProjectRoleId { get; set; }
-        [Required]
-        public MentorSandBox MentorSandBoxId { get; set; }
+        public List<FunctionalRole> FunctionalRoles { get; set; }
+        public List<User> Users { get; set; }
     }
 }

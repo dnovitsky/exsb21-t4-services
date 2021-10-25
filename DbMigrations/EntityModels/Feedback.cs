@@ -12,11 +12,11 @@ namespace DbMigrations.EntityModels
         [Key]
         public int Id { get; set; }
         [Required]
-        public List<User> UserId { get; set; }
+        public List<User> Users { get; set; }
         [Required]
         public DateTime CreateDate { get; set; }
         [Required]
         public string UserReview { get; set; }
-        public List<Rating> RatingId { get; set; }
+        public List<Rating> Ratings { get; set; }
     }
 }

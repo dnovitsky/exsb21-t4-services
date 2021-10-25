@@ -13,5 +13,7 @@ namespace DbMigrations.EntityModels
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        [Required]
+        public LanguageLevel LanguageLevel { get; set; }
     }
 }

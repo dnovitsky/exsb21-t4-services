@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
+
 namespace DbMigrations.EntityModels
 {
-    public class UserTechSkill
+    public class UserSandBox
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+        public List<Sandbox> SandBoxes {get;set;}
+        public List<UserRole> UserRoles { get; set; }
         public List<User> Users { get; set; }
-        [Required]
-        public List<Skill> Skills { get; set; }
     }
 }

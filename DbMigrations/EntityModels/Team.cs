@@ -14,7 +14,7 @@ namespace DbMigrations.EntityModels
         [Required]
         public string Name { get; set; }
         [Required]
-        public Sandbox SandboxId { get; set; }
+        public List<Sandbox> Sandbox { get; set; }
        
        
     }

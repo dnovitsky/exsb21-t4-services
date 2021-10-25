@@ -12,9 +12,9 @@ namespace DbMigrations.EntityModels
         [Key]
         public int Id { get; set; }
         [Required]
-        public List<Skill> CandidateId { get; set; }
+        public List<Skill> Candidates { get; set; }
         [Required]
-        public List<Sandbox> LanguageId { get; set; }
+        public List<Sandbox> Languages { get; set; }
 
     }
 }

@@ -22,8 +22,6 @@ namespace DbMigrations.EntityModels
         [Required]
         public string Password { get; set; }
         [Required]
-        public Position PositionId { get; set; }
-        [Required]
         public string Skype { get; set; }
         [Required]
         public string Phone { get; set; }
