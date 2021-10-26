@@ -13,7 +13,7 @@ namespace SAPex.Controllers
     public class UploadController : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> UploadDocument(
+        public async Task<IActionResult> UploadFile(
             [FromHeader] String documentType,
             [FromForm] IFormFile file
             )
