@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SAPex
 {
-    public class SwaggerFileOperationFilter : IOperationFilter
+    public class SwaggerFileUploadOperationFilter : IOperationFilter
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {

@@ -29,7 +29,7 @@ namespace SAPex
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sample.FileUpload.Api", Version = "v1" });
-                c.OperationFilter<SwaggerFileOperationFilter>();
+                c.OperationFilter<SwaggerFileUploadOperationFilter>();
             });
         }
 

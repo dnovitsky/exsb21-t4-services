@@ -9,10 +9,9 @@ using System.Threading.Tasks;
 namespace SAPex.Controllers
 {
     [ApiController]
-    [Route("api/document")]
-    public class DocumentsController : ControllerBase
+    [Route("api/fileupload")]
+    public class UploadController : ControllerBase
     {
-
         [HttpPost]
         public async Task<IActionResult> UploadDocument(
             [FromHeader] String documentType,
