@@ -19,8 +19,9 @@ namespace SAPex.Controllers
             [FromForm] IFormFile file
             )
         {
-            Stream stream = file.OpenReadStream();         
-            using (FileStream outputFileStream = new FileStream(@"C:\ExadelSandbox\exsb21-t4-services\SAPex\uploads\" + file.FileName, FileMode.Create))
+            Stream stream = file.OpenReadStream();
+            string filepath = @"uploads\";
+            using (FileStream outputFileStream = new FileStream(filepath + file.FileName, FileMode.Create))
             {
                 DirectoryInfo info = new DirectoryInfo(file.ContentDisposition);
                 stream.CopyTo(outputFileStream);
