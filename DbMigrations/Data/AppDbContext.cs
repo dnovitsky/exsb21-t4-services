@@ -9,9 +9,11 @@ namespace DbMigrations.Data
 
         public DbSet<CandidateEntityModel> Candidates { get; set; }
         public DbSet<CandidateLanguageEntityModel> CandidateLanguages { get; set; }
-        public DbSet<CandidateSandboxEntityModel> CandidateSandboxes { get; set; }
         public DbSet<CandidateProccesEntityModel> CandidatesProcceses { get; set; }
+        public DbSet<CandidateProjectRoleEntityModel> CandidateProjectRoles { get; set; }
+        public DbSet<CandidateSandboxEntityModel> CandidateSandboxes { get; set; }
         public DbSet<CandidateTechSkillEntityModel> CandidateTechSkills { get; set; }
+
         public DbSet<FeedbackEntityModel> Feedbacks { get; set; }
         public DbSet<FunctionalRoleEntityModel> FunctionalRoles { get; set; }
         public DbSet<LanguageEntityModel> Languages { get; set; }
@@ -20,11 +22,51 @@ namespace DbMigrations.Data
         public DbSet<SandboxEntityModel> Sandboxes { get; set; }
         public DbSet<SandBoxTechSkillEntityModel> SandBoxTechSkills { get; set; }
         public DbSet<SkillEntityModel> Skills { get; set; }
+        public DbSet<StatusEntityModel> Statuses { get; set; }
         public DbSet<TeamEntityModel> Teams { get; set; }
+
         public DbSet<UserEntityModel> Users { get; set; }
         public DbSet<UserLanguageEntityModel> UserLanguages { get; set; }
+        public DbSet<UserRoleEntityModel> UserRoles { get; set; }
         public DbSet<UserSandBoxEntityModel> UserSandBoxes { get; set; }
         public DbSet<UserTeamEntityModel> UserTeams { get; set; }
-        public DbSet<UserTechSkillEntityModel> UserTechSkill { get; set; }
+        public DbSet<UserTechSkillEntityModel> UserTechSkills { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelbuilder)
+        {
+            base.OnModelCreating(modelbuilder);
+
+            modelbuilder.Entity(typeof(UserSandBoxEntityModel))
+                .HasOne(typeof(UserEntityModel), "User")
+                .WithMany()
+                .HasForeignKey("UserId")
+                .OnDelete(DeleteBehavior.Restrict); // no ON DELETE
+
+            modelbuilder.Entity(typeof(UserTeamEntityModel))
+               .HasOne(typeof(UserSandBoxEntityModel), "UserSandBox")
+               .WithMany()
+               .HasForeignKey("UserSandBoxId")
+               .OnDelete(DeleteBehavior.Restrict); // no ON DELETE
+
+            modelbuilder.Entity(typeof(CandidateSandboxEntityModel))
+               .HasOne(typeof(TeamEntityModel), "Team")
+               .WithMany()
+               .HasForeignKey("TeamId")
+               .OnDelete(DeleteBehavior.Restrict); // no ON DELETE
+
+            //modelbuilder.Entity(typeof(ChangeOrder))
+            //    .HasOne(typeof(User), "AssignedTo")
+            //    .WithMany()
+            //    .HasForeignKey("AssignedToID")
+            //    .OnDelete(DeleteBehavior.Restrict); // no ON DELETE
+            //modelbuilder.Entity(typeof(ChangeOrder))
+            //    .HasOne(typeof(User), "CreatedBy")
+            //    .WithMany()
+            //    .HasForeignKey("CreatedByID")
+            //    .OnDelete(DeleteBehavior.Cascade); // set ON DELETE CASCADE
+        }
+
     }
+
+
 }

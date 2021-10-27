@@ -128,7 +128,7 @@ namespace DbMigrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CandidateProjectRoleEntityModel");
+                    b.ToTable("CandidateProjectRoles");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateSandboxEntityModel", b =>
@@ -160,8 +160,7 @@ namespace DbMigrations.Migrations
 
                     b.HasIndex("SandboxId");
 
-                    b.HasIndex("TeamId")
-                        .IsUnique();
+                    b.HasIndex("TeamId");
 
                     b.ToTable("CandidateSandboxes");
                 });
@@ -368,13 +367,16 @@ namespace DbMigrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StatusEntityModel");
+                    b.ToTable("Statuses");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.TeamEntityModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CandidateSandboxId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -385,6 +387,8 @@ namespace DbMigrations.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CandidateSandboxId");
 
                     b.HasIndex("SandboxId");
 
@@ -477,7 +481,7 @@ namespace DbMigrations.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserRoleEntityModel");
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.UserSandBoxEntityModel", b =>
@@ -489,6 +493,9 @@ namespace DbMigrations.Migrations
                     b.Property<Guid>("SandBoxId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("UserEntityModelId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
@@ -498,6 +505,8 @@ namespace DbMigrations.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("SandBoxId");
+
+                    b.HasIndex("UserEntityModelId");
 
                     b.HasIndex("UserId");
 
@@ -515,12 +524,17 @@ namespace DbMigrations.Migrations
                     b.Property<Guid>("TeamId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("UserSandBoxEntityModelId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("UserSandBoxId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TeamId");
+
+                    b.HasIndex("UserSandBoxEntityModelId");
 
                     b.HasIndex("UserSandBoxId");
 
@@ -545,7 +559,7 @@ namespace DbMigrations.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserTechSkill");
+                    b.ToTable("UserTechSkills");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateLanguageEntityModel", b =>
@@ -621,9 +635,9 @@ namespace DbMigrations.Migrations
                         .IsRequired();
 
                     b.HasOne("DbMigrations.EntityModels.TeamEntityModel", "Team")
-                        .WithOne("CandidateSandbox")
-                        .HasForeignKey("DbMigrations.EntityModels.CandidateSandboxEntityModel", "TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithMany()
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("CandidateProjectRole");
@@ -705,11 +719,17 @@ namespace DbMigrations.Migrations
 
             modelBuilder.Entity("DbMigrations.EntityModels.TeamEntityModel", b =>
                 {
+                    b.HasOne("DbMigrations.EntityModels.CandidateSandboxEntityModel", "CandidateSandbox")
+                        .WithMany()
+                        .HasForeignKey("CandidateSandboxId");
+
                     b.HasOne("DbMigrations.EntityModels.SandboxEntityModel", "Sandbox")
                         .WithMany("Teams")
                         .HasForeignKey("SandboxId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("CandidateSandbox");
 
                     b.Navigation("Sandbox");
                 });
@@ -766,10 +786,14 @@ namespace DbMigrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DbMigrations.EntityModels.UserEntityModel", "User")
+                    b.HasOne("DbMigrations.EntityModels.UserEntityModel", null)
                         .WithMany("UserSanboxes")
+                        .HasForeignKey("UserEntityModelId");
+
+                    b.HasOne("DbMigrations.EntityModels.UserEntityModel", "User")
+                        .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DbMigrations.EntityModels.UserRoleEntityModel", "UserRole")
@@ -793,10 +817,14 @@ namespace DbMigrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DbMigrations.EntityModels.UserSandBoxEntityModel", "UserSandBox")
+                    b.HasOne("DbMigrations.EntityModels.UserSandBoxEntityModel", null)
                         .WithMany("Teams")
+                        .HasForeignKey("UserSandBoxEntityModelId");
+
+                    b.HasOne("DbMigrations.EntityModels.UserSandBoxEntityModel", "UserSandBox")
+                        .WithMany()
                         .HasForeignKey("UserSandBoxId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Team");
@@ -895,8 +923,6 @@ namespace DbMigrations.Migrations
 
             modelBuilder.Entity("DbMigrations.EntityModels.TeamEntityModel", b =>
                 {
-                    b.Navigation("CandidateSandbox");
-
                     b.Navigation("UserTeams");
                 });
 
