@@ -7,24 +7,24 @@ namespace DbMigrations.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<Candidate> Candidates { get; set; }
-        public DbSet<CandidateLanguage> CandidateLanguages { get; set; }
-        public DbSet<CandidateSandbox> CandidateSandboxes { get; set; }
-        public DbSet<CandidatesProcces> CandidatesProcceses { get; set; }
-        public DbSet<CandidateTechSkill> CandidateTechSkills { get; set; }
-        public DbSet<Feedback> Feedbacks { get; set; }
-        public DbSet<FunctionalRole> FunctionalRoles { get; set; }
-        public DbSet<Language> Languages { get; set; }
-        public DbSet<LanguageLevel> LanguageLevels { get; set; }
-        public DbSet<Rating> Ratings { get; set; }
-        public DbSet<Sandbox> Sandboxes { get; set; }
-        public DbSet<SandBoxTechSkill> SandBoxTechSkills { get; set; }
-        public DbSet<Skill> Skills { get; set; }
-        public DbSet<Team> Teams { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<UserLanguage> UserLanguages { get; set; }
-        public DbSet<UserSandBox> UserSandBoxes { get; set; }
-        public DbSet<UserTeam> UserTeams { get; set; }
-        public DbSet<UserTechSkill> UserTechSkill { get; set; }
+        public DbSet<CandidateEntityModel> Candidates { get; set; }
+        public DbSet<CandidateLanguageEntityModel> CandidateLanguages { get; set; }
+        public DbSet<CandidateSandboxEntityModel> CandidateSandboxes { get; set; }
+        public DbSet<CandidateProccesEntityModel> CandidatesProcceses { get; set; }
+        public DbSet<CandidateTechSkillEntityModel> CandidateTechSkills { get; set; }
+        public DbSet<FeedbackEntityModel> Feedbacks { get; set; }
+        public DbSet<FunctionalRoleEntityModel> FunctionalRoles { get; set; }
+        public DbSet<LanguageEntityModel> Languages { get; set; }
+        public DbSet<LanguageLevelEntityModel> LanguageLevels { get; set; }
+        public DbSet<RatingEntityModel> Ratings { get; set; }
+        public DbSet<SandboxEntityModel> Sandboxes { get; set; }
+        public DbSet<SandBoxTechSkillEntityModel> SandBoxTechSkills { get; set; }
+        public DbSet<SkillEntityModel> Skills { get; set; }
+        public DbSet<TeamEntityModel> Teams { get; set; }
+        public DbSet<UserEntityModel> Users { get; set; }
+        public DbSet<UserLanguageEntityModel> UserLanguages { get; set; }
+        public DbSet<UserSandBoxEntityModel> UserSandBoxes { get; set; }
+        public DbSet<UserTeamEntityModel> UserTeams { get; set; }
+        public DbSet<UserTechSkillEntityModel> UserTechSkill { get; set; }
     }
 }

@@ -7,13 +7,19 @@ using System.Threading.Tasks;
 
 namespace DbMigrations.EntityModels
 {
-    public class FunctionalRole
+    public class FunctionalRoleEntityModel
     {
+        public FunctionalRoleEntityModel()
+        {
+            UserRoles = new List<UserRoleEntityModel>();
+        }
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
         public string Access { get; set; }
+
+        public IList<UserRoleEntityModel> UserRoles { get; set; }
     }
 }

@@ -8,10 +8,17 @@ using System.Threading.Tasks;
 
 namespace DbMigrations.EntityModels
 {
-    public class Sandbox
+    public class SandboxEntityModel
     {
+        public SandboxEntityModel()
+        {
+            SandBoxTechSkills = new List<SandBoxTechSkillEntityModel>();
+            UserSandboxes = new List<UserSandBoxEntityModel>();
+            CandidateSandboxes = new List<CandidateSandboxEntityModel>();
+            Teams = new List<TeamEntityModel>();
+        }
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
@@ -28,5 +35,11 @@ namespace DbMigrations.EntityModels
         public DateTime StartRegistration { get; set; }
         [Required]
         public DateTime EndRegistration { get; set; }
+
+        public IList<SandBoxTechSkillEntityModel> SandBoxTechSkills { get; set; }
+        public IList<UserSandBoxEntityModel> UserSandboxes  { get; set; }
+        public IList<CandidateSandboxEntityModel> CandidateSandboxes  { get; set; }
+        public IList<TeamEntityModel> Teams { get; set; }
+
     }
 }

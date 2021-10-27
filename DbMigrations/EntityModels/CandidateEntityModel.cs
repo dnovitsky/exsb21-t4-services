@@ -7,10 +7,16 @@ using System.Threading.Tasks;
 
 namespace DbMigrations.EntityModels
 {
-    public class Candidate
+    public class CandidateEntityModel
     {
+        public CandidateEntityModel()
+        {
+            CandidateLanguages = new List<CandidateLanguageEntityModel>();
+            CandidateTechSkills = new List<CandidateTechSkillEntityModel>();
+            CandidatesProcceses = new List<CandidateProccesEntityModel>();
+        }
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
@@ -25,6 +31,10 @@ namespace DbMigrations.EntityModels
         public string Education { get; set; }
         [Required]
         public string CV { get; set; }
+
+        public IList<CandidateLanguageEntityModel> CandidateLanguages { get; set; }
+        public IList<CandidateTechSkillEntityModel> CandidateTechSkills { get; set; }
+        public IList<CandidateProccesEntityModel> CandidatesProcceses { get; set; }
 
     }
 }

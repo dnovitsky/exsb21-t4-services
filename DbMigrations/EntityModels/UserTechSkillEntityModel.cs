@@ -7,13 +7,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DbMigrations.EntityModels
 {
-    public class UserTechSkill
+    public class UserTechSkillEntityModel
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
+
         [Required]
-        public List<User> Users { get; set; }
+        public Guid UserId { get; set; }
+        public UserEntityModel User { get; set; }
         [Required]
-        public List<Skill> Skills { get; set; }
+        public Guid SkillId { get; set; }
+        public SkillEntityModel Skill { get; set; }
     }
 }
