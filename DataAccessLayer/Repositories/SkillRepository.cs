@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DataAccessLayer.IRepositories;
 using System.Threading.Tasks;
 using DbMigrations.EntityModels;
 using DbMigrations.Data;
@@ -9,9 +10,9 @@ using DataAccessLayer.IRepositories;
 
 namespace DataAccessLayer.Repositories
 {
-    public class CandidateRepository : Repository<CandidateEntityModel>, ICandidateRepository
+    public class SkillRepository : Repository<SkillEntityModel>, ISkillRepository
     {
-        public CandidateRepository(AppDbContext context)
+        public SkillRepository(AppDbContext context)
             : base(context)
         { }
     }

@@ -9,9 +9,9 @@ using DataAccessLayer.IRepositories;
 
 namespace DataAccessLayer.Repositories
 {
-    public class CandidateRepository : Repository<CandidateEntityModel>, ICandidateRepository
+    public class SandboxTechSkillRepository : Repository<SandBoxTechSkillEntityModel>, ISandboxTechSkillRepository
     {
-        public CandidateRepository(AppDbContext context)
+        public SandboxTechSkillRepository(AppDbContext context)
             : base(context)
         { }
     }

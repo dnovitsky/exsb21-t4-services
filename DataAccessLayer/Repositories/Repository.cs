@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccessLayer.IRepositories;
@@ -22,9 +23,9 @@ namespace DataAccessLayer.Repositories
             return context.Set<T>().ToList();
         }
 
-        public virtual T Search(int id)
+        public virtual IEnumerable<T> FindByCondition(Expression<Func<T, bool>> expression)
         {
-            return context.Set<T>().Find(id);
+            return context.Set<T>().Where(expression);
         }
 
         public virtual void Create(T item)
@@ -41,8 +42,9 @@ namespace DataAccessLayer.Repositories
             }
         }
 
-        public virtual void Update(T item) //????????????????
+        public virtual void Update(T item)
         {
+
             context.Entry(context.Set<T>()).State = EntityState.Modified;
         }
     }

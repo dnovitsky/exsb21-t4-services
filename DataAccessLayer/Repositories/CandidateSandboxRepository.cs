@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using DbMigrations.EntityModels;
@@ -9,9 +9,9 @@ using DataAccessLayer.IRepositories;
 
 namespace DataAccessLayer.Repositories
 {
-    public class CandidateRepository : Repository<CandidateEntityModel>, ICandidateRepository
+    public class CandidateSandboxRepository : Repository<CandidateSandboxEntityModel>, ICandidateSandboxRepository
     {
-        public CandidateRepository(AppDbContext context)
+        public CandidateSandboxRepository(AppDbContext context)
             : base(context)
         { }
     }

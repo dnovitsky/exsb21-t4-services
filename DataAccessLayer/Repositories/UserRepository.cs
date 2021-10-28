@@ -9,9 +9,9 @@ using DataAccessLayer.IRepositories;
 
 namespace DataAccessLayer.Repositories
 {
-    public class CandidateRepository : Repository<CandidateEntityModel>, ICandidateRepository
+    public class UserRepository : Repository<UserEntityModel>, IUserRepository
     {
-        public CandidateRepository(AppDbContext context)
+        public UserRepository(AppDbContext context)
             : base(context)
         { }
     }

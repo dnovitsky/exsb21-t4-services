@@ -9,10 +9,10 @@ using DataAccessLayer.IRepositories;
 
 namespace DataAccessLayer.Repositories
 {
-    public class CandidateRepository : Repository<CandidateEntityModel>, ICandidateRepository
+    public class CandidateLanguageRepository : Repository<CandidateLanguageEntityModel>, ICandidateLanguageRepository
     {
-        public CandidateRepository(AppDbContext context)
-            : base(context)
+        public CandidateLanguageRepository(AppDbContext context)
+            : base(context) 
         { }
     }
 }
