@@ -19,7 +19,7 @@ namespace SAPex.Controllers
             )
         {
             Stream stream = file.OpenReadStream();
-            string filepath = @"files\";
+            string filepath = @"uploads\";
             using (FileStream outputFileStream = new FileStream(filepath + file.FileName, FileMode.Create))
             {
                 DirectoryInfo info = new DirectoryInfo(file.ContentDisposition);
