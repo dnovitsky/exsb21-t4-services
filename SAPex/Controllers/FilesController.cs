@@ -30,7 +30,7 @@ namespace SAPex.Controllers
 
         [HttpGet("{id}")]
         public async Task<ActionResult> DownloadFile(
-             [FromForm] int id
+             [FromRoute] int id
             )
         {
             var filePath = @"files\";
