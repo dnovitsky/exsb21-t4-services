@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Dapper;
@@ -35,7 +34,7 @@ namespace SAPex.Repository.Google
         }
         public GoogleUserAccessToken Add(GoogleUserAccessToken item)
         {
-            var sql = "INSERT INTO GoogleUserAccessTokens(Expires_in,Created_in,Email,Access_token,Refresh_token,Scope,Token_type) VALUES(@Expires_in,@Created_in,@Email,@Access_token,@Refresh_token,@Scope,@Token_type); SELECT CAST(SCOPE_IDENTITY() as int)";
+            var sql = "INSERT INTO GoogleUserAccessTokens(Expires_in,Created_in,Email,Access_token,Refresh_token,Id_token,Scope,Token_type) VALUES(@Expires_in,@Created_in,@Email,@Access_token,@Refresh_token,@Id_token,@Scope,@Token_type); SELECT CAST(SCOPE_IDENTITY() as int)";
             var id = db.Query<int>(sql, new
             {
                 @Expires_in=item.Expires_in,
@@ -43,7 +42,8 @@ namespace SAPex.Repository.Google
                 @Email = item.Email,
                 @Access_token = item.Access_token,
                 @Refresh_token = item.Refresh_token,
-                @Scope=item.Scope,
+                @Id_token= item.Id_token,
+                @Scope =item.Scope,
                 @Token_type = item.Token_type
             }).Single();
             item.Id = id;
@@ -57,6 +57,7 @@ namespace SAPex.Repository.Google
                 "Email=@Email, " +
                 "Access_token=@Access_token, " +
                 "Refresh_token=@Refresh_token, " +
+                "Id_token=@Id_token, " +
                 "Scope=@Scope, " +
                 "Token_type=@Token_type " +
                 "WHERE Id = @Id";
@@ -67,6 +68,7 @@ namespace SAPex.Repository.Google
                 @Email = item.Email,
                 @Access_token = item.Access_token,
                 @Refresh_token = item.Refresh_token,
+                @Id_token=item.Id_token,
                 @Scope = item.Scope,
                 @Token_type = item.Token_type,
                 @Id=item.Id
