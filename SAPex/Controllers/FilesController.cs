@@ -40,7 +40,6 @@ namespace SAPex.Controllers
             }
             var bytes = await System.IO.File.ReadAllBytesAsync(existingFile);
             return File(bytes, contentType, Path.GetFileName(existingFile));
-
         }
     }
 }
