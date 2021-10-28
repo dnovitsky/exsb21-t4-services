@@ -16,7 +16,7 @@ namespace SAPex.Controllers
         }
 
         [HttpGet("{email}")]
-        public ActionResult OauthRedirect(string email)
+        public ActionResult OauthRedirect([FromRoute] string email)
         {
             return Redirect(googleOAuthService.GetRedirectUrl(email));   
         }
@@ -26,9 +26,15 @@ namespace SAPex.Controllers
         { 
             if (string.IsNullOrWhiteSpace(error) && googleOAuthService.Add(code, state) != null)
             {
-                return Ok();
+                return Ok(googleOAuthService.GetUserInfo(state));
             }
             return BadRequest();
         }
+        [HttpGet("userinfo/{email}")]
+        public ActionResult GetUserInfo([FromRoute] string email) {
+            return Ok(googleOAuthService.GetUserInfo(email));
+        }
+
+        
     }
 }

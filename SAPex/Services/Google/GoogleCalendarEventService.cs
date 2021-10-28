@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using RestSharp;
 using SAPex.Models;
+using SAPex.Models.Google;
 using SAPex.Services.Google.IGoogleSevices;
 
 namespace SAPex.Services.Google
@@ -94,10 +95,10 @@ namespace SAPex.Services.Google
             request.AddParameter("application/json", model, ParameterType.RequestBody);
             restClient.BaseUrl = new System.Uri($"{GOOGLE_CALENDAR_EVENT_URL}/{item.Id}?sendUpdates=all");
             var response = restClient.Patch(request);
-            System.IO.File.WriteAllText("response.json", response.Content);
             return response.StatusCode == System.Net.HttpStatusCode.OK;
 
         }
+
         private RestRequest GetRequest(string email)
         {
             RestRequest request = new();

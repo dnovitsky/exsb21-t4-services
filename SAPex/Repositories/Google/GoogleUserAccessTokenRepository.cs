@@ -26,12 +26,12 @@ namespace SAPex.Repository.Google
         public GoogleUserAccessToken FindById(int id)
         {
             var sql = "SELECT *FROM GoogleUserAccessTokens WHERE Id=@Id;";
-            return db.Query<GoogleUserAccessToken>(sql, new { @Id = id }).Single();
+            return db.Query<GoogleUserAccessToken>(sql, new { @Id = id }).SingleOrDefault();
         }
         public GoogleUserAccessToken FindByEmail(string email)
         {
             var sql = "SELECT *FROM GoogleUserAccessTokens WHERE Email=@Email;";
-            return db.Query<GoogleUserAccessToken>(sql, new { @Email = email }).Single();
+            return db.Query<GoogleUserAccessToken>(sql, new { @Email = email }).SingleOrDefault();
         }
         public GoogleUserAccessToken Add(GoogleUserAccessToken item)
         {
@@ -43,7 +43,7 @@ namespace SAPex.Repository.Google
                 @Email = item.Email,
                 @Access_token = item.Access_token,
                 @Refresh_token = item.Refresh_token,
-                @Scope = item.Scope,
+                @Scope=item.Scope,
                 @Token_type = item.Token_type
             }).Single();
             item.Id = id;

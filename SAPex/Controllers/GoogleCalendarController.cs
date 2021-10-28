@@ -19,7 +19,7 @@ namespace SAPex.Controllers
         }
 
         [HttpGet("{email}")]
-        public ActionResult<IEnumerable<GoogleCalendar>> Get(string email)
+        public ActionResult<IEnumerable<GoogleCalendar>> Get([FromRoute] string email)
         {
             List<GoogleCalendar> calendars = calendarService.Get(email);
             if (calendars != null) {
@@ -29,7 +29,7 @@ namespace SAPex.Controllers
         }
 
         [HttpGet("{email}/{id}")]
-        public ActionResult<GoogleCalendar> Get(string email, string id)
+        public ActionResult<GoogleCalendar> Get([FromRoute] string email, [FromRoute] string id)
         {
 
             GoogleCalendar calendar = calendarService.Get(email, id);
@@ -42,7 +42,7 @@ namespace SAPex.Controllers
         }
 
         [HttpPost("{email}")]
-        public ActionResult Post(string email,[FromBody] GoogleCalendar calendar)
+        public ActionResult Post([FromRoute] string email,[FromBody] GoogleCalendar calendar)
         {
             bool added = calendarService.Add(email, calendar);
             if (added)
@@ -54,7 +54,7 @@ namespace SAPex.Controllers
         }
 
         [HttpDelete("{email}/{id}")]
-        public ActionResult Delete(string email,string id)
+        public ActionResult Delete([FromRoute] string email, [FromRoute] string id)
         {
             bool deleted = calendarService.Delete(email, id);
             if (deleted)
@@ -65,7 +65,7 @@ namespace SAPex.Controllers
         }
 
         [HttpPatch("{email}")]
-        public ActionResult Patch(string email, [FromBody] GoogleCalendar calendar)
+        public ActionResult Patch([FromRoute] string email, [FromBody] GoogleCalendar calendar)
         {
             bool updated = calendarService.Update(email, calendar);
             if (updated)
