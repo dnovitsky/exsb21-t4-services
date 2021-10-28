@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SAPex.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/files")]
     public class FilesController : ControllerBase
     {
         [HttpPost]
