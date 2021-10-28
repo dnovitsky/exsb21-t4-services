@@ -26,7 +26,10 @@ namespace SAPex
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.OperationFilter<SwaggerFileUploadOperationFilter>();
+            });
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
@@ -34,8 +37,9 @@ namespace SAPex
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseSwagger();
-            app.UseSwaggerUI(options=> {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json","SAPex API v1");
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "SAPex API v1");
             });
             if (env.IsDevelopment())
             {
