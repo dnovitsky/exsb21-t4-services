@@ -22,6 +22,6 @@ namespace DbMigrations.EntityModels
         public Guid SandboxId { get; set; }
         public SandboxEntityModel Sandbox { get; set; }
         public IList<UserTeamEntityModel> UserTeams { get; set; }
-        public CandidateSandboxEntityModel CandidateSandbox { get; set; }
+        //public CandidateSandboxEntityModel CandidateSandbox { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace DbMigrations.EntityModels
         public LanguageEntityModel Language { get; set; }
         [Required]
         public Guid LanguageLevelId { get; set; }
-        public LanguageLevelEntityModel LanguageLevels { get; set; }
+        public LanguageLevelEntityModel LanguageLevel { get; set; }
     }
     
 }

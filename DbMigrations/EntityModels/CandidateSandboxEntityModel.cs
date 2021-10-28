@@ -18,7 +18,7 @@ namespace DbMigrations.EntityModels
 
         [Required]
         public Guid CandidateProccesId { get; set; }
-        public CandidateProccesEntityModel CandidatesProcces { get; set; }
+        public CandidateProccesEntityModel CandidateProcces { get; set; }
 
         [Required]
         public Guid CandidateProjectRoleId { get; set; }

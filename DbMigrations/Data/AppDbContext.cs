@@ -32,38 +32,11 @@ namespace DbMigrations.Data
         public DbSet<UserTeamEntityModel> UserTeams { get; set; }
         public DbSet<UserTechSkillEntityModel> UserTechSkills { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelbuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelbuilder);
-
-            modelbuilder.Entity(typeof(UserSandBoxEntityModel))
-                .HasOne(typeof(UserEntityModel), "User")
-                .WithMany()
-                .HasForeignKey("UserId")
-                .OnDelete(DeleteBehavior.Restrict); // no ON DELETE
-
-            modelbuilder.Entity(typeof(UserTeamEntityModel))
-               .HasOne(typeof(UserSandBoxEntityModel), "UserSandBox")
-               .WithMany()
-               .HasForeignKey("UserSandBoxId")
-               .OnDelete(DeleteBehavior.Restrict); // no ON DELETE
-
-            modelbuilder.Entity(typeof(CandidateSandboxEntityModel))
-               .HasOne(typeof(TeamEntityModel), "Team")
-               .WithMany()
-               .HasForeignKey("TeamId")
-               .OnDelete(DeleteBehavior.Restrict); // no ON DELETE
-
-            //modelbuilder.Entity(typeof(ChangeOrder))
-            //    .HasOne(typeof(User), "AssignedTo")
-            //    .WithMany()
-            //    .HasForeignKey("AssignedToID")
-            //    .OnDelete(DeleteBehavior.Restrict); // no ON DELETE
-            //modelbuilder.Entity(typeof(ChangeOrder))
-            //    .HasOne(typeof(User), "CreatedBy")
-            //    .WithMany()
-            //    .HasForeignKey("CreatedByID")
-            //    .OnDelete(DeleteBehavior.Cascade); // set ON DELETE CASCADE
+            CandidateSandboxConfiguration.OnModelCreating(modelBuilder);
+            UserSandboxConfiguration.OnModelCreating(modelBuilder);
+            UserTeamConfiguration.OnModelCreating(modelBuilder);
         }
 
     }

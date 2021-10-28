@@ -12,7 +12,7 @@ namespace DbMigrations.EntityModels
     {
         public UserSandBoxEntityModel()
         {
-            Teams = new List<UserTeamEntityModel>();
+            UserTeams = new List<UserTeamEntityModel>();
         }
         [Key]
         public Guid Id { get; set; }
@@ -24,6 +24,6 @@ namespace DbMigrations.EntityModels
         public Guid UserId { get; set; }
         public UserEntityModel User { get; set; }
 
-        public IList<UserTeamEntityModel> Teams { get; set; }
+        public IList<UserTeamEntityModel> UserTeams { get; set; }
     }
 }
