@@ -27,11 +27,11 @@ namespace SAPex
         {
             services.AddControllers();
             services.AddSwaggerGen();
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("MSSQL_CONNECTION_STRING")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext dbContext)
         {
             app.UseSwagger();
             app.UseSwaggerUI(options=> {
@@ -59,8 +59,8 @@ namespace SAPex
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            DbObjects.Initial(Configuration.GetConnectionString("DefaultConnection"));
+            dbContext.Database.Migrate();
+            DbObjects.Initial(Environment.GetEnvironmentVariable("MSSQL_CONNECTION_STRING"));
 
         }
     }
