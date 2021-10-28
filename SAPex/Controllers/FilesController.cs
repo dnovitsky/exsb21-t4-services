@@ -29,7 +29,9 @@ namespace SAPex.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> DownloadFile(int id)
+        public async Task<ActionResult> DownloadFile(
+             [FromForm] int id
+            )
         {
             var filePath = @"files\";
             string existingFile = Directory.EnumerateFiles(filePath, id.ToString() + ".*").FirstOrDefault();
