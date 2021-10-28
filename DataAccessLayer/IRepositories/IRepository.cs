@@ -10,7 +10,7 @@ namespace DataAccessLayer.IRepositories
         where T : class
     {
         IEnumerable<T> GetAll();
-        T Search(int id);
+        T Search(string search);
         void Create(T item);
         void Update(T item);
         void Delete(int id);
