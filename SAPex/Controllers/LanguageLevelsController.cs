@@ -12,14 +12,5 @@ namespace SAPex
     [ApiController]
     public class LanguageLevelsController : AbstractController<LanguageLevelViewModel>
     {
-        public LanguageLevelsController()
-        {
-            this.storageList = new List<LanguageLevelViewModel>() {
-                new LanguageLevelViewModel(Guid.NewGuid(), "A1"),
-                new LanguageLevelViewModel(Guid.NewGuid(), "A2"),
-                new LanguageLevelViewModel(Guid.NewGuid(), "B1"),
-                new LanguageLevelViewModel(Guid.NewGuid(), "B2 ")
-            };
-        }
     }
 }

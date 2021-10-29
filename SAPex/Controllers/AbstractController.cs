@@ -14,6 +14,12 @@ namespace SAPex.Controllers
     public abstract class AbstractController<T>: ControllerBase where T: AbstractIdViewModel
     {
         protected List<T> storageList = new List<T>() { };
+        protected FakeDBSingleton DB = new FakeDBSingleton();
+
+        public AbstractController()
+        {
+            this.storageList = this.DB.getJsonData_Sync<T>();
+        }
 
         [HttpGet]
         public async Task<IEnumerable<T>> Get() {
@@ -42,6 +48,8 @@ namespace SAPex.Controllers
                 return await Task.FromResult(NotFound());
             }
 
+            await this.DB.setJsonData<T>(this.storageList);
+
             return await Task.FromResult(Ok());
         }
 
@@ -54,6 +62,7 @@ namespace SAPex.Controllers
             }
 
             this.storageList[index] = status;
+            await this.DB.setJsonData<T>(this.storageList);
 
             return await Task.FromResult(Ok());
         }
@@ -67,6 +76,7 @@ namespace SAPex.Controllers
             }
 
             this.storageList.Remove(response);
+            await this.DB.setJsonData<T>(this.storageList);
 
             return await Task.FromResult(Ok());
         }

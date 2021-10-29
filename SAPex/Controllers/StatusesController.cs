@@ -14,14 +14,5 @@ namespace SAPex
     [ApiController]
     public class StatusesController : AbstractController<StatusViewModel>
     {
-        public StatusesController()
-        {
-            this.storageList = new List<StatusViewModel>() {
-                new StatusViewModel(Guid.NewGuid(), "Stat 1"),
-                new StatusViewModel(Guid.NewGuid(), "Stat 2"),
-                new StatusViewModel(Guid.NewGuid(), "Stat 3"),
-                new StatusViewModel(Guid.NewGuid(), "Stat 4")
-            };
-        }
     }
 }

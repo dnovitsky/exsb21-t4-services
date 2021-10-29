@@ -13,14 +13,5 @@ namespace SAPex
     [ApiController]
     public class SkillsController: AbstractController<SkillViewModel>
     {
-        public SkillsController()
-        {
-            this.storageList = new List<SkillViewModel>() {
-                new SkillViewModel(Guid.NewGuid(), "Skill 1"),
-                new SkillViewModel(Guid.NewGuid(), "Skill 2"),
-                new SkillViewModel(Guid.NewGuid(), "Skill 3"),
-                new SkillViewModel(Guid.NewGuid(), "Skill 4")
-            };
-        }
     }
 }
