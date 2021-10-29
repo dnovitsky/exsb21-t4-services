@@ -1,8 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\**" />
+    <Content Remove="Models\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="Models\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Remove="Models\" />
@@ -62,5 +69,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Remove="tokens.json" />
+    <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Authorization\Authorization\UserCredentials.cs" />
+    <Compile Include="Models\Google\Google\GoogleCalendar.cs" />
+    <Compile Include="Models\Google\Google\GoogleScope.cs" />
+    <Compile Include="Models\Google\Google\GoogleCalendarEvent.cs" />
+    <Compile Include="Models\Google\Google\GoogleUser.cs" />
+    <Compile Include="Models\Google\Google\GoogleUserAccessToken.cs" />
   </ItemGroup>
 </Project>

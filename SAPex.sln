@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.810.11
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAPex", "SAPex\SAPex.csproj", "{37AFC335-5921-4000-BD67-D5B71C2AE9BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbMigrations", "DbMigrations\DbMigrations.csproj", "{94EFB338-BD08-4A80-BB34-57C4D0BB48FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAPex", "SAPex\SAPex.csproj", "{92BB9E89-6756-41A2-BDB3-7986AB8F20E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{37AFC335-5921-4000-BD67-D5B71C2AE9BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{37AFC335-5921-4000-BD67-D5B71C2AE9BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{37AFC335-5921-4000-BD67-D5B71C2AE9BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{37AFC335-5921-4000-BD67-D5B71C2AE9BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94EFB338-BD08-4A80-BB34-57C4D0BB48FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94EFB338-BD08-4A80-BB34-57C4D0BB48FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94EFB338-BD08-4A80-BB34-57C4D0BB48FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94EFB338-BD08-4A80-BB34-57C4D0BB48FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92BB9E89-6756-41A2-BDB3-7986AB8F20E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92BB9E89-6756-41A2-BDB3-7986AB8F20E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92BB9E89-6756-41A2-BDB3-7986AB8F20E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92BB9E89-6756-41A2-BDB3-7986AB8F20E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

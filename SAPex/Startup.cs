@@ -1,8 +1,8 @@
 ﻿using System.Text;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+using DbMigrations.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,6 +13,7 @@ using SAPex.Repository.Google;
 using SAPex.Services.Google;
 using SAPex.Services.Google.IGoogleSevices;
 using SAPex.Services.Jwt;
+using Microsoft.AspNetCore.Hosting;
 
 namespace SAPex
 {
@@ -28,6 +29,7 @@ namespace SAPex
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddSingleton<DapperDbContext>();
             services.AddScoped<IGoogleUserAccessTokenRepository, GoogleUserAccessTokenRepository>();
             services.AddScoped<IGoogleOAuthService, GoogleOAuthService>();
@@ -52,13 +54,16 @@ namespace SAPex
                 };
             });
 
-            services.AddSingleton<JwtService>(new JwtService(Configuration));
-            services.AddSwaggerGen();
-
+            services.AddSingleton(new JwtService(Configuration));
+            services.AddSwaggerGen(c =>
+            {
+                c.OperationFilter<SwaggerFileUploadOperationFilter>();
+            });
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,AppDbContext dbContext)
         {
             app.UseSwagger();
             app.UseSwaggerUI(options=> {
@@ -80,6 +85,10 @@ namespace SAPex
             {
                 endpoints.MapControllers();
             });
+
+            dbContext.Database.Migrate();
+            DbObjects.Initial(Configuration.GetConnectionString("DefaultConnection"));
+
         }
     }
 }
