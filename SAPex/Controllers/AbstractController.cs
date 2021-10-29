@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SAPex.Models;
+// using System.Reflection;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -46,11 +47,13 @@ namespace SAPex.Controllers
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid Id, [FromBody] T status) {
-            var response = this.storageList.Find(item => item.Id == Id);
+            var index = this.storageList.IndexOf(this.storageList.Find(item => item.Id == Id));
 
-            if (response == null) {
+            if (index < 0) {
                 return await Task.FromResult(NotFound());
             }
+
+            this.storageList[index] = status;
 
             return await Task.FromResult(Ok());
         }
