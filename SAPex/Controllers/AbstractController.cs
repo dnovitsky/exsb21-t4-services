@@ -16,7 +16,7 @@ namespace SAPex.Controllers
 
         [HttpGet]
         public async Task<IEnumerable<T>> Get() {
-            return await Task.FromResult(storageList.AsEnumerable<T>());
+            return await Task.FromResult(this.storageList.AsEnumerable<T>());
         }
 
         [HttpGet("{id}")]
@@ -33,7 +33,7 @@ namespace SAPex.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] T status) {
-            storageList.Add(status);
+            this.storageList.Add(status);
 
             var response = this.storageList.Find(item => item.Id == status.Id);
 
