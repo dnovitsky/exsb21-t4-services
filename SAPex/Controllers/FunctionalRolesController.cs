@@ -2,23 +2,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using SAPex.Models;
 
 namespace SAPex
 {
-    [Route("api/languagelevels")]
+    [Route("api/functionalroles")]
     [ApiController]
-    public class LanguageLevelController : ControllerBase
+    public class FunctionalRolesController : ControllerBase
     {
-        //---------------- Test LanguageLevelModel ----
-        private List<LanguageLevelViewModel> storageList = new List<LanguageLevelViewModel>() { };
+        //---------------- Test FunctionalRoleModel ----
+        private List<FunctionalRoleViewModel> storageList = new List<FunctionalRoleViewModel>() { };
         //-------------------------------
 
         [HttpGet]
-        public async Task<IEnumerable<LanguageLevelViewModel>> Get()
+        public async Task<IEnumerable<FunctionalRoleViewModel>> Get()
         {
-            return await Task.FromResult(storageList.AsEnumerable<LanguageLevelViewModel>());
+            return await Task.FromResult(storageList.AsEnumerable<FunctionalRoleViewModel>());
         }
 
         [HttpGet("{id}")]
@@ -34,10 +35,10 @@ namespace SAPex
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] LanguageLevelViewModel languageLevel)
+        public async Task<IActionResult> Post([FromBody] FunctionalRoleViewModel functionalRole)
         {
             var oldCount = storageList.Count;
-            storageList.Add(languageLevel);
+            storageList.Add(functionalRole);
             var newCount = storageList.Count;
 
             if (newCount > oldCount)
@@ -49,14 +50,15 @@ namespace SAPex
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid Id, [FromBody] LanguageLevelViewModel languageLevel)
+        public async Task<IActionResult> Put(Guid Id, [FromBody] FunctionalRoleViewModel functionalRole)
         {
-            LanguageLevelViewModel item = storageList.Find(item => item.Id == Id);
+            FunctionalRoleViewModel item = storageList.Find(item => item.Id == Id);
             if (item != null)
             {
                 return await Task.FromResult(Ok());
             }
-            item.Name = languageLevel.Name;
+            item.Name = functionalRole.Name;
+            item.Access = functionalRole.Access;
 
             return await Task.FromResult(NotFound());
         }
@@ -64,7 +66,7 @@ namespace SAPex
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid Id)
         {
-            LanguageLevelViewModel item = storageList.Find(item => item.Id == Id);
+            FunctionalRoleViewModel item = storageList.Find(item => item.Id == Id);
             if (item != null)
             {
                 return await Task.FromResult(Ok());

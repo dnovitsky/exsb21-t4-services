@@ -1,6 +1,4 @@
 ﻿using System.IO;
-using DbMigrations.Data;
-using DbMigrations.EntityModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

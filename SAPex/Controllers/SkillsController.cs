@@ -5,20 +5,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using SAPex.Models;
 
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 namespace SAPex
 {
-    [Route("api/languagelevels")]
+    [Route("api/skills")]
     [ApiController]
-    public class LanguageLevelController : ControllerBase
+    public class SkillsController : ControllerBase
     {
-        //---------------- Test LanguageLevelModel ----
-        private List<LanguageLevelViewModel> storageList = new List<LanguageLevelViewModel>() { };
+
+        //---------------- Test SkillModel ----
+        private List<SkillViewModel> storageList = new List<SkillViewModel>() { };
         //-------------------------------
 
+
         [HttpGet]
-        public async Task<IEnumerable<LanguageLevelViewModel>> Get()
+        public async Task<IEnumerable<SkillViewModel>> Get()
         {
-            return await Task.FromResult(storageList.AsEnumerable<LanguageLevelViewModel>());
+            return await Task.FromResult(storageList.AsEnumerable<SkillViewModel>());
         }
 
         [HttpGet("{id}")]
@@ -34,10 +37,10 @@ namespace SAPex
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] LanguageLevelViewModel languageLevel)
+        public async Task<IActionResult> Post([FromBody] SkillViewModel skill)
         {
             var oldCount = storageList.Count;
-            storageList.Add(languageLevel);
+            storageList.Add(skill);
             var newCount = storageList.Count;
 
             if (newCount > oldCount)
@@ -49,14 +52,14 @@ namespace SAPex
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid Id, [FromBody] LanguageLevelViewModel languageLevel)
+        public async Task<IActionResult> Put(Guid Id, [FromBody] SkillViewModel skill)
         {
-            LanguageLevelViewModel item = storageList.Find(item => item.Id == Id);
+            SkillViewModel item = storageList.Find(item => item.Id == Id);
             if (item != null)
             {
                 return await Task.FromResult(Ok());
             }
-            item.Name = languageLevel.Name;
+            item.Name = skill.Name;
 
             return await Task.FromResult(NotFound());
         }
@@ -64,7 +67,7 @@ namespace SAPex
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid Id)
         {
-            LanguageLevelViewModel item = storageList.Find(item => item.Id == Id);
+            SkillViewModel item = storageList.Find(item => item.Id == Id);
             if (item != null)
             {
                 return await Task.FromResult(Ok());

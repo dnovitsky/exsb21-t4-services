@@ -7,18 +7,18 @@ using SAPex.Models;
 
 namespace SAPex
 {
-    [Route("api/languagelevels")]
+    [Route("api/languages")]
     [ApiController]
-    public class LanguageLevelController : ControllerBase
+    public class LanguagesController : ControllerBase
     {
-        //---------------- Test LanguageLevelModel ----
-        private List<LanguageLevelViewModel> storageList = new List<LanguageLevelViewModel>() { };
+        //---------------- Test LanguageModel ----
+         private List<LanguageViewModel> storageList = new List<LanguageViewModel>() { };
         //-------------------------------
 
         [HttpGet]
-        public async Task<IEnumerable<LanguageLevelViewModel>> Get()
+        public async Task<IEnumerable<LanguageViewModel>> Get()
         {
-            return await Task.FromResult(storageList.AsEnumerable<LanguageLevelViewModel>());
+            return await Task.FromResult(storageList.AsEnumerable<LanguageViewModel>());
         }
 
         [HttpGet("{id}")]
@@ -33,11 +33,11 @@ namespace SAPex
             return await Task.FromResult(Ok(item));
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] LanguageLevelViewModel languageLevel)
+        [HttpPost("{id}")]
+        public async Task<IActionResult> Post([FromBody] LanguageViewModel language)
         {
             var oldCount = storageList.Count;
-            storageList.Add(languageLevel);
+            storageList.Add(language);
             var newCount = storageList.Count;
 
             if (newCount > oldCount)
@@ -48,15 +48,15 @@ namespace SAPex
             return await Task.FromResult(NotFound());
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid Id, [FromBody] LanguageLevelViewModel languageLevel)
+        [HttpPut]
+        public async Task<IActionResult> Put(Guid Id, [FromBody] LanguageViewModel language)
         {
-            LanguageLevelViewModel item = storageList.Find(item => item.Id == Id);
+            LanguageViewModel item = storageList.Find(item => item.Id == Id);
             if (item != null)
             {
                 return await Task.FromResult(Ok());
             }
-            item.Name = languageLevel.Name;
+            item.Name = language.Name;
 
             return await Task.FromResult(NotFound());
         }
@@ -64,7 +64,7 @@ namespace SAPex
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid Id)
         {
-            LanguageLevelViewModel item = storageList.Find(item => item.Id == Id);
+            LanguageViewModel item = storageList.Find(item => item.Id == Id);
             if (item != null)
             {
                 return await Task.FromResult(Ok());
