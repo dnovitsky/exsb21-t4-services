@@ -5,7 +5,7 @@ namespace SAPex.Services.Google.IGoogleSevices
 {
     public interface IGoogleOAuthService
     {
-        public string GetRedirectUrl(string email);
+        public string GetRedirectUrl();
         public GoogleUser GetUserInfo(string email);
         public GoogleUserAccessToken Add(string email,string code);
         public GoogleUserAccessToken Update(string email);

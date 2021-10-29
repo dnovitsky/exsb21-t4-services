@@ -9,6 +9,8 @@
     <Content Remove="Models\**" />
     <EmbeddedResource Remove="Models\**" />
     <None Remove="Models\**" />
+    <None Remove="Controllers\Google\" />
+    <None Remove="Controllers\Authorization\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,6 +55,8 @@
     <Folder Include="Services\Google\BaseServices\" />
     <Folder Include="Services\Jwt\" />
     <Folder Include="Models\Authorization\" />
+    <Folder Include="Controllers\Google\" />
+    <Folder Include="Controllers\Authorization\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
@@ -72,11 +76,11 @@
     <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Authorization\Authorization\UserCredentials.cs" />
-    <Compile Include="Models\Google\Google\GoogleCalendar.cs" />
-    <Compile Include="Models\Google\Google\GoogleScope.cs" />
-    <Compile Include="Models\Google\Google\GoogleCalendarEvent.cs" />
-    <Compile Include="Models\Google\Google\GoogleUser.cs" />
-    <Compile Include="Models\Google\Google\GoogleUserAccessToken.cs" />
+    <Compile Include="Models\Authorization\UserCredentials.cs" />
+    <Compile Include="Models\Google\GoogleCalendar.cs" />
+    <Compile Include="Models\Google\GoogleScope.cs" />
+    <Compile Include="Models\Google\GoogleCalendarEvent.cs" />
+    <Compile Include="Models\Google\GoogleUser.cs" />
+    <Compile Include="Models\Google\GoogleUserAccessToken.cs" />
   </ItemGroup>
 </Project>

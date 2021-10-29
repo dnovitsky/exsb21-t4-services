@@ -31,9 +31,9 @@ namespace SAPex.Services.Google
             GOOGLE_REDIRECT_URL = configuration.GetSection("GoogleStrings").GetSection("redirect_uris").Value;
             this.googleUserAccess = googleUserAccess;
         }
-        public string GetRedirectUrl(string email) {
+        public string GetRedirectUrl() {
             var scope = string.Format("{0}+{1}+{2}+{3}+{4}+{5}", GoogleScope.CALENDAR, GoogleScope.CALENDAR_READ_ONLY, GoogleScope.EVENTS, GoogleScope.EVENTS_READ_ONLY,GoogleScope.PROFILE_USER_INFO, GoogleScope.PROFILE_USER_EMAIL);
-            return  $"{GOOGLE_AUTHENTICATION_URL}?scope={scope}&access_type=offline&include_granted_scopes=true&response_type=code&state={email}&redirect_uri={GOOGLE_REDIRECT_URL}&client_id={GOOGLE_CLIENT_ID}";
+            return  $"{GOOGLE_AUTHENTICATION_URL}?scope={scope}&access_type=offline&include_granted_scopes=true&response_type=code&state=email&redirect_uri={GOOGLE_REDIRECT_URL}&client_id={GOOGLE_CLIENT_ID}";
         }
         public GoogleUserAccessToken Add(string code, string email)
         {
@@ -47,7 +47,6 @@ namespace SAPex.Services.Google
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 JObject events = JObject.Parse(response.Content);
-
                 GoogleUserAccessToken userAccess = events.ToObject<GoogleUserAccessToken>();
                 userAccess.Set(email, now);
                 return googleUserAccess.Add(userAccess); 

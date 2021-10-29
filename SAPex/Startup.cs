@@ -87,7 +87,6 @@ namespace SAPex
             });
 
             dbContext.Database.Migrate();
-            DbObjects.Initial(Configuration.GetConnectionString("DefaultConnection"));
 
         }
     }

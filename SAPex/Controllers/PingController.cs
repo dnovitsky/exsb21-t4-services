@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace SAPex.Controllers
 {
     [Route("api/ping")]
-    [ApiController]
-    [Authorize]
+    [ApiController]     
     public class PingController : ControllerBase
     {
         [HttpGet]
@@ -13,5 +12,19 @@ namespace SAPex.Controllers
         {
             return Ok();
         }
+
+        [Authorize(Roles = "ADMIN")]
+        [HttpGet("admin")]
+        public ActionResult GetAdmin()
+        {
+            return Ok();
+        }
+        [Authorize(Roles = "USER")]
+        [HttpGet("user")]
+        public ActionResult GetUser()
+        {
+            return Ok();
+        }
+
     }
 }
