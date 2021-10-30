@@ -9,7 +9,6 @@
     <Content Remove="Models\**" />
     <EmbeddedResource Remove="Models\**" />
     <None Remove="Models\**" />
-    <None Remove="Controllers\Google\" />
     <None Remove="Controllers\Authorization\" />
   </ItemGroup>
 
@@ -22,7 +21,6 @@
     <None Remove="Repository\" />
     <None Remove="Repository\Google\" />
     <None Remove="Repository\Google\BaseRepository\" />
-    <None Remove="Models\Google\" />
     <None Remove="Repository\Google\IRepository\" />
     <None Remove="Services\" />
     <None Remove="Data\" />
@@ -30,9 +28,7 @@
     <None Remove="Microsoft.EntityFrameworkCore.Tools" />
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
     <None Remove="Services\IService\" />
-    <None Remove="Services\Google\" />
     <None Remove="Services\Google\IServices\" />
-    <None Remove="Services\Google\BaseServices\" />
     <None Remove="Microsoft.AspNetCore.Authentication.Google" />
     <None Remove="Services\Jwt\" />
     <None Remove="System.IdentityModel.Tokens.Jwt" />
@@ -43,19 +39,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Repositories\" />
-    <Folder Include="Repositories\Google\" />
-    <Folder Include="Repositories\Google\BaseRepositories\" />
-    <Folder Include="Models\Google\" />
-    <Folder Include="Repositories\Google\IGoogleRepositories\" />
     <Folder Include="Services\" />
     <Folder Include="Data\" />
-    <Folder Include="Services\Google\" />
-    <Folder Include="Services\Google\IGoogleServices\" />
-    <Folder Include="Services\Google\BaseServices\" />
     <Folder Include="Services\Jwt\" />
     <Folder Include="Models\Authorization\" />
-    <Folder Include="Controllers\Google\" />
     <Folder Include="Controllers\Authorization\" />
   </ItemGroup>
   <ItemGroup>
@@ -77,10 +64,5 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Authorization\UserCredentials.cs" />
-    <Compile Include="Models\Google\GoogleCalendar.cs" />
-    <Compile Include="Models\Google\GoogleScope.cs" />
-    <Compile Include="Models\Google\GoogleCalendarEvent.cs" />
-    <Compile Include="Models\Google\GoogleUser.cs" />
-    <Compile Include="Models\Google\GoogleUserAccessToken.cs" />
   </ItemGroup>
 </Project>

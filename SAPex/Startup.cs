@@ -7,11 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using SAPex.Data;
-using SAPex.Repositories.Google.IGoogleRepositories;
-using SAPex.Repository.Google;
-using SAPex.Services.Google;
-using SAPex.Services.Google.IGoogleSevices;
 using SAPex.Services.Jwt;
 using Microsoft.AspNetCore.Hosting;
 
@@ -29,12 +24,6 @@ namespace SAPex
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddSingleton<DapperDbContext>();
-            services.AddScoped<IGoogleUserAccessTokenRepository, GoogleUserAccessTokenRepository>();
-            services.AddScoped<IGoogleOAuthService, GoogleOAuthService>();
-            services.AddScoped<IGoogleCalendarService, GoogleCalendarService>();
-            services.AddScoped<IGoogleCalendarEventService, GoogleCalendarEventService>();
             services.AddControllers();
             
             services.AddAuthentication(options =>
