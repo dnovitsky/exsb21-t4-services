@@ -23,7 +23,6 @@
     <None Remove="Repository\Google\BaseRepository\" />
     <None Remove="Repository\Google\IRepository\" />
     <None Remove="Services\" />
-    <None Remove="Data\" />
     <None Remove="Dapper" />
     <None Remove="Microsoft.EntityFrameworkCore.Tools" />
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
@@ -40,7 +39,6 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Services\" />
-    <Folder Include="Data\" />
     <Folder Include="Services\Jwt\" />
     <Folder Include="Models\Authorization\" />
     <Folder Include="Controllers\Authorization\" />

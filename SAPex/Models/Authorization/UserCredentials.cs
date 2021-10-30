@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 namespace SAPex.Models.Authorization
 {
     public class UserCredentials
