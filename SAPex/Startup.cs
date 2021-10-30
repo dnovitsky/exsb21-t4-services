@@ -25,6 +25,7 @@ namespace SAPex
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddControllers();
             services.AddSwaggerGen();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("MSSQL_CONNECTION_STRING")));
@@ -46,9 +47,9 @@ namespace SAPex
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseCors(builder=>builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseRouting();
 
             app.UseAuthorization();
