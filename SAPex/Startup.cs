@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,8 +27,12 @@ namespace SAPex
         {
             services.AddCors();
             services.AddControllers();
-            services.AddSwaggerGen();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("MSSQL_CONNECTION_STRING")));
+            services.AddSwaggerGen(c =>
+            {
+                c.OperationFilter<SwaggerFileUploadOperationFilter>();
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -15,14 +15,14 @@ namespace DbMigrations.Data
     {
         public static void Initial(string connectionString)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            var options = optionsBuilder.UseSqlServer(connectionString).Options;
+            //var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+            //var options = optionsBuilder.UseSqlServer(connectionString).Options;
 
-            using (AppDbContext db = new AppDbContext(options))
-            {
-                db.TestTable.Add(new TestModel { Name = " third " });
-                db.SaveChanges();
-            }
+            //using (AppDbContext db = new AppDbContext(options))
+            //{
+            //    db.TestTable.Add(new TestModel { Name = " third " });
+            //    db.SaveChanges();
+            //}
 
         }
     }
