@@ -26,16 +26,12 @@ namespace SAPex
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-<<<<<<< HEAD
-            services.AddSwaggerGen();
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("MSSQL_CONNECTION_STRING")));
-=======
             services.AddSwaggerGen(c =>
             {
                 c.OperationFilter<SwaggerFileUploadOperationFilter>();
             });
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
->>>>>>> dev
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
