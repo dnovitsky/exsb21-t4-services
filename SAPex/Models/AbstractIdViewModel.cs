@@ -5,12 +5,12 @@ namespace SAPex.Models
 {
     public abstract class AbstractIdViewModel
     {
-        public AbstractIdViewModel(Guid Id)
+        public AbstractIdViewModel(Guid id)
         {
-            this.Id = Id;
+            this.id = id;
         }
 
         [Key]
-        public Guid Id { get; set; }
+        public Guid id { get; set; }
     }
 }

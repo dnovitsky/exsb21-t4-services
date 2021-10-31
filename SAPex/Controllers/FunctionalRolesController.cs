@@ -13,5 +13,9 @@ namespace SAPex
     [ApiController]
     public class FunctionalRolesController : AbstractController<FunctionalRoleViewModel>
     {
+        protected override Predicate<FunctionalRoleViewModel> FindByRequestDataCallback(FunctionalRoleViewModel requestData)
+        {
+            return (item) => { return item.name == requestData.name; };
+        }
     }
 }

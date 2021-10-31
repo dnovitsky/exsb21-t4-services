@@ -12,5 +12,9 @@ namespace SAPex
     [ApiController]
     public class LanguageLevelsController : AbstractController<LanguageLevelViewModel>
     {
+        protected override Predicate<LanguageLevelViewModel> FindByRequestDataCallback(LanguageLevelViewModel requestData)
+        {
+            return (item) => { return item.name == requestData.name; };
+        }
     }
 }

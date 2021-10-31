@@ -1,1 +1,22 @@
-[{"Access":"RW","Name":"FunctionalRoles 1","Id":"1fa85f64-5717-4562-b3fc-2c963f66afa6"},{"Access":"XRW","Name":"FunctionalRoles 2","Id":"2fa85f64-5717-4562-b3fc-2c963f66afa6"},{"Access":"W","Name":"FunctionalRoles 3","Id":"3fa85f64-5717-4562-b3fc-2c963f66afa6"},{"Access":"W","Name":"FunctionalRoles 6","Id":"6fa85f64-5717-4562-b3fc-2c963f66afa6"}]
+[
+  {
+    "access": "RW",
+    "name": "FunctionalRoles 1",
+    "id": "1fa85f64-5717-4562-b3fc-2c963f66afa6"
+  },
+  {
+    "access": "XRW",
+    "name": "FunctionalRoles 2",
+    "id": "2fa85f64-5717-4562-b3fc-2c963f66afa6"
+  },
+  {
+    "access": "W",
+    "name": "FunctionalRoles 3",
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+  },
+  {
+    "access": "W",
+    "name": "FunctionalRoles 6",
+    "id": "6fa85f64-5717-4562-b3fc-2c963f66afa6"
+  }
+]

@@ -12,5 +12,9 @@ namespace SAPex
     [ApiController]
     public class RatingsController : AbstractController<RatingViewModel>
     {
+        protected override Predicate<RatingViewModel> FindByRequestDataCallback(RatingViewModel requestData)
+        {
+            return (item) => { return item.id == requestData.id; };
+        }
     }
 }

@@ -13,5 +13,9 @@ namespace SAPex
     [ApiController]
     public class SkillsController: AbstractController<SkillViewModel>
     {
+        protected override Predicate<SkillViewModel> FindByRequestDataCallback(SkillViewModel requestData)
+        {
+            return (item) => { return item.name == requestData.name; };
+        }
     }
 }

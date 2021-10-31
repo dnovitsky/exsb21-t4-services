@@ -14,5 +14,9 @@ namespace SAPex
     [ApiController]
     public class StatusesController : AbstractController<StatusViewModel>
     {
+        protected override Predicate<StatusViewModel> FindByRequestDataCallback(StatusViewModel requestData)
+        {
+            return (item) => { return item.name == requestData.name; };
+        }
     }
 }

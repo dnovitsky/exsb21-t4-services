@@ -14,11 +14,17 @@ namespace SAPex.Controllers
     public abstract class AbstractController<T> : ControllerBase where T : AbstractIdViewModel
     {
         protected List<T> storageList = new List<T>() { };
-        protected FakeDBSingleton DB = new FakeDBSingleton();
+        protected FakeDBSingleton dB = new FakeDBSingleton();
+
+        protected Predicate<T> FindByIdCallback(Guid id) {
+            return (item) => { return item.id == id; };
+        }
+
+        protected abstract Predicate<T> FindByRequestDataCallback(T requestData);
 
         public AbstractController()
         {
-            this.storageList = this.DB.getJsonData_Sync<T>();
+            this.storageList = this.dB.getJsonData_Sync<T>();
         }
 
         [HttpGet]
@@ -27,10 +33,10 @@ namespace SAPex.Controllers
             return await Task.FromResult(this.storageList.AsEnumerable<T>());
         }
 
-        [HttpGet("{Id}")]
-        public async Task<IActionResult> Get(Guid Id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(Guid id)
         {
-            var response = this.storageList.Find(item => item.Id == Id);
+            var response = this.storageList.Find(this.FindByIdCallback(id));
 
             if (response == null)
             {
@@ -41,42 +47,41 @@ namespace SAPex.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] T status)
+        public async Task<IActionResult> Post([FromBody] T requestData)
         {
-            this.storageList.Add(status);
+            var response = this.storageList.Find(this.FindByRequestDataCallback(requestData));
 
-            var response = this.storageList.Find(item => item.Id == status.Id);
-
-            if (response == null)
+            if (response != null)
             {
-                return await Task.FromResult(NotFound());
+                return await Task.FromResult(StatusCode(403));
             }
 
-            await this.DB.setJsonData<T>(this.storageList);
+            this.storageList.Add(requestData);
+            await this.dB.setJsonData<T>(this.storageList);
 
             return await Task.FromResult(Ok());
         }
 
-        [HttpPut("{Id}")]
-        public async Task<IActionResult> Put(Guid Id, [FromBody] T status)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(Guid id, [FromBody] T requestData)
         {
-            var index = this.storageList.IndexOf(this.storageList.Find(item => item.Id == Id));
+            var index = this.storageList.IndexOf(this.storageList.Find(this.FindByIdCallback(id)));
 
             if (index < 0)
             {
                 return await Task.FromResult(NotFound());
             }
 
-            this.storageList[index] = status;
-            await this.DB.setJsonData<T>(this.storageList);
+            this.storageList[index] = requestData;
+            await this.dB.setJsonData<T>(this.storageList);
 
             return await Task.FromResult(Ok());
         }
 
-        [HttpDelete("{Id}")]
-        public async Task<IActionResult> Delete(Guid Id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var response = this.storageList.Find(item => item.Id == Id);
+            var response = this.storageList.Find(this.FindByIdCallback(id));
 
             if (response == null)
             {
@@ -84,7 +89,7 @@ namespace SAPex.Controllers
             }
 
             this.storageList.Remove(response);
-            await this.DB.setJsonData<T>(this.storageList);
+            await this.dB.setJsonData<T>(this.storageList);
 
             return await Task.FromResult(Ok());
         }

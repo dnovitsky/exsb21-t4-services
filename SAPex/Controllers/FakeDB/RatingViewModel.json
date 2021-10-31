@@ -1,1 +1,17 @@
-[{"Mark":4,"SkillId":"1fa85f64-5717-4562-b3fc-2c963f66afa6","Id":"1fa85f64-5717-4562-b3fc-2c963f66afa6"},{"Mark":7,"SkillId":"1fa85f64-5717-4562-b3fc-2c963f66afa6","Id":"2fa85f64-5717-4562-b3fc-2c963f66afa6"},{"Mark":10,"SkillId":"1fa85f64-5717-4562-b3fc-2c963f66afa6","Id":"8fa85f64-5717-4562-b3fc-2c963f66afa6"}]
+[
+  {
+    "mark": 4,
+    "skillid": "1fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "id": "1fa85f64-5717-4562-b3fc-2c963f66afa6"
+  },
+  {
+    "mark": 7,
+    "skillid": "1fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "id": "2fa85f64-5717-4562-b3fc-2c963f66afa6"
+  },
+  {
+    "mark": 10,
+    "skillid": "1fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "id": "8fa85f64-5717-4562-b3fc-2c963f66afa6"
+  }
+]

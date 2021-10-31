@@ -5,13 +5,13 @@ namespace SAPex.Models
 {
     public class RatingViewModel: AbstractIdViewModel
     {
-        public RatingViewModel(Guid Id, int Mark, Guid SkillId) : base(Id) {
-            this.Mark = Mark;
-            this.SkillId = SkillId;
+        public RatingViewModel(Guid id, int mark, Guid skillId) : base(id) {
+            this.mark = mark;
+            this.skillId = skillId;
         }
         [Required]
-        public int Mark { get; set; }
+        public int mark { get; set; }
         [Required]
-        public Guid SkillId { get; set; }
+        public Guid skillId { get; set; }
     }
 }

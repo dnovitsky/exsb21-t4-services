@@ -5,12 +5,12 @@ namespace SAPex.Models
 {
     public abstract class AbstractNameViewModel: AbstractIdViewModel
     {
-        public AbstractNameViewModel(Guid Id, string Name) : base(Id)
+        public AbstractNameViewModel(Guid id, string name) : base(id)
         {
-            this.Name = Name;
+            this.name = name;
         }
 
         [Required]
-        public string Name { get; set; }
+        public string name { get; set; }
     }
 }
