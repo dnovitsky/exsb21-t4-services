@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace DbMigrations.EntityModels
 {
-    public class SandBoxTechSkillEntityModel
+    public class FormEntityModel
     {
+        public FormEntityModel()
+        {
+            AccessForms = new List<AccessFormEntityModel>();
+        }
         [Key]
         public Guid Id { get; set; }
-
         [Required]
-        public Guid SkillId { get; set; }
-        public SkillEntityModel Skill { get; set; }
+        public string Name { get; set; }
 
-        [Required]
-        public Guid SandboxId { get; set; }
-        public SandboxEntityModel Sandbox { get; set; }
+        public IList<AccessFormEntityModel> AccessForms { get; set; }
 
     }
 }

@@ -15,10 +15,6 @@ namespace DbMigrations.EntityModels
         public Guid Id { get; set; }
 
         [Required]
-        public Guid CandidateId { get; set; }
-        public CandidateEntityModel Candidate { get; set; }
-
-        [Required]
         public Guid StatusId { get; set; }
         public StatusEntityModel Status { get; set; }
 
@@ -30,7 +26,7 @@ namespace DbMigrations.EntityModels
         public Guid FeedbackId { get; set; }
         public FeedbackEntityModel Feedback { get; set; }
 
-       // public CandidateSandboxEntityModel CandidateSandbox { get; set; }
+      
 
     }
 }

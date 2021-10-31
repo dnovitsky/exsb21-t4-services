@@ -12,10 +12,10 @@ namespace DbMigrations.EntityModels
     {
         public SandboxEntityModel()
         {
-            SandBoxTechSkills = new List<SandBoxTechSkillEntityModel>();
             UserSandboxes = new List<UserSandBoxEntityModel>();
             CandidateSandboxes = new List<CandidateSandboxEntityModel>();
             Teams = new List<TeamEntityModel>();
+            SandboxStackTechnologies = new List<SandboxStackTechnologyEntityModel>();
         }
         [Key]
         public Guid Id { get; set; }
@@ -36,10 +36,11 @@ namespace DbMigrations.EntityModels
         [Required]
         public DateTime EndRegistration { get; set; }
 
-        public IList<SandBoxTechSkillEntityModel> SandBoxTechSkills { get; set; }
+        
         public IList<UserSandBoxEntityModel> UserSandboxes  { get; set; }
         public IList<CandidateSandboxEntityModel> CandidateSandboxes  { get; set; }
         public IList<TeamEntityModel> Teams { get; set; }
+        public IList<SandboxStackTechnologyEntityModel> SandboxStackTechnologies { get; set; }
 
     }
 }
