@@ -42,6 +42,8 @@
     <Folder Include="Services\Jwt\" />
     <Folder Include="Models\Authorization\" />
     <Folder Include="Controllers\Authorization\" />
+    <Folder Include="Models\Authorization\AuthRequest\" />
+    <Folder Include="Models\Authorization\AuthResponse\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
@@ -61,6 +63,7 @@
     <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Authorization\UserCredentials.cs" />
+    <Compile Include="Models\Authorization\AuthRequest\UserCredentials.cs" />
+    <Compile Include="Models\Authorization\AuthResponse\AuthenticateResponse.cs" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using SAPex.Models.Authorization;
-
+using SAPex.Models.Authorization.AuthResponse;
 using SAPex.Services.Jwt;
 
 namespace SAPex.Controllers.Authorization
@@ -10,17 +10,17 @@ namespace SAPex.Controllers.Authorization
     [ApiController]
     public class CustomAuthorizationController: ControllerBase
     {
-        private readonly JwtService _userService;
+        private readonly JwtService _jwtService;
 
-        public CustomAuthorizationController(JwtService userService)
+        public CustomAuthorizationController(JwtService jwtService)
         {
-            _userService = userService;
+            _jwtService = jwtService;
         }
 
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody] UserCredentials credentials)
+        public ActionResult<AuthenticateResponse> Authenticate([FromBody] AuthenticateRequest credentials)
         {
-            var user = _userService.Authenticate(credentials.Email, credentials.Password);
+            var user = _jwtService.Authenticate(credentials.Email, credentials.Password);
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });

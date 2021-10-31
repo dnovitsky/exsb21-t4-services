@@ -7,6 +7,7 @@ using System.Text;
 using DbMigrations.EntityModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using SAPex.Models.Authorization.AuthResponse;
 
 namespace SAPex.Services.Jwt
 {
@@ -57,7 +58,7 @@ namespace SAPex.Services.Jwt
             _expDate = config.GetSection("JwtConfig").GetSection("expirationInMinutes").Value;
         }
 
-        public string Authenticate(string email, string password)
+        public AuthenticateResponse Authenticate(string email, string password)
         {
 
             var user = _users.SingleOrDefault(x => x.Email == email && x.Password == password);
@@ -79,7 +80,7 @@ namespace SAPex.Services.Jwt
                     SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            return new AuthenticateResponse(user, tokenHandler.WriteToken(token),"");
         }
 
         public UserEntityModel GetById(Guid id)
