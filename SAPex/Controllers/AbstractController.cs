@@ -11,7 +11,7 @@ using SAPex.Models;
 namespace SAPex.Controllers
 {
     [ApiController]
-    public abstract class AbstractController<T>: ControllerBase where T: AbstractIdViewModel
+    public abstract class AbstractController<T> : ControllerBase where T : AbstractIdViewModel
     {
         protected List<T> storageList = new List<T>() { };
         protected FakeDBSingleton DB = new FakeDBSingleton();
@@ -22,12 +22,14 @@ namespace SAPex.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<T>> Get() {
+        public async Task<IEnumerable<T>> Get()
+        {
             return await Task.FromResult(this.storageList.AsEnumerable<T>());
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid Id) {
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> Get(Guid Id)
+        {
             var response = this.storageList.Find(item => item.Id == Id);
 
             if (response == null)
@@ -39,12 +41,14 @@ namespace SAPex.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] T status) {
+        public async Task<IActionResult> Post([FromBody] T status)
+        {
             this.storageList.Add(status);
 
             var response = this.storageList.Find(item => item.Id == status.Id);
 
-            if (response == null) {
+            if (response == null)
+            {
                 return await Task.FromResult(NotFound());
             }
 
@@ -53,11 +57,13 @@ namespace SAPex.Controllers
             return await Task.FromResult(Ok());
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid Id, [FromBody] T status) {
+        [HttpPut("{Id}")]
+        public async Task<IActionResult> Put(Guid Id, [FromBody] T status)
+        {
             var index = this.storageList.IndexOf(this.storageList.Find(item => item.Id == Id));
 
-            if (index < 0) {
+            if (index < 0)
+            {
                 return await Task.FromResult(NotFound());
             }
 
@@ -67,11 +73,13 @@ namespace SAPex.Controllers
             return await Task.FromResult(Ok());
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid Id) {
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> Delete(Guid Id)
+        {
             var response = this.storageList.Find(item => item.Id == Id);
 
-            if (response == null) {
+            if (response == null)
+            {
                 return await Task.FromResult(NotFound());
             }
 
