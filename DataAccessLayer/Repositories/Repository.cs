@@ -33,7 +33,7 @@ namespace DataAccessLayer.Repositories
             context.Set<T>().Add(item);
         }
 
-        public virtual void Delete(int id)
+        public virtual void Delete(int id) //Удаление в отдельных репозиториях
         {
             T del_item = context.Set<T>().Find(id);
             if (del_item != null)
