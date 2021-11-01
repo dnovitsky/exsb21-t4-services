@@ -29,7 +29,7 @@ namespace SAPex
                 return 200;
             }
 
-            return 403;
+            return 409;
         }
         protected override int PutValidation(Guid id, RatingViewModel requestData)
         {
@@ -41,7 +41,7 @@ namespace SAPex
 
                 if (index < 0)
                 {
-                    return 405;
+                    return 400;
                 } else
                 {
                     this.UpdateFields(responce, requestData);
@@ -51,7 +51,7 @@ namespace SAPex
                 }
             }
 
-            return 403;
+            return 404;
         }
     }
 }

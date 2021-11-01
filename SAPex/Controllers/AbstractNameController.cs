@@ -28,9 +28,11 @@ namespace SAPex.Controllers
 
                     return 200;
                 }
+
+                return 409;
             }
 
-            return 403;
+            return 400;
         }
         protected override int PutValidation(Guid id, T requestData)
         {
@@ -48,11 +50,11 @@ namespace SAPex.Controllers
                     return 200;
                 } else
                 {
-                    return 405;
+                    return 400;
                 }
             }
 
-            return 403;
+            return 404;
         }
     }
 }
