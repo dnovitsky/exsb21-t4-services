@@ -13,7 +13,7 @@ namespace DbMigrations.EntityModels
         {
             CandidateLanguages = new List<CandidateLanguageEntityModel>();
             CandidateTechSkills = new List<CandidateTechSkillEntityModel>();
-            CandidatesProcceses = new List<CandidateProccesEntityModel>();
+            CandidateSandboxes = new List<CandidateSandboxEntityModel>();
         }
         [Key]
         public Guid Id { get; set; }
@@ -34,7 +34,7 @@ namespace DbMigrations.EntityModels
 
         public IList<CandidateLanguageEntityModel> CandidateLanguages { get; set; }
         public IList<CandidateTechSkillEntityModel> CandidateTechSkills { get; set; }
-        public IList<CandidateProccesEntityModel> CandidatesProcceses { get; set; }
+        public IList<CandidateSandboxEntityModel> CandidateSandboxes { get; set; }
 
     }
 }
