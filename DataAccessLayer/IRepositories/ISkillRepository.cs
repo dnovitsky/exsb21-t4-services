@@ -11,8 +11,8 @@ namespace DataAccessLayer.IRepositories
     {
         IEnumerable<SkillEntityModel> GetAll();
         IEnumerable<SkillEntityModel> FindByCondition(Expression<Func<SkillEntityModel, bool>> expression);
-        void Create(SkillEntityModel item);
-        void Update(SkillEntityModel item);
-        void Delete(int id);
+        void CreateAsync(SkillEntityModel item);
+        void UpdateAsync(SkillEntityModel item);
+        void DeleteAsync(int id);
     }
 }

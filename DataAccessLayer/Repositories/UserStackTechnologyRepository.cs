@@ -9,9 +9,9 @@ using DataAccessLayer.IRepositories;
 
 namespace DataAccessLayer.Repositories
 {
-    public class SandboxTechSkillRepository : Repository<SandBoxTechSkillEntityModel>, ISandboxTechSkillRepository
+    public class UserStackTechnologyRepository : Repository<UserStackTechnologyEntityModel>, IUserStackTechnologyRepository
     {
-        public SandboxTechSkillRepository(AppDbContext context)
+        public UserStackTechnologyRepository(AppDbContext context)
             : base(context)
         { }
     }

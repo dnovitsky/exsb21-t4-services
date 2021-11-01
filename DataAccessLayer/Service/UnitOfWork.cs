@@ -14,6 +14,8 @@ namespace DataAccessLayer.Service
 
         private readonly AppDbContext context;
 
+        private IAccessFormRepository accessForms;
+        private IAccessRepository accesses;
         private ICandidateLanguageRepository candidateLanguages;
         private ICandidateProccesRepository candidateProcceses;
         private ICandidateProjectRoleRepository candidateProjectRoles;
@@ -21,18 +23,21 @@ namespace DataAccessLayer.Service
         private ICandidateSandboxRepository candidateSandboxes;
         private ICandidateTechSkillRepository candidateTechSkills;
         private IFeedbackRepository feedbacks;
+        private IFormRepository forms;
         private IFunctionalRoleRepository functionalRoles;
         private ILanguageLevelRepository languageLevels;
         private ILanguageRepository languages;
         private IRatingRepository ratings;
         private ISandboxRepository sandboxes;
-        private ISandboxTechSkillRepository sandboxTechSkill;
+        private ISandboxStackTechnologyRepository sandboxStackTechnologies;
         private ISkillRepository skills;
+        private IStackTechnologyRepository stackTechnologies;
         private IStatusRepository statuses;
         private ITeamRepository teams;
+        private IUserFunctionalRoleRepository userFunctionalRoles;
         private IUserLanguageRepository userLanguages;
         private IUserRepository users;
-        private IUserRoleRepository userRoles;
+        private IUserStackTechnologyRepository userStackTechnologies;
         private IUserSandBoxRepository userSandBoxes;
         private IUserTeamRepository userTeams;
         private IUserTechSkillRepository userTechSkills;
@@ -41,6 +46,31 @@ namespace DataAccessLayer.Service
         {
             this.context= context;
         }
+
+        public IAccessFormRepository AccessForms
+        {
+            get
+            {
+                if (accessForms == null)
+                {
+                    accessForms = new AccessFormRepository(context);
+                }
+                return accessForms;
+            }
+        }
+
+        public IAccessRepository Accesses
+        {
+            get
+            {
+                if (accesses == null)
+                {
+                    accesses = new AccessRepository(context);
+                }
+                return accesses;
+            }
+        }
+
         public ICandidateLanguageRepository CandidateLanguages
         {
             get
@@ -185,15 +215,15 @@ namespace DataAccessLayer.Service
             }
         }
 
-        public ISandboxTechSkillRepository SandboxTechSkill
+        public ISandboxStackTechnologyRepository SandboxTechSkill
         {
             get
             {
-                if (sandboxTechSkill == null)
+                if (sandboxStackTechnologies == null)
                 {
-                    sandboxTechSkill = new SandboxTechSkillRepository(context);
+                    sandboxStackTechnologies = new SandboxStackTechnologyRepository(context);
                 }
-                return sandboxTechSkill;
+                return sandboxStackTechnologies;
             }
         }
 
@@ -257,15 +287,15 @@ namespace DataAccessLayer.Service
             }
         }
 
-        public IUserRoleRepository UserRoles
+        public IUserStackTechnologyRepository UserRoles
         {
             get
             {
-                if (userRoles == null)
+                if (userStackTechnologies == null)
                 {
-                    userRoles = new UserRoleRepository(context);
+                    userStackTechnologies = new UserStackTechnologyRepository(context);
                 }
-                return userRoles;
+                return userStackTechnologies;
             }
         }
 
@@ -305,6 +335,66 @@ namespace DataAccessLayer.Service
             }
         }
 
+        public IFormRepository Forms
+        {
+            get
+            {
+                if (forms == null)
+                {
+                    forms = new FormRepository(context);
+                }
+                return forms;
+            }
+        }
+
+        public ISandboxStackTechnologyRepository SandboxStackTechnologies
+        {
+            get
+            {
+                if (sandboxStackTechnologies == null)
+                {
+                    sandboxStackTechnologies = new SandboxStackTechnologyRepository(context);
+                }
+                return sandboxStackTechnologies;
+            }
+        }
+
+        public IStackTechnologyRepository StackTechnologies
+        {
+            get
+            {
+                if (stackTechnologies == null)
+                {
+                    stackTechnologies = new StackTechnologyRepository(context);
+                }
+                return stackTechnologies;
+            }
+        }
+
+        public IUserFunctionalRoleRepository UserFunctionalRoles
+        {
+            get
+            {
+                if (userFunctionalRoles == null)
+                {
+                    userFunctionalRoles = new UserFunctionalRoleRepository(context);
+                }
+                return userFunctionalRoles;
+            }
+        }
+
+        public IUserStackTechnologyRepository UserStackTechnologies
+        {
+            get
+            {
+                if (userStackTechnologies == null)
+                {
+                    userStackTechnologies = new UserStackTechnologyRepository(context);
+                }
+                return userStackTechnologies;
+            }
+        }
+
         public void Save()
         {
             context.SaveChanges();
@@ -314,12 +404,9 @@ namespace DataAccessLayer.Service
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!this.disposed && disposing)
             {
-                if (disposing)
-                {
                     context.Dispose();
-                }
             }
             this.disposed = true;
         }

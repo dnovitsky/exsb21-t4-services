@@ -13,8 +13,8 @@ namespace DataAccessLayer.Repositories
     public abstract class Repository<T> : IRepository<T>
         where T : class
     {
-        public AppDbContext context;
-        public Repository(AppDbContext context)
+        private readonly AppDbContext context;
+        protected Repository(AppDbContext context)
         {
             this.context = context;
         }
@@ -28,24 +28,26 @@ namespace DataAccessLayer.Repositories
             return context.Set<T>().Where(expression);
         }
 
-        public virtual void Create(T item)
+        public virtual async void CreateAsync(T item)
         {
-            context.Set<T>().Add(item);
+            await Task.Run(() => context.Set<T>().Add(item));            
         }
 
-        public virtual void Delete(int id) //Удаление в отдельных репозиториях
+        public virtual async void DeleteAsync(int id) //Удаление в отдельных репозиториях
         {
-            T del_item = context.Set<T>().Find(id);
-            if (del_item != null)
+            await Task.Run(() =>
             {
-                context.Set<T>().Remove(del_item);
-            }
+                T del_item = context.Set<T>().Find(id);
+                if (del_item != null)
+                {
+                    context.Set<T>().Remove(del_item);
+                }
+            });            
         }
 
-        public virtual void Update(T item)
+        public virtual async void UpdateAsync(T item)
         {
-
-            context.Entry(context.Set<T>()).State = EntityState.Modified;
+            await Task.Run(() => context.Entry(context.Set<T>()).State = EntityState.Modified);
         }
     }
 }

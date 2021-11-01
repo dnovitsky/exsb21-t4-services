@@ -11,6 +11,7 @@ namespace DbMigrations.EntityModels
     {
         public static void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Method intentionally left empty.
         }
     }
 }

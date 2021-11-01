@@ -11,8 +11,8 @@ namespace DataAccessLayer.IRepositories
     {
         IEnumerable<FunctionalRoleEntityModel> GetAll();
         IEnumerable<FunctionalRoleEntityModel> FindByCondition(Expression<Func<FunctionalRoleEntityModel, bool>> expression);
-        void Create(FunctionalRoleEntityModel item);
-        void Update(FunctionalRoleEntityModel item);
-        void Delete(int id);
+        void CreateAsync(FunctionalRoleEntityModel item);
+        void UpdateAsync(FunctionalRoleEntityModel item);
+        void DeleteAsync(int id);
     }
 }

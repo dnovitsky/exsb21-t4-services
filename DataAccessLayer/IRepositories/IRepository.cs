@@ -12,8 +12,8 @@ namespace DataAccessLayer.IRepositories
     {
         IEnumerable<T> GetAll();
         IEnumerable<T> FindByCondition(Expression<Func<T,bool>> expression);
-        void Create(T item);
-        void Update(T item);
-        void Delete(int id);
+        void CreateAsync(T item);
+        void UpdateAsync(T item);
+        void DeleteAsync(int id);//SoftDelete??
     }
 }

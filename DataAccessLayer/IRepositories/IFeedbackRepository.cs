@@ -11,8 +11,8 @@ namespace DataAccessLayer.IRepositories
     {
         IEnumerable<FeedbackEntityModel> GetAll();
         IEnumerable<FeedbackEntityModel> FindByCondition(Expression<Func<FeedbackEntityModel, bool>> expression);
-        void Create(FeedbackEntityModel item);
-        void Update(FeedbackEntityModel item);
-        void Delete(int id);
+        void CreateAsync(FeedbackEntityModel item);
+        void UpdateAsync(FeedbackEntityModel item);
+        void DeleteAsync(int id);
     }
 }

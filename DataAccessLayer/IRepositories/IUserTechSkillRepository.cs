@@ -11,8 +11,8 @@ namespace DataAccessLayer.IRepositories
     {
         IEnumerable<UserTechSkillEntityModel> GetAll();
         IEnumerable<UserTechSkillEntityModel> FindByCondition(Expression<Func<UserTechSkillEntityModel, bool>> expression);
-        void Create(UserTechSkillEntityModel item);
-        void Update(UserTechSkillEntityModel item);
-        void Delete(int id);
+        void CreateAsync(UserTechSkillEntityModel item);
+        void UpdateAsync(UserTechSkillEntityModel item);
+        void DeleteAsync(int id);
     }
 }
