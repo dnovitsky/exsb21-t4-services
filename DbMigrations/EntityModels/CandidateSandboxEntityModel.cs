@@ -17,8 +17,8 @@ namespace DbMigrations.EntityModels
         public SandboxEntityModel Sandbox { get; set; }
 
         [Required]
-        public Guid CandidateProccesId { get; set; }
-        public CandidateProccesEntityModel CandidateProcces { get; set; }
+        public Guid CandidateId { get; set; }
+        public CandidateEntityModel Candidate { get; set; }
 
         [Required]
         public Guid CandidateProjectRoleId { get; set; }
@@ -27,5 +27,14 @@ namespace DbMigrations.EntityModels
         [Required]
         public Guid TeamId { get; set; }
         public TeamEntityModel Team { get; set; }
+
+        [Required]
+        public Guid StackTechnologiesId { get; set; }
+        public StackTechnologyEntityModel StackTechnologies { get; set; }
+
+        [Required]
+        public Guid CandidateProccesId { get; set; }
+        public CandidateProccesEntityModel CandidateProcces { get; set; }
+
     }
 }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DbMigrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211027223241_AddAllTables")]
-    partial class AddAllTables
+    [Migration("20211031094633_AddAllUpdatedTables")]
+    partial class AddAllUpdatedTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,47 @@ namespace DbMigrations.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("DbMigrations.EntityModels.AccessEntityModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Accesses");
+                });
+
+            modelBuilder.Entity("DbMigrations.EntityModels.AccessFormEntityModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AccessId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("FormId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("FunctionalRoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccessId");
+
+                    b.HasIndex("FormId");
+
+                    b.HasIndex("FunctionalRoleId");
+
+                    b.ToTable("AccessForms");
+                });
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateEntityModel", b =>
                 {
@@ -92,9 +133,6 @@ namespace DbMigrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CandidateId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -108,8 +146,6 @@ namespace DbMigrations.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CandidateId");
 
                     b.HasIndex("FeedbackId");
 
@@ -139,16 +175,19 @@ namespace DbMigrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CandidateId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("CandidateProccesId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CandidateProjectRoleId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CandidatesProccesId")
+                    b.Property<Guid>("SandboxId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SandboxId")
+                    b.Property<Guid>("StackTechnologiesId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("TeamId")
@@ -156,11 +195,15 @@ namespace DbMigrations.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CandidateId");
+
+                    b.HasIndex("CandidateProccesId");
+
                     b.HasIndex("CandidateProjectRoleId");
 
-                    b.HasIndex("CandidatesProccesId");
-
                     b.HasIndex("SandboxId");
+
+                    b.HasIndex("StackTechnologiesId");
 
                     b.HasIndex("TeamId");
 
@@ -216,15 +259,26 @@ namespace DbMigrations.Migrations
                     b.ToTable("Feedbacks");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.FunctionalRoleEntityModel", b =>
+            modelBuilder.Entity("DbMigrations.EntityModels.FormEntityModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Access")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Forms");
+                });
+
+            modelBuilder.Entity("DbMigrations.EntityModels.FunctionalRoleEntityModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -284,27 +338,6 @@ namespace DbMigrations.Migrations
                     b.ToTable("Ratings");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.SandBoxTechSkillEntityModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("SandboxId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("SkillId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SandboxId");
-
-                    b.HasIndex("SkillId");
-
-                    b.ToTable("SandBoxTechSkills");
-                });
-
             modelBuilder.Entity("DbMigrations.EntityModels.SandboxEntityModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -342,6 +375,27 @@ namespace DbMigrations.Migrations
                     b.ToTable("Sandboxes");
                 });
 
+            modelBuilder.Entity("DbMigrations.EntityModels.SandboxStackTechnologyEntityModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SandboxId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StackTechnologyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SandboxId");
+
+                    b.HasIndex("StackTechnologyId");
+
+                    b.ToTable("SandboxStackTechnologies");
+                });
+
             modelBuilder.Entity("DbMigrations.EntityModels.SkillEntityModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -355,6 +409,21 @@ namespace DbMigrations.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Skills");
+                });
+
+            modelBuilder.Entity("DbMigrations.EntityModels.StackTechnologyEntityModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StackTechnologies");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.StatusEntityModel", b =>
@@ -378,9 +447,6 @@ namespace DbMigrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CandidateSandboxId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -389,8 +455,6 @@ namespace DbMigrations.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CandidateSandboxId");
 
                     b.HasIndex("SandboxId");
 
@@ -436,36 +500,7 @@ namespace DbMigrations.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.UserLanguageEntityModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("LanguageId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("LanguageLevelId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("LanguageLevelsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LanguageId");
-
-                    b.HasIndex("LanguageLevelsId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserLanguages");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.UserRoleEntityModel", b =>
+            modelBuilder.Entity("DbMigrations.EntityModels.UserFunctionalRoleEntityModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -483,7 +518,33 @@ namespace DbMigrations.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserRoles");
+                    b.ToTable("UserFunctionalRoles");
+                });
+
+            modelBuilder.Entity("DbMigrations.EntityModels.UserLanguageEntityModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("LanguageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("LanguageLevelId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("LanguageLevelId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserLanguages");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.UserSandBoxEntityModel", b =>
@@ -492,29 +553,43 @@ namespace DbMigrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("FunctionalRole")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("SandBoxId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("UserEntityModelId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserRoleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("SandBoxId");
 
-                    b.HasIndex("UserEntityModelId");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserSandBoxes");
+                });
+
+            modelBuilder.Entity("DbMigrations.EntityModels.UserStackTechnologyEntityModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StackTechnologyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StackTechnologyId");
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("UserRoleId");
-
-                    b.ToTable("UserSandBoxes");
+                    b.ToTable("UserStackTechnologies");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.UserTeamEntityModel", b =>
@@ -526,17 +601,12 @@ namespace DbMigrations.Migrations
                     b.Property<Guid>("TeamId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("UserSandBoxEntityModelId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("UserSandBoxId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TeamId");
-
-                    b.HasIndex("UserSandBoxEntityModelId");
 
                     b.HasIndex("UserSandBoxId");
 
@@ -562,6 +632,33 @@ namespace DbMigrations.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserTechSkills");
+                });
+
+            modelBuilder.Entity("DbMigrations.EntityModels.AccessFormEntityModel", b =>
+                {
+                    b.HasOne("DbMigrations.EntityModels.AccessEntityModel", "Access")
+                        .WithMany("AccessForms")
+                        .HasForeignKey("AccessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DbMigrations.EntityModels.FormEntityModel", "Form")
+                        .WithMany("AccessForms")
+                        .HasForeignKey("FormId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DbMigrations.EntityModels.FunctionalRoleEntityModel", "FunctionalRole")
+                        .WithMany("AccessForms")
+                        .HasForeignKey("FunctionalRoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Access");
+
+                    b.Navigation("Form");
+
+                    b.Navigation("FunctionalRole");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateLanguageEntityModel", b =>
@@ -593,12 +690,6 @@ namespace DbMigrations.Migrations
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateProccesEntityModel", b =>
                 {
-                    b.HasOne("DbMigrations.EntityModels.CandidateEntityModel", "Candidate")
-                        .WithMany("CandidatesProcceses")
-                        .HasForeignKey("CandidateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("DbMigrations.EntityModels.FeedbackEntityModel", "Feedback")
                         .WithMany("CandidateProcceses")
                         .HasForeignKey("FeedbackId")
@@ -611,8 +702,6 @@ namespace DbMigrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Candidate");
-
                     b.Navigation("Feedback");
 
                     b.Navigation("Status");
@@ -620,15 +709,23 @@ namespace DbMigrations.Migrations
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateSandboxEntityModel", b =>
                 {
+                    b.HasOne("DbMigrations.EntityModels.CandidateEntityModel", "Candidate")
+                        .WithMany("CandidateSandboxes")
+                        .HasForeignKey("CandidateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DbMigrations.EntityModels.CandidateProccesEntityModel", "CandidateProcces")
+                        .WithMany()
+                        .HasForeignKey("CandidateProccesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DbMigrations.EntityModels.CandidateProjectRoleEntityModel", "CandidateProjectRole")
                         .WithMany("CandidateSandboxes")
                         .HasForeignKey("CandidateProjectRoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("DbMigrations.EntityModels.CandidateProccesEntityModel", "CandidatesProcces")
-                        .WithMany()
-                        .HasForeignKey("CandidatesProccesId");
 
                     b.HasOne("DbMigrations.EntityModels.SandboxEntityModel", "Sandbox")
                         .WithMany("CandidateSandboxes")
@@ -636,17 +733,26 @@ namespace DbMigrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DbMigrations.EntityModels.StackTechnologyEntityModel", "StackTechnologies")
+                        .WithMany("CandidateSandboxes")
+                        .HasForeignKey("StackTechnologiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DbMigrations.EntityModels.TeamEntityModel", "Team")
                         .WithMany()
                         .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Candidate");
+
+                    b.Navigation("CandidateProcces");
 
                     b.Navigation("CandidateProjectRole");
 
-                    b.Navigation("CandidatesProcces");
-
                     b.Navigation("Sandbox");
+
+                    b.Navigation("StackTechnologies");
 
                     b.Navigation("Team");
                 });
@@ -700,68 +806,37 @@ namespace DbMigrations.Migrations
                     b.Navigation("Skill");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.SandBoxTechSkillEntityModel", b =>
+            modelBuilder.Entity("DbMigrations.EntityModels.SandboxStackTechnologyEntityModel", b =>
                 {
                     b.HasOne("DbMigrations.EntityModels.SandboxEntityModel", "Sandbox")
-                        .WithMany("SandBoxTechSkills")
+                        .WithMany("SandboxStackTechnologies")
                         .HasForeignKey("SandboxId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DbMigrations.EntityModels.SkillEntityModel", "Skill")
-                        .WithMany("SandBoxTechSkills")
-                        .HasForeignKey("SkillId")
+                    b.HasOne("DbMigrations.EntityModels.StackTechnologyEntityModel", "StackTechnology")
+                        .WithMany("SandboxStackTechnologies")
+                        .HasForeignKey("StackTechnologyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Sandbox");
 
-                    b.Navigation("Skill");
+                    b.Navigation("StackTechnology");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.TeamEntityModel", b =>
                 {
-                    b.HasOne("DbMigrations.EntityModels.CandidateSandboxEntityModel", "CandidateSandbox")
-                        .WithMany()
-                        .HasForeignKey("CandidateSandboxId");
-
                     b.HasOne("DbMigrations.EntityModels.SandboxEntityModel", "Sandbox")
                         .WithMany("Teams")
                         .HasForeignKey("SandboxId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CandidateSandbox");
-
                     b.Navigation("Sandbox");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.UserLanguageEntityModel", b =>
-                {
-                    b.HasOne("DbMigrations.EntityModels.LanguageEntityModel", "Language")
-                        .WithMany("UserLanguages")
-                        .HasForeignKey("LanguageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DbMigrations.EntityModels.LanguageLevelEntityModel", "LanguageLevels")
-                        .WithMany("UserLanguages")
-                        .HasForeignKey("LanguageLevelsId");
-
-                    b.HasOne("DbMigrations.EntityModels.UserEntityModel", "User")
-                        .WithMany("UserLanguages")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Language");
-
-                    b.Navigation("LanguageLevels");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.UserRoleEntityModel", b =>
+            modelBuilder.Entity("DbMigrations.EntityModels.UserFunctionalRoleEntityModel", b =>
                 {
                     b.HasOne("DbMigrations.EntityModels.FunctionalRoleEntityModel", "FunctionalRole")
                         .WithMany("UserRoles")
@@ -780,6 +855,33 @@ namespace DbMigrations.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("DbMigrations.EntityModels.UserLanguageEntityModel", b =>
+                {
+                    b.HasOne("DbMigrations.EntityModels.LanguageEntityModel", "Language")
+                        .WithMany("UserLanguages")
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DbMigrations.EntityModels.LanguageLevelEntityModel", "LanguageLevel")
+                        .WithMany("UserLanguages")
+                        .HasForeignKey("LanguageLevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DbMigrations.EntityModels.UserEntityModel", "User")
+                        .WithMany("UserLanguages")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Language");
+
+                    b.Navigation("LanguageLevel");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("DbMigrations.EntityModels.UserSandBoxEntityModel", b =>
                 {
                     b.HasOne("DbMigrations.EntityModels.SandboxEntityModel", "Sandbox")
@@ -788,27 +890,34 @@ namespace DbMigrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DbMigrations.EntityModels.UserEntityModel", null)
-                        .WithMany("UserSanboxes")
-                        .HasForeignKey("UserEntityModelId");
-
                     b.HasOne("DbMigrations.EntityModels.UserEntityModel", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("DbMigrations.EntityModels.UserRoleEntityModel", "UserRole")
                         .WithMany("UserSanboxes")
-                        .HasForeignKey("UserRoleId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Sandbox");
 
                     b.Navigation("User");
+                });
 
-                    b.Navigation("UserRole");
+            modelBuilder.Entity("DbMigrations.EntityModels.UserStackTechnologyEntityModel", b =>
+                {
+                    b.HasOne("DbMigrations.EntityModels.StackTechnologyEntityModel", "StackTechnology")
+                        .WithMany("UserStackTechnologies")
+                        .HasForeignKey("StackTechnologyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DbMigrations.EntityModels.UserEntityModel", "User")
+                        .WithMany("UserStackTechnologies")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StackTechnology");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.UserTeamEntityModel", b =>
@@ -819,14 +928,9 @@ namespace DbMigrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DbMigrations.EntityModels.UserSandBoxEntityModel", null)
-                        .WithMany("Teams")
-                        .HasForeignKey("UserSandBoxEntityModelId");
-
                     b.HasOne("DbMigrations.EntityModels.UserSandBoxEntityModel", "UserSandBox")
-                        .WithMany()
+                        .WithMany("UserTeams")
                         .HasForeignKey("UserSandBoxId")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Team");
@@ -853,11 +957,16 @@ namespace DbMigrations.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("DbMigrations.EntityModels.AccessEntityModel", b =>
+                {
+                    b.Navigation("AccessForms");
+                });
+
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateEntityModel", b =>
                 {
                     b.Navigation("CandidateLanguages");
 
-                    b.Navigation("CandidatesProcceses");
+                    b.Navigation("CandidateSandboxes");
 
                     b.Navigation("CandidateTechSkills");
                 });
@@ -872,8 +981,15 @@ namespace DbMigrations.Migrations
                     b.Navigation("CandidateProcceses");
                 });
 
+            modelBuilder.Entity("DbMigrations.EntityModels.FormEntityModel", b =>
+                {
+                    b.Navigation("AccessForms");
+                });
+
             modelBuilder.Entity("DbMigrations.EntityModels.FunctionalRoleEntityModel", b =>
                 {
+                    b.Navigation("AccessForms");
+
                     b.Navigation("UserRoles");
                 });
 
@@ -900,7 +1016,7 @@ namespace DbMigrations.Migrations
                 {
                     b.Navigation("CandidateSandboxes");
 
-                    b.Navigation("SandBoxTechSkills");
+                    b.Navigation("SandboxStackTechnologies");
 
                     b.Navigation("Teams");
 
@@ -913,9 +1029,16 @@ namespace DbMigrations.Migrations
 
                     b.Navigation("Ratings");
 
-                    b.Navigation("SandBoxTechSkills");
-
                     b.Navigation("UserTechSkills");
+                });
+
+            modelBuilder.Entity("DbMigrations.EntityModels.StackTechnologyEntityModel", b =>
+                {
+                    b.Navigation("CandidateSandboxes");
+
+                    b.Navigation("SandboxStackTechnologies");
+
+                    b.Navigation("UserStackTechnologies");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.StatusEntityModel", b =>
@@ -938,17 +1061,14 @@ namespace DbMigrations.Migrations
 
                     b.Navigation("UserSanboxes");
 
-                    b.Navigation("UserTechSkills");
-                });
+                    b.Navigation("UserStackTechnologies");
 
-            modelBuilder.Entity("DbMigrations.EntityModels.UserRoleEntityModel", b =>
-                {
-                    b.Navigation("UserSanboxes");
+                    b.Navigation("UserTechSkills");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.UserSandBoxEntityModel", b =>
                 {
-                    b.Navigation("Teams");
+                    b.Navigation("UserTeams");
                 });
 #pragma warning restore 612, 618
         }
