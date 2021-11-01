@@ -5,76 +5,43 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using DbMigrations.EntityModels;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using SAPex.Helpers;
+using SAPex.Models.Authorization.AuthRequest;
 using SAPex.Models.Authorization.AuthResponse;
 
 namespace SAPex.Services.Jwt
 {
     public class JwtService
     {
-        private readonly string _secret;
-        private readonly string _expDate;
-
-        private List<UserEntityModel> _users = new()
+        private readonly UserService _userService;
+        private readonly AppSettings _appSettings;
+        
+        public JwtService(UserService userService, IOptions<AppSettings> appSettings)
         {
-            new UserEntityModel
-            {
-                Id = Guid.NewGuid(),
-                Name = "Admin",
-                Surname = "User",
-                Email = "admin@gmail.com",
-                Password = "admin",
-                UserRoles = new List<UserRoleEntityModel>()
-                                  {
-                                      new UserRoleEntityModel
-                                      {
-                                          Id = Guid.NewGuid(),
-                                          FunctionalRole=new FunctionalRoleEntityModel{  Access="ADMIN"}
-                                      } 
-                                  }
-                                },
-            new UserEntityModel
-            {
-                Id = Guid.NewGuid(),
-                Name = "Normal",
-                Surname = "User",
-                Email = "user@gmail.com",
-                Password = "user",
-                UserRoles = new List<UserRoleEntityModel>()
-                                  {
-                                      new UserRoleEntityModel
-                                      {
-                                          Id = Guid.NewGuid(),
-                                          FunctionalRole=new FunctionalRoleEntityModel{  Access="USER"}
-                                      }
-                                  }
-            }
-        };
-
-        public JwtService(IConfiguration config)
-        {
-            _secret = config.GetSection("JwtConfig").GetSection("secret").Value;
-            _expDate = config.GetSection("JwtConfig").GetSection("expirationInMinutes").Value;
+            _appSettings = appSettings.Value;
+            _userService = userService;                       
         }
 
-        public AuthenticateResponse Authenticate(string email, string password)
+        public AuthenticateResponse Authenticate(AuthenticateRequest credentials)
         {
-
-            var user = _users.SingleOrDefault(x => x.Email == email && x.Password == password);
+            var user = _userService.FindByEmailAndPassword(credentials.Email, credentials.Password);
             if (user == null)
                 return null;
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_secret);
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+
             IList<UserRoleEntityModel> userRoles = user.UserRoles;
             List<Claim> claims = (from userRole in userRoles
-                                  select new Claim(ClaimTypes.Role, userRole.FunctionalRole.Access)).ToList();
-            claims.Add(new Claim(ClaimTypes.Email, email));
+                                  select new Claim(ClaimTypes.Role,
+                                  userRole.FunctionalRole.Access)).ToList();
+            claims.Add(new Claim(ClaimTypes.Email, credentials.Email));
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims.ToArray()),
-                Expires = DateTime.UtcNow.AddMinutes(double.Parse(_expDate)),
+                Expires = DateTime.UtcNow.AddMinutes(_appSettings.ExpDate),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key),
                     SecurityAlgorithms.HmacSha256Signature)
@@ -82,10 +49,6 @@ namespace SAPex.Services.Jwt
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return new AuthenticateResponse(user, tokenHandler.WriteToken(token),"");
         }
-
-        public UserEntityModel GetById(Guid id)
-        {
-            return _users.FirstOrDefault(x => x.Id == id);
-        }
+         
     }
 }

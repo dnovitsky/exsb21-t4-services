@@ -9,6 +9,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using SAPex.Services.Jwt;
 using Microsoft.AspNetCore.Hosting;
+using SAPex.Helpers;
+using SAPex.Services;
 
 namespace SAPex
 {
@@ -37,13 +39,15 @@ namespace SAPex
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("JwtConfig").GetSection("secret").Value)),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings").GetSection("Secret").Value)),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
             });
 
-            services.AddSingleton(new JwtService(Configuration));
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.AddSingleton<JwtService, JwtService>();
+            services.AddSingleton<UserService,UserService>();
             services.AddSwaggerGen(c =>
             {
                 c.OperationFilter<SwaggerFileUploadOperationFilter>();
@@ -55,7 +59,8 @@ namespace SAPex
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,AppDbContext dbContext)
         {
             app.UseSwagger();
-            app.UseSwaggerUI(options=> {
+            app.UseSwaggerUI(options=>
+            {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json","SAPex API v1");
             });
             if (env.IsDevelopment())
