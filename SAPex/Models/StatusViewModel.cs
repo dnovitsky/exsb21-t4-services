@@ -5,6 +5,7 @@ namespace SAPex.Models
 {
     public class StatusViewModel: AbstractNameViewModel
     {
-        public StatusViewModel(Guid id, string name) : base(id, name) { }
+        public StatusViewModel() : base() { }
+        public StatusViewModel(string name) : base(name) { }
     }
 }

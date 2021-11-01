@@ -11,11 +11,20 @@ namespace SAPex
 {
     [Route("api/functionalroles")]
     [ApiController]
-    public class FunctionalRolesController : AbstractController<FunctionalRoleViewModel>
+    public class FunctionalRolesController : AbstractNameController<FunctionalRoleViewModel>
     {
-        protected override Predicate<FunctionalRoleViewModel> FindByRequestDataCallback(FunctionalRoleViewModel requestData)
+        protected override bool IsValidPostData(FunctionalRoleViewModel requestData)
         {
-            return (item) => { return item.name == requestData.name; };
+            return requestData.name != null && requestData.access != null;
+        }
+        protected override bool IsValidPutData(FunctionalRoleViewModel requestData)
+        {
+            return requestData.name != null;
+        }
+        protected override void UpdateFields(FunctionalRoleViewModel responce, FunctionalRoleViewModel requestData)
+        {
+            responce.name = requestData.name != null ? requestData.name : responce.name;
+            responce.access = requestData.access != null ? requestData.access : responce.access;
         }
     }
 }

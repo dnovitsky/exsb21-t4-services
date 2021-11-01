@@ -5,7 +5,11 @@ namespace SAPex.Models
 {
     public class FunctionalRoleViewModel: AbstractNameViewModel
     {
-        public FunctionalRoleViewModel(Guid id, string name, string access) : base(id, name)
+        public FunctionalRoleViewModel() : base()
+        {
+            this.access = "";
+        }
+        public FunctionalRoleViewModel(string name, string access) : base(name)
         {
             this.access = access;
         }

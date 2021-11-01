@@ -11,11 +11,19 @@ namespace SAPex
 {
     [Route("api/skills")]
     [ApiController]
-    public class SkillsController: AbstractController<SkillViewModel>
+    public class SkillsController: AbstractNameController<SkillViewModel>
     {
-        protected override Predicate<SkillViewModel> FindByRequestDataCallback(SkillViewModel requestData)
+        protected override bool IsValidPostData(SkillViewModel requestData)
         {
-            return (item) => { return item.name == requestData.name; };
+            return requestData.name != null;
+        }
+        protected override bool IsValidPutData(SkillViewModel requestData)
+        {
+            return requestData.name != null;
+        }
+        protected override void UpdateFields(SkillViewModel responce, SkillViewModel requestData)
+        {
+            responce.name = requestData.name != null ? requestData.name : responce.name;
         }
     }
 }

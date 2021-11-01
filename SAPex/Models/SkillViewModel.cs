@@ -5,6 +5,7 @@ namespace SAPex.Models
 {
     public class SkillViewModel: AbstractNameViewModel
     {
-        public SkillViewModel(Guid id, string name) : base(id, name) { }
+        public SkillViewModel() : base() { }
+        public SkillViewModel(string name) : base(name) { }
     }
 }

@@ -12,9 +12,46 @@ namespace SAPex
     [ApiController]
     public class RatingsController : AbstractController<RatingViewModel>
     {
-        protected override Predicate<RatingViewModel> FindByRequestDataCallback(RatingViewModel requestData)
+        private void UpdateFields(RatingViewModel responce, RatingViewModel requestData)
         {
-            return (item) => { return item.id == requestData.id; };
+            responce.mark = requestData.mark == responce.mark ? responce.mark : requestData.mark;
+            responce.skillId = requestData.skillId == responce.skillId ? responce.skillId : requestData.skillId;
+        }
+        
+        protected override int PostValidation(RatingViewModel requestData)
+        {
+            var responce = this.storageList.Find(item => item.mark == requestData.mark && item.skillId == requestData.skillId);
+            if (responce == null)
+            {
+                requestData.id = Guid.NewGuid();
+                this.storageList.Add(requestData);
+
+                return 200;
+            }
+
+            return 403;
+        }
+        protected override int PutValidation(Guid id, RatingViewModel requestData)
+        {
+            var responce = this.storageList.Find(this.FindByIdCallback(id));
+
+            if (responce != null)
+            {
+                var index = this.storageList.IndexOf(responce);
+
+                if (index < 0)
+                {
+                    return 405;
+                } else
+                {
+                    this.UpdateFields(responce, requestData);
+                    this.storageList[index] = responce;
+
+                    return 200;
+                }
+            }
+
+            return 403;
         }
     }
 }

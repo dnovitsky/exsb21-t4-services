@@ -5,6 +5,7 @@ namespace SAPex.Models
 {
     public class LanguageViewModel: AbstractNameViewModel
     {
-        public LanguageViewModel(Guid id, string name) : base(id, name) { }
+        public LanguageViewModel() : base() { }
+        public LanguageViewModel(string name) : base(name) { }
     }
 }

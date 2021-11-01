@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SAPex.Models;
-// using System.Reflection;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,11 +15,13 @@ namespace SAPex.Controllers
         protected List<T> storageList = new List<T>() { };
         protected FakeDBSingleton dB = new FakeDBSingleton();
 
-        protected Predicate<T> FindByIdCallback(Guid id) {
+        protected abstract int PostValidation(T requestData);
+        protected abstract int PutValidation(Guid id, T requestData);
+
+        protected Predicate<T> FindByIdCallback(Guid id)
+        {
             return (item) => { return item.id == id; };
         }
-
-        protected abstract Predicate<T> FindByRequestDataCallback(T requestData);
 
         public AbstractController()
         {
@@ -49,33 +50,31 @@ namespace SAPex.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] T requestData)
         {
-            var response = this.storageList.Find(this.FindByRequestDataCallback(requestData));
+            var statusCode = this.PostValidation(requestData);
 
-            if (response != null)
+            if (statusCode != 200)
             {
-                return await Task.FromResult(StatusCode(403));
+                return await Task.FromResult(StatusCode(statusCode));
             }
 
-            this.storageList.Add(requestData);
             await this.dB.setJsonData<T>(this.storageList);
 
-            return await Task.FromResult(Ok());
+            return await Task.FromResult(Ok("record has been added"));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] T requestData)
         {
-            var index = this.storageList.IndexOf(this.storageList.Find(this.FindByIdCallback(id)));
+            var statusCode = this.PutValidation(id, requestData);
 
-            if (index < 0)
+            if (statusCode != 200)
             {
-                return await Task.FromResult(NotFound());
+                return await Task.FromResult(StatusCode(statusCode));
             }
 
-            this.storageList[index] = requestData;
             await this.dB.setJsonData<T>(this.storageList);
 
-            return await Task.FromResult(Ok());
+            return await Task.FromResult(Ok("record has been updated"));
         }
 
         [HttpDelete("{id}")]
@@ -91,7 +90,7 @@ namespace SAPex.Controllers
             this.storageList.Remove(response);
             await this.dB.setJsonData<T>(this.storageList);
 
-            return await Task.FromResult(Ok());
+            return await Task.FromResult(Ok("has been deleted"));
         }
     }
 }

@@ -12,11 +12,19 @@ namespace SAPex
 {
     [Route("api/statuses")]
     [ApiController]
-    public class StatusesController : AbstractController<StatusViewModel>
+    public class StatusesController : AbstractNameController<StatusViewModel>
     {
-        protected override Predicate<StatusViewModel> FindByRequestDataCallback(StatusViewModel requestData)
+        protected override bool IsValidPostData(StatusViewModel requestData)
         {
-            return (item) => { return item.name == requestData.name; };
+            return requestData.name != null;
+        }
+        protected override bool IsValidPutData(StatusViewModel requestData)
+        {
+            return requestData.name != null;
+        }
+        protected override void UpdateFields(StatusViewModel responce, StatusViewModel requestData)
+        {
+            responce.name = requestData.name != null ? requestData.name : responce.name;
         }
     }
 }

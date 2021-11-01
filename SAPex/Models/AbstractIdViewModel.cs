@@ -1,16 +1,13 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace SAPex.Models
 {
     public abstract class AbstractIdViewModel
     {
-        public AbstractIdViewModel(Guid id)
-        {
-            this.id = id;
-        }
-
         [Key]
-        public Guid id { get; set; }
+        [DefaultValue(null)]
+        public Guid? id { get; set; }
     }
 }

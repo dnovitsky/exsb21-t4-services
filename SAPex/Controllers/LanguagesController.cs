@@ -10,11 +10,19 @@ namespace SAPex
 {
     [Route("api/languages")]
     [ApiController]
-    public class LanguagesController : AbstractController<LanguageViewModel>
+    public class LanguagesController : AbstractNameController<LanguageViewModel>
     {
-        protected override Predicate<LanguageViewModel> FindByRequestDataCallback(LanguageViewModel requestData)
+        protected override bool IsValidPostData(LanguageViewModel requestData)
         {
-            return (item) => { return item.name == requestData.name; };
+            return requestData.name != null;
+        }
+        protected override bool IsValidPutData(LanguageViewModel requestData)
+        {
+            return requestData.name != null;
+        }
+        protected override void UpdateFields(LanguageViewModel responce, LanguageViewModel requestData)
+        {
+            responce.name = requestData.name != null ? requestData.name : responce.name;
         }
     }
 }

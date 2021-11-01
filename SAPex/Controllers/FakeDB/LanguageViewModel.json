@@ -1,22 +1,42 @@
 [
   {
-    "name": "string",
-    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    "name": "English",
+    "id": "f544eed3-b9fb-440e-b237-29fdb4d88d4e"
   },
   {
-    "name": "Languages 1",
-    "id": "1fa85f64-5717-4562-b3fc-2c963f66afa6"
+    "name": "Mandarin",
+    "id": "6c1c9e0b-fb90-4f82-99f3-ff2833ebcbe2"
   },
   {
-    "name": "Languages 2",
-    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    "name": "Hindi",
+    "id": "a04c3673-7a09-4bd4-8fee-24fd73fbec41"
   },
   {
-    "name": "Languages 3",
-    "id": "4fa85f64-5717-4562-b3fc-2c963f66afa6"
+    "name": "Spanish",
+    "id": "03330d07-8974-431b-9d2f-e30939694f53"
   },
   {
-    "name": "Languages 6",
-    "id": "6fa85f64-5717-4562-b3fc-2c963f66afa6"
+    "name": "French",
+    "id": "23ccf8de-1771-4eda-9a1b-376bd23de445"
+  },
+  {
+    "name": "Arabic",
+    "id": "03812d54-a76d-45ce-bb99-ce2ab62a359f"
+  },
+  {
+    "name": "Bengali",
+    "id": "a39043a4-7198-413e-92df-d8f14b16b117"
+  },
+  {
+    "name": "Russian",
+    "id": "050d2a9f-e9ad-421d-9084-9cb309790fb5"
+  },
+  {
+    "name": "Portuguese",
+    "id": "5df06fbb-bbf4-4d72-8115-ceb489e455f2"
+  },
+  {
+    "name": "Indonesian",
+    "id": "5aa9b31d-ed23-4153-a2c0-9a86760f8006"
   }
 ]
