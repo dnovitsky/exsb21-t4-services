@@ -14,40 +14,55 @@ namespace DataAccessLayer.Repositories
         where T : class
     {
         private readonly AppDbContext context;
+        protected readonly DbSet<T> set;
+
         protected Repository(AppDbContext context)
         {
             this.context = context;
-        }
-        public virtual IEnumerable<T> GetAll()
-        {
-            return context.Set<T>().ToList();
+            this.set = context.Set<T>(); 
         }
 
-        public virtual IEnumerable<T> FindByCondition(Expression<Func<T, bool>> expression)
+        public virtual async Task<IEnumerable<T>> GetAllAsync(Func<IQueryable<T>, IQueryable<T>> include = null)
         {
-            return context.Set<T>().Where(expression);
+            IQueryable<T> queryWithInclude = include?.Invoke(set) ?? set.AsQueryable();
+
+            return await queryWithInclude.ToListAsync();
+        }
+
+        public virtual async Task<IEnumerable<T>> FindByConditionAsync(Expression<Func<T, bool>> expression)
+        {
+            IQueryable<T> query = set.Where(expression);
+            return await query.ToListAsync();
+        }
+
+        public virtual async Task<T> FindByIdAsync(int id)
+        {
+            return await Task.Run(() => set.Find(id));
         }
 
         public virtual async void CreateAsync(T item)
         {
-            await Task.Run(() => context.Set<T>().Add(item));            
+            await set.AddAsync(item);
         }
 
-        public virtual async void DeleteAsync(int id) //Удаление в отдельных репозиториях
+        public async void UpdateAsync(T item)
+        {
+            if (item == null)
+                throw new ArgumentNullException("item can not be null");
+
+            await Task.Run(() => context.Update(item));
+        }
+
+        public virtual async void DeleteAsync(int id)
         {
             await Task.Run(() =>
             {
-                T del_item = context.Set<T>().Find(id);
+                T del_item = set.Find(id);
                 if (del_item != null)
                 {
-                    context.Set<T>().Remove(del_item);
+                    set.Remove(del_item);
                 }
             });            
-        }
-
-        public virtual async void UpdateAsync(T item)
-        {
-            await Task.Run(() => context.Entry(context.Set<T>()).State = EntityState.Modified);
         }
     }
 }

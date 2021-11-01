@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +10,9 @@ namespace DataAccessLayer.IRepositories
 {
     public interface IStackTechnologyRepository
     {
-        IEnumerable<StackTechnologyEntityModel> GetAll();
-        IEnumerable<StackTechnologyEntityModel> FindByCondition(Expression<Func<StackTechnologyEntityModel, bool>> expression);
+        Task<IEnumerable<StackTechnologyEntityModel>> GetAllAsync(Func<IQueryable<StackTechnologyEntityModel>, IQueryable<StackTechnologyEntityModel>> include = null);
+        Task<IEnumerable<StackTechnologyEntityModel>> FindByConditionAsync(Expression<Func<StackTechnologyEntityModel, bool>> expression);
+        Task<StackTechnologyEntityModel> FindByIdAsync(int id);
         void CreateAsync(StackTechnologyEntityModel item);
         void UpdateAsync(StackTechnologyEntityModel item);
         void DeleteAsync(int id);

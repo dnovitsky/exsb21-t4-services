@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +10,9 @@ namespace DataAccessLayer.IRepositories
 {
     public interface IUserTeamRepository
     {
-        IEnumerable<UserTeamEntityModel> GetAll();
-        IEnumerable<UserTeamEntityModel> FindByCondition(Expression<Func<UserTeamEntityModel, bool>> expression);
+        Task<IEnumerable<UserTeamEntityModel>> GetAllAsync(Func<IQueryable<UserTeamEntityModel>, IQueryable<UserTeamEntityModel>> include = null);
+        Task<IEnumerable<UserTeamEntityModel>> FindByConditionAsync(Expression<Func<UserTeamEntityModel, bool>> expression);
+        Task<UserTeamEntityModel> FindByIdAsync(int id);
         void CreateAsync(UserTeamEntityModel item);
         void UpdateAsync(UserTeamEntityModel item);
         void DeleteAsync(int id);

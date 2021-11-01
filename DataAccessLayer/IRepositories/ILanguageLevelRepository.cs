@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +10,9 @@ namespace DataAccessLayer.IRepositories
 {
     public interface ILanguageLevelRepository
     {
-        IEnumerable<LanguageLevelEntityModel> GetAll();
-        IEnumerable<LanguageLevelEntityModel> FindByCondition(Expression<Func<LanguageLevelEntityModel, bool>> expression);
+        Task<IEnumerable<LanguageLevelEntityModel>> GetAllAsync(Func<IQueryable<LanguageLevelEntityModel>, IQueryable<LanguageLevelEntityModel>> include = null);
+        Task<IEnumerable<LanguageLevelEntityModel>> FindByConditionAsync(Expression<Func<LanguageLevelEntityModel, bool>> expression);
+        Task<LanguageLevelEntityModel> FindByIdAsync(int id);
         void CreateAsync(LanguageLevelEntityModel item);
         void UpdateAsync(LanguageLevelEntityModel item);
         void DeleteAsync(int id);
