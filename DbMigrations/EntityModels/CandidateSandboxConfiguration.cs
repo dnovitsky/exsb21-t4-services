@@ -17,6 +17,7 @@ namespace DbMigrations.EntityModels
                 .HasForeignKey(d => d.TeamId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
             //.HasConstraintName("SupportChatMembers_SupportChatId_fkey");
+
         }
     }
 }
