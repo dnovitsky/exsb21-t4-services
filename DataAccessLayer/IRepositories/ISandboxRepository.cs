@@ -10,11 +10,11 @@ namespace DataAccessLayer.IRepositories
 {
     public interface ISandboxRepository
     {
-        Task<IEnumerable<SandboxEntityModel>> GetAllAsync(Func<IQueryable<SandboxEntityModel>, IQueryable<SandboxEntityModel>> include = null);
+        Task<IEnumerable<SandboxEntityModel>> GetAllAsync();
         Task<IEnumerable<SandboxEntityModel>> FindByConditionAsync(Expression<Func<SandboxEntityModel, bool>> expression);
         Task<SandboxEntityModel> FindByIdAsync(int id);
         void CreateAsync(SandboxEntityModel item);
-        void UpdateAsync(SandboxEntityModel item);
-        void DeleteAsync(int id);
+        void Update(SandboxEntityModel item);
+        void Delete(int id);
     }
 }

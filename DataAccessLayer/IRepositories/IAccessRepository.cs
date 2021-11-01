@@ -10,11 +10,11 @@ namespace DataAccessLayer.IRepositories
 {
     public interface IAccessRepository
     {
-        Task<IEnumerable<AccessEntityModel>> GetAllAsync(Func<IQueryable<AccessEntityModel>, IQueryable<AccessEntityModel>> include = null);
+        Task<IEnumerable<AccessEntityModel>> GetAllAsync();
         Task<IEnumerable<AccessEntityModel>> FindByConditionAsync(Expression<Func<AccessEntityModel, bool>> expression);
         Task<AccessEntityModel> FindByIdAsync(int id);
         void CreateAsync(AccessEntityModel item);
-        void UpdateAsync(AccessEntityModel item);
-        void DeleteAsync(int id);
+        void Update(AccessEntityModel item);
+        void Delete(int id);
     }
 }

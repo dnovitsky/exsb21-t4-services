@@ -10,11 +10,11 @@ namespace DataAccessLayer.IRepositories
 {
     public interface IStatusRepository
     {
-        Task<IEnumerable<StatusEntityModel>> GetAllAsync(Func<IQueryable<StatusEntityModel>, IQueryable<StatusEntityModel>> include = null);
+        Task<IEnumerable<StatusEntityModel>> GetAllAsync();
         Task<IEnumerable<StatusEntityModel>> FindByConditionAsync(Expression<Func<StatusEntityModel, bool>> expression);
         Task<StatusEntityModel> FindByIdAsync(int id);
         void CreateAsync(StatusEntityModel item);
-        void UpdateAsync(StatusEntityModel item);
-        void DeleteAsync(int id);
+        void Update(StatusEntityModel item);
+        void Delete(int id);
     }
 }

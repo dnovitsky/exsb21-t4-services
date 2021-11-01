@@ -10,11 +10,11 @@ namespace DataAccessLayer.IRepositories
 {
     public interface IFunctionalRoleRepository
     {
-        Task<IEnumerable<FunctionalRoleEntityModel>> GetAllAsync(Func<IQueryable<FunctionalRoleEntityModel>, IQueryable<FunctionalRoleEntityModel>> include = null);
+        Task<IEnumerable<FunctionalRoleEntityModel>> GetAllAsync();
         Task<IEnumerable<FunctionalRoleEntityModel>> FindByConditionAsync(Expression<Func<FunctionalRoleEntityModel, bool>> expression);
         Task<FunctionalRoleEntityModel> FindByIdAsync(int id);
         void CreateAsync(FunctionalRoleEntityModel item);
-        void UpdateAsync(FunctionalRoleEntityModel item);
-        void DeleteAsync(int id);
+        void Update(FunctionalRoleEntityModel item);
+        void Delete(int id);
     }
 }

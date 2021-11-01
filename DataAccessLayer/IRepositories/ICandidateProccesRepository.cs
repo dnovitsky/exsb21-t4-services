@@ -10,11 +10,11 @@ namespace DataAccessLayer.IRepositories
 {
     public interface ICandidateProccesRepository
     {
-        Task<IEnumerable<CandidateProccesEntityModel>> GetAllAsync(Func<IQueryable<CandidateProccesEntityModel>, IQueryable<CandidateProccesEntityModel>> include = null);
+        Task<IEnumerable<CandidateProccesEntityModel>> GetAllAsync();
         Task<IEnumerable<CandidateProccesEntityModel>> FindByConditionAsync(Expression<Func<CandidateProccesEntityModel, bool>> expression);
         Task<CandidateProccesEntityModel> FindByIdAsync(int id);
         void CreateAsync(CandidateProccesEntityModel item);
-        void UpdateAsync(CandidateProccesEntityModel item);
-        void DeleteAsync(int id);
+        void Update(CandidateProccesEntityModel item);
+        void Delete(int id);
     }
 }

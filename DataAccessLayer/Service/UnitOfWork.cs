@@ -395,25 +395,25 @@ namespace DataAccessLayer.Service
             }
         }
 
-        public void Save()
+        public async void SaveAsync()
         {
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         private bool disposed = false;
 
-        protected virtual void Dispose(bool disposing)
+        protected virtual async Task DisposeAsync(bool disposing)
         {
             if (!this.disposed && disposing)
             {
-                    context.Dispose();
+                await context.DisposeAsync();
             }
             this.disposed = true;
         }
 
-        public void Dispose()
+        public async void Dispose()
         {
-            Dispose(true);
+            await DisposeAsync(true);
             GC.SuppressFinalize(this);
         }
     }

@@ -10,11 +10,11 @@ namespace DataAccessLayer.IRepositories
 {
     public interface ILanguageLevelRepository
     {
-        Task<IEnumerable<LanguageLevelEntityModel>> GetAllAsync(Func<IQueryable<LanguageLevelEntityModel>, IQueryable<LanguageLevelEntityModel>> include = null);
+        Task<IEnumerable<LanguageLevelEntityModel>> GetAllAsync();
         Task<IEnumerable<LanguageLevelEntityModel>> FindByConditionAsync(Expression<Func<LanguageLevelEntityModel, bool>> expression);
         Task<LanguageLevelEntityModel> FindByIdAsync(int id);
         void CreateAsync(LanguageLevelEntityModel item);
-        void UpdateAsync(LanguageLevelEntityModel item);
-        void DeleteAsync(int id);
+        void Update(LanguageLevelEntityModel item);
+        void Delete(int id);
     }
 }

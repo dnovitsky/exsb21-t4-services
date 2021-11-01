@@ -10,11 +10,11 @@ namespace DataAccessLayer.IRepositories
 {
     public interface ICandidateProjectRoleRepository
     {
-        Task<IEnumerable<CandidateProjectRoleEntityModel>> GetAllAsync(Func<IQueryable<CandidateProjectRoleEntityModel>, IQueryable<CandidateProjectRoleEntityModel>> include = null);
+        Task<IEnumerable<CandidateProjectRoleEntityModel>> GetAllAsync();
         Task<IEnumerable<CandidateProjectRoleEntityModel>> FindByConditionAsync(Expression<Func<CandidateProjectRoleEntityModel, bool>> expression);
         Task<CandidateProjectRoleEntityModel> FindByIdAsync(int id);
         void CreateAsync(CandidateProjectRoleEntityModel item);
-        void UpdateAsync(CandidateProjectRoleEntityModel item);
-        void DeleteAsync(int id);
+        void Update(CandidateProjectRoleEntityModel item);
+        void Delete(int id);
     }
 }

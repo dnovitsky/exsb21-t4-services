@@ -10,11 +10,11 @@ namespace DataAccessLayer.IRepositories
 {
     public interface IUserTeamRepository
     {
-        Task<IEnumerable<UserTeamEntityModel>> GetAllAsync(Func<IQueryable<UserTeamEntityModel>, IQueryable<UserTeamEntityModel>> include = null);
+        Task<IEnumerable<UserTeamEntityModel>> GetAllAsync();
         Task<IEnumerable<UserTeamEntityModel>> FindByConditionAsync(Expression<Func<UserTeamEntityModel, bool>> expression);
         Task<UserTeamEntityModel> FindByIdAsync(int id);
         void CreateAsync(UserTeamEntityModel item);
-        void UpdateAsync(UserTeamEntityModel item);
-        void DeleteAsync(int id);
+        void Update(UserTeamEntityModel item);
+        void Delete(int id);
     }
 }

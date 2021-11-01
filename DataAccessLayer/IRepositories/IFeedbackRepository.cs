@@ -10,11 +10,11 @@ namespace DataAccessLayer.IRepositories
 {
     public interface IFeedbackRepository
     {
-        Task<IEnumerable<FeedbackEntityModel>> GetAllAsync(Func<IQueryable<FeedbackEntityModel>, IQueryable<FeedbackEntityModel>> include = null);
+        Task<IEnumerable<FeedbackEntityModel>> GetAllAsync();
         Task<IEnumerable<FeedbackEntityModel>> FindByConditionAsync(Expression<Func<FeedbackEntityModel, bool>> expression);
         Task<FeedbackEntityModel> FindByIdAsync(int id);
         void CreateAsync(FeedbackEntityModel item);
-        void UpdateAsync(FeedbackEntityModel item);
-        void DeleteAsync(int id);
+        void Update(FeedbackEntityModel item);
+        void Delete(int id);
     }
 }

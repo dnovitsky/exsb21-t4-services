@@ -10,11 +10,11 @@ namespace DataAccessLayer.IRepositories
 {
     public interface ISkillRepository
     {
-        Task<IEnumerable<SkillEntityModel>> GetAllAsync(Func<IQueryable<SkillEntityModel>, IQueryable<SkillEntityModel>> include = null);
+        Task<IEnumerable<SkillEntityModel>> GetAllAsync();
         Task<IEnumerable<SkillEntityModel>> FindByConditionAsync(Expression<Func<SkillEntityModel, bool>> expression);
         Task<SkillEntityModel> FindByIdAsync(int id);
         void CreateAsync(SkillEntityModel item);
-        void UpdateAsync(SkillEntityModel item);
-        void DeleteAsync(int id);
+        void Update(SkillEntityModel item);
+        void Delete(int id);
     }
 }

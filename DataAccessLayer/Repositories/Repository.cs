@@ -22,11 +22,9 @@ namespace DataAccessLayer.Repositories
             this.set = context.Set<T>(); 
         }
 
-        public virtual async Task<IEnumerable<T>> GetAllAsync(Func<IQueryable<T>, IQueryable<T>> include = null)
+        public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
-            IQueryable<T> queryWithInclude = include?.Invoke(set) ?? set.AsQueryable();
-
-            return await queryWithInclude.ToListAsync();
+            return await set.ToListAsync();
         }
 
         public virtual async Task<IEnumerable<T>> FindByConditionAsync(Expression<Func<T, bool>> expression)
@@ -37,7 +35,7 @@ namespace DataAccessLayer.Repositories
 
         public virtual async Task<T> FindByIdAsync(int id)
         {
-            return await Task.Run(() => set.Find(id));
+            return await set.FindAsync(id);
         }
 
         public virtual async void CreateAsync(T item)
@@ -45,24 +43,23 @@ namespace DataAccessLayer.Repositories
             await set.AddAsync(item);
         }
 
-        public async void UpdateAsync(T item)
+        public async void Update(T item)
         {
             if (item == null)
+            {
                 throw new ArgumentNullException("item can not be null");
+            }
 
-            await Task.Run(() => context.Update(item));
+            context.Update(item);
         }
 
-        public virtual async void DeleteAsync(int id)
+        public virtual async void Delete(int id)
         {
-            await Task.Run(() =>
+            T del_item = set.Find(id);
+            if (del_item != null)
             {
-                T del_item = set.Find(id);
-                if (del_item != null)
-                {
-                    set.Remove(del_item);
-                }
-            });            
+                set.Remove(del_item);
+            }
         }
     }
 }

@@ -10,11 +10,11 @@ namespace DataAccessLayer.IRepositories
     public interface IRepository<T>
         where T : class
     {
-        Task<IEnumerable<T>> GetAllAsync(Func<IQueryable<T>, IQueryable<T>> include = null);
+        Task<IEnumerable<T>> GetAllAsync();
         Task<IEnumerable<T>> FindByConditionAsync(Expression<Func<T,bool>> expression);
         Task<T> FindByIdAsync(int id);
         void CreateAsync(T item);
-        void UpdateAsync(T item);
-        void DeleteAsync(int id);//SoftDelete??
+        void Update(T item);
+        void Delete(int id);//SoftDelete??
     }
 }
