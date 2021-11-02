@@ -402,18 +402,18 @@ namespace DataAccessLayer.Service
 
         private bool disposed = false;
 
-        protected virtual async Task DisposeAsync(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed && disposing)
             {
-                await context.DisposeAsync();
+                context.DisposeAsync();
             }
             this.disposed = true;
         }
 
-        public async void Dispose()
+        public void Dispose()
         {
-            await DisposeAsync(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
     }

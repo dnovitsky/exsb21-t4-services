@@ -43,7 +43,7 @@ namespace DataAccessLayer.Repositories
             await set.AddAsync(item);
         }
 
-        public async void Update(T item)
+        public virtual void Update(T item)
         {
             if (item == null)
             {
@@ -53,7 +53,7 @@ namespace DataAccessLayer.Repositories
             context.Update(item);
         }
 
-        public virtual async void Delete(int id)
+        public virtual void Delete(int id)
         {
             T del_item = set.Find(id);
             if (del_item != null)
