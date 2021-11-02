@@ -7,14 +7,14 @@ namespace SAPex.Models
     {
         public AbstractNameViewModel() : base()
         {
-            this.name = "";
+            this.Name = "";
         }
         public AbstractNameViewModel(string name) : base()
         {
-            this.name = name;
+            this.Name = name;
         }
 
         [Required]
-        public string name { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -6,8 +6,6 @@ namespace SAPex.Models
 {
     public abstract class AbstractIdViewModel
     {
-        [Key]
-        [DefaultValue(null)]
-        public Guid? id { get; set; }
+        public Guid? Id { get; set; } = null;
     }
 }

@@ -1,42 +1,42 @@
 [
   {
-    "name": "English",
-    "id": "f544eed3-b9fb-440e-b237-29fdb4d88d4e"
+    "Name": "English",
+    "Id": "f544eed3-b9fb-440e-b237-29fdb4d88d4e"
   },
   {
-    "name": "Mandarin",
-    "id": "6c1c9e0b-fb90-4f82-99f3-ff2833ebcbe2"
+    "Name": "Mandarin",
+    "Id": "6c1c9e0b-fb90-4f82-99f3-ff2833ebcbe2"
   },
   {
-    "name": "Hindi",
-    "id": "a04c3673-7a09-4bd4-8fee-24fd73fbec41"
+    "Name": "Hindi",
+    "Id": "a04c3673-7a09-4bd4-8fee-24fd73fbec41"
   },
   {
-    "name": "Spanish",
-    "id": "03330d07-8974-431b-9d2f-e30939694f53"
+    "Name": "Spanish",
+    "Id": "03330d07-8974-431b-9d2f-e30939694f53"
   },
   {
-    "name": "French",
-    "id": "23ccf8de-1771-4eda-9a1b-376bd23de445"
+    "Name": "French",
+    "Id": "23ccf8de-1771-4eda-9a1b-376bd23de445"
   },
   {
-    "name": "Arabic",
-    "id": "03812d54-a76d-45ce-bb99-ce2ab62a359f"
+    "Name": "Arabic",
+    "Id": "03812d54-a76d-45ce-bb99-ce2ab62a359f"
   },
   {
-    "name": "Bengali",
-    "id": "a39043a4-7198-413e-92df-d8f14b16b117"
+    "Name": "Bengali",
+    "Id": "a39043a4-7198-413e-92df-d8f14b16b117"
   },
   {
-    "name": "Russian",
-    "id": "050d2a9f-e9ad-421d-9084-9cb309790fb5"
+    "Name": "Russian",
+    "Id": "050d2a9f-e9ad-421d-9084-9cb309790fb5"
   },
   {
-    "name": "Portuguese",
-    "id": "5df06fbb-bbf4-4d72-8115-ceb489e455f2"
+    "Name": "Portuguese",
+    "Id": "5df06fbb-bbf4-4d72-8115-ceb489e455f2"
   },
   {
-    "name": "Indonesian",
-    "id": "5aa9b31d-ed23-4153-a2c0-9a86760f8006"
+    "Name": "Indonesian",
+    "Id": "5aa9b31d-ed23-4153-a2c0-9a86760f8006"
   }
 ]
