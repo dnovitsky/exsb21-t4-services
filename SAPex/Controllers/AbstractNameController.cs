@@ -27,7 +27,7 @@ namespace SAPex.Controllers
                     requestData.Id = Guid.NewGuid();
                     this.storageList.Add(requestData);
 
-                    return Ok();
+                    return Ok("record has been added");
                 }
 
                 return NotFound();
@@ -48,7 +48,7 @@ namespace SAPex.Controllers
                     this.UpdateFields(responce, requestData);
                     this.storageList[index] = responce;
 
-                    return Ok();
+                    return Ok("record has been updated");
                 } else
                 {
                     return Conflict();
