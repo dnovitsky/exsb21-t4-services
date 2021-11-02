@@ -45,11 +45,6 @@ namespace DataAccessLayer.Repositories
 
         public virtual void Update(T item)
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException("item can not be null");
-            }
-
             context.Update(item);
         }
 
