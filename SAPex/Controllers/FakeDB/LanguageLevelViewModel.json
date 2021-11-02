@@ -1,26 +1,26 @@
 [
   {
-    "name": "A1",
-    "id": "f353721a-428b-451b-be25-882a0354b2e1"
+    "Name": "A1",
+    "Id": "f353721a-428b-451b-be25-882a0354b2e1"
   },
   {
-    "name": "A2",
-    "id": "1acf2e38-365e-4c85-94fb-c0ff87840a00"
+    "Name": "A2",
+    "Id": "1acf2e38-365e-4c85-94fb-c0ff87840a00"
   },
   {
-    "name": "B1",
-    "id": "4834b7fe-6852-4ecd-bab7-ee29677a0440"
+    "Name": "B1",
+    "Id": "4834b7fe-6852-4ecd-bab7-ee29677a0440"
   },
   {
-    "name": "B2",
-    "id": "f8f612a2-dbe5-4ab1-b856-80c3ac7ee90d"
+    "Name": "B2",
+    "Id": "f8f612a2-dbe5-4ab1-b856-80c3ac7ee90d"
   },
   {
-    "name": "\u04211",
-    "id": "08bcf47e-408c-4e21-a67f-d39e6e4ff526"
+    "Name": "\u04211",
+    "Id": "08bcf47e-408c-4e21-a67f-d39e6e4ff526"
   },
   {
-    "name": "\u04212",
-    "id": "73c9aade-8f1a-4e6b-8576-7eb369740bf9"
+    "Name": "\u04212",
+    "Id": "73c9aade-8f1a-4e6b-8576-7eb369740bf9"
   }
 ]
