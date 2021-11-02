@@ -1,0 +1,27 @@
+[
+  {
+    "access": "RWSX",
+    "name": "EDU manger",
+    "id": "23ebddf5-3814-42bd-87d1-401fce80ea73"
+  },
+  {
+    "access": "RWS",
+    "name": "Recruter",
+    "id": "3904c924-fdfa-4f56-9489-69f32996884f"
+  },
+  {
+    "access": "RWSX",
+    "name": "Admin",
+    "id": "c4ba8e2d-637d-4f34-b018-7b9cd459c871"
+  },
+  {
+    "access": "R",
+    "name": "Interviewer",
+    "id": "35d394fa-2655-4715-879d-fb8d1d8f7a25"
+  },
+  {
+    "access": "RW",
+    "name": "Mentor",
+    "id": "f5125c1a-ebb9-4d19-b743-4c152766670b"
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Draft",
+    "id": "be7ba319-03a4-4ecd-a13c-ae1cbfffd7cc"
+  },
+  {
+    "name": "Rejected",
+    "id": "ea6da7df-72cc-41a1-9fd7-70a373b0af94"
+  },
+  {
+    "name": "Test",
+    "id": "2ac99400-09a2-4872-bd69-0f555286267e"
+  },
+  {
+    "name": "Need Verification",
+    "id": "c08eab63-a92d-4f3a-ba3f-a8de3acd9513"
+  },
+  {
+    "name": "Need Recruiter",
+    "id": "30ae8876-359f-4c4a-88c2-8fbc0f66b388"
+  },
+  {
+    "name": "Approved",
+    "id": "a1bec403-45e6-44ab-b78c-82d4d083ec19"
+  },
+  {
+    "name": "Questionable",
+    "id": "3a34496a-9141-4c2a-8da4-a6e71a2b0449"
+  },
+  {
+    "name": "Interview Soft",
+    "id": "94d2d509-118d-4e59-984e-3cda6019fc76"
+  },
+  {
+    "name": "Interview Rejected",
+    "id": "e2732ba8-e870-4a28-8fb7-9e6cd129a770"
+  },
+  {
+    "name": "Interview Tech",
+    "id": "13e82ea7-e78b-4185-963c-a2f23cf866e3"
+  }
+]
