@@ -1,40 +1,41 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SAPex.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace SAPex.Controllers
 {
     [ApiController]
     public abstract class AbstractNameController<T> : AbstractController<T> where T : AbstractNameViewModel
     {
-        protected abstract bool IsValidPostData(T requestData);
-        protected abstract bool IsValidPutData(T requestData);
-        protected abstract void UpdateFields(T responce, T requestData);
-
-        protected override int PostValidation(T requestData)
+        private bool IsValidData(T requestData)
         {
-            if (this.IsValidPostData(requestData))
+            return requestData.Name != null;
+        }
+
+        private void UpdateFields(T responce, T requestData)
+        {
+            responce.Name = requestData.Name != null ? requestData.Name : responce.Name;
+        }
+
+        protected override IActionResult PostValidation(T requestData)
+        {
+            if (this.IsValidData(requestData))
             {
-                var responce = this.storageList.Find(item => item.name == requestData.name);
+                var responce = this.storageList.Find(item => item.Name == requestData.Name);
                 if (responce == null)
                 {
-                    requestData.id = Guid.NewGuid();
+                    requestData.Id = Guid.NewGuid();
                     this.storageList.Add(requestData);
 
-                    return 200;
+                    return Ok("record has been added");
                 }
 
-                return 409;
+                return NotFound();
             }
 
-            return 400;
+            return Conflict();
         }
-        protected override int PutValidation(Guid id, T requestData)
+        protected override IActionResult PutValidation(Guid id, T requestData)
         {
             var responce = this.storageList.Find(this.FindByIdCallback(id));
 
@@ -42,19 +43,19 @@ namespace SAPex.Controllers
             {
                 var index = this.storageList.IndexOf(responce);
 
-                if(this.IsValidPutData(requestData))
+                if(this.IsValidData(requestData))
                 {
                     this.UpdateFields(responce, requestData);
                     this.storageList[index] = responce;
 
-                    return 200;
+                    return Ok("record has been updated");
                 } else
                 {
-                    return 400;
+                    return Conflict();
                 }
             }
 
-            return 404;
+            return NotFound();
         }
     }
 }

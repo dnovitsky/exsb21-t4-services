@@ -5,8 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using SAPex.Models;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace SAPex.Controllers
 {
     [ApiController]
@@ -15,12 +13,12 @@ namespace SAPex.Controllers
         protected List<T> storageList = new List<T>() { };
         protected FakeDBSingleton dB = new FakeDBSingleton();
 
-        protected abstract int PostValidation(T requestData);
-        protected abstract int PutValidation(Guid id, T requestData);
+        protected abstract IActionResult PostValidation(T requestData);
+        protected abstract IActionResult PutValidation(Guid id, T requestData);
 
         protected Predicate<T> FindByIdCallback(Guid id)
         {
-            return (item) => { return item.id == id; };
+            return (item) => { return item.Id == id; };
         }
 
         public AbstractController()
@@ -35,7 +33,7 @@ namespace SAPex.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get([FromRoute] Guid id)
         {
             var response = this.storageList.Find(this.FindByIdCallback(id));
 
@@ -50,35 +48,31 @@ namespace SAPex.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] T requestData)
         {
-            var statusCode = this.PostValidation(requestData);
+            IActionResult status = this.PostValidation(requestData);
 
-            if (statusCode != 200)
+            if (status is OkResult)
             {
-                return await Task.FromResult(StatusCode(statusCode));
+                await this.dB.setJsonData<T>(this.storageList);
             }
 
-            await this.dB.setJsonData<T>(this.storageList);
-
-            return await Task.FromResult(Ok("record has been added"));
+            return await Task.FromResult(status);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody] T requestData)
+        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] T requestData)
         {
-            var statusCode = this.PutValidation(id, requestData);
+            IActionResult status = this.PutValidation(id, requestData);
 
-            if (statusCode != 200)
+            if (status is OkResult)
             {
-                return await Task.FromResult(StatusCode(statusCode));
+                await this.dB.setJsonData<T>(this.storageList);
             }
 
-            await this.dB.setJsonData<T>(this.storageList);
-
-            return await Task.FromResult(Ok("record has been updated"));
+            return await Task.FromResult(status);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var response = this.storageList.Find(this.FindByIdCallback(id));
 
