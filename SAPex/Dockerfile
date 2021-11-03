@@ -7,8 +7,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["SAPex/SAPex.csproj", "SAPex/"]
 COPY ["DbMigrations/DbMigrations.csproj", "DbMigrations/"]
+COPY ["DataAccessLayer/DataAccessLayer.csproj", "DataAccessLayer/"]
+COPY ["SAPex/SAPex.csproj", "SAPex/"]
+
 RUN dotnet restore "SAPex/SAPex.csproj"
 COPY . .
 WORKDIR "/src/SAPex"
