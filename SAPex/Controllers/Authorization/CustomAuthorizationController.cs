@@ -20,7 +20,7 @@ namespace SAPex.Controllers.Authorization
             _jwtService = jwtService;
         }
 
-        [HttpPost("signin")]
+        [HttpPost("sign-in")]//sign=in
         public ActionResult<AuthenticateResponse> Authenticate([FromBody] AuthenticateRequest credentials)
         {
             var authResponse = _jwtService.Authenticate(credentials);
@@ -43,7 +43,7 @@ namespace SAPex.Controllers.Authorization
         }
 
         [Authorize]
-        [HttpGet("signout/{refreshToken}")]
+        [HttpGet("sign-out/{refreshToken}")]
         public ActionResult<ActionResponse<AuthenticateResponse>> RevokeToken(string refreshToken)
         {
             if (_jwtService.RevokeToken(refreshToken))
