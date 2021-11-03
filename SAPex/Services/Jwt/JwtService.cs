@@ -5,11 +5,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using DbMigrations.EntityModels;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SAPex.Helpers;
-using SAPex.Models;
 using SAPex.Models.Authorization.AuthRequest;
 using SAPex.Models.Authorization.AuthResponse;
 
@@ -168,15 +166,16 @@ namespace SAPex.Services.Jwt
 
         }
 
-        private bool IsValidRefreshToken(UserRefreshTokenEntityModel userRefreshTokenEntityModel,string jwtId)
+        private bool IsValidRefreshToken(UserRefreshTokenEntityModel refresh,string jwtId)
         {
-            
-            if (userRefreshTokenEntityModel == null || userRefreshTokenEntityModel.IsUsed || userRefreshTokenEntityModel.IsRevoked || userRefreshTokenEntityModel.JwtId != jwtId)
+
+            if (refresh == null || refresh.IsUsed || refresh.IsRevoked || refresh.JwtId != jwtId || DateTime.UtcNow > refresh.ExpiryDate)
             {
                 return false;
             }
-            userRefreshTokenEntityModel.IsUsed = true;
-            _refreshTokenService.Update(userRefreshTokenEntityModel);
+   
+             refresh.IsUsed = true;
+            _refreshTokenService.Update(refresh);
             return true;
         }
 
