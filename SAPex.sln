@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.810.11
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAPex", "SAPex\SAPex.csproj", "{37AFC335-5921-4000-BD67-D5B71C2AE9BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{369F0B48-ADFE-435A-A855-328BAC8006C0}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbMigrations", "DbMigrations\DbMigrations.csproj", "{94EFB338-BD08-4A80-BB34-57C4D0BB48FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{369F0B48-ADFE-435A-A855-328BAC8006C0}"
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{C5671F6D-2555-47AC-A6DB-B6C7FD04943C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +21,18 @@ Global
 		{37AFC335-5921-4000-BD67-D5B71C2AE9BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37AFC335-5921-4000-BD67-D5B71C2AE9BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37AFC335-5921-4000-BD67-D5B71C2AE9BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{369F0B48-ADFE-435A-A855-328BAC8006C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{369F0B48-ADFE-435A-A855-328BAC8006C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{369F0B48-ADFE-435A-A855-328BAC8006C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{369F0B48-ADFE-435A-A855-328BAC8006C0}.Release|Any CPU.Build.0 = Release|Any CPU		
 		{94EFB338-BD08-4A80-BB34-57C4D0BB48FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{94EFB338-BD08-4A80-BB34-57C4D0BB48FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94EFB338-BD08-4A80-BB34-57C4D0BB48FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94EFB338-BD08-4A80-BB34-57C4D0BB48FB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{369F0B48-ADFE-435A-A855-328BAC8006C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{369F0B48-ADFE-435A-A855-328BAC8006C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{369F0B48-ADFE-435A-A855-328BAC8006C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{369F0B48-ADFE-435A-A855-328BAC8006C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5671F6D-2555-47AC-A6DB-B6C7FD04943C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5671F6D-2555-47AC-A6DB-B6C7FD04943C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5671F6D-2555-47AC-A6DB-B6C7FD04943C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5671F6D-2555-47AC-A6DB-B6C7FD04943C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
