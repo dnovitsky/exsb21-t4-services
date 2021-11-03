@@ -67,5 +67,7 @@
   <ItemGroup>
     <Compile Include="Models\Authorization\AuthResponse\AuthenticateResponse.cs" />
     <Compile Include="Models\Authorization\AuthRequest\AuthenticateRequest.cs" />
+    <Compile Include="Models\Authorization\AuthRequest\TokenRequest.cs" />
+    <Compile Include="Models\ActionResponse.cs" />
   </ItemGroup>
 </Project>

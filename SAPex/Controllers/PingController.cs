@@ -13,13 +13,13 @@ namespace SAPex.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN")]// mentor
         [HttpGet("admin")]
         public ActionResult GetAdmin()
         {
             return Ok();
         }
-        [Authorize(Roles = "USER")]
+        [Authorize(Roles = "USER")]// inter
         [HttpGet("user")]
         public ActionResult GetUser()
         {

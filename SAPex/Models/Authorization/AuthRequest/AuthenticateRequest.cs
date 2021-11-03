@@ -1,5 +1,4 @@
-﻿
-namespace SAPex.Models.Authorization.AuthRequest
+﻿namespace SAPex.Models.Authorization.AuthRequest
 {
     public class AuthenticateRequest
     {

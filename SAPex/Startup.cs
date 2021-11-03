@@ -11,6 +11,7 @@ using SAPex.Services.Jwt;
 using Microsoft.AspNetCore.Hosting;
 using SAPex.Helpers;
 using SAPex.Services;
+using System;
 
 namespace SAPex
 {
@@ -27,7 +28,7 @@ namespace SAPex
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -41,13 +42,16 @@ namespace SAPex
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings").GetSection("Secret").Value)),
                     ValidateIssuer = false,
-                    ValidateAudience = false
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
                 };
             });
-
+            
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddSingleton<JwtService, JwtService>();
             services.AddSingleton<UserService,UserService>();
+            services.AddSingleton<UserRefreshTokenService, UserRefreshTokenService>();
             services.AddSwaggerGen(c =>
             {
                 c.OperationFilter<SwaggerFileUploadOperationFilter>();

@@ -21,7 +21,7 @@ namespace SAPex.Services
                                       new UserRoleEntityModel
                                       {
                                           Id = Guid.NewGuid(),
-                                          FunctionalRole=new FunctionalRoleEntityModel{  Access="ADMIN"}
+                                          FunctionalRole=new FunctionalRoleEntityModel{  Access="MANAGER"}
                                       }
                                   }
             },
@@ -37,21 +37,32 @@ namespace SAPex.Services
                                       new UserRoleEntityModel
                                       {
                                           Id = Guid.NewGuid(),
-                                          FunctionalRole=new FunctionalRoleEntityModel{  Access="USER"}
+                                          FunctionalRole=new FunctionalRoleEntityModel{  Access="INTERVIEWER"}
                                       }
                                   }
             }
         };
 
-        public UserService()
+        public List<UserEntityModel> FindAll()
         {
-        } 
+            return _userRepository;
+        }
+
+        public UserEntityModel FindByEmail(string email)
+        {
+            return _userRepository.SingleOrDefault(x => x.Email == email);
+        }
 
         public UserEntityModel FindByEmailAndPassword(string email, string password)
         {
-           return _userRepository.SingleOrDefault(x => x.Email == email && x.Password == password);
+            return _userRepository.SingleOrDefault(x => x.Email == email && x.Password == password);
         }
 
-        
+        public UserEntityModel FindById(Guid userId)
+        {
+            return _userRepository.SingleOrDefault(x => x.Id == userId);
+        }
+
+
     }
 }
