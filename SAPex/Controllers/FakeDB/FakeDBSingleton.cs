@@ -12,8 +12,8 @@ namespace SAPex.Controllers
     public class FakeDBSingleton
     {
         static private FakeDBSingleton instance;
-        private string path = /* Directory.GetCurrentDirectory() + */ "Controllers\\FakeDB\\";
-            
+        private string path = Directory.GetCurrentDirectory() + "/Controllers/FakeDB/";
+
         public FakeDBSingleton()
         {
             instance = FakeDBSingleton.getInstance(this);
@@ -28,7 +28,7 @@ namespace SAPex.Controllers
                     instance = j;
                 }
             }
-            return instance;    
+            return instance;
         }
 
         public async Task<List<T>> getJsonData<T> () where T : AbstractIdViewModel
