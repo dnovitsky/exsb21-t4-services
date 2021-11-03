@@ -1,6 +1,7 @@
-﻿namespace SAPex.Models.Authorization.AuthRequest
+﻿using System;
+namespace SAPex.Models.Authorization
 {
-    public class AuthenticateRequest
+    public class UserCredentials
     {
         public string Email { get; set; }
         public string Password { get; set; }

@@ -8,8 +8,7 @@ using DbMigrations.EntityModels;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SAPex.Helpers;
-using SAPex.Models.Authorization.AuthRequest;
-using SAPex.Models.Authorization.AuthResponse;
+using SAPex.Models.Authorization;
 
 namespace SAPex.Services.Jwt
 {
@@ -27,16 +26,16 @@ namespace SAPex.Services.Jwt
            
         }
 
-        public AuthenticateResponse Authenticate(AuthenticateRequest credentials)
+        public TokenCredentials Authenticate(UserCredentials credentials)
         {
-            var user = _userService.FindByEmailAndPassword(credentials.Email, credentials.Password);
+            var user = _userService.FindByEmailAndPassword(credentials.Email, credentials.Password); 
             if (user == null)
                 return null;
 
             return GenerateTokenByUser(user);
         }
 
-        public AuthenticateResponse VerifyAndRefreshToken(TokenRequest tokenRequest)
+        public TokenCredentials VerifyAndRefreshToken(TokenCredentials tokenRequest)
         {
             var userRefreshTokenEntityModel = _refreshTokenService.FindByRefreshToken(tokenRequest.RefreshToken);
             if (IsValidToken(userRefreshTokenEntityModel, tokenRequest))
@@ -60,7 +59,7 @@ namespace SAPex.Services.Jwt
             return false;
         }
 
-        private AuthenticateResponse GenerateTokenByUser(UserEntityModel user)
+        private TokenCredentials GenerateTokenByUser(UserEntityModel user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -82,7 +81,7 @@ namespace SAPex.Services.Jwt
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             
-            return new AuthenticateResponse
+            return new TokenCredentials
             {
                 AccessToken=tokenHandler.WriteToken(token),
                 RefreshToken=GenerateRefreshToken(token.Id,user.Id)
@@ -130,7 +129,7 @@ namespace SAPex.Services.Jwt
             };    
         }
 
-        private bool IsValidToken(UserRefreshTokenEntityModel  userRefreshTokenEntityModel,TokenRequest tokenRequest)
+        private bool IsValidToken(UserRefreshTokenEntityModel  userRefreshTokenEntityModel,TokenCredentials tokenRequest)
         {
             try
             {

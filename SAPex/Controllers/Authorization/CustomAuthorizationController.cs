@@ -1,10 +1,9 @@
 ﻿
-using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SAPex.Models;
-using SAPex.Models.Authorization.AuthRequest;
-using SAPex.Models.Authorization.AuthResponse;
+using SAPex.Models.Authorization;
 using SAPex.Services.Jwt;
 
 namespace SAPex.Controllers.Authorization
@@ -21,7 +20,7 @@ namespace SAPex.Controllers.Authorization
         }
 
         [HttpPost("sign-in")] //sign-in
-        public ActionResult<AuthenticateResponse> Authenticate([FromBody] AuthenticateRequest credentials)
+        public ActionResult<TokenCredentials> Authenticate([FromBody] UserCredentials credentials)
         {
             var authResponse = _jwtService.Authenticate(credentials);
             if (authResponse != null)
@@ -32,7 +31,7 @@ namespace SAPex.Controllers.Authorization
         }
 
         [HttpPost("refresh-token")]
-         public ActionResult<ActionResponse<AuthenticateResponse>> RefreshToken([FromBody] TokenRequest tokenRequest)
+         public ActionResult<TokenCredentials> RefreshToken([FromBody] TokenCredentials tokenRequest)
         {
             var authResponse = _jwtService.VerifyAndRefreshToken(tokenRequest);
             if (authResponse != null)
@@ -44,7 +43,7 @@ namespace SAPex.Controllers.Authorization
 
         [Authorize]
         [HttpGet("sign-out/{refreshToken}")] //sign-out
-        public ActionResult<ActionResponse<AuthenticateResponse>> RevokeToken(string refreshToken)
+        public ActionResult RevokeToken(string refreshToken)
         {
             if (_jwtService.RevokeToken(refreshToken))
             {

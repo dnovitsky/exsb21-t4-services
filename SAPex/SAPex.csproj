@@ -43,8 +43,6 @@
     <Folder Include="Services\Jwt\" />
     <Folder Include="Models\Authorization\" />
     <Folder Include="Controllers\Authorization\" />
-    <Folder Include="Models\Authorization\AuthResponse\" />
-    <Folder Include="Models\Authorization\AuthRequest\" />
     <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
@@ -65,9 +63,8 @@
     <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Authorization\AuthResponse\AuthenticateResponse.cs" />
-    <Compile Include="Models\Authorization\AuthRequest\AuthenticateRequest.cs" />
-    <Compile Include="Models\Authorization\AuthRequest\TokenRequest.cs" />
     <Compile Include="Models\ActionResponse.cs" />
+    <Compile Include="Models\Authorization\UserCredentials.cs" />
+    <Compile Include="Models\Authorization\TokenCredentials.cs" />
   </ItemGroup>
 </Project>

@@ -14,13 +14,6 @@ namespace SAPex.Services
             userRefreshTokenEntityModel.Id = Guid.NewGuid();
             _userRefreshTokenRepository.Add(userRefreshTokenEntityModel);
             return userRefreshTokenEntityModel;
-
-        }
-
-        public UserRefreshTokenEntityModel FindByRefreshToken(string refreshToken)
-        {
-            
-            return _userRefreshTokenRepository.SingleOrDefault(x => x.Token == refreshToken);
         }
 
         public bool Update(UserRefreshTokenEntityModel userRefreshTokenEntityModel)
@@ -38,6 +31,12 @@ namespace SAPex.Services
                     x.AddedDate = userRefreshTokenEntityModel.AddedDate;
                 });
             return true;
+        }
+
+        public UserRefreshTokenEntityModel FindByRefreshToken(string refreshToken)
+        {
+
+            return _userRefreshTokenRepository.SingleOrDefault(x => x.Token == refreshToken);
         }
 
     }

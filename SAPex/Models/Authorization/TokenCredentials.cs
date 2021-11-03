@@ -1,6 +1,7 @@
-﻿namespace SAPex.Models.Authorization.AuthRequest
+﻿using System;
+namespace SAPex.Models.Authorization
 {
-    public class TokenRequest
+    public class TokenCredentials
     {
         public string AccessToken { get; set; }
         public string RefreshToken { get; set; }
