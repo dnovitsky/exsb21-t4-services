@@ -8,11 +8,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DbMigrations.EntityModels
 {
-    public class UserRoleEntityModel
+    public class UserFunctionalRoleEntityModel
     {
-        public UserRoleEntityModel()
+        public UserFunctionalRoleEntityModel()
         {
-            UserSanboxes = new List<UserSandBoxEntityModel>();
+        
         }
 
         [Key]
@@ -23,6 +23,5 @@ namespace DbMigrations.EntityModels
         public Guid UserId { get; set; }
         public UserEntityModel User { get; set; }
 
-        public IList<UserSandBoxEntityModel> UserSanboxes { get; set; }
     }
 }

@@ -11,12 +11,7 @@ namespace DbMigrations.EntityModels
     {
         public static void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserSandBoxEntityModel>()
-                .HasOne(d => d.User)
-                .WithMany(p => p.UserSanboxes)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
-            //.HasConstraintName("SupportChatMembers_SupportChatId_fkey");
+            // Method intentionally left empty.
         }
     }
 }

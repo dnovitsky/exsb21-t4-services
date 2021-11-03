@@ -11,15 +11,15 @@ namespace DbMigrations.EntityModels
     {
         public FunctionalRoleEntityModel()
         {
-            UserRoles = new List<UserRoleEntityModel>();
+            UserRoles = new List<UserFunctionalRoleEntityModel>();
+            AccessForms = new List<AccessFormEntityModel>();
         }
         [Key]
         public Guid Id { get; set; }
         [Required]
         public string Name { get; set; }
-        [Required]
-        public string Access { get; set; }
 
-        public IList<UserRoleEntityModel> UserRoles { get; set; }
+        public IList<UserFunctionalRoleEntityModel> UserRoles { get; set; }
+        public IList<AccessFormEntityModel> AccessForms { get; set; }
     }
 }

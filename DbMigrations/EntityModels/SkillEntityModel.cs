@@ -11,7 +11,6 @@ namespace DbMigrations.EntityModels
     {
         public SkillEntityModel()
         {
-            SandBoxTechSkills = new List<SandBoxTechSkillEntityModel>();
             UserTechSkills = new List<UserTechSkillEntityModel>();
             Ratings = new List<RatingEntityModel>();
             CandidateTechSkills = new List<CandidateTechSkillEntityModel>();
@@ -20,8 +19,6 @@ namespace DbMigrations.EntityModels
         public Guid Id { get; set; }
         [Required]
         public string Name { get; set; }
-
-        public IList<SandBoxTechSkillEntityModel> SandBoxTechSkills { get; set; }
         public IList<UserTechSkillEntityModel> UserTechSkills { get; set; }
         public IList<RatingEntityModel> Ratings { get; set; }
         public IList<CandidateTechSkillEntityModel> CandidateTechSkills { get; set; }
