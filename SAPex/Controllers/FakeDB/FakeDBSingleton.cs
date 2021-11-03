@@ -12,7 +12,7 @@ namespace SAPex.Controllers
     public class FakeDBSingleton
     {
         static private FakeDBSingleton instance;
-        private string path = Directory.GetCurrentDirectory() + "\\Controllers\\FakeDB\\";
+        private string path = /* Directory.GetCurrentDirectory() + */ "Controllers\\FakeDB\\";
             
         public FakeDBSingleton()
         {
