@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.StaticFiles;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace SAPex.Controllers
 {
@@ -13,10 +13,7 @@ namespace SAPex.Controllers
     public class FilesController : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> UploadFile(
-            //[FromHeader] String documentType, TODO review with FE
-            [FromForm] IFormFile file
-            )
+        public async Task<IActionResult> UploadFile(/* [FromHeader] String documentType, TODO review with FE */ [FromForm] IFormFile file)
         {
             Stream stream = file.OpenReadStream();
             string filepath = @"uploads\";
@@ -29,9 +26,7 @@ namespace SAPex.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> DownloadFile(
-             [FromRoute] int id
-            )
+        public async Task<ActionResult> DownloadFile([FromRoute] int id)
         {
             var filePath = @"files\";
             string existingFile = Directory.EnumerateFiles(filePath, id.ToString() + ".*").FirstOrDefault();
@@ -40,9 +35,9 @@ namespace SAPex.Controllers
             {
                 contentType = "application/octet-stream";
             }
+
             var bytes = await System.IO.File.ReadAllBytesAsync(existingFile);
             return File(bytes, contentType, Path.GetFileName(existingFile));
         }
     }
 }
-

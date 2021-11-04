@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SAPex.Models;
 using SAPex.Controllers;
+using SAPex.Models;
 
 namespace SAPex
 {
