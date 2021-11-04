@@ -1,31 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using SAPex.Models;
-using System;
 
 namespace SAPex.Controllers
 {
     [ApiController]
-    public abstract class AbstractNameController<T> : AbstractController<T> where T : AbstractNameViewModel
+    public abstract class AbstractNameController<T> : AbstractController<T>
+        where T : AbstractNameViewModel
     {
-        private bool IsValidData(T requestData)
-        {
-            return requestData.Name != null;
-        }
-
-        private void UpdateFields(T responce, T requestData)
-        {
-            responce.Name = requestData.Name != null ? requestData.Name : responce.Name;
-        }
-
         protected override IActionResult PostValidation(T requestData)
         {
-            if (this.IsValidData(requestData))
+            if (IsValidData(requestData))
             {
-                var responce = this.storageList.Find(item => item.Name == requestData.Name);
+                var responce = storageList.Find(item => item.Name == requestData.Name);
                 if (responce == null)
                 {
                     requestData.Id = Guid.NewGuid();
-                    this.storageList.Add(requestData);
+                    storageList.Add(requestData);
 
                     return Ok("record has been added");
                 }
@@ -35,27 +26,39 @@ namespace SAPex.Controllers
 
             return Conflict();
         }
+
         protected override IActionResult PutValidation(Guid id, T requestData)
         {
-            var responce = this.storageList.Find(this.FindByIdCallback(id));
+            var responce = storageList.Find(FindByIdCallback(id));
 
-            if(responce != null)
+            if (responce != null)
             {
-                var index = this.storageList.IndexOf(responce);
+                var index = storageList.IndexOf(responce);
 
-                if(this.IsValidData(requestData))
+                if (IsValidData(requestData))
                 {
-                    this.UpdateFields(responce, requestData);
-                    this.storageList[index] = responce;
+                    UpdateFields(responce, requestData);
+                    storageList[index] = responce;
 
                     return Ok("record has been updated");
-                } else
+                }
+                else
                 {
                     return Conflict();
                 }
             }
 
             return NotFound();
+        }
+
+        private bool IsValidData(T requestData)
+        {
+            return requestData.Name != null;
+        }
+
+        private void UpdateFields(T responce, T requestData)
+        {
+            responce.Name = requestData.Name != null ? requestData.Name : responce.Name;
         }
     }
 }

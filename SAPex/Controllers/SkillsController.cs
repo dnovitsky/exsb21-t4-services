@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SAPex.Models;
 using SAPex.Controllers;
+using SAPex.Models;
 
 namespace SAPex
 {
     [Route("api/skills")]
     [ApiController]
-    public class SkillsController: AbstractNameController<SkillViewModel>
+    public class SkillsController : AbstractNameController<SkillViewModel>
     {
     }
 }
