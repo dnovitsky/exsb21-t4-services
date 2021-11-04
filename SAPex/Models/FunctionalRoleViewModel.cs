@@ -1,6 +1,6 @@
 ﻿namespace SAPex.Models
 {
-    public class FunctionalRoleViewModel: AbstractNameViewModel
+    public class FunctionalRoleViewModel : AbstractNameViewModel
     {
     }
 }

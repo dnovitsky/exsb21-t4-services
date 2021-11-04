@@ -89,7 +89,7 @@ namespace SAPex
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json","SAPex API v1");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "SAPex API v1");
             });
 
             if (env.IsDevelopment())
@@ -115,7 +115,6 @@ namespace SAPex
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-
         }
     }
 }

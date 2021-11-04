@@ -1,19 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using SAPex.Models;
 
 namespace SAPex.Controllers
 {
     [ApiController]
-    public abstract class AbstractController<T> : ControllerBase where T : AbstractIdViewModel
+    public abstract class AbstractController<T> : ControllerBase
+        where T : AbstractIdViewModel
     {
         protected List<T> storageList = new List<T>() { };
-        protected FakeDBSingleton dB = new FakeDBSingleton();
+        protected FakeDBSingleton fakeDB = new FakeDBSingleton();
 
         protected abstract IActionResult PostValidation(T requestData);
+
         protected abstract IActionResult PutValidation(Guid id, T requestData);
 
         protected Predicate<T> FindByIdCallback(Guid id)
@@ -23,19 +25,19 @@ namespace SAPex.Controllers
 
         public AbstractController()
         {
-            this.storageList = this.dB.getJsonData_Sync<T>();
+            storageList = fakeDB.GetJsonData_Sync<T>();
         }
 
         [HttpGet]
         public async Task<IEnumerable<T>> Get()
         {
-            return await Task.FromResult(this.storageList.AsEnumerable<T>());
+            return await Task.FromResult(storageList.AsEnumerable<T>());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            var response = this.storageList.Find(this.FindByIdCallback(id));
+            var response = storageList.Find(FindByIdCallback(id));
 
             if (response == null)
             {
@@ -48,11 +50,11 @@ namespace SAPex.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] T requestData)
         {
-            IActionResult status = this.PostValidation(requestData);
+            IActionResult status = PostValidation(requestData);
 
-            if (status is OkResult)
+            if (status is OkObjectResult)
             {
-                await this.dB.setJsonData<T>(this.storageList);
+                await fakeDB.SetJsonData<T>(storageList);
             }
 
             return await Task.FromResult(status);
@@ -61,11 +63,11 @@ namespace SAPex.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] T requestData)
         {
-            IActionResult status = this.PutValidation(id, requestData);
+            IActionResult status = PutValidation(id, requestData);
 
-            if (status is OkResult)
+            if (status is OkObjectResult)
             {
-                await this.dB.setJsonData<T>(this.storageList);
+                await fakeDB.SetJsonData<T>(storageList);
             }
 
             return await Task.FromResult(status);
@@ -74,15 +76,15 @@ namespace SAPex.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            var response = this.storageList.Find(this.FindByIdCallback(id));
+            var response = storageList.Find(FindByIdCallback(id));
 
             if (response == null)
             {
                 return await Task.FromResult(NotFound());
             }
 
-            this.storageList.Remove(response);
-            await this.dB.setJsonData<T>(this.storageList);
+            storageList.Remove(response);
+            await fakeDB.SetJsonData<T>(storageList);
 
             return await Task.FromResult(Ok("has been deleted"));
         }
