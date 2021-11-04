@@ -1,5 +1,5 @@
 ﻿using System;
-﻿using DataAccessLayer.Service;
+using DataAccessLayer.Service;
 using DbMigrations.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,7 +33,7 @@ namespace SAPex
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext dbContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext dbcontext)
         {
             app.UseSwagger();
             app.UseSwaggerUI(options =>
@@ -49,6 +49,7 @@ namespace SAPex
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
             // app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
@@ -63,7 +64,7 @@ namespace SAPex
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            dbContext.Database.Migrate();
+            dbcontext.Database.Migrate();
             DbObjects.Initial(Environment.GetEnvironmentVariable("MSSQL_CONNECTION_STRING"));
         }
     }
