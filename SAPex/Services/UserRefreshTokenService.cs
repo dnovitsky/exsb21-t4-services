@@ -7,7 +7,7 @@ namespace SAPex.Services
 {
     public class UserRefreshTokenService
     {
-        private List<UserRefreshTokenEntityModel> _userRefreshTokenRepository = new();
+        private List<UserRefreshTokenEntityModel> _userRefreshTokenRepository = new ();
 
         public UserRefreshTokenEntityModel Add(UserRefreshTokenEntityModel userRefreshTokenEntityModel)
         {
@@ -35,9 +35,7 @@ namespace SAPex.Services
 
         public UserRefreshTokenEntityModel FindByRefreshToken(string refreshToken)
         {
-
             return _userRefreshTokenRepository.SingleOrDefault(x => x.Token == refreshToken);
         }
-
     }
 }

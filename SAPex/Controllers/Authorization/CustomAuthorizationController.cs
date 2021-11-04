@@ -7,7 +7,7 @@ namespace SAPex.Controllers.Authorization
 {
     [Route("/authorization")]
     [ApiController]
-    public class CustomAuthorizationController: ControllerBase
+    public class CustomAuthorizationController : ControllerBase
     {
         private readonly JwtService _jwtService;
 
@@ -16,7 +16,7 @@ namespace SAPex.Controllers.Authorization
             _jwtService = jwtService;
         }
 
-        [HttpPost("sign-in")] //sign-in
+        [HttpPost("sign-in")]
         public ActionResult<TokenCredentials> Authenticate([FromBody] UserCredentials credentials)
         {
             var authResponse = _jwtService.Authenticate(credentials);
@@ -24,28 +24,31 @@ namespace SAPex.Controllers.Authorization
             {
                 return Ok(authResponse);
             }
+
             return Unauthorized();
         }
 
         [HttpPost("refresh-token")]
-         public ActionResult<TokenCredentials> RefreshToken([FromBody] TokenCredentials tokenRequest)
+        public ActionResult<TokenCredentials> RefreshToken([FromBody] TokenCredentials tokenRequest)
         {
             var authResponse = _jwtService.VerifyAndRefreshToken(tokenRequest);
             if (authResponse != null)
             {
                 return Ok(authResponse);
             }
+
             return Unauthorized();
         }
 
         [Authorize]
-        [HttpGet("sign-out/{refreshToken}")] //sign-out
+        [HttpGet("sign-out/{refreshToken}")]
         public ActionResult RevokeToken(string refreshToken)
         {
             if (_jwtService.RevokeToken(refreshToken))
             {
                 return Ok();
             }
+
             return Unauthorized();
         }
     }

@@ -12,8 +12,8 @@ namespace SAPex.Controllers
     [Authorize]
     public class UserController : ControllerBase
     {
-
         private readonly UserService _userService;
+
         public UserController(UserService userService)
         {
             _userService = userService;
@@ -27,6 +27,7 @@ namespace SAPex.Controllers
             {
                 email = identity.FindFirst(ClaimTypes.Email).Value;
             }
+
             return Ok(_userService.FindByEmail(email));
         }
 

@@ -18,19 +18,20 @@ namespace SAPex.Services.Jwt
         private readonly AppSettings _appSettings;
         private readonly UserRefreshTokenService _refreshTokenService;
 
-        public JwtService(UserService userService,UserRefreshTokenService refreshTokenService, IOptions<AppSettings> appSettings)
+        public JwtService(UserService userService, UserRefreshTokenService refreshTokenService, IOptions<AppSettings> appSettings)
         {
             _userService = userService;
             _appSettings = appSettings.Value;
             _refreshTokenService = refreshTokenService;
-           
         }
 
         public TokenCredentials Authenticate(UserCredentials credentials)
         {
-            var user = _userService.FindByEmailAndPassword(credentials.Email, credentials.Password); 
+            var user = _userService.FindByEmailAndPassword(credentials.Email, credentials.Password);
             if (user == null)
+            {
                 return null;
+            }
 
             return GenerateTokenByUser(user);
         }
@@ -41,9 +42,10 @@ namespace SAPex.Services.Jwt
             if (IsValidToken(userRefreshTokenEntityModel, tokenRequest))
             {
                 var user = _userService.FindById(userRefreshTokenEntityModel.UserId);
-                return GenerateTokenByUser(user);  
+                return GenerateTokenByUser(user);
             }
-            return null;    
+
+            return null;
         }
 
         public bool RevokeToken(string refreshToken)
@@ -54,8 +56,8 @@ namespace SAPex.Services.Jwt
                 userRefresh.IsRevoked = true;
                 _refreshTokenService.Update(userRefresh);
                 return true;
-
             }
+
             return false;
         }
 
@@ -76,34 +78,31 @@ namespace SAPex.Services.Jwt
                 Expires = DateTime.UtcNow.AddMinutes(_appSettings.ExpDate),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key),
-                    SecurityAlgorithms.HmacSha256Signature)
+                    SecurityAlgorithms.HmacSha256Signature),
             };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            
+            var token = tokenHandler.CreateToken(tokenDescriptor);
             return new TokenCredentials
             {
-                AccessToken=tokenHandler.WriteToken(token),
-                RefreshToken=GenerateRefreshToken(token.Id,user.Id)
+                AccessToken = tokenHandler.WriteToken(token),
+                RefreshToken = GenerateRefreshToken(token.Id, user.Id),
             };
-
         }
 
         private string GenerateRefreshToken(string jwtId, Guid userId)
         {
             var refreshTokenEntityModel = new UserRefreshTokenEntityModel
             {
-                JwtId = jwtId, //token.Id,
+                JwtId = jwtId, // token.Id,
                 IsUsed = false,
                 IsRevoked = false,
-                UserId = userId,// user.Id
+                UserId = userId, // user.Id
                 AddedDate = DateTime.UtcNow,
                 ExpiryDate = DateTime.UtcNow.AddMonths(6),
-                Token = RefreshTokenGenerateString(35) + Guid.NewGuid()
+                Token = RefreshTokenGenerateString(35) + Guid.NewGuid(),
             };
             _refreshTokenService.Add(refreshTokenEntityModel);
             return refreshTokenEntityModel.Token;
-
         }
 
         private string RefreshTokenGenerateString(int length)
@@ -114,11 +113,11 @@ namespace SAPex.Services.Jwt
                 .Select(x => x[random.Next(x.Length)]).ToArray());
         }
 
-        private bool IsValidToken(UserRefreshTokenEntityModel  userRefreshTokenEntityModel,TokenCredentials tokenRequest)
+        private bool IsValidToken(UserRefreshTokenEntityModel userRefreshTokenEntityModel, TokenCredentials tokenRequest)
         {
             try
             {
-                JwtSecurityTokenHandler jwtTokenHandler = new();
+                JwtSecurityTokenHandler jwtTokenHandler = new ();
                 var tokenInVerification = jwtTokenHandler.ValidateToken(tokenRequest.AccessToken, GetTokenValidationParameters(), out var validatedToken);
 
                 if (validatedToken is JwtSecurityToken jwtSecurityToken)
@@ -138,27 +137,25 @@ namespace SAPex.Services.Jwt
                 {
                     return false;
                 }
+
                 var jwtId = tokenInVerification.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
 
                 return IsValidRefreshToken(userRefreshTokenEntityModel, jwtId);
-
             }
             catch (Exception ex)
             {
                 return false;
             }
-
         }
 
-        private bool IsValidRefreshToken(UserRefreshTokenEntityModel refresh,string jwtId)
+        private bool IsValidRefreshToken(UserRefreshTokenEntityModel refresh, string jwtId)
         {
-
             if (refresh == null || refresh.IsUsed || refresh.IsRevoked || refresh.JwtId != jwtId || DateTime.UtcNow > refresh.ExpiryDate)
             {
                 return false;
             }
-   
-             refresh.IsUsed = true;
+
+            refresh.IsUsed = true;
             _refreshTokenService.Update(refresh);
             return true;
         }
@@ -173,8 +170,7 @@ namespace SAPex.Services.Jwt
                 ValidateAudience = false,
                 RequireExpirationTime = false,
                 ValidateLifetime = false,
-                ClockSkew = TimeSpan.Zero
-
+                ClockSkew = TimeSpan.Zero,
             };
         }
     }

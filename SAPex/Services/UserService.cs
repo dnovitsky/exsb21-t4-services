@@ -7,7 +7,7 @@ namespace SAPex.Services
 {
     public class UserService
     {
-        private List<UserEntityModel> _userRepository = new()
+        private List<UserEntityModel> _userRepository = new ()
         {
             new UserEntityModel
             {
@@ -21,9 +21,9 @@ namespace SAPex.Services
                                       new UserFunctionalRoleEntityModel
                                       {
                                           Id = Guid.NewGuid(),
-                                          FunctionalRole=new FunctionalRoleEntityModel{  Name="MANAGER"}
-                                      }
-                                  }
+                                          FunctionalRole = new FunctionalRoleEntityModel { Name = "MANAGER" },
+                                      },
+                                  },
             },
             new UserEntityModel
             {
@@ -37,10 +37,10 @@ namespace SAPex.Services
                                       new UserFunctionalRoleEntityModel
                                       {
                                           Id = Guid.NewGuid(),
-                                          FunctionalRole=new FunctionalRoleEntityModel{  Name="INTERVIEWER"}
-                                      }
-                                  }
-            }
+                                          FunctionalRole = new FunctionalRoleEntityModel { Name = "INTERVIEWER" },
+                                      },
+                                  },
+            },
         };
 
         public List<UserEntityModel> FindAll()
@@ -62,7 +62,5 @@ namespace SAPex.Services
         {
             return _userRepository.SingleOrDefault(x => x.Id == userId);
         }
-
-
     }
 }

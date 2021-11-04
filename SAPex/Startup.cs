@@ -12,8 +12,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SAPex.Helpers;
-using SAPex.Services.Jwt;
 using SAPex.Services;
+using SAPex.Services.Jwt;
 
 namespace SAPex
 {
@@ -45,7 +45,7 @@ namespace SAPex
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = true,
-                    ClockSkew = TimeSpan.Zero
+                    ClockSkew = TimeSpan.Zero,
                 };
             });
 
@@ -67,15 +67,15 @@ namespace SAPex
                     Reference = new OpenApiReference
                     {
                         Id = JwtBearerDefaults.AuthenticationScheme,
-                        Type = ReferenceType.SecurityScheme
-                    }
+                        Type = ReferenceType.SecurityScheme,
+                    },
                 };
 
                 c.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
 
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
-                    { jwtSecurityScheme, Array.Empty<string>() }
+                    { jwtSecurityScheme, Array.Empty<string>() },
                 });
                 c.OperationFilter<SwaggerFileUploadOperationFilter>();
             });
