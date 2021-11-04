@@ -12,25 +12,22 @@ namespace SAPex.Controllers
     [Route("api/files")]
     public class FilesController : ControllerBase
     {
-        [HttpPost]
-        public async Task<IActionResult> UploadFile(/* [FromHeader] String documentType, TODO review with FE */ [FromForm] IFormFile file)
+        private readonly string _rootFilesPath = Directory.GetCurrentDirectory() + "/files/";
+
+        public FilesController()
         {
-            Stream stream = file.OpenReadStream();
-            string filepath = @"uploads\";
-            using (FileStream outputFileStream = new FileStream(filepath + file.FileName, FileMode.Create))
+            if (!Directory.Exists(_rootFilesPath))
             {
-                DirectoryInfo info = new DirectoryInfo(file.ContentDisposition);
-                stream.CopyTo(outputFileStream);
-                return await Task.FromResult(Ok());
+                Directory.CreateDirectory(_rootFilesPath);
             }
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult> DownloadFile([FromRoute] int id)
         {
-            var filePath = @"files\";
-            string existingFile = Directory.EnumerateFiles(filePath, id.ToString() + ".*").FirstOrDefault();
+            string existingFile = Directory.EnumerateFiles(_rootFilesPath, id.ToString() + ".*").FirstOrDefault();
             var provider = new FileExtensionContentTypeProvider();
+
             if (!provider.TryGetContentType(existingFile, out var contentType))
             {
                 contentType = "application/octet-stream";
@@ -38,6 +35,20 @@ namespace SAPex.Controllers
 
             var bytes = await System.IO.File.ReadAllBytesAsync(existingFile);
             return File(bytes, contentType, Path.GetFileName(existingFile));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadFile(/* [FromHeader] String documentType, TODO review with FE */ [FromForm] IFormFile file)
+        {
+            string filepath = _rootFilesPath + file.FileName;
+
+            Stream stream = file.OpenReadStream();
+            using (FileStream outputFileStream = new FileStream(filepath, FileMode.Create))
+            {
+                DirectoryInfo info = new DirectoryInfo(file.ContentDisposition);
+                stream.CopyTo(outputFileStream);
+                return await Task.FromResult(Ok());
+            }
         }
     }
 }
