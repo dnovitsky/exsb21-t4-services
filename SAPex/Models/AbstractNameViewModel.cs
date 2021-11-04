@@ -2,15 +2,18 @@
 
 namespace SAPex.Models
 {
-    public abstract class AbstractNameViewModel: AbstractIdViewModel
+    public abstract class AbstractNameViewModel : AbstractIdViewModel
     {
-        public AbstractNameViewModel() : base()
+        public AbstractNameViewModel()
+            : base()
         {
-            this.Name = "";
+            Name = string.Empty;
         }
-        public AbstractNameViewModel(string name) : base()
+
+        public AbstractNameViewModel(string name)
+            : base()
         {
-            this.Name = name;
+            Name = name;
         }
 
         [Required]
