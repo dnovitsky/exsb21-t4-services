@@ -38,6 +38,7 @@ namespace DbMigrations.Data
         public DbSet<UserEntityModel> Users { get; set; }
         public DbSet<UserFunctionalRoleEntityModel> UserFunctionalRoles { get; set; }
         public DbSet<UserLanguageEntityModel> UserLanguages { get; set; }
+        public DbSet<UserRefreshTokenEntityModel> UserRefreshTokens { get; set; }
         public DbSet<UserSandBoxEntityModel> UserSandBoxes { get; set; }
         public DbSet<UserStackTechnologyEntityModel> UserStackTechnologies { get; set; }
         public DbSet<UserTeamEntityModel> UserTeams { get; set; }
