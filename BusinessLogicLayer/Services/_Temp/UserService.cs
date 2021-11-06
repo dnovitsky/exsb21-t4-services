@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DbMigrations.EntityModels;
 
-namespace SAPex.Services
+namespace BusinessLogicLayer.Services._Temp
 {
     public class UserService
     {

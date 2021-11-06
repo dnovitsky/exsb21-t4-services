@@ -7,10 +7,11 @@ using System.Text;
 using DbMigrations.EntityModels;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using SAPex.Helpers;
-using SAPex.Models.Authorization;
+using BusinessLogicLayer.Services._Temp;
+using BusinessLogicLayer.DtoModels.Authorization;
+using BusinessLogicLayer.Helpers;
 
-namespace SAPex.Services.Jwt
+namespace BusinessLogicLayer.Services
 {
     public class JwtService
     {

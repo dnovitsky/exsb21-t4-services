@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Text;
+using BusinessLogicLayer.Helpers;
+using BusinessLogicLayer.Services;
+using BusinessLogicLayer.Services._Temp;
 using DataAccessLayer.Service;
 using DbMigrations.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -11,9 +14,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using SAPex.Helpers;
-using SAPex.Services;
-using SAPex.Services.Jwt;
 
 namespace SAPex
 {

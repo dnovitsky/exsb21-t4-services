@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SAPex.Helpers
+namespace BusinessLogicLayer.Helpers
 {
     public class AppSettings
     {
