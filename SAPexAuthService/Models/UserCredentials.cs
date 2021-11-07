@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BusinessLogicLayer.DtoModels.Authorization
+namespace SAPexAuthService.Models
 {
     public class UserCredentials
     {

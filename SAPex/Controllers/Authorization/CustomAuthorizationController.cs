@@ -1,7 +1,7 @@
-﻿using BusinessLogicLayer.DtoModels.Authorization;
-using BusinessLogicLayer.Services;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SAPexAuthService.Models;
+using SAPexAuthService.Services;
 
 namespace SAPex.Controllers.Authorization
 {

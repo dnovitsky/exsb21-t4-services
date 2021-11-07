@@ -14,14 +14,4 @@
     <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Services\_Temp\" />
-    <None Remove="DtoModels\Authorization\" />
-    <None Remove="Helpers\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\_Temp\" />
-    <Folder Include="DtoModels\Authorization\" />
-    <Folder Include="Helpers\" />
-  </ItemGroup>
 </Project>

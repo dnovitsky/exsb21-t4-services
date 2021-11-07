@@ -12,4 +12,10 @@
     <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Service\_Temp\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Service\_Temp\" />
+  </ItemGroup>
 </Project>

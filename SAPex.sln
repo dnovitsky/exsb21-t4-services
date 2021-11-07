@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.810.11
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAPex", "SAPex\SAPex.csproj", "{37AFC335-5921-4000-BD67-D5B71C2AE9BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAPex", "SAPex\SAPex.csproj", "{37AFC335-5921-4000-BD67-D5B71C2AE9BA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbMigrations", "DbMigrations\DbMigrations.csproj", "{94EFB338-BD08-4A80-BB34-57C4D0BB48FB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{369F0B48-ADFE-435A-A855-328BAC8006C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogicLayer", "BusinessLogicLayer\BusinessLogicLayer.csproj", "{9803FCCC-C025-453D-960F-2CD1D0152BF1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicLayer", "BusinessLogicLayer\BusinessLogicLayer.csproj", "{9803FCCC-C025-453D-960F-2CD1D0152BF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAPexAuthService", "SAPexAuthService\SAPexAuthService.csproj", "{A9942981-72F0-400B-979B-B2941BFDDDC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{9803FCCC-C025-453D-960F-2CD1D0152BF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9803FCCC-C025-453D-960F-2CD1D0152BF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9803FCCC-C025-453D-960F-2CD1D0152BF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9942981-72F0-400B-979B-B2941BFDDDC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9942981-72F0-400B-979B-B2941BFDDDC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9942981-72F0-400B-979B-B2941BFDDDC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9942981-72F0-400B-979B-B2941BFDDDC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,14 +4,14 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using DataAccessLayer.Services._Temp;
 using DbMigrations.EntityModels;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using BusinessLogicLayer.Services._Temp;
-using BusinessLogicLayer.DtoModels.Authorization;
-using BusinessLogicLayer.Helpers;
+using SAPexAuthService.Helpers;
+using SAPexAuthService.Models;
 
-namespace BusinessLogicLayer.Services
+namespace SAPexAuthService.Services
 {
     public class JwtService
     {

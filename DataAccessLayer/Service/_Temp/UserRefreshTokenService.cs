@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DbMigrations.EntityModels;
 
-namespace BusinessLogicLayer.Services._Temp
+namespace DataAccessLayer.Services._Temp
 {
     public class UserRefreshTokenService
     {
