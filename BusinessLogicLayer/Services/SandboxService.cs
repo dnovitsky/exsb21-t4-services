@@ -16,7 +16,7 @@ namespace BusinessLogicLayer.Services
     public class SandboxService : ISandboxService
     {
         private readonly IUnitOfWork unitOfWork;
-        private readonly SandboxProfile profile;
+        private readonly SandboxProfile profile = new SandboxProfile();
         
         public SandboxService(IUnitOfWork unitOfWork)
         {
@@ -37,7 +37,7 @@ namespace BusinessLogicLayer.Services
                 return false;
             }
         }
-        public async Task<SandboxDtoModel> FindSandboxByIdAsync(int id)
+        public async Task<SandboxDtoModel> FindSandboxByIdAsync(Guid id)
         {
             SandboxEntityModel sandboxEM = await unitOfWork.Sandboxes.FindByIdAsync(id);
             SandboxDtoModel sandboxDto = profile.mapToDto(sandboxEM);

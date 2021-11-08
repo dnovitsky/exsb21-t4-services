@@ -115,6 +115,8 @@ namespace SAPex
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            InitService.Initial(Configuration.GetConnectionString("DefaultConnection"));
         }
     }
 }
