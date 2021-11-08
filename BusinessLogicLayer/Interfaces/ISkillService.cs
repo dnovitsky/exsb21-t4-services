@@ -14,7 +14,7 @@ namespace BusinessLogicLayer.Interfaces
         Task<IEnumerable<SkillDtoModel>> GetAllSkillsAsync();
         Task<IEnumerable<SkillDtoModel>> FindSkillsAsync(Expression<Func<SkillEntityModel, bool>> expression);
         void UpdateSkill(SkillDtoModel languageDto);
-        Task<SkillDtoModel> FindSkillByIdAsync(int id);
+        Task<SkillDtoModel> FindSkillByIdAsync(Guid id);
         void DeleteSkill(int id);
     }
 }

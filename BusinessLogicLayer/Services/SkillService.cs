@@ -8,7 +8,6 @@ using BusinessLogicLayer.DtoModels;
 using BusinessLogicLayer.Mapping;
 using BusinessLogicLayer.Interfaces;
 using System.Linq.Expressions;
-using AutoMapper;
 using DataAccessLayer.Service;
 
 namespace BusinessLogicLayer.Services
@@ -42,7 +41,7 @@ namespace BusinessLogicLayer.Services
             unitOfWork.Skills.Delete(id);
         }
 
-        public async Task<SkillDtoModel> FindSkillByIdAsync(int id)
+        public async Task<SkillDtoModel> FindSkillByIdAsync(Guid id)
         {
             SkillEntityModel skillEM = await unitOfWork.Skills.FindByIdAsync(id);
             SkillDtoModel skillDto = profile.mapToDto(skillEM);

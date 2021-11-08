@@ -42,7 +42,7 @@ namespace BusinessLogicLayer.Services
             unitOfWork.Languages.Delete(id);
         }
 
-        public async Task<LanguageDtoModel> FindLanguageByIdAsync(int id)
+        public async Task<LanguageDtoModel> FindLanguageByIdAsync(Guid id)
         {
             LanguageEntityModel languageEM = await unitOfWork.Languages.FindByIdAsync(id);
             LanguageDtoModel languageDto = profile.mapToDto(languageEM);

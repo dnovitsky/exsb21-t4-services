@@ -14,4 +14,10 @@
     <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Helpers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
 </Project>

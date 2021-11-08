@@ -1,6 +1,7 @@
-﻿using DataAccessLayer.Services._Temp;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SAPexAuthService.Services;
 
 namespace SAPex.Controllers
 {
@@ -17,9 +18,10 @@ namespace SAPex.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> GetAsync()
         {
-            return Ok(_userService.FindAll());
+            var users = await _userService.FindAllAsync();
+            return Ok(users);
         }
     }
 }

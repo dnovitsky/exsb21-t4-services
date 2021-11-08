@@ -33,7 +33,7 @@ namespace DataAccessLayer.Repositories
             return await query.ToListAsync();
         }
 
-        public virtual async Task<T> FindByIdAsync(int id)
+        public virtual async Task<T> FindByIdAsync(Guid id)
         {
             return await set.FindAsync(id);
         }

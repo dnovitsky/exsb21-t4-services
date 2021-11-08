@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace SAPexAuthService.Helpers
+namespace SAPexAuthService.Models
 {
-    public class AppSettings
+    public class AppSettingsModel
     {
         public string Secret { get; set; }
 
         public int ExpDate { get; set; }
 
-        public int ExpDay { get; set; }
+        public int ExpMonth { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace BusinessLogicLayer.Interfaces
         Task<IEnumerable<LanguageDtoModel>> GetAllLanguagesAsync();
         Task<IEnumerable<LanguageDtoModel>> FindLanguagesAsync(Expression<Func<LanguageEntityModel, bool>> expression);
         void UpdateLanguage(LanguageDtoModel languageDto);
-        Task<LanguageDtoModel> FindLanguageByIdAsync(int id);
+        Task<LanguageDtoModel> FindLanguageByIdAsync(Guid id);
         void DeleteLanguage(int id);
     }
 }

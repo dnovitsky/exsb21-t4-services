@@ -12,7 +12,7 @@ namespace DataAccessLayer.IRepositories
     {
         Task<IEnumerable<UserFunctionalRoleEntityModel>> GetAllAsync();
         Task<IEnumerable<UserFunctionalRoleEntityModel>> FindByConditionAsync(Expression<Func<UserFunctionalRoleEntityModel, bool>> expression);
-        Task<UserFunctionalRoleEntityModel> FindByIdAsync(int id);
+        Task<UserFunctionalRoleEntityModel> FindByIdAsync(Guid id);
         void CreateAsync(UserFunctionalRoleEntityModel item);
         void Update(UserFunctionalRoleEntityModel item);
         void Delete(int id);

@@ -12,7 +12,7 @@ namespace DataAccessLayer.IRepositories
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<IEnumerable<T>> FindByConditionAsync(Expression<Func<T,bool>> expression);
-        Task<T> FindByIdAsync(int id);
+        Task<T> FindByIdAsync(Guid id);
         void CreateAsync(T item);
         void Update(T item);
         void Delete(int id);//SoftDelete??

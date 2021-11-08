@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
+using BusinessLogicLayer.Helpers;
 using DataAccessLayer.Service;
-using DataAccessLayer.Services._Temp;
 using DbMigrations.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using SAPexAuthService.Helpers;
+using SAPexAuthService.Models;
 using SAPexAuthService.Services;
 
 namespace SAPex
@@ -48,11 +48,13 @@ namespace SAPex
                     ClockSkew = TimeSpan.Zero,
                 };
             });
-
-            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-            services.AddSingleton<JwtService, JwtService>();
-            services.AddSingleton<UserService, UserService>();
-            services.AddSingleton<UserRefreshTokenService, UserRefreshTokenService>();
+            services.Configure<AppSettingsModel>(Configuration.GetSection("AppSettings"));
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Scoped);
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<UserService, UserService>();
+            services.AddScoped<UserRefreshTokenService, UserRefreshTokenService>();
+            services.AddScoped<JwtService, JwtService>();
+            services.AddScoped<ApplicationHelper, ApplicationHelper>();
             services.AddSwaggerGen(c =>
             {
                 var jwtSecurityScheme = new OpenApiSecurityScheme
@@ -79,12 +81,10 @@ namespace SAPex
                 });
                 c.OperationFilter<SwaggerFileUploadOperationFilter>();
             });
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext dbContext)
         {
             app.UseSwagger();
             app.UseSwaggerUI(options =>
@@ -115,6 +115,7 @@ namespace SAPex
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            dbContext.Database.Migrate();
         }
     }
 }

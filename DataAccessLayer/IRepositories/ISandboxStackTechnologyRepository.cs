@@ -12,7 +12,7 @@ namespace DataAccessLayer.IRepositories
     {
         Task<IEnumerable<SandboxStackTechnologyEntityModel>> GetAllAsync();
         Task<IEnumerable<SandboxStackTechnologyEntityModel>> FindByConditionAsync(Expression<Func<SandboxStackTechnologyEntityModel, bool>> expression);
-        Task<SandboxStackTechnologyEntityModel> FindByIdAsync(int id);
+        Task<SandboxStackTechnologyEntityModel> FindByIdAsync(Guid id);
         void CreateAsync(SandboxStackTechnologyEntityModel item);
         void Update(SandboxStackTechnologyEntityModel item);
         void Delete(int id);

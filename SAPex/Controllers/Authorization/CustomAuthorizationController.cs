@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SAPexAuthService.Models;
 using SAPexAuthService.Services;
 
 namespace SAPex.Controllers.Authorization
 {
-    [Route("/authorization")]
+    [Route("/api/authorization")]
     [ApiController]
     public class CustomAuthorizationController : ControllerBase
     {
@@ -17,9 +18,9 @@ namespace SAPex.Controllers.Authorization
         }
 
         [HttpPost("sign-in")]
-        public ActionResult<TokenCredentials> Authenticate([FromBody] UserCredentials credentials)
+        public async Task<ActionResult<TokenCredentialsModel>> AuthenticateAsync([FromBody] UserCredentialsModel credentials)
         {
-            var authResponse = _jwtService.Authenticate(credentials);
+            var authResponse = await _jwtService.AuthenticateAsync(credentials);
             if (authResponse != null)
             {
                 return Ok(authResponse);
@@ -29,9 +30,9 @@ namespace SAPex.Controllers.Authorization
         }
 
         [HttpPost("refresh-token")]
-        public ActionResult<TokenCredentials> RefreshToken([FromBody] TokenCredentials tokenRequest)
+        public async Task<ActionResult<TokenCredentialsModel>> RefreshTokenAsync([FromBody] TokenCredentialsModel tokenRequest)
         {
-            var authResponse = _jwtService.VerifyAndRefreshToken(tokenRequest);
+            var authResponse = await _jwtService.VerifyAndRefreshTokenAsync(tokenRequest);
             if (authResponse != null)
             {
                 return Ok(authResponse);
@@ -42,9 +43,9 @@ namespace SAPex.Controllers.Authorization
 
         [Authorize]
         [HttpGet("sign-out/{refreshToken}")]
-        public ActionResult RevokeToken(string refreshToken)
+        public async Task<ActionResult> RevokeTokenAsync(string refreshToken)
         {
-            if (_jwtService.RevokeToken(refreshToken))
+            if (await _jwtService.RevokeTokenAsync(refreshToken))
             {
                 return Ok();
             }

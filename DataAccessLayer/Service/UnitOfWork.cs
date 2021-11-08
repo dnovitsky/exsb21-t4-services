@@ -41,6 +41,7 @@ namespace DataAccessLayer.Service
         private IUserSandBoxRepository userSandBoxes;
         private IUserTeamRepository userTeams;
         private IUserTechSkillRepository userTechSkills;
+        private IUserRefreshTokenRepository userRefreshTokens;
 
         public UnitOfWork(AppDbContext context)
         {
@@ -392,6 +393,18 @@ namespace DataAccessLayer.Service
                     userStackTechnologies = new UserStackTechnologyRepository(context);
                 }
                 return userStackTechnologies;
+            }
+        }
+
+        public IUserRefreshTokenRepository UserRefreshTokens
+        {
+            get
+            {
+                if (userRefreshTokens == null)
+                {
+                    userRefreshTokens = new UserRefreshTokenRepository(context);
+                }
+                return userRefreshTokens;
             }
         }
 

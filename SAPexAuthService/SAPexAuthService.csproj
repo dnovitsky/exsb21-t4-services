@@ -6,12 +6,11 @@
 
   <ItemGroup>
     <None Remove="Services\" />
-    <None Remove="Helpers\" />
     <None Remove="Models\" />
+    <None Remove="..\.editorconfig" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
-    <Folder Include="Helpers\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

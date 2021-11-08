@@ -37,7 +37,7 @@ namespace BusinessLogicLayer.Services
                 return false;
             }
         }
-        public async Task<SandboxDtoModel> FindSandboxByIdAsync(int id)
+        public async Task<SandboxDtoModel> FindSandboxByIdAsync(Guid id)
         {
             SandboxEntityModel sandboxEM = await unitOfWork.Sandboxes.FindByIdAsync(id);
             SandboxDtoModel sandboxDto = profile.mapToDto(sandboxEM);
