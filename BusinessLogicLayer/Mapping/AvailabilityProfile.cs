@@ -11,42 +11,46 @@ namespace BusinessLogicLayer.Mapping
 {
     public class AvailabilityProfile
     {
-        public AvailabilityEntityModel mapToEM(AvailabilityDtoModel availabilityDto)
+        public AvailabilityTypeEntityModel mapToEM(AvailabilityDtoModel availabilityDto)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<AvailabilityDtoModel, AvailabilityEntityModel>()
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<AvailabilityDtoModel, AvailabilityTypeEntityModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.Name, y => y.MapFrom(x => x.Name)));
             var mapper = new Mapper(config);
 
-            AvailabilityEntityModel availabilityEM = mapper.Map<AvailabilityDtoModel, AvailabilityEntityModel>(availabilityDto);
+            AvailabilityTypeEntityModel availabilityEM = mapper.Map<AvailabilityDtoModel, AvailabilityTypeEntityModel>(availabilityDto);
             return availabilityEM;
         }
 
-        public AvailabilityDtoModel mapToDto(AvailabilityEntityModel availabilityEM)
+        public AvailabilityDtoModel mapToDto(AvailabilityTypeEntityModel availabilityEM)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<AvailabilityEntityModel, AvailabilityDtoModel>()
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<AvailabilityTypeEntityModel, AvailabilityDtoModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.Name, y => y.MapFrom(x => x.Name)));
             var mapper = new Mapper(config);
 
-            AvailabilityDtoModel availabilityDto = mapper.Map<AvailabilityEntityModel, AvailabilityDtoModel>(availabilityEM);
+            AvailabilityDtoModel availabilityDto = mapper.Map<AvailabilityTypeEntityModel, AvailabilityDtoModel>(availabilityEM);
             return availabilityDto;
         }
 
-        public IEnumerable<AvailabilityDtoModel> mapListToDto(IEnumerable<AvailabilityEntityModel> availabilitiesEM)
+        public IEnumerable<AvailabilityDtoModel> mapListToDto(IEnumerable<AvailabilityTypeEntityModel> availabilitiesEM)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<AvailabilityEntityModel, AvailabilityDtoModel>()
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<AvailabilityTypeEntityModel, AvailabilityDtoModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.Name, y => y.MapFrom(x => x.Name)));
             var mapper = new Mapper(config);
 
-            IList<AvailabilityDtoModel> availabilitiesDto= new List<AvailabilityDtoModel>() { mapper.Map<AvailabilityEntityModel, AvailabilityDtoModel>(availabilitiesEM.FirstOrDefault()) };
+            IList<AvailabilityDtoModel> availabilitiesDto= new List<AvailabilityDtoModel>()
+            {
+                mapper.Map<AvailabilityTypeEntityModel, AvailabilityDtoModel>(availabilitiesEM.FirstOrDefault())
+            };
+
             int i = 0;
             foreach (var avail in availabilitiesEM)
             {
                 if (i != 0)
                 {
-                    AvailabilityDtoModel availabilityDto = mapper.Map<AvailabilityEntityModel, AvailabilityDtoModel>(avail);
+                    AvailabilityDtoModel availabilityDto = mapper.Map<AvailabilityTypeEntityModel, AvailabilityDtoModel>(avail);
                     availabilitiesDto.Add(availabilityDto);
                 }
                 i++;

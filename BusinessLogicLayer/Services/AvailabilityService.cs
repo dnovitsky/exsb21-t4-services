@@ -21,7 +21,7 @@ namespace BusinessLogicLayer.Services
         }
         public async Task<IEnumerable<AvailabilityDtoModel>> GetAllAvailabilitiesAsync()
         {
-            IEnumerable<AvailabilityEntityModel> availabilitiesEM = await Task.Run(() => unitOfWork.Availabilities.GetAllAsync());
+            IEnumerable<AvailabilityTypeEntityModel> availabilitiesEM = await Task.Run(() => unitOfWork.Availabilities.GetAllAsync());
             return profile.mapListToDto(availabilitiesEM);
         }
     }

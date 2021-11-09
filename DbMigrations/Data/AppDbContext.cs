@@ -11,8 +11,7 @@ namespace DbMigrations.Data
 
         public DbSet<AccessFormEntityModel> AccessForms { get; set;}
 
-        public DbSet<AvailabilityEntityModel> Availabilities { get; set; }
-        
+        public DbSet<AvailabilityTypeEntityModel> AvailabilityTypes { get; set; }        
 
         public DbSet<CandidateEntityModel> Candidates { get; set; }
         public DbSet<CandidateLanguageEntityModel> CandidateLanguages { get; set; }

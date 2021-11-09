@@ -15,19 +15,21 @@ namespace DbMigrations.Data
 
             using (AppDbContext db = new AppDbContext(options))
             {
-                if (!db.Availabilities.Any())
+                if (!db.AvailabilityTypes.Any())
                 {
-                    db.Availabilities.Add(new AvailabilityEntityModel
+                    db.AvailabilityTypes.Add(new AvailabilityTypeEntityModel
                     {
                         Id = Guid.NewGuid(),
                         Name = "Less than 4 hours"
                     });
-                    db.Availabilities.Add(new AvailabilityEntityModel
+
+                    db.AvailabilityTypes.Add(new AvailabilityTypeEntityModel
                     {
                         Id = Guid.NewGuid(),
                         Name = "4-6 hours"
                     });
-                    db.Availabilities.Add(new AvailabilityEntityModel
+
+                    db.AvailabilityTypes.Add(new AvailabilityTypeEntityModel
                     {
                         Id = Guid.NewGuid(),
                         Name = "6-infinity hours"

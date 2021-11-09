@@ -9,11 +9,11 @@ namespace DataAccessLayer.IRepositories
 {
     public interface IAvailabilityRepository
     {
-        Task<IEnumerable<AvailabilityEntityModel>> GetAllAsync();
-        Task<IEnumerable<AvailabilityEntityModel>> FindByConditionAsync(Expression<Func<AvailabilityEntityModel, bool>> expression);
-        Task<AvailabilityEntityModel> FindByIdAsync(int id);
-        void CreateAsync(AvailabilityEntityModel item);
-        void Update(AvailabilityEntityModel item);
+        Task<IEnumerable<AvailabilityTypeEntityModel>> GetAllAsync();
+        Task<IEnumerable<AvailabilityTypeEntityModel>> FindByConditionAsync(Expression<Func<AvailabilityTypeEntityModel, bool>> expression);
+        Task<AvailabilityTypeEntityModel> FindByIdAsync(int id);
+        void CreateAsync(AvailabilityTypeEntityModel item);
+        void Update(AvailabilityTypeEntityModel item);
         void Delete(int id);
     }
 }

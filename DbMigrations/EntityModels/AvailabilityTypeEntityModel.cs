@@ -3,12 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DbMigrations.EntityModels
 {
-    public class AvailabilityEntityModel
+    public class AvailabilityTypeEntityModel
     {
-        public AvailabilityEntityModel()
-        {            
-        }
-
         [Key]
         public Guid Id { get; set; }
 

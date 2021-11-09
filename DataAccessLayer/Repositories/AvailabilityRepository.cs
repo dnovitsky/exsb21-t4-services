@@ -9,7 +9,7 @@ using DataAccessLayer.IRepositories;
 
 namespace DataAccessLayer.Repositories
 {
-    public class AvailabilityRepository : Repository<AvailabilityEntityModel>, IAvailabilityRepository
+    public class AvailabilityRepository : Repository<AvailabilityTypeEntityModel>, IAvailabilityRepository
     {
         public AvailabilityRepository(AppDbContext context)
             : base(context)
