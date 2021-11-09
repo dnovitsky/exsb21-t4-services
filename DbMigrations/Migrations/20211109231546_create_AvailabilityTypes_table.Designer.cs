@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DbMigrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211109144905_AddAvailabilityEM")]
-    partial class AddAvailabilityEM
+    [Migration("20211109231546_create_AvailabilityTypes_table")]
+    partial class create_AvailabilityTypes_table
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -62,7 +62,7 @@ namespace DbMigrations.Migrations
                     b.ToTable("AccessForms");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.AvailabilityEntityModel", b =>
+            modelBuilder.Entity("DbMigrations.EntityModels.AvailabilityTypeEntityModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -74,16 +74,13 @@ namespace DbMigrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Availabilities");
+                    b.ToTable("AvailabilityTypes");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateEntityModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AvailabilityId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CV")
@@ -115,8 +112,6 @@ namespace DbMigrations.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AvailabilityId");
 
                     b.ToTable("Candidates");
                 });
@@ -681,17 +676,6 @@ namespace DbMigrations.Migrations
                     b.Navigation("FunctionalRole");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.CandidateEntityModel", b =>
-                {
-                    b.HasOne("DbMigrations.EntityModels.AvailabilityEntityModel", "Availability")
-                        .WithMany("Candidates")
-                        .HasForeignKey("AvailabilityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Availability");
-                });
-
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateLanguageEntityModel", b =>
                 {
                     b.HasOne("DbMigrations.EntityModels.CandidateEntityModel", "Candidate")
@@ -991,11 +975,6 @@ namespace DbMigrations.Migrations
             modelBuilder.Entity("DbMigrations.EntityModels.AccessEntityModel", b =>
                 {
                     b.Navigation("AccessForms");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.AvailabilityEntityModel", b =>
-                {
-                    b.Navigation("Candidates");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateEntityModel", b =>
