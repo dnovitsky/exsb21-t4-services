@@ -17,7 +17,7 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.Name, y => y.MapFrom(x => x.Name)));
             var mapper = new Mapper(config);
-            // Выполняем сопоставление
+
             AvailabilityEntityModel availabilityEM = mapper.Map<AvailabilityDtoModel, AvailabilityEntityModel>(availabilityDto);
             return availabilityEM;
         }
@@ -28,7 +28,7 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.Name, y => y.MapFrom(x => x.Name)));
             var mapper = new Mapper(config);
-            // Выполняем сопоставление
+
             AvailabilityDtoModel availabilityDto = mapper.Map<AvailabilityEntityModel, AvailabilityDtoModel>(availabilityEM);
             return availabilityDto;
         }

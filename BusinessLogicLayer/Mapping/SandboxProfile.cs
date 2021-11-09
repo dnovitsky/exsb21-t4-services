@@ -40,7 +40,7 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.StartRegistration, y => y.MapFrom(x => x.StartRegistration))
                     .ForMember(x => x.EndRegistration, y => y.MapFrom(x => x.EndRegistration)));
             var mapper = new Mapper(config);
-            // Выполняем сопоставление
+
             SandboxDtoModel sandbox = mapper.Map<SandboxEntityModel, SandboxDtoModel>(sandboxEM);
             return sandbox;
         }
