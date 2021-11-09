@@ -31,6 +31,10 @@ namespace DbMigrations.EntityModels
         public string Education { get; set; }
         [Required]
         public string CV { get; set; }
+        [Required]
+        public Guid AvailabilityId { get; set; }
+        [Required]
+        public AvailabilityEntityModel Availability { get; set; }
 
         public IList<CandidateLanguageEntityModel> CandidateLanguages { get; set; }
         public IList<CandidateTechSkillEntityModel> CandidateTechSkills { get; set; }

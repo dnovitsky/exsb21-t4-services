@@ -11,6 +11,7 @@ namespace DataAccessLayer.Service
     {
         IAccessFormRepository AccessForms { get; }
         IAccessRepository Accesses { get; }
+        IAvailabilityRepository Availabilities { get; }
         ICandidateLanguageRepository CandidateLanguages { get; }
         ICandidateProccesRepository CandidateProcceses { get; }
         ICandidateProjectRoleRepository CandidateProjectRoles { get; }
