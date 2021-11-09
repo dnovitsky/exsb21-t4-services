@@ -19,7 +19,7 @@ namespace BusinessLogicLayer.Services
         {
             this.unitOfWork = unitOfWork;
         }
-        public async Task<IEnumerable<AvailabilityDtoModel>> GetAllLanguagesAsync()
+        public async Task<IEnumerable<AvailabilityDtoModel>> GetAllAvailabilitiesAsync()
         {
             IEnumerable<AvailabilityEntityModel> availabilitiesEM = await Task.Run(() => unitOfWork.Availabilities.GetAllAsync());
             return profile.mapListToDto(availabilitiesEM);

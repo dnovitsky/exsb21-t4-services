@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DbMigrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211109140555_AddAvailabilityEM")]
+    [Migration("20211109144905_AddAvailabilityEM")]
     partial class AddAvailabilityEM
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,7 +74,7 @@ namespace DbMigrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AvailabilityEntityModel");
+                    b.ToTable("Availabilities");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateEntityModel", b =>

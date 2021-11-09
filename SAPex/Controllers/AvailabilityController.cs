@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogicLayer.DtoModels;
+using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,11 +15,18 @@ namespace SAPex.Controllers
     [ApiController]
     public class AvailabilityController : ControllerBase
     {
+        private readonly IAvailabilityService _availabilityService;
+
+        public AvailabilityController(IAvailabilityService service)
+        {
+            _availabilityService = service;
+        }
+
         // GET: api/<AvailabilityController>
         [HttpGet]
-        public async IEnumerable<AvailabilityDtoModel> GetAllAvailabilitiesAsync()
+        public async Task<IEnumerable<AvailabilityDtoModel>> GetAvailabilitiesAsync()
         {
-            return await  
+            return await _availabilityService.GetAllAvailabilitiesAsync();
         }
     }
 }

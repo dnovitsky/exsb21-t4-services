@@ -10,6 +10,6 @@ namespace BusinessLogicLayer.Interfaces
 {
     public interface IAvailabilityService
     {
-        Task<IEnumerable<AvailabilityDtoModel>> GetAllLanguagesAsync();
+        Task<IEnumerable<AvailabilityDtoModel>> GetAllAvailabilitiesAsync();
     }
 }

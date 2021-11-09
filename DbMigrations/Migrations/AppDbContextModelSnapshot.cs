@@ -72,7 +72,7 @@ namespace DbMigrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AvailabilityEntityModel");
+                    b.ToTable("Availabilities");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateEntityModel", b =>
