@@ -36,5 +36,8 @@ namespace DbMigrations.EntityModels
         public Guid CandidateProccesId { get; set; }
         public CandidateProccesEntityModel CandidateProcces { get; set; }
 
+        [Required]
+        public Guid AvailabilityTypeId { get; set; }
+        public AvailabilityTypeEntityModel AvailabilityType { get; set; }
     }
 }
