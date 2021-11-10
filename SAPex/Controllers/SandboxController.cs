@@ -57,7 +57,7 @@ namespace SAPex.Controllers
 
             if (dtoModels == null)
             {
-                return await Task.FromResult(NotFound());
+                return await Task.FromResult(NotFound()); // return null
             }
 
             IEnumerable<SandboxViewModel> viewModels = _mapper.MapListSbFromDtoToView(dtoModels);
@@ -92,7 +92,11 @@ namespace SAPex.Controllers
                     viewModels = viewModels.OrderBy(s => s.StartRegistration).ToList();
                     break;
                 case "endregistration":
-                    viewModels = viewModels.OrderBy(s => s.EndRegistration).ToList();
+                    viewModels = viewModels
+                        .OrderBy(s => s.EndRegistration)
+                        .Skip(pageNumber - 1)
+                        .Take(pageSize)
+                        .ToList();
                     break;
 
                 default:

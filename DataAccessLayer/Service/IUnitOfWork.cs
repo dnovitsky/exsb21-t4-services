@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using DataAccessLayer.IRepositories;
 
 namespace DataAccessLayer.Service
@@ -34,7 +35,6 @@ namespace DataAccessLayer.Service
         IUserTeamRepository UserTeams { get; }
         IUserTechSkillRepository UserTechSkills { get; }
         Task SaveAsync();
-
         void Save();
     }
 }
