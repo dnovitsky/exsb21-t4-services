@@ -15,7 +15,9 @@ namespace BusinessLogicLayer.Mapping
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<AvailabilityTypeDtoModel, AvailabilityTypeEntityModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
-                    .ForMember(x => x.Name, y => y.MapFrom(x => x.Name)));
+                    .ForMember(x => x.Name, y => y.MapFrom(x => x.Name))
+                    .ForMember(x => x.OrderLevel, y => y.MapFrom(x => x.OrderLevel)));
+
             var mapper = new Mapper(config);
 
             AvailabilityTypeEntityModel availabilityEM = mapper.Map<AvailabilityTypeDtoModel, AvailabilityTypeEntityModel>(availabilityDto);
@@ -26,7 +28,9 @@ namespace BusinessLogicLayer.Mapping
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<AvailabilityTypeEntityModel, AvailabilityTypeDtoModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
-                    .ForMember(x => x.Name, y => y.MapFrom(x => x.Name)));
+                    .ForMember(x => x.Name, y => y.MapFrom(x => x.Name))
+                    .ForMember(x => x.OrderLevel, y => y.MapFrom(x => x.OrderLevel)));
+
             var mapper = new Mapper(config);
 
             AvailabilityTypeDtoModel availabilityDto = mapper.Map<AvailabilityTypeEntityModel, AvailabilityTypeDtoModel>(availabilityEM);
@@ -37,7 +41,9 @@ namespace BusinessLogicLayer.Mapping
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<AvailabilityTypeEntityModel, AvailabilityTypeDtoModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
-                    .ForMember(x => x.Name, y => y.MapFrom(x => x.Name)));
+                    .ForMember(x => x.Name, y => y.MapFrom(x => x.Name))
+                    .ForMember(x => x.OrderLevel, y => y.MapFrom(x => x.OrderLevel)));
+
             var mapper = new Mapper(config);
 
             IList<AvailabilityTypeDtoModel> availabilitiesDto= new List<AvailabilityTypeDtoModel>()
