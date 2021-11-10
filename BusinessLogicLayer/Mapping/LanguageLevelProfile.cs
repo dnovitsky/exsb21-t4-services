@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using BusinessLogicLayer.DtoModels;
 using DbMigrations.EntityModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Mapping
 {
@@ -15,7 +12,9 @@ namespace BusinessLogicLayer.Mapping
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<LanguageLevelDtoModel, LanguageLevelEntityModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
-                    .ForMember(x => x.Name, y => y.MapFrom(x => x.Name)));
+                    .ForMember(x => x.Name, y => y.MapFrom(x => x.Name))
+                    .ForMember(x => x.OrderLevel, y => y.MapFrom(x => x.OrderLevel)));
+
             var mapper = new Mapper(config);
 
             LanguageLevelEntityModel languagelevelEM = mapper.Map<LanguageLevelDtoModel, LanguageLevelEntityModel>(languagelevelDto);
@@ -26,7 +25,9 @@ namespace BusinessLogicLayer.Mapping
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<LanguageLevelEntityModel, LanguageLevelDtoModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
-                    .ForMember(x => x.Name, y => y.MapFrom(x => x.Name)));
+                    .ForMember(x => x.Name, y => y.MapFrom(x => x.Name))
+                    .ForMember(x => x.OrderLevel, y => y.MapFrom(x => x.OrderLevel)));
+
             var mapper = new Mapper(config);
 
             LanguageLevelDtoModel languagelevelDto = mapper.Map<LanguageLevelEntityModel, LanguageLevelDtoModel>(languagelevelEM);
@@ -36,7 +37,9 @@ namespace BusinessLogicLayer.Mapping
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<LanguageLevelEntityModel, LanguageLevelDtoModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
-                    .ForMember(x => x.Name, y => y.MapFrom(x => x.Name)));
+                    .ForMember(x => x.Name, y => y.MapFrom(x => x.Name))
+                    .ForMember(x => x.OrderLevel, y => y.MapFrom(x => x.OrderLevel)));
+
             var mapper = new Mapper(config);
 
             IList<LanguageLevelDtoModel> languagelevelsDto = new List<LanguageLevelDtoModel>()
