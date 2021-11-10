@@ -33,14 +33,15 @@ namespace DataAccessLayer.Repositories
             return await query.ToListAsync();
         }
 
-        public virtual async Task<T> FindByIdAsync(int id)
+        public virtual async Task<T> FindByIdAsync(Guid id)
         {
             return await set.FindAsync(id);
         }
 
-        public virtual async void CreateAsync(T item)
+        public virtual async Task CreateAsync(T item)
         {
             await set.AddAsync(item);
+
         }
 
         public virtual void Update(T item)
@@ -48,7 +49,7 @@ namespace DataAccessLayer.Repositories
             context.Update(item);
         }
 
-        public virtual void Delete(int id)
+        public virtual void Delete(Guid id)
         {
             T del_item = set.Find(id);
             if (del_item != null)
