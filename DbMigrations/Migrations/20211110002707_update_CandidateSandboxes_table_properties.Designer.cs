@@ -4,14 +4,16 @@ using DbMigrations.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DbMigrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211110002707_update_CandidateSandboxes_table_properties")]
+    partial class update_CandidateSandboxes_table_properties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -194,7 +196,10 @@ namespace DbMigrations.Migrations
                     b.Property<Guid>("CandidateId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CandidateProcessId")
+                    b.Property<Guid>("CandidateProccesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CandidateProcessId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CandidateProjectRoleId")
@@ -203,7 +208,10 @@ namespace DbMigrations.Migrations
                     b.Property<Guid>("SandboxId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("StackTechnologyId")
+                    b.Property<Guid>("StackTechnologiesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("StackTechnologyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("TeamId")
@@ -565,40 +573,6 @@ namespace DbMigrations.Migrations
                     b.ToTable("UserLanguages");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.UserRefreshTokenEntityModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("AddedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ExpiryDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsRevoked")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsUsed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("JwtId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Token")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserRefreshTokens");
-                });
-
             modelBuilder.Entity("DbMigrations.EntityModels.UserSandBoxEntityModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -775,9 +749,7 @@ namespace DbMigrations.Migrations
 
                     b.HasOne("DbMigrations.EntityModels.CandidateProccesEntityModel", "CandidateProcess")
                         .WithMany()
-                        .HasForeignKey("CandidateProcessId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CandidateProcessId");
 
                     b.HasOne("DbMigrations.EntityModels.CandidateProjectRoleEntityModel", "CandidateProjectRole")
                         .WithMany("CandidateSandboxes")
@@ -793,9 +765,7 @@ namespace DbMigrations.Migrations
 
                     b.HasOne("DbMigrations.EntityModels.StackTechnologyEntityModel", "StackTechnology")
                         .WithMany("CandidateSandboxes")
-                        .HasForeignKey("StackTechnologyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StackTechnologyId");
 
                     b.HasOne("DbMigrations.EntityModels.TeamEntityModel", "Team")
                         .WithMany()
@@ -938,17 +908,6 @@ namespace DbMigrations.Migrations
                     b.Navigation("Language");
 
                     b.Navigation("LanguageLevel");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.UserRefreshTokenEntityModel", b =>
-                {
-                    b.HasOne("DbMigrations.EntityModels.UserEntityModel", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("User");
                 });

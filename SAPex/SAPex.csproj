@@ -34,6 +34,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj" />
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
     <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
     <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj">
