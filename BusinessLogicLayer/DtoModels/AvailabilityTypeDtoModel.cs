@@ -1,11 +1,8 @@
-﻿using System;
+﻿using BusinessLogicLayer.DtoModels.BaseModels;
 
 namespace BusinessLogicLayer.DtoModels
 {
-    public class AvailabilityTypeDtoModel
-    {
-        public Guid Id { get; set; }
-
-        public string Name { get; set; }
+    public class AvailabilityTypeDtoModel : ItemOrderLevelDtoModel
+    {    
     }
 }
