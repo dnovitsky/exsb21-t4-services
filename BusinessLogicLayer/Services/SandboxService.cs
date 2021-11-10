@@ -65,7 +65,7 @@ namespace BusinessLogicLayer.Services
         {
                 SandboxEntityModel sandbox = profile.mapToEM(sandboxDto);
                 unitOfWork.Sandboxes.Update(sandbox);
-                unitOfWork.Save();
+                unitOfWork.SaveAsync();
         }
 
         public void DeleteSandbox(Guid id)

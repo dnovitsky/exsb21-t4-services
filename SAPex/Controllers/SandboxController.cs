@@ -117,19 +117,16 @@ namespace SAPex.Controllers
             return await Task.FromResult(Ok()); // need message?
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] SandboxViewModel requestData) // ? id
-        {
-            ValidationResult validationResult = new SandboxValidator().Validate(requestData); // check if already exists update
-
-            if (!validationResult.IsValid)
-            {
-                return await Task.FromResult(BadRequest());
-            }
-
-            _service.UpdateSandbox(_mapper.MapSbFromViewToDto(requestData)); // where goes check on exist
-
-            return await Task.FromResult(Ok());
-        }
+        // [HttpPut]
+        // public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] SandboxViewModel requestData) // ? id
+        // {
+        //    ValidationResult validationResult = new SandboxValidator().Validate(requestData); // check if already exists update
+        //    if (!validationResult.IsValid)
+        //    {
+        //        return await Task.FromResult(BadRequest());
+        //    }
+        //    _service.UpdateSandbox(_mapper.MapSbFromViewToDto(requestData)); // where goes check on exist
+        //    return await Task.FromResult(Ok());
+        // }
     }
 }
