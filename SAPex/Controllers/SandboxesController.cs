@@ -18,12 +18,12 @@ namespace SAPex.Controllers
 {
     [Route("api/sandbox")]
     [ApiController]
-    public class SandboxController : ControllerBase
+    public class SandboxesController : ControllerBase
     {
         private readonly ISandboxService _service;
         private readonly SandboxMapper _mapper;
 
-        public SandboxController(ISandboxService service)
+        public SandboxesController(ISandboxService service)
         {
             _service = service;
             _mapper = new SandboxMapper();
