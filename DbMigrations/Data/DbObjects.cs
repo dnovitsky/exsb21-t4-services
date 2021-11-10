@@ -36,6 +36,40 @@ namespace DbMigrations.Data
                     });
                 }
 
+                if (!db.LanguageLevels.Any())
+                {
+                    db.LanguageLevels.Add(new LanguageLevelEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Elementary"
+                    });
+                    db.LanguageLevels.Add(new LanguageLevelEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Pre Intermediate"
+                    });
+                    db.LanguageLevels.Add(new LanguageLevelEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Intermediate"
+                    });
+                    db.LanguageLevels.Add(new LanguageLevelEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Upper Intermediate"
+                    });
+                    db.LanguageLevels.Add(new LanguageLevelEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Advanced"
+                    });
+                    db.LanguageLevels.Add(new LanguageLevelEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Proficient"
+                    });
+
+                }
                 db.SaveChanges();
             }
         }
