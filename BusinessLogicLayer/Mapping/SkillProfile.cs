@@ -17,7 +17,7 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.Name, y => y.MapFrom(x => x.Name)));
             var mapper = new Mapper(config);
-            // Выполняем сопоставление
+
             SkillEntityModel skillEM = mapper.Map<SkillDtoModel, SkillEntityModel>(skillDto);
             return skillEM;
         }
@@ -28,7 +28,7 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.Name, y => y.MapFrom(x => x.Name)));
             var mapper = new Mapper(config);
-            // Выполняем сопоставление
+
             SkillDtoModel skillDto= mapper.Map<SkillEntityModel,SkillDtoModel>(skillEM);
             return skillDto;
         }

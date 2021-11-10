@@ -4,14 +4,16 @@ using DbMigrations.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DbMigrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211109234816_create_AvailabilityTypes_and_CandidateSandboxes_tables_relationship")]
+    partial class create_AvailabilityTypes_and_CandidateSandboxes_tables_relationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -197,9 +199,6 @@ namespace DbMigrations.Migrations
                     b.Property<Guid>("CandidateProccesId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CandidateProcessId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("CandidateProjectRoleId")
                         .HasColumnType("uniqueidentifier");
 
@@ -207,9 +206,6 @@ namespace DbMigrations.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("StackTechnologiesId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("StackTechnologyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("TeamId")
@@ -221,13 +217,13 @@ namespace DbMigrations.Migrations
 
                     b.HasIndex("CandidateId");
 
-                    b.HasIndex("CandidateProcessId");
+                    b.HasIndex("CandidateProccesId");
 
                     b.HasIndex("CandidateProjectRoleId");
 
                     b.HasIndex("SandboxId");
 
-                    b.HasIndex("StackTechnologyId");
+                    b.HasIndex("StackTechnologiesId");
 
                     b.HasIndex("TeamId");
 
@@ -745,9 +741,11 @@ namespace DbMigrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DbMigrations.EntityModels.CandidateProccesEntityModel", "CandidateProcess")
+                    b.HasOne("DbMigrations.EntityModels.CandidateProccesEntityModel", "CandidateProcces")
                         .WithMany()
-                        .HasForeignKey("CandidateProcessId");
+                        .HasForeignKey("CandidateProccesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DbMigrations.EntityModels.CandidateProjectRoleEntityModel", "CandidateProjectRole")
                         .WithMany("CandidateSandboxes")
@@ -761,9 +759,11 @@ namespace DbMigrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DbMigrations.EntityModels.StackTechnologyEntityModel", "StackTechnology")
+                    b.HasOne("DbMigrations.EntityModels.StackTechnologyEntityModel", "StackTechnologies")
                         .WithMany("CandidateSandboxes")
-                        .HasForeignKey("StackTechnologyId");
+                        .HasForeignKey("StackTechnologiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DbMigrations.EntityModels.TeamEntityModel", "Team")
                         .WithMany()
@@ -774,13 +774,13 @@ namespace DbMigrations.Migrations
 
                     b.Navigation("Candidate");
 
-                    b.Navigation("CandidateProcess");
+                    b.Navigation("CandidateProcces");
 
                     b.Navigation("CandidateProjectRole");
 
                     b.Navigation("Sandbox");
 
-                    b.Navigation("StackTechnology");
+                    b.Navigation("StackTechnologies");
 
                     b.Navigation("Team");
                 });
