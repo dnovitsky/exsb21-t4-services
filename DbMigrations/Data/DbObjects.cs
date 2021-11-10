@@ -41,34 +41,34 @@ namespace DbMigrations.Data
                     db.LanguageLevels.Add(new LanguageLevelEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        Name = "Elementary"
+                        Name = "Beginner(A1)"
                     });
                     db.LanguageLevels.Add(new LanguageLevelEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        Name = "Pre Intermediate"
+                        Name = "Elementary(A2)"
                     });
                     db.LanguageLevels.Add(new LanguageLevelEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        Name = "Intermediate"
+                        Name = "Intermediate(B1)"
                     });
                     db.LanguageLevels.Add(new LanguageLevelEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        Name = "Upper Intermediate"
+                        Name = "Upper-Intermediate(B2)"
                     });
                     db.LanguageLevels.Add(new LanguageLevelEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        Name = "Advanced"
+                        Name = "Advanced(C1)"
                     });
                     db.LanguageLevels.Add(new LanguageLevelEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        Name = "Proficient"
+                        Name = "Proficient(C2)"
                     });
-
+                    
                 }
                 db.SaveChanges();
             }
