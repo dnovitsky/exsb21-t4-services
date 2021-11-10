@@ -65,7 +65,7 @@ namespace BusinessLogicLayer.Services
                 unitOfWork.SaveAsync();
         }
 
-        public void DeleteSandbox(int id)
+        public void DeleteSandbox(Guid id)
         {
             unitOfWork.Sandboxes.Delete(id);
         }

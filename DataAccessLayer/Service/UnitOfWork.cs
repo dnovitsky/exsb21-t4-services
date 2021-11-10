@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.IRepositories;
+using DataAccessLayer.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -409,7 +409,11 @@ namespace DataAccessLayer.Service
             }
         }
 
+<<<<<<< HEAD
         public IUserRefreshTokenRepository UserRefreshTokens
+=======
+        public async Task SaveAsync()
+>>>>>>> dev
         {
             get
             {

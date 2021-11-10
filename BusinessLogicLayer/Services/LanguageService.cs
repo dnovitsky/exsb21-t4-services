@@ -37,7 +37,7 @@ namespace BusinessLogicLayer.Services
             }
         }
 
-        public void DeleteLanguage(int id)
+        public void DeleteLanguage(Guid id)
         {
             unitOfWork.Languages.Delete(id);
         }

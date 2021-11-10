@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -13,8 +13,12 @@ namespace DataAccessLayer.IRepositories
         Task<IEnumerable<FunctionalRoleEntityModel>> GetAllAsync();
         Task<IEnumerable<FunctionalRoleEntityModel>> FindByConditionAsync(Expression<Func<FunctionalRoleEntityModel, bool>> expression);
         Task<FunctionalRoleEntityModel> FindByIdAsync(Guid id);
+<<<<<<< HEAD
         void CreateAsync(FunctionalRoleEntityModel item);
+=======
+        Task<FunctionalRoleEntityModel> CreateAsync(FunctionalRoleEntityModel item);
+>>>>>>> dev
         void Update(FunctionalRoleEntityModel item);
-        void Delete(int id);
+        void Delete(Guid id);
     }
 }

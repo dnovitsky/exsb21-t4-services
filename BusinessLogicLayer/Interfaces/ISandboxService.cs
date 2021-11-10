@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
@@ -15,6 +15,10 @@ namespace BusinessLogicLayer.Interfaces
         Task<IEnumerable<SandboxDtoModel>> FindSandBoxesAsync(Expression<Func<SandboxEntityModel, bool>> expression);
         void UpdateSandbox(SandboxDtoModel sandboxDto);
         Task<SandboxDtoModel> FindSandboxByIdAsync(Guid id);
+<<<<<<< HEAD
         void DeleteSandbox(int id);
+=======
+        void DeleteSandbox(Guid id);
+>>>>>>> dev
     }
 }

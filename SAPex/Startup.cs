@@ -85,6 +85,14 @@ namespace SAPex
                 });
                 c.OperationFilter<SwaggerFileUploadOperationFilter>();
             });
+<<<<<<< HEAD
+=======
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
+            services.AddScoped<ILanguageLevelService, LanguageLevelService>();
+            services.AddScoped<ISkillService, SkillService>();
+>>>>>>> dev
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

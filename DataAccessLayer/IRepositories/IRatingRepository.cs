@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -13,8 +13,12 @@ namespace DataAccessLayer.IRepositories
         Task<IEnumerable<RatingEntityModel>> GetAllAsync();
         Task<IEnumerable<RatingEntityModel>> FindByConditionAsync(Expression<Func<RatingEntityModel, bool>> expression);
         Task<RatingEntityModel> FindByIdAsync(Guid id);
+<<<<<<< HEAD
         void CreateAsync(RatingEntityModel item);
+=======
+        Task<RatingEntityModel> CreateAsync(RatingEntityModel item);
+>>>>>>> dev
         void Update(RatingEntityModel item);
-        void Delete(int id);
+        void Delete(Guid id);
     }
 }
