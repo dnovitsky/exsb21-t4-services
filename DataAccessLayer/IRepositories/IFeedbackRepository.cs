@@ -13,7 +13,7 @@ namespace DataAccessLayer.IRepositories
         Task<IEnumerable<FeedbackEntityModel>> GetAllAsync();
         Task<IEnumerable<FeedbackEntityModel>> FindByConditionAsync(Expression<Func<FeedbackEntityModel, bool>> expression);
         Task<FeedbackEntityModel> FindByIdAsync(Guid id);
-        void CreateAsync(FeedbackEntityModel item);
+        Task<FeedbackEntityModel> CreateAsync(FeedbackEntityModel item);
         void Update(FeedbackEntityModel item);
         void Delete(Guid id);
     }

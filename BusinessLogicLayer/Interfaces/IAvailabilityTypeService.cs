@@ -7,5 +7,6 @@ namespace BusinessLogicLayer.Interfaces
     public interface IAvailabilityTypeService
     {
         Task<IEnumerable<AvailabilityTypeDtoModel>> GetAllAvailabilitiesAsync();
+
     }
 }

@@ -13,7 +13,7 @@ namespace DataAccessLayer.IRepositories
         Task<IEnumerable<AccessFormEntityModel>> GetAllAsync();
         Task<IEnumerable<AccessFormEntityModel>> FindByConditionAsync(Expression<Func<AccessFormEntityModel, bool>> expression);
         Task<AccessFormEntityModel> FindByIdAsync(Guid id);
-        void CreateAsync(AccessFormEntityModel item);
+        Task<AccessFormEntityModel> CreateAsync(AccessFormEntityModel item);
         void Update(AccessFormEntityModel item);
         void Delete(Guid id);
     }

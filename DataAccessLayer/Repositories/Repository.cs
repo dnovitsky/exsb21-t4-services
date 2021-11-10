@@ -38,10 +38,10 @@ namespace DataAccessLayer.Repositories
             return await set.FindAsync(id);
         }
 
-        public virtual async Task CreateAsync(T item)
+        public virtual async Task<T> CreateAsync(T item)
         {
-            await set.AddAsync(item);
-
+            var entityEntry = await set.AddAsync(item);
+            return entityEntry.Entity;
         }
 
         public virtual void Update(T item)

@@ -24,7 +24,7 @@ namespace BusinessLogicLayer.Mapping
 
         public SkillDtoModel mapToDto(SkillEntityModel skillEM)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<LanguageEntityModel, LanguageDtoModel>()
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<SkillEntityModel, SkillDtoModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.Name, y => y.MapFrom(x => x.Name)));
             var mapper = new Mapper(config);
