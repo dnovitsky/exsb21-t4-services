@@ -16,7 +16,7 @@ namespace DataAccessLayer.Service
 
         private IAccessFormRepository accessForms;
         private IAccessRepository accesses;
-        private IAvailabilityRepository availabilities;
+        private IAvailabilityTypeRepository availabilityTypes;
         private ICandidateLanguageRepository candidateLanguages;
         private ICandidateProccesRepository candidateProcceses;
         private ICandidateProjectRoleRepository candidateProjectRoles;
@@ -72,15 +72,15 @@ namespace DataAccessLayer.Service
             }
         }
 
-        public IAvailabilityRepository Availabilities
+        public IAvailabilityTypeRepository AvailabilityTypes
         {
             get
             {
-                if (availabilities == null)
+                if (availabilityTypes == null)
                 {
-                    availabilities = new AvailabilityRepository(context);
+                    availabilityTypes = new AvailabilityTypeRepository(context);
                 }
-                return availabilities;
+                return availabilityTypes;
             }
         }
 

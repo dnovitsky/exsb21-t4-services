@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using DbMigrations.EntityModels;
 
 namespace DataAccessLayer.IRepositories
 {
-    public interface IAvailabilityRepository
+    public interface IAvailabilityTypeRepository
     {
         Task<IEnumerable<AvailabilityTypeEntityModel>> GetAllAsync();
         Task<IEnumerable<AvailabilityTypeEntityModel>> FindByConditionAsync(Expression<Func<AvailabilityTypeEntityModel, bool>> expression);

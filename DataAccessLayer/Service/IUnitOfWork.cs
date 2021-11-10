@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataAccessLayer.IRepositories;
 
 namespace DataAccessLayer.Service
@@ -11,7 +7,7 @@ namespace DataAccessLayer.Service
     {
         IAccessFormRepository AccessForms { get; }
         IAccessRepository Accesses { get; }
-        IAvailabilityRepository Availabilities { get; }
+        IAvailabilityTypeRepository AvailabilityTypes { get; }
         ICandidateLanguageRepository CandidateLanguages { get; }
         ICandidateProccesRepository CandidateProcceses { get; }
         ICandidateProjectRoleRepository CandidateProjectRoles { get; }

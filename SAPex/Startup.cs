@@ -83,7 +83,7 @@ namespace SAPex
             });
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IAvailabilityService, AvailabilityService>();
+            services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
