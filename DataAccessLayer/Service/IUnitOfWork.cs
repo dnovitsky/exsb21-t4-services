@@ -37,6 +37,6 @@ namespace DataAccessLayer.Service
         IUserTeamRepository UserTeams { get; }
         IUserTechSkillRepository UserTechSkills { get; }
         IUserRefreshTokenRepository UserRefreshTokens { get; }
-        void SaveAsync();
+        Task SaveAsync();
     }
 }

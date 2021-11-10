@@ -49,7 +49,7 @@ namespace SAPex
                 };
             });
             services.Configure<AppSettingsModel>(Configuration.GetSection("AppSettings"));
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Scoped);
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<UserService, UserService>();
             services.AddScoped<UserRefreshTokenService, UserRefreshTokenService>();
@@ -84,7 +84,7 @@ namespace SAPex
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext dbContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext dbContext, ApplicationHelper helper)
         {
             app.UseSwagger();
             app.UseSwaggerUI(options =>
@@ -116,6 +116,7 @@ namespace SAPex
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
             dbContext.Database.Migrate();
+            System.Threading.Tasks.Task<bool> task = helper.CreateAsync();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace SAPexAuthService.Services
         public async Task<bool> Add(UserRefreshTokenEntityModel model)
         {
             await Task.Run(() => _unitOfWork.UserRefreshTokens.CreateAsync(model));
-            _unitOfWork.SaveAsync();
+            await Task.Run(()=>_unitOfWork.SaveAsync());
             return true;
         }
 

@@ -14,15 +14,16 @@ namespace BusinessLogicLayer.Helpers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<bool> CreateAsync()
+        public async Task<bool> CreateDataAsync()
         {
             FunctionalRoleEntityModel functionalRole = new FunctionalRoleEntityModel
             {
-                Name = "manager"
+                Name = "Manager"
             };
 
             await Task.Run(()=> _unitOfWork.FunctionalRoles.CreateAsync(functionalRole));
-            _unitOfWork.SaveAsync();
+            await Task.Run(()=>_unitOfWork.SaveAsync());
+
             UserEntityModel user = new UserEntityModel
             {
                 Name="Manager",
@@ -36,11 +37,11 @@ namespace BusinessLogicLayer.Helpers
             };
 
             await Task.Run(() => _unitOfWork.Users.CreateAsync(user));
-            _unitOfWork.SaveAsync();
+            await Task.Run(() => _unitOfWork.SaveAsync());
             return true;
         }
 
-        public bool Delete()
+        public bool DeleteData()
         {
             return true;
         }
