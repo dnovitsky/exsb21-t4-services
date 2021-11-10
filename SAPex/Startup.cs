@@ -1,11 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
-<<<<<<< HEAD
 using BusinessLogicLayer.Helpers;
-=======
 using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Services;
->>>>>>> dev
 using DataAccessLayer.Service;
 using DbMigrations.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -59,7 +57,7 @@ namespace SAPex
             services.AddScoped<UserService, UserService>();
             services.AddScoped<UserRefreshTokenService, UserRefreshTokenService>();
             services.AddScoped<JwtService, JwtService>();
-            services.AddScoped<ApplicationHelper, ApplicationHelper>();
+            services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
             services.AddSwaggerGen(c =>
             {
                 var jwtSecurityScheme = new OpenApiSecurityScheme
@@ -86,16 +84,10 @@ namespace SAPex
                 });
                 c.OperationFilter<SwaggerFileUploadOperationFilter>();
             });
-<<<<<<< HEAD
-=======
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
->>>>>>> dev
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext dbContext, ApplicationHelper helper)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext dbContext)
         {
             app.UseSwagger();
             app.UseSwaggerUI(options =>
@@ -126,13 +118,18 @@ namespace SAPex
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-<<<<<<< HEAD
+
             dbContext.Database.Migrate();
-            System.Threading.Tasks.Task<bool> task = helper.CreateAsync();
-=======
+            List<IApplicationHelper> helpers = new List<IApplicationHelper>
+            {
+                new UserHelper(dbContext),
+                new RoleHelper(dbContext),
+                new UserRoleHelper(dbContext),
+            };
+
+            helpers.ForEach(helper => helper.CreateTestData());
 
             DbObjects.Initial(Configuration.GetConnectionString("DefaultConnection"));
->>>>>>> dev
         }
     }
 }

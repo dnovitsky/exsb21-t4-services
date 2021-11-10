@@ -12,7 +12,7 @@ namespace DbMigrations.Data
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
             var options = optionsBuilder.UseSqlServer(connectionString).Options;
-
+           
             using (AppDbContext db = new AppDbContext(options))
             {
                 if (!db.AvailabilityTypes.Any())
@@ -34,6 +34,7 @@ namespace DbMigrations.Data
                         Id = Guid.NewGuid(),
                         Name = "6-infinity hours"
                     });
+
                 }
 
                 db.SaveChanges();
