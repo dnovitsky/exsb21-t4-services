@@ -15,6 +15,6 @@ namespace BusinessLogicLayer.Interfaces
         Task<IEnumerable<SandboxDtoModel>> FindSandBoxesAsync(Expression<Func<SandboxEntityModel, bool>> expression);
         void UpdateSandbox(SandboxDtoModel sandboxDto);
         Task<SandboxDtoModel> FindSandboxByIdAsync(Guid id);
-        void DeleteSandbox(int id);
+        void DeleteSandbox(Guid id);
     }
 }
