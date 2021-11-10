@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Text;
+using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.Services;
 using DataAccessLayer.Service;
 using DbMigrations.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -82,6 +84,8 @@ namespace SAPex
             });
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("MSSQL_CONNECTION_STRING")));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
+            services.AddScoped<ILanguageLevelService, LanguageLevelService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

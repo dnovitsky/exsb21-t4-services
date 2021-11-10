@@ -4,14 +4,16 @@ using DbMigrations.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DbMigrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211109231546_create_AvailabilityTypes_table")]
+    partial class create_AvailabilityTypes_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,9 +71,6 @@ namespace DbMigrations.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OrderLevel")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -191,13 +190,10 @@ namespace DbMigrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AvailabilityTypeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("CandidateId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CandidateProcessId")
+                    b.Property<Guid>("CandidateProccesId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CandidateProjectRoleId")
@@ -206,7 +202,7 @@ namespace DbMigrations.Migrations
                     b.Property<Guid>("SandboxId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("StackTechnologyId")
+                    b.Property<Guid>("StackTechnologiesId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("TeamId")
@@ -214,17 +210,15 @@ namespace DbMigrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AvailabilityTypeId");
-
                     b.HasIndex("CandidateId");
 
-                    b.HasIndex("CandidateProcessId");
+                    b.HasIndex("CandidateProccesId");
 
                     b.HasIndex("CandidateProjectRoleId");
 
                     b.HasIndex("SandboxId");
 
-                    b.HasIndex("StackTechnologyId");
+                    b.HasIndex("StackTechnologiesId");
 
                     b.HasIndex("TeamId");
 
@@ -334,9 +328,6 @@ namespace DbMigrations.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OrderLevel")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -733,21 +724,15 @@ namespace DbMigrations.Migrations
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateSandboxEntityModel", b =>
                 {
-                    b.HasOne("DbMigrations.EntityModels.AvailabilityTypeEntityModel", "AvailabilityType")
-                        .WithMany("CandidateSandboxes")
-                        .HasForeignKey("AvailabilityTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("DbMigrations.EntityModels.CandidateEntityModel", "Candidate")
                         .WithMany("CandidateSandboxes")
                         .HasForeignKey("CandidateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DbMigrations.EntityModels.CandidateProccesEntityModel", "CandidateProcess")
+                    b.HasOne("DbMigrations.EntityModels.CandidateProccesEntityModel", "CandidateProcces")
                         .WithMany()
-                        .HasForeignKey("CandidateProcessId")
+                        .HasForeignKey("CandidateProccesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -763,9 +748,9 @@ namespace DbMigrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DbMigrations.EntityModels.StackTechnologyEntityModel", "StackTechnology")
+                    b.HasOne("DbMigrations.EntityModels.StackTechnologyEntityModel", "StackTechnologies")
                         .WithMany("CandidateSandboxes")
-                        .HasForeignKey("StackTechnologyId")
+                        .HasForeignKey("StackTechnologiesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -774,17 +759,15 @@ namespace DbMigrations.Migrations
                         .HasForeignKey("TeamId")
                         .IsRequired();
 
-                    b.Navigation("AvailabilityType");
-
                     b.Navigation("Candidate");
 
-                    b.Navigation("CandidateProcess");
+                    b.Navigation("CandidateProcces");
 
                     b.Navigation("CandidateProjectRole");
 
                     b.Navigation("Sandbox");
 
-                    b.Navigation("StackTechnology");
+                    b.Navigation("StackTechnologies");
 
                     b.Navigation("Team");
                 });
@@ -992,11 +975,6 @@ namespace DbMigrations.Migrations
             modelBuilder.Entity("DbMigrations.EntityModels.AccessEntityModel", b =>
                 {
                     b.Navigation("AccessForms");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.AvailabilityTypeEntityModel", b =>
-                {
-                    b.Navigation("CandidateSandboxes");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateEntityModel", b =>

@@ -2,7 +2,7 @@
 
 namespace BusinessLogicLayer.DtoModels
 {
-    public class LanguageDtoModel : ItemDtoModel
-    {       
+    public class AvailabilityTypeDtoModel : ItemOrderLevelDtoModel
+    {    
     }
 }
