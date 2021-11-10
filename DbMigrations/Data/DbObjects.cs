@@ -1,12 +1,7 @@
 ﻿using DbMigrations.EntityModels;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace DbMigrations.Data
@@ -15,15 +10,34 @@ namespace DbMigrations.Data
     {
         public static void Initial(string connectionString)
         {
-            //var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            //var options = optionsBuilder.UseSqlServer(connectionString).Options;
+            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+            var options = optionsBuilder.UseSqlServer(connectionString).Options;
 
-            //using (AppDbContext db = new AppDbContext(options))
-            //{
-            //    db.TestTable.Add(new TestModel { Name = " third " });
-            //    db.SaveChanges();
-            //}
+            using (AppDbContext db = new AppDbContext(options))
+            {
+                if (!db.AvailabilityTypes.Any())
+                {
+                    db.AvailabilityTypes.Add(new AvailabilityTypeEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Less than 4 hours"
+                    });
 
+                    db.AvailabilityTypes.Add(new AvailabilityTypeEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "4-6 hours"
+                    });
+
+                    db.AvailabilityTypes.Add(new AvailabilityTypeEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "6-infinity hours"
+                    });
+                }
+
+                db.SaveChanges();
+            }
         }
     }
 }

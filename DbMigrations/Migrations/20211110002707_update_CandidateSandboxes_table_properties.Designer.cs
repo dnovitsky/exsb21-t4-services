@@ -4,14 +4,16 @@ using DbMigrations.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DbMigrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211110002707_update_CandidateSandboxes_table_properties")]
+    partial class update_CandidateSandboxes_table_properties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -194,7 +196,10 @@ namespace DbMigrations.Migrations
                     b.Property<Guid>("CandidateId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CandidateProcessId")
+                    b.Property<Guid>("CandidateProccesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CandidateProcessId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CandidateProjectRoleId")
@@ -203,7 +208,10 @@ namespace DbMigrations.Migrations
                     b.Property<Guid>("SandboxId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("StackTechnologyId")
+                    b.Property<Guid>("StackTechnologiesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("StackTechnologyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("TeamId")
@@ -741,9 +749,7 @@ namespace DbMigrations.Migrations
 
                     b.HasOne("DbMigrations.EntityModels.CandidateProccesEntityModel", "CandidateProcess")
                         .WithMany()
-                        .HasForeignKey("CandidateProcessId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CandidateProcessId");
 
                     b.HasOne("DbMigrations.EntityModels.CandidateProjectRoleEntityModel", "CandidateProjectRole")
                         .WithMany("CandidateSandboxes")
@@ -759,9 +765,7 @@ namespace DbMigrations.Migrations
 
                     b.HasOne("DbMigrations.EntityModels.StackTechnologyEntityModel", "StackTechnology")
                         .WithMany("CandidateSandboxes")
-                        .HasForeignKey("StackTechnologyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StackTechnologyId");
 
                     b.HasOne("DbMigrations.EntityModels.TeamEntityModel", "Team")
                         .WithMany()
