@@ -18,17 +18,18 @@ namespace SAPex.Controllers
             _availabilityTypeService = service;
         }
 
-        // GET: api/<AvailabilityTypesController>
         [HttpGet]
         public async Task<IEnumerable<AvailabilityTypeDtoModel>> GetAvailabilityTypesAsync()
         {
             return await _availabilityTypeService.GetAllAvailabilitiesAsync();
         }
 
+        /* TODO: remove this action, we dont need pagination for this domain model
+
         [HttpGet("{pagesize}")]
         public async Task<PagedList<AvailabilityTypeDtoModel>> GetPageListAsync(int pagesize, int pagenumber)
         {
             return await _availabilityTypeService.GetPageListAsync(pagesize, pagenumber);
-        }
+        } */
     }
 }
