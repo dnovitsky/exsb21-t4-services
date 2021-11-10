@@ -6,10 +6,11 @@ using BusinessLogicLayer.DtoModels;
 using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace SAPex.Controllers
 {
+    /* TODO: please review and refactor this conrollers
+
+
     [Route("api/[controller]")]
     [ApiController]
     public class SkillController : ControllerBase
@@ -56,4 +57,5 @@ namespace SAPex.Controllers
         {
         }
     }
+    */
 }
