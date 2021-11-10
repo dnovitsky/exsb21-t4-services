@@ -23,5 +23,17 @@ namespace BusinessLogicLayer.Services
             IEnumerable<AvailabilityTypeEntityModel> availabilitiesEM = await Task.Run(() => unitOfWork.AvailabilityTypes.GetAllAsync());
             return profile.mapListToDto(availabilitiesEM);
         }
+
+        public async Task<PagedList<AvailabilityTypeDtoModel>> GetPageListAsync(int pagesize, int pagenumber)
+        {
+            PagedList<AvailabilityTypeEntityModel> pagedListEM = await unitOfWork.AvailabilityTypes.GetPageAsync(pagesize, pagenumber);
+            PagedList<AvailabilityTypeDtoModel> pagedListDto = new PagedList<AvailabilityTypeDtoModel>
+            {
+                PageList = profile.mapListToDto(pagedListEM.PageList),
+                CurrentPage = pagedListEM.CurrentPage,
+                TotalPages = pagedListEM.TotalPages
+            };
+            return pagedListDto;
+        }
     }
 }
