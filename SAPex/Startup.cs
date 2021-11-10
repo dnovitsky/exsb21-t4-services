@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Text;
 using BusinessLogicLayer.Interfaces;
-<<<<<<< HEAD
-<<<<<<< HEAD
 using BusinessLogicLayer.Mapping;
 using BusinessLogicLayer.Services;
 using DataAccessLayer.IRepositories;
 using DataAccessLayer.Repositories;
-=======
-using BusinessLogicLayer.Services;
->>>>>>> dev
-=======
-using BusinessLogicLayer.Services;
->>>>>>> dev
 using DataAccessLayer.Service;
 using DbMigrations.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -92,20 +84,12 @@ namespace SAPex
                 });
                 c.OperationFilter<SwaggerFileUploadOperationFilter>();
             });
+            
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-            // services.AddScoped<ISandboxRepository, SandboxRepository>();
-
+            services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
+            services.AddScoped<ILanguageLevelService, LanguageLevelService>();
             services.AddScoped<ISandboxService, SandboxService>();
-=======
-            services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
->>>>>>> dev
-=======
-            services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
->>>>>>> dev
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -141,15 +125,8 @@ namespace SAPex
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-<<<<<<< HEAD
-<<<<<<< HEAD
             InitService.Initial(Configuration.GetConnectionString("DefaultConnection"));
-=======
             DbObjects.Initial(Configuration.GetConnectionString("DefaultConnection"));
->>>>>>> dev
-=======
-            DbObjects.Initial(Configuration.GetConnectionString("DefaultConnection"));
->>>>>>> dev
         }
     }
 }
