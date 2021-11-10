@@ -16,11 +16,12 @@ namespace BusinessLogicLayer.Services
     public class SandboxService : ISandboxService
     {
         private readonly IUnitOfWork unitOfWork;
-        private readonly SandboxProfile profile = new SandboxProfile();
+        private readonly SandboxProfile profile;
         
         public SandboxService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
+            this.profile = new SandboxProfile();
         }
 
         public async Task<bool> AddSandboxAsync(SandboxDtoModel sandboxDto)
@@ -28,8 +29,10 @@ namespace BusinessLogicLayer.Services
             try
             {
                 SandboxEntityModel sandbox = profile.mapToEM(sandboxDto);
+
                 await Task.Run(() => unitOfWork.Sandboxes.CreateAsync(sandbox));
-                unitOfWork.SaveAsync();
+                await unitOfWork.SaveAsync();
+
                 return true;
             }
             catch(Exception ex)
@@ -62,7 +65,7 @@ namespace BusinessLogicLayer.Services
         {
                 SandboxEntityModel sandbox = profile.mapToEM(sandboxDto);
                 unitOfWork.Sandboxes.Update(sandbox);
-                unitOfWork.SaveAsync();
+                unitOfWork.Save();
         }
 
         public void DeleteSandbox(int id)
@@ -72,7 +75,7 @@ namespace BusinessLogicLayer.Services
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
 
     }

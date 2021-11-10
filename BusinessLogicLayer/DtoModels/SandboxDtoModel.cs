@@ -17,11 +17,5 @@ namespace BusinessLogicLayer.DtoModels
         public DateTime EndDate { get; set; }
         public DateTime StartRegistration { get; set; }
         public DateTime EndRegistration { get; set; }
-
-
-        //public IList<UserSandBoxEntityModel> UserSandboxes { get; set; }
-        //public IList<CandidateSandboxEntityModel> CandidateSandboxes { get; set; }
-        //public IList<TeamEntityModel> Teams { get; set; }
-        //public IList<SandboxStackTechnologyEntityModel> SandboxStackTechnologies { get; set; }
     }
 }

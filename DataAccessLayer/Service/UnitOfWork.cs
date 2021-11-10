@@ -44,7 +44,7 @@ namespace DataAccessLayer.Service
 
         public UnitOfWork(AppDbContext context)
         {
-            this.context= context;
+            this.context = context;
         }
 
         public IAccessFormRepository AccessForms
@@ -395,9 +395,14 @@ namespace DataAccessLayer.Service
             }
         }
 
-        public async void SaveAsync()
+        public async Task SaveAsync()
         {
             await context.SaveChangesAsync();
+        }
+
+        public void Save()
+        {
+            context.SaveChanges();
         }
 
         private bool disposed = false;

@@ -15,15 +15,25 @@ namespace SAPex.Models
         [Required]
         public string Name { get; set; }
 
-        public SandboxViewModel()
-        {
-            Name = string.Empty;
-        }
+        [Required]
+        public string Description { get; set; }
 
-        public SandboxViewModel(string name)
-            : base()
-        {
-            Name = name;
-        }
+        [Required]
+        public int MaxCandidates { get; set; }
+
+        [Required]
+        public DateTime CreateDate { get; set; }
+
+        [Required]
+        public DateTime StartDate { get; set; }
+
+        [Required]
+        public DateTime EndDate { get; set; }
+
+        [Required]
+        public DateTime StartRegistration { get; set; }
+
+        [Required]
+        public DateTime EndRegistration { get; set; }
     }
 }

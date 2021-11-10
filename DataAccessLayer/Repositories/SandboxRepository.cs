@@ -20,18 +20,22 @@ namespace DataAccessLayer.Repositories
 
         public async Task<SandboxEntityModel> FindByIdAsync(Guid id)
         {
-            SandboxEntityModel requestData = await db.Sandboxes.FindAsync(id);
-            return requestData;
+            return await db.Sandboxes.FindAsync(id);
         }
 
         public async Task<IEnumerable<SandboxEntityModel>> GetAllAsync()
         {
             return await Task.Run(() => db.Sandboxes.AsEnumerable());
         }
-        public async void CreateAsync(SandboxEntityModel item)
+        public async Task CreateAsync(SandboxEntityModel item)
         {
             await db.Sandboxes.AddAsync(item);
-            // await db.SaveChangesAsync();
+        }
+
+        public void Update(SandboxEntityModel item)
+        {
+            db.Sandboxes.Update(item);
+            // db.SaveChanges();
         }
         public void Delete(Guid id)
         {
