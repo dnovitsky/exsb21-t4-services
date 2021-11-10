@@ -8,13 +8,13 @@ using DbMigrations.EntityModels;
 
 namespace BusinessLogicLayer.Interfaces
 {
-    public interface ISkillService :IDisposable
+    public interface ISkillService 
     {
-        Task<bool> AddSkillAsync(SkillDtoModel skillDto);
+        Task<SkillDtoModel> AddSkillAsync(SkillDtoModel skillDto);
         Task<IEnumerable<SkillDtoModel>> GetAllSkillsAsync();
         Task<IEnumerable<SkillDtoModel>> FindSkillsAsync(Expression<Func<SkillEntityModel, bool>> expression);
         void UpdateSkill(SkillDtoModel languageDto);
-        Task<SkillDtoModel> FindSkillByIdAsync(int id);
-        void DeleteSkill(int id);
+        Task<SkillDtoModel> FindSkillByIdAsync(Guid id);
+        void DeleteSkill(Guid id);
     }
 }
