@@ -25,11 +25,11 @@ namespace DbMigrations.EntityModels
         public TeamEntityModel Team { get; set; }
 
         [Required]
-        public Guid StackTechnologiesId { get; set; }
+        public Guid StackTechnologyId { get; set; }
         public StackTechnologyEntityModel StackTechnology { get; set; }
 
         [Required]
-        public Guid CandidateProccesId { get; set; }
+        public Guid CandidateProcessId { get; set; }
         public CandidateProccesEntityModel CandidateProcess { get; set; }
 
         [Required]
