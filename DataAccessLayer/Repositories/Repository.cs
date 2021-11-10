@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DataAccessLayer.IRepositories;
 using DbMigrations.Data;
 using Microsoft.EntityFrameworkCore;
+using DataAccessLayer.Service;
 
 namespace DataAccessLayer.Repositories
 {
@@ -25,6 +26,20 @@ namespace DataAccessLayer.Repositories
         public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
             return await set.ToListAsync();
+        }
+
+        public async Task<PagedList<T>> GetPageAsync(int pagesize, int pagenumber)
+        {
+            IEnumerable<T> list = await set.ToListAsync();
+            int pages = (int)Math.Ceiling((double)list.Count()/(double)pagesize);
+            IEnumerable<T> PageList = await set.Skip((pagenumber-1)*pagesize).Take(pagesize).ToListAsync();
+            PagedList<T> pagedList = new PagedList<T>
+            {
+                PageList = PageList,
+                CurrentPage = pagenumber,
+                TotalPages = pages
+            };
+            return pagedList;
         }
 
         public virtual async Task<IEnumerable<T>> FindByConditionAsync(Expression<Func<T, bool>> expression)
