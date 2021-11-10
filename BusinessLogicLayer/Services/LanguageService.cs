@@ -28,7 +28,7 @@ namespace BusinessLogicLayer.Services
             {
                 LanguageEntityModel languageEM = profile.mapToEM(languageDto);
                 await Task.Run(() => unitOfWork.Languages.CreateAsync(languageEM));
-                unitOfWork.SaveAsync();
+                await Task.Run(() => unitOfWork.SaveAsync());
                 return true;
             }
             catch(Exception ex)

@@ -11,8 +11,8 @@ namespace DataAccessLayer.IRepositories
         Task<IEnumerable<UserRefreshTokenEntityModel>> GetAllAsync();
         Task<IEnumerable<UserRefreshTokenEntityModel>> FindByConditionAsync(Expression<Func<UserRefreshTokenEntityModel, bool>> expression);
         Task<UserRefreshTokenEntityModel> FindByIdAsync(Guid id);
-        void CreateAsync(UserRefreshTokenEntityModel item);
+        Task<UserRefreshTokenEntityModel> CreateAsync(UserRefreshTokenEntityModel item);
         void Update(UserRefreshTokenEntityModel item);
-        void Delete(int id);
+        void Delete(Guid id);
     }
 }

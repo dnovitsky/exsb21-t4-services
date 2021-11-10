@@ -409,11 +409,8 @@ namespace DataAccessLayer.Service
             }
         }
 
-<<<<<<< HEAD
+
         public IUserRefreshTokenRepository UserRefreshTokens
-=======
-        public async Task SaveAsync()
->>>>>>> dev
         {
             get
             {

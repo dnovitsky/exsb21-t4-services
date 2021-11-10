@@ -13,11 +13,9 @@ namespace DataAccessLayer.IRepositories
         Task<IEnumerable<CandidateLanguageEntityModel>> GetAllAsync();
         Task<IEnumerable<CandidateLanguageEntityModel>> FindByConditionAsync(Expression<Func<CandidateLanguageEntityModel, bool>> expression);
         Task<CandidateLanguageEntityModel> FindByIdAsync(Guid id);
-<<<<<<< HEAD
-        void CreateAsync(CandidateLanguageEntityModel item);
-=======
+
         Task<CandidateLanguageEntityModel> CreateAsync(CandidateLanguageEntityModel item);
->>>>>>> dev
+
         void Update(CandidateLanguageEntityModel item);
         void Delete(Guid id);
     }

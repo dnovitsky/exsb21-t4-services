@@ -15,11 +15,9 @@ namespace DataAccessLayer.IRepositories
         Task<PagedList<T>> GetPageAsync(int pagesize, int pagenumber);
         Task<IEnumerable<T>> FindByConditionAsync(Expression<Func<T,bool>> expression);
         Task<T> FindByIdAsync(Guid id);
-<<<<<<< HEAD
-        void CreateAsync(T item);
-=======
+
         Task<T> CreateAsync(T item);
->>>>>>> dev
+
         void Update(T item);
         void Delete(Guid id);//SoftDelete??
     }

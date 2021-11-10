@@ -34,10 +34,8 @@ namespace DataAccessLayer.Service
         IUserStackTechnologyRepository UserStackTechnologies { get; }
         IUserTeamRepository UserTeams { get; }
         IUserTechSkillRepository UserTechSkills { get; }
-<<<<<<< HEAD
         IUserRefreshTokenRepository UserRefreshTokens { get; }
-=======
->>>>>>> dev
+
         Task SaveAsync();
     }
 }
