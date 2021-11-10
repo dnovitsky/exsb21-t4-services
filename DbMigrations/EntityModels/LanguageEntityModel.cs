@@ -13,6 +13,7 @@ namespace DbMigrations.EntityModels
         {
             CandidateLanguages = new List<CandidateLanguageEntityModel>();
             UserLanguages = new List<UserLanguageEntityModel>();
+            SandboxLanguages = new List<SandboxLanguageEntityModel>();
         }
 
         [Key]
@@ -22,5 +23,6 @@ namespace DbMigrations.EntityModels
 
         public IList<CandidateLanguageEntityModel> CandidateLanguages  { get; set; }
         public IList<UserLanguageEntityModel> UserLanguages { get; set; }
+        public IList<SandboxLanguageEntityModel> SandboxLanguages { get; set; }
     }
 }

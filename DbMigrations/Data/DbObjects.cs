@@ -52,7 +52,7 @@ namespace DbMigrations.Data
                     {
                         Id = Guid.NewGuid(),
                         Name = "Elementary (A2)",
-                        OrderLevel = 1,                        
+                        OrderLevel = 1,
                     });
 
                     db.LanguageLevels.Add(new LanguageLevelEntityModel
@@ -82,8 +82,68 @@ namespace DbMigrations.Data
                         Name = "Proficient (C2)",
                         OrderLevel = 5,
                     });
-                    
+
                 }
+
+                if (!db.Languages.Any())
+                {
+                    db.Languages.Add(new LanguageEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "English"
+                    });
+                    db.Languages.Add(new LanguageEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Russian"
+                    });
+                    db.Languages.Add(new LanguageEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Georgian"
+                    });
+                    db.Languages.Add(new LanguageEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Latvian"
+                    });
+                    db.Languages.Add(new LanguageEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Polish"
+                    });
+                }
+
+                if (!db.StackTechnologies.Any())
+                {
+                    db.StackTechnologies.Add(new StackTechnologyEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = ".Net"
+                    });
+                    db.StackTechnologies.Add(new StackTechnologyEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "JS"
+                    });
+                    db.StackTechnologies.Add(new StackTechnologyEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Java"
+                    });
+                    db.StackTechnologies.Add(new StackTechnologyEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Devops"
+                    });
+                    db.StackTechnologies.Add(new StackTechnologyEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Python"
+                    });
+                }
+
+
                 db.SaveChanges();
             }
         }

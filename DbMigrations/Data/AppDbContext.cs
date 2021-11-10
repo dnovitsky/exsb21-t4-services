@@ -29,6 +29,7 @@ namespace DbMigrations.Data
 
 
         public DbSet<SandboxEntityModel> Sandboxes { get; set; }
+        public DbSet<SandboxLanguageEntityModel> SandboxLanguages { get; set; }
         public DbSet<SandboxStackTechnologyEntityModel> SandboxStackTechnologies { get; set; }
         public DbSet<SkillEntityModel> Skills { get; set; }
 

@@ -29,12 +29,6 @@ namespace SAPex.Controllers
             _mapper = new SandboxMapper();
         }
 
-        // public SandboxController(AppDbContext context)
-        // : base()
-        // {
-        //    _service = new SandboxService(new UnitOfWork(context)); // how to do via Startup ?
-        // }
-
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
