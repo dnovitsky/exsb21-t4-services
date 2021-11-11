@@ -28,8 +28,8 @@ namespace BusinessLogicLayer.Services
             try
             {
                 SandboxEntityModel sandbox = profile.mapToEM(sandboxDto);
-                await Task.Run(() => unitOfWork.Sandboxes.CreateAsync(sandbox));
-                await Task.Run(() => unitOfWork.SaveAsync());
+                await unitOfWork.Sandboxes.CreateAsync(sandbox);
+                await unitOfWork.SaveAsync();
                 return true;
             }
             catch(Exception ex)

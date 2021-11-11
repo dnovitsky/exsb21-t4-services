@@ -11,11 +11,5 @@ namespace DataAccessLayer.Repositories
             : base(context)
         { }
 
-        //public override async Task<IEnumerable<UserEntityModel>>  FindByConditionAsync(Expression<Func<UserEntityModel, bool>> expression)
-        //{
-        //    IQueryable<UserEntityModel> query = set.Where(expression).Include(x => x.UserRoles);
-        //    return await query.ToListAsync();
-        //}
-
     }
 }
