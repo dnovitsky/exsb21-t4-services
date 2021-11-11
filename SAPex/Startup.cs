@@ -56,9 +56,7 @@ namespace SAPex
 
             services.AddDbContext<AppDbContext>(options => options
                                                            .UseLazyLoadingProxies()
-                                                           .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDbContext<AppDbContext>(options => options
-            .UseSqlServer(Environment.GetEnvironmentVariable("MSSQL_CONNECTION_STRING")));
+                                                           .UseSqlServer(Environment.GetEnvironmentVariable("MSSQL_CONNECTION_STRING")));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.Configure<AppSettingsModel>(Configuration.GetSection("AppSettings"));
