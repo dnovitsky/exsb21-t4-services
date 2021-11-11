@@ -20,7 +20,7 @@ namespace DbMigrations.EntityModels
         [Required]
         public string Name { get; set; }
 
-        public IList<CandidateLanguageEntityModel> CandidateLanguages  { get; set; }
-        public IList<UserLanguageEntityModel> UserLanguages { get; set; }
+        public virtual IList<CandidateLanguageEntityModel> CandidateLanguages  { get; set; }
+        public virtual IList<UserLanguageEntityModel> UserLanguages { get; set; }
     }
 }

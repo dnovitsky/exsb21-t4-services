@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DbMigrations.EntityModels
 {
@@ -37,13 +34,13 @@ namespace DbMigrations.EntityModels
         [Required]
         public string Phone { get; set; }
 
-        public IList<UserSandBoxEntityModel> UserSanboxes { get; set; }
-        public IList<UserTechSkillEntityModel> UserTechSkills { get; set; }
-        public IList<UserFunctionalRoleEntityModel> UserRoles { get; set; }
-        public IList<UserLanguageEntityModel> UserLanguages { get; set; }
-        public IList<FeedbackEntityModel> Feedbacks { get; set; }
+        public virtual IList<UserSandBoxEntityModel> UserSanboxes { get; set; }
+        public virtual IList<UserTechSkillEntityModel> UserTechSkills { get; set; }
+        public virtual IList<UserFunctionalRoleEntityModel> UserRoles { get; set; }
+        public virtual IList<UserLanguageEntityModel> UserLanguages { get; set; }
+        public virtual IList<FeedbackEntityModel> Feedbacks { get; set; }
 
-        public IList<UserStackTechnologyEntityModel> UserStackTechnologies { get; set; }
+        public virtual IList<UserStackTechnologyEntityModel> UserStackTechnologies { get; set; }
 
     }
 }

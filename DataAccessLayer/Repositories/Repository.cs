@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DataAccessLayer.IRepositories;
 using DbMigrations.Data;
 using Microsoft.EntityFrameworkCore;
+using DataAccessLayer.Service;
 
 namespace DataAccessLayer.Repositories
 {
@@ -27,20 +28,35 @@ namespace DataAccessLayer.Repositories
             return await set.ToListAsync();
         }
 
+        public async Task<PagedList<T>> GetPageAsync(int pagesize, int pagenumber)
+        {
+            IEnumerable<T> list = await set.ToListAsync();
+            int pages = (int)Math.Ceiling((double)list.Count()/(double)pagesize);
+            IEnumerable<T> PageList = await set.Skip((pagenumber-1)*pagesize).Take(pagesize).ToListAsync();
+            PagedList<T> pagedList = new PagedList<T>
+            {
+                PageList = PageList,
+                CurrentPage = pagenumber,
+                TotalPages = pages
+            };
+            return pagedList;
+        }
+
         public virtual async Task<IEnumerable<T>> FindByConditionAsync(Expression<Func<T, bool>> expression)
         {
             IQueryable<T> query = set.Where(expression);
             return await query.ToListAsync();
         }
 
-        public virtual async Task<T> FindByIdAsync(int id)
+        public virtual async Task<T> FindByIdAsync(Guid id)
         {
             return await set.FindAsync(id);
         }
 
-        public virtual async void CreateAsync(T item)
+        public virtual async Task<T> CreateAsync(T item)
         {
-            await set.AddAsync(item);
+            var entityEntry = await set.AddAsync(item);
+            return entityEntry.Entity;
         }
 
         public virtual void Update(T item)
@@ -48,7 +64,7 @@ namespace DataAccessLayer.Repositories
             context.Update(item);
         }
 
-        public virtual void Delete(int id)
+        public virtual void Delete(Guid id)
         {
             T del_item = set.Find(id);
             if (del_item != null)

@@ -28,8 +28,8 @@ namespace BusinessLogicLayer.Services
             try
             {
                 SandboxEntityModel sandbox = profile.mapToEM(sandboxDto);
-                await Task.Run(() => unitOfWork.Sandboxes.CreateAsync(sandbox));
-                unitOfWork.SaveAsync();
+                await unitOfWork.Sandboxes.CreateAsync(sandbox);
+                await unitOfWork.SaveAsync();
                 return true;
             }
             catch(Exception ex)
@@ -37,7 +37,7 @@ namespace BusinessLogicLayer.Services
                 return false;
             }
         }
-        public async Task<SandboxDtoModel> FindSandboxByIdAsync(int id)
+        public async Task<SandboxDtoModel> FindSandboxByIdAsync(Guid id)
         {
             SandboxEntityModel sandboxEM = await unitOfWork.Sandboxes.FindByIdAsync(id);
             SandboxDtoModel sandboxDto = profile.mapToDto(sandboxEM);
@@ -65,7 +65,7 @@ namespace BusinessLogicLayer.Services
                 unitOfWork.SaveAsync();
         }
 
-        public void DeleteSandbox(int id)
+        public void DeleteSandbox(Guid id)
         {
             unitOfWork.Sandboxes.Delete(id);
         }

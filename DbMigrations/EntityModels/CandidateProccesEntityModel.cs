@@ -16,7 +16,7 @@ namespace DbMigrations.EntityModels
 
         [Required]
         public Guid StatusId { get; set; }
-        public StatusEntityModel Status { get; set; }
+        public virtual StatusEntityModel Status { get; set; }
 
         public string TestResult { get; set; }
         [Required]
@@ -24,7 +24,7 @@ namespace DbMigrations.EntityModels
 
         [Required]
         public Guid FeedbackId { get; set; }
-        public FeedbackEntityModel Feedback { get; set; }
+        public virtual FeedbackEntityModel Feedback { get; set; }
 
       
 

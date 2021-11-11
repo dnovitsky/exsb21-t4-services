@@ -1,11 +1,10 @@
 ﻿using System;
 
-namespace SAPex.Models.Authorization
+namespace SAPexAuthService.Models
 {
-    public class TokenCredentials
+    public class TokenCredentialsModel
     {
         public string AccessToken { get; set; }
-
         public string RefreshToken { get; set; }
     }
 }

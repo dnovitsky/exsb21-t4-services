@@ -27,8 +27,8 @@ namespace BusinessLogicLayer.Services
             try
             {
                 LanguageEntityModel languageEM = profile.mapToEM(languageDto);
-                await Task.Run(() => unitOfWork.Languages.CreateAsync(languageEM));
-                unitOfWork.SaveAsync();
+                await unitOfWork.Languages.CreateAsync(languageEM);
+                await unitOfWork.SaveAsync();
                 return true;
             }
             catch(Exception ex)
@@ -37,12 +37,12 @@ namespace BusinessLogicLayer.Services
             }
         }
 
-        public void DeleteLanguage(int id)
+        public void DeleteLanguage(Guid id)
         {
             unitOfWork.Languages.Delete(id);
         }
 
-        public async Task<LanguageDtoModel> FindLanguageByIdAsync(int id)
+        public async Task<LanguageDtoModel> FindLanguageByIdAsync(Guid id)
         {
             LanguageEntityModel languageEM = await unitOfWork.Languages.FindByIdAsync(id);
             LanguageDtoModel languageDto = profile.mapToDto(languageEM);

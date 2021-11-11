@@ -14,14 +14,14 @@ namespace DbMigrations.EntityModels
 
         [Required]
         public Guid FormId { get; set; }
-        public FormEntityModel Form { get; set; }
+        public virtual FormEntityModel Form { get; set; }
 
         [Required]
         public Guid AccessId { get; set; }
-        public AccessEntityModel Access { get; set; }
+        public virtual AccessEntityModel Access { get; set; }
 
         [Required]
         public Guid FunctionalRoleId { get; set; }
-        public FunctionalRoleEntityModel FunctionalRole { get; set; }
+        public virtual FunctionalRoleEntityModel FunctionalRole { get; set; }
     }
 }

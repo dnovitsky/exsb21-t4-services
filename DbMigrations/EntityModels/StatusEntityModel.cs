@@ -19,6 +19,6 @@ namespace DbMigrations.EntityModels
         [Required]
         public string Name { get; set; }
 
-        public IList<CandidateProccesEntityModel> CandidatesProcceses { get; set; }
+        public virtual IList<CandidateProccesEntityModel> CandidatesProcceses { get; set; }
     }
 }

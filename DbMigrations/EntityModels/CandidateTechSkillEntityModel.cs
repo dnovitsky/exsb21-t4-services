@@ -14,11 +14,11 @@ namespace DbMigrations.EntityModels
 
         [Required]
         public Guid SkillId { get; set; }
-        public SkillEntityModel Skill { get; set; }
+        public virtual SkillEntityModel Skill { get; set; }
 
         [Required]
         public Guid CandidateId { get; set; }
-        public CandidateEntityModel Candidate { get; set; }
+        public virtual CandidateEntityModel Candidate { get; set; }
         
     }
 }

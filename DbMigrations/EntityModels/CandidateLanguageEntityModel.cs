@@ -13,13 +13,13 @@ namespace DbMigrations.EntityModels
         public Guid Id { get; set; }
         [Required]
         public Guid CandidateId { get; set; }
-        public CandidateEntityModel Candidate { get; set; }
+        public virtual CandidateEntityModel Candidate { get; set; }
         [Required]
         public Guid LanguageId { get; set; }
-        public LanguageEntityModel Language { get; set; }
+        public virtual LanguageEntityModel Language { get; set; }
         [Required]
         public Guid LanguageLevelId { get; set; }
-        public LanguageLevelEntityModel LanguageLevel { get; set; }
+        public virtual LanguageLevelEntityModel LanguageLevel { get; set; }
 
     }
 }

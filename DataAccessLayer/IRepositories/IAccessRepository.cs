@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -12,9 +12,11 @@ namespace DataAccessLayer.IRepositories
     {
         Task<IEnumerable<AccessEntityModel>> GetAllAsync();
         Task<IEnumerable<AccessEntityModel>> FindByConditionAsync(Expression<Func<AccessEntityModel, bool>> expression);
-        Task<AccessEntityModel> FindByIdAsync(int id);
-        void CreateAsync(AccessEntityModel item);
+        Task<AccessEntityModel> FindByIdAsync(Guid id);
+
+        Task<AccessEntityModel> CreateAsync(AccessEntityModel item);
+
         void Update(AccessEntityModel item);
-        void Delete(int id);
+        void Delete(Guid id);
     }
 }

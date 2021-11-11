@@ -14,9 +14,9 @@ namespace DbMigrations.EntityModels
 
         [Required]
         public Guid UserSandBoxId { get; set; }
-        public UserSandBoxEntityModel UserSandBox { get; set; }
+        public virtual UserSandBoxEntityModel UserSandBox { get; set; }
         [Required]
         public Guid TeamId { get; set; }
-        public TeamEntityModel Team { get; set; }
+        public virtual TeamEntityModel Team { get; set; }
     }
 }
