@@ -20,8 +20,8 @@ namespace DbMigrations.EntityModels
 
         [Required]
         public Guid SandboxId { get; set; }
-        public SandboxEntityModel Sandbox { get; set; }
-        public IList<UserTeamEntityModel> UserTeams { get; set; }
-        //public CandidateSandboxEntityModel CandidateSandbox { get; set; }
+        public virtual SandboxEntityModel Sandbox { get; set; }
+        public virtual IList<UserTeamEntityModel> UserTeams { get; set; }
+        
     }
 }

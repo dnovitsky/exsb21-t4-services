@@ -19,17 +19,17 @@ namespace DbMigrations.EntityModels
 
         [Required]
         public Guid UserId { get; set; }
-        public UserEntityModel User { get; set; }
+        public virtual UserEntityModel User { get; set; }
 
         [Required]
         public Guid RatingId { get; set; }
-        public RatingEntityModel Rating { get; set; }
+        public virtual RatingEntityModel Rating { get; set; }
 
         [Required]
         public DateTime CreateDate { get; set; }
         [Required]
         public string UserReview { get; set; }
 
-        public IList<CandidateProccesEntityModel> CandidateProcceses { get; set; }
+        public virtual IList<CandidateProccesEntityModel> CandidateProcceses { get; set; }
     }
 }

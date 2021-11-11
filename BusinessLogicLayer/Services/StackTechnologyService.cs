@@ -62,6 +62,12 @@ namespace BusinessLogicLayer.Services
             return profile.mapListToDto(StackTechnologiesEM);
         }
 
+        public async Task<IEnumerable<StackTechnologyDtoModel>> GetStackTechnologiesBySandboxIdAsync(Guid id)
+        {
+            IEnumerable<StackTechnologyEntityModel> StackTechnologiesEM = await Task.Run(() => unitOfWork.StackTechnologies.GetBySandboxId(id));
+            return profile.mapListToDto(StackTechnologiesEM);
+        }
+
         public void UpdateStackTechnology(StackTechnologyDtoModel StackTechnologyDto)
         {
             StackTechnologyEntityModel StackTechnologyEM = profile.mapToEM(StackTechnologyDto);

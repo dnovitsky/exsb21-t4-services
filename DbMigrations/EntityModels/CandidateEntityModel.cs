@@ -37,10 +37,10 @@ namespace DbMigrations.EntityModels
         [Required]
         public string CV { get; set; }
 
-        public IList<CandidateLanguageEntityModel> CandidateLanguages { get; set; }
+        public virtual IList<CandidateLanguageEntityModel> CandidateLanguages { get; set; }
         
-        public IList<CandidateTechSkillEntityModel> CandidateTechSkills { get; set; }
+        public virtual IList<CandidateTechSkillEntityModel> CandidateTechSkills { get; set; }
         
-        public IList<CandidateSandboxEntityModel> CandidateSandboxes { get; set; }
+        public virtual IList<CandidateSandboxEntityModel> CandidateSandboxes { get; set; }
     }
 }

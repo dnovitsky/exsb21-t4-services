@@ -19,6 +19,6 @@ namespace DbMigrations.EntityModels
         [Required]
         public string Name { get; set; }
 
-        public IList<AccessFormEntityModel> AccessForms { get; set; }
+        public virtual IList<AccessFormEntityModel> AccessForms { get; set; }
     }
 }

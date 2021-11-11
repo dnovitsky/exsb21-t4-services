@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using BusinessLogicLayer.Helpers;
 using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Mapping;
 using BusinessLogicLayer.Services;
@@ -85,7 +86,9 @@ namespace SAPex
                 c.OperationFilter<SwaggerFileUploadOperationFilter>();
             });
 
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            // services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
             services.AddScoped<ILanguageLevelService, LanguageLevelService>();
@@ -128,8 +131,7 @@ namespace SAPex
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            InitService.Initial(Configuration.GetConnectionString("DefaultConnection"));
-            DbObjects.Initial(Configuration.GetConnectionString("DefaultConnection"));
+            TestDataHelper.InitTestData(Configuration.GetConnectionString("DefaultConnection"));
         }
     }
 }

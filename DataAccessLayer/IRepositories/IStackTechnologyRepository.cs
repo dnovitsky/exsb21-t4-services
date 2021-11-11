@@ -11,6 +11,7 @@ namespace DataAccessLayer.IRepositories
     public interface IStackTechnologyRepository
     {
         Task<IEnumerable<StackTechnologyEntityModel>> GetAllAsync();
+        Task<IEnumerable<StackTechnologyEntityModel>> GetBySandboxId(Guid id);
         Task<IEnumerable<StackTechnologyEntityModel>> FindByConditionAsync(Expression<Func<StackTechnologyEntityModel, bool>> expression);
         Task<StackTechnologyEntityModel> FindByIdAsync(Guid id);
         Task<StackTechnologyEntityModel> CreateAsync(StackTechnologyEntityModel item);

@@ -10,6 +10,6 @@ namespace DbMigrations.EntityModels
             CandidateSandboxes = new List<CandidateSandboxEntityModel>();
         }
 
-        public IList<CandidateSandboxEntityModel> CandidateSandboxes { get; set; }
+        public virtual IList<CandidateSandboxEntityModel> CandidateSandboxes { get; set; }
     }
 }

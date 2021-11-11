@@ -73,5 +73,18 @@ namespace SAPex.Mappers
 
             return sandboxViewList;
         }
+
+        public SandboxViewModel MapSbStackLgFromDtoToView(
+            SandboxDtoModel sandboxDto,
+            IEnumerable<LanguageDtoModel> languagesDto,
+            IEnumerable<StackTechnologyDtoModel> stackTechnologiesDto)
+        {
+            SandboxViewModel sandboxView = MapSbFromDtoToView(sandboxDto);
+
+            sandboxView.Languages = new LanguageMapper().MapListLanguageFromDtoToView(languagesDto);
+            sandboxView.StackTechnologies = new StackTechnologyMapper().MapListStackTechnologyFromDtoToView(stackTechnologiesDto);
+
+            return sandboxView;
+        }
     }
 }

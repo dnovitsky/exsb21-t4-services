@@ -16,30 +16,36 @@ using SAPex.Models.Validators;
 
 namespace SAPex.Controllers
 {
-    [Route("api/sandbox")]
+    [Route("api/sandboxes")]
     [ApiController]
     public class SandboxesController : ControllerBase
     {
-        private readonly ISandboxService _service;
+        private readonly ISandboxService _sandboxService;
+        private readonly IStackTechnologyService _stackTechnologyService;
+        private readonly ILanguageService _languageService;
         private readonly SandboxMapper _mapper;
 
-        public SandboxesController(ISandboxService service)
+        public SandboxesController(ISandboxService sandboxService, IStackTechnologyService stackTechnologyService, ILanguageService languageService)
         {
-            _service = service;
+            _sandboxService = sandboxService;
+            _stackTechnologyService = stackTechnologyService;
+            _languageService = languageService;
             _mapper = new SandboxMapper();
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            SandboxDtoModel dtoModel = await _service.FindSandboxByIdAsync(id); // on what level goes null check? it should go directly to db?
+            SandboxDtoModel sandboxDtoModel = await _sandboxService.FindSandboxByIdAsync(id); // on what level goes null check? it should go directly to db?
+            IEnumerable<StackTechnologyDtoModel> stackTechnologyDtoModel = await _stackTechnologyService.GetStackTechnologiesBySandboxIdAsync(id);
+            IEnumerable<LanguageDtoModel> languageDtoModel = await _languageService.GetLanguagesBySandboxIdAsync(id);
 
-            if (dtoModel == null)
+            if (sandboxDtoModel == null)
             {
                 return await Task.FromResult(NotFound());
             }
 
-            SandboxViewModel viewModel = _mapper.MapSbFromDtoToView(dtoModel);
+            SandboxViewModel viewModel = _mapper.MapSbStackLgFromDtoToView(sandboxDtoModel, languageDtoModel, stackTechnologyDtoModel);
 
             return await Task.FromResult(Ok(viewModel)); // convert to json?
         }
@@ -47,7 +53,7 @@ namespace SAPex.Controllers
         [HttpGet]
         public async Task<IActionResult> GetByPage(int pageNumber = 1, int pageSize = 5, string sortOrder = "name", string searchString = "")
         {
-            IEnumerable<SandboxDtoModel> dtoModels = await _service.GetAllSandboxesAsync(); // on what level goes null check? it should go directly to db?
+            IEnumerable<SandboxDtoModel> dtoModels = await _sandboxService.GetAllSandboxesAsync(); // on what level goes null check? it should go directly to db?
 
             if (dtoModels == null)
             {
@@ -100,22 +106,22 @@ namespace SAPex.Controllers
             return await Task.FromResult(Ok(viewModels.ToPagedList(pageNumber, pageSize)));
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] SandboxViewModel requestData)
-        {
-            ValidationResult validationResult = new SandboxValidator().Validate(requestData); // ? check if requestData already exists, do not push if true, on what fields
+        // [HttpPost]
+        // public async Task<IActionResult> Post([FromBody] SandboxViewModel requestData)
+        // {
+        //    ValidationResult validationResult = new SandboxValidator().Validate(requestData); // ? check if requestData already exists, do not push if true, on what fields
 
-            // check this
+        // // check this
 
-            if (!validationResult.IsValid)
-            {
-                return await Task.FromResult(BadRequest());
-            }
+        // if (!validationResult.IsValid)
+        //    {
+        //        return await Task.FromResult(BadRequest());
+        //    }
 
-            await _service.AddSandboxAsync(_mapper.MapSbFromViewToDto(requestData)); // where is check on already exists
+        // await _sandboxService.AddSandboxAsync(_mapper.MapSbFromViewToDto(requestData)); // where is check on already exists
 
-            return await Task.FromResult(Ok()); // need message?
-        }
+        // return await Task.FromResult(Ok()); // need message?
+        // }
 
         // [HttpPut]
         // public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] SandboxViewModel requestData) // ? id

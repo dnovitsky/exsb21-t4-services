@@ -26,5 +26,9 @@ namespace SAPex.Models
         public DateTime StartRegistration { get; set; }
 
         public DateTime EndRegistration { get; set; }
+
+        public IEnumerable<StackTechnologyViewModel> StackTechnologies { get; set; }
+
+        public IEnumerable<LanguageViewModel> Languages { get; set; }
     }
 }

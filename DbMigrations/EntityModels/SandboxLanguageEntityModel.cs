@@ -12,10 +12,10 @@ namespace DbMigrations.EntityModels
     {
         [Required]
         public Guid SandboxId { get; set; }
-        public SandboxEntityModel Sandbox { get; set; }
+        public virtual SandboxEntityModel Sandbox { get; set; }
 
         [Required]
         public Guid LanguageId { get; set; }
-        public LanguageEntityModel Language { get; set; }
+        public virtual LanguageEntityModel Language { get; set; }
     }
 }

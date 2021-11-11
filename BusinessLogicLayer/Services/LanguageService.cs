@@ -62,6 +62,11 @@ namespace BusinessLogicLayer.Services
             return profile.mapListToDto(languagesEM);
         }
 
+        public async Task<IEnumerable<LanguageDtoModel>> GetLanguagesBySandboxIdAsync(Guid id)
+        {
+            IEnumerable<LanguageEntityModel> LanguagesEM = await Task.Run(() => unitOfWork.Languages.GetBySandboxId(id));
+            return profile.mapListToDto(LanguagesEM);
+        }
         public void UpdateLanguage(LanguageDtoModel languageDto)
         {            
             LanguageEntityModel languageEM = profile.mapToEM(languageDto);

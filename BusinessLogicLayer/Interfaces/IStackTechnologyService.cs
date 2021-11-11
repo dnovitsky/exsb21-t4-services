@@ -13,6 +13,7 @@ namespace BusinessLogicLayer.Interfaces
     {
         Task<bool> AddStackTechnologyAsync(StackTechnologyDtoModel stackTechnologyDto);
         Task<IEnumerable<StackTechnologyDtoModel>> GetAllStackTechnologiesAsync();
+        Task<IEnumerable<StackTechnologyDtoModel>> GetStackTechnologiesBySandboxIdAsync(Guid id);
         Task<IEnumerable<StackTechnologyDtoModel>> FindStackTechnologiesAsync(Expression<Func<StackTechnologyEntityModel, bool>> expression);
         void UpdateStackTechnology(StackTechnologyDtoModel sandboxDto);
         Task<StackTechnologyDtoModel> FindStackTechnologyByIdAsync(Guid id);
