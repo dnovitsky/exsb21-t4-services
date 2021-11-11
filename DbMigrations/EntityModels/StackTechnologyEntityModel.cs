@@ -20,8 +20,8 @@ namespace DbMigrations.EntityModels
         [Required]
         public string Name { get; set; }
 
-        public IList<CandidateSandboxEntityModel> CandidateSandboxes { get; set; }
-        public IList<SandboxStackTechnologyEntityModel> SandboxStackTechnologies { get; set; }
-        public IList<UserStackTechnologyEntityModel> UserStackTechnologies { get; set; }
+        public virtual IList<CandidateSandboxEntityModel> CandidateSandboxes { get; set; }
+        public virtual IList<SandboxStackTechnologyEntityModel> SandboxStackTechnologies { get; set; }
+        public virtual IList<UserStackTechnologyEntityModel> UserStackTechnologies { get; set; }
     }
 }

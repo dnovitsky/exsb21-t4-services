@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SAPex.Controllers
 {
@@ -7,6 +8,7 @@ namespace SAPex.Controllers
     public class PingController : ControllerBase
     {
         [HttpGet]
+        [Authorize(Roles = "mentor")]
         public ActionResult Get()
         {
             return Ok();

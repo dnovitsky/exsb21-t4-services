@@ -52,7 +52,7 @@ namespace SAPex
                 };
             });
             services.Configure<AppSettingsModel>(Configuration.GetSection("AppSettings"));
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<UserService, UserService>();
             services.AddScoped<UserRefreshTokenService, UserRefreshTokenService>();

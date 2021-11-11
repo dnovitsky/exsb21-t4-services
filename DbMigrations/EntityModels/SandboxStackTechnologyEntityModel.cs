@@ -14,9 +14,9 @@ namespace DbMigrations.EntityModels
 
         [Required]
         public Guid SandboxId { get; set; }
-        public SandboxEntityModel Sandbox { get; set; }
+        public virtual SandboxEntityModel Sandbox { get; set; }
         [Required]
         public Guid StackTechnologyId { get; set; }
-        public StackTechnologyEntityModel StackTechnology { get; set; }
+        public virtual StackTechnologyEntityModel StackTechnology { get; set; }
     }
 }

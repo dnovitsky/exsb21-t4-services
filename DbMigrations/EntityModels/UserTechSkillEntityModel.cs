@@ -14,9 +14,9 @@ namespace DbMigrations.EntityModels
 
         [Required]
         public Guid UserId { get; set; }
-        public UserEntityModel User { get; set; }
+        public virtual UserEntityModel User { get; set; }
         [Required]
         public Guid SkillId { get; set; }
-        public SkillEntityModel Skill { get; set; }
+        public virtual SkillEntityModel Skill { get; set; }
     }
 }

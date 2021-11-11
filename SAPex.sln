@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAPexAuthService", "SAPexAuthService\SAPexAuthService.csproj", "{A91CA813-1DAC-4C72-B70E-63B092B4C09B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAPexAuthService", "SAPexAuthService\SAPexAuthService.csproj", "{AA9B804C-A4AA-4F28-BE70-25F28F029FDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,10 +40,10 @@ Global
 		{9803FCCC-C025-453D-960F-2CD1D0152BF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9803FCCC-C025-453D-960F-2CD1D0152BF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9803FCCC-C025-453D-960F-2CD1D0152BF1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A91CA813-1DAC-4C72-B70E-63B092B4C09B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A91CA813-1DAC-4C72-B70E-63B092B4C09B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A91CA813-1DAC-4C72-B70E-63B092B4C09B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A91CA813-1DAC-4C72-B70E-63B092B4C09B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA9B804C-A4AA-4F28-BE70-25F28F029FDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA9B804C-A4AA-4F28-BE70-25F28F029FDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA9B804C-A4AA-4F28-BE70-25F28F029FDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA9B804C-A4AA-4F28-BE70-25F28F029FDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

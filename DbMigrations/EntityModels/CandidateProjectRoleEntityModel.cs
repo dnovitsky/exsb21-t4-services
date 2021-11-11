@@ -18,6 +18,6 @@ namespace DbMigrations.EntityModels
         [Required]
         public string Name { get; set; }
 
-        public IList<CandidateSandboxEntityModel> CandidateSandboxes { get; set; }
+        public virtual IList<CandidateSandboxEntityModel> CandidateSandboxes { get; set; }
     }
 }
