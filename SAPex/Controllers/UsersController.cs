@@ -10,17 +10,17 @@ namespace SAPex.Controllers
     [Authorize]
     public class UsersController : ControllerBase
     {
-        private readonly UserService _userService;
+        private readonly AuthUserService _authUserService;
 
-        public UsersController(UserService userService)
+        public UsersController(AuthUserService authUserService)
         {
-            _userService = userService;
+            _authUserService = authUserService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
-            var users = await _userService.FindAllAsync();
+            var users = await _authUserService.FindAllAsync();
             return Ok(users);
         }
     }

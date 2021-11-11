@@ -14,11 +14,11 @@ namespace SAPexAuthService.Services
 {
     public class JwtService
     {
-        private readonly UserService _userService;
+        private readonly AuthUserService _userService;
         private readonly AppSettingsModel _appSettings;
-        private readonly UserRefreshTokenService _refreshTokenService;
+        private readonly AuthUserRefreshTokenService _refreshTokenService;
 
-        public JwtService(UserService userService, UserRefreshTokenService refreshTokenService, IOptions<AppSettingsModel> appSettings)
+        public JwtService(AuthUserService userService, AuthUserRefreshTokenService refreshTokenService, IOptions<AppSettingsModel> appSettings)
         {
             _userService = userService;
             _appSettings = appSettings.Value;
