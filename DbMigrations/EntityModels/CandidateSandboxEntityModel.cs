@@ -32,6 +32,19 @@ namespace DbMigrations.EntityModels
         public Guid CandidateProcessId { get; set; }
         public virtual CandidateProccesEntityModel CandidateProcess { get; set; }
 
+        public string Motivation { get; set; }
+
+        public string CurrentJob { get; set; }
+
+        public string AvailabillityPerDay { get; set; }
+
+        public string TimeContact { get; set; }
+
+        public bool IsJoinToExadel { get; set; }
+
+        public Guid SandboxLanguageId { get; set; }
+
+        public bool IsAgreement { get; set; }
         [Required]
         public Guid AvailabilityTypeId { get; set; }
         public virtual AvailabilityTypeEntityModel AvailabilityType { get; set; }
