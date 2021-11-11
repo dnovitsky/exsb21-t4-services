@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DbMigrations.EntityModels
 {
@@ -29,12 +25,12 @@ namespace DbMigrations.EntityModels
         public TeamEntityModel Team { get; set; }
 
         [Required]
-        public Guid StackTechnologiesId { get; set; }
-        public StackTechnologyEntityModel StackTechnologies { get; set; }
+        public Guid StackTechnologyId { get; set; }
+        public StackTechnologyEntityModel StackTechnology { get; set; }
 
         [Required]
-        public Guid CandidateProccesId { get; set; }
-        public CandidateProccesEntityModel CandidateProcces { get; set; }
+        public Guid CandidateProcessId { get; set; }
+        public CandidateProccesEntityModel CandidateProcess { get; set; }
 
         public string Motivation { get; set; }
 
@@ -47,5 +43,8 @@ namespace DbMigrations.EntityModels
         public bool IsJoinToExadel { get; set; }
 
         public bool IsAgreement { get; set; }
+        [Required]
+        public Guid AvailabilityTypeId { get; set; }
+        public AvailabilityTypeEntityModel AvailabilityType { get; set; }
     }
 }

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BusinessLogicLayer.DtoModels.BaseModels;
 
 namespace BusinessLogicLayer.DtoModels
 {
-    public class LanguageLevelDtoModel
-    {
+    public class LanguageLevelDtoModel : ItemOrderLevelDtoModel
+    {        
         public Guid Id { get; set; }
         public string Name { get; set; }
     }

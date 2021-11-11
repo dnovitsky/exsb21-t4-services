@@ -16,33 +16,27 @@ namespace BusinessLogicLayer.Services
     public class SkillService : ISkillService
     {
         private readonly IUnitOfWork unitOfWork;
-        private readonly SkillProfile profile;
+        private readonly SkillProfile profile = new SkillProfile();
 
         public SkillService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
-        public async Task<bool> AddSkillAsync(SkillDtoModel skillDto)
+        public async Task<SkillDtoModel> AddSkillAsync(SkillDtoModel skillDto)
         {
-            try
-            {
-                SkillEntityModel skillEM = profile.mapToEM(skillDto);
-                await Task.Run(() => unitOfWork.Skills.CreateAsync(skillEM));
-                unitOfWork.SaveAsync();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+            SkillEntityModel skillEM = profile.mapToEM(skillDto);
+            await unitOfWork.Skills.CreateAsync(skillEM);
+            await unitOfWork.SaveAsync();
+            var skillDto2 = profile.mapToDto(skillEM);
+            return skillDto2;
         }
 
-        public void DeleteSkill(int id)
+        public void DeleteSkill(Guid id)
         {
             unitOfWork.Skills.Delete(id);
         }
 
-        public async Task<SkillDtoModel> FindSkillByIdAsync(int id)
+        public async Task<SkillDtoModel> FindSkillByIdAsync(Guid id)
         {
             SkillEntityModel skillEM = await unitOfWork.Skills.FindByIdAsync(id);
             SkillDtoModel skillDto = profile.mapToDto(skillEM);
@@ -66,11 +60,6 @@ namespace BusinessLogicLayer.Services
             SkillEntityModel skillEM = profile.mapToEM(skillDto);
             unitOfWork.Skills.Update(skillEM);
             unitOfWork.SaveAsync();
-        }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
         }
 
     }

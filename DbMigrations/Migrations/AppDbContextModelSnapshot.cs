@@ -60,6 +60,24 @@ namespace DbMigrations.Migrations
                     b.ToTable("AccessForms");
                 });
 
+            modelBuilder.Entity("DbMigrations.EntityModels.AvailabilityTypeEntityModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OrderLevel")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AvailabilityTypes");
+                });
+
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateEntityModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -173,10 +191,13 @@ namespace DbMigrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("AvailabilityTypeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("CandidateId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CandidateProccesId")
+                    b.Property<Guid>("CandidateProcessId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CandidateProjectRoleId")
@@ -185,7 +206,7 @@ namespace DbMigrations.Migrations
                     b.Property<Guid>("SandboxId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("StackTechnologiesId")
+                    b.Property<Guid>("StackTechnologyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("TeamId")
@@ -193,15 +214,17 @@ namespace DbMigrations.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AvailabilityTypeId");
+
                     b.HasIndex("CandidateId");
 
-                    b.HasIndex("CandidateProccesId");
+                    b.HasIndex("CandidateProcessId");
 
                     b.HasIndex("CandidateProjectRoleId");
 
                     b.HasIndex("SandboxId");
 
-                    b.HasIndex("StackTechnologiesId");
+                    b.HasIndex("StackTechnologyId");
 
                     b.HasIndex("TeamId");
 
@@ -311,6 +334,9 @@ namespace DbMigrations.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OrderLevel")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -707,15 +733,21 @@ namespace DbMigrations.Migrations
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateSandboxEntityModel", b =>
                 {
+                    b.HasOne("DbMigrations.EntityModels.AvailabilityTypeEntityModel", "AvailabilityType")
+                        .WithMany("CandidateSandboxes")
+                        .HasForeignKey("AvailabilityTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DbMigrations.EntityModels.CandidateEntityModel", "Candidate")
                         .WithMany("CandidateSandboxes")
                         .HasForeignKey("CandidateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DbMigrations.EntityModels.CandidateProccesEntityModel", "CandidateProcces")
+                    b.HasOne("DbMigrations.EntityModels.CandidateProccesEntityModel", "CandidateProcess")
                         .WithMany()
-                        .HasForeignKey("CandidateProccesId")
+                        .HasForeignKey("CandidateProcessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -731,9 +763,9 @@ namespace DbMigrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DbMigrations.EntityModels.StackTechnologyEntityModel", "StackTechnologies")
+                    b.HasOne("DbMigrations.EntityModels.StackTechnologyEntityModel", "StackTechnology")
                         .WithMany("CandidateSandboxes")
-                        .HasForeignKey("StackTechnologiesId")
+                        .HasForeignKey("StackTechnologyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -742,15 +774,17 @@ namespace DbMigrations.Migrations
                         .HasForeignKey("TeamId")
                         .IsRequired();
 
+                    b.Navigation("AvailabilityType");
+
                     b.Navigation("Candidate");
 
-                    b.Navigation("CandidateProcces");
+                    b.Navigation("CandidateProcess");
 
                     b.Navigation("CandidateProjectRole");
 
                     b.Navigation("Sandbox");
 
-                    b.Navigation("StackTechnologies");
+                    b.Navigation("StackTechnology");
 
                     b.Navigation("Team");
                 });
@@ -958,6 +992,11 @@ namespace DbMigrations.Migrations
             modelBuilder.Entity("DbMigrations.EntityModels.AccessEntityModel", b =>
                 {
                     b.Navigation("AccessForms");
+                });
+
+            modelBuilder.Entity("DbMigrations.EntityModels.AvailabilityTypeEntityModel", b =>
+                {
+                    b.Navigation("CandidateSandboxes");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateEntityModel", b =>

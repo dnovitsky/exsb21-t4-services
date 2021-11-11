@@ -17,7 +17,7 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.Name, y => y.MapFrom(x => x.Name)));
             var mapper = new Mapper(config);
-            // Выполняем сопоставление
+
             LanguageEntityModel language = mapper.Map<LanguageDtoModel, LanguageEntityModel>(languageDto);
             return language;
         }
@@ -28,7 +28,7 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.Name, y => y.MapFrom(x => x.Name)));
             var mapper = new Mapper(config);
-            // Выполняем сопоставление
+
             LanguageDtoModel language = mapper.Map<LanguageEntityModel, LanguageDtoModel>(languageEM);
             return language;
         }

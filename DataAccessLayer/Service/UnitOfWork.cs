@@ -16,6 +16,7 @@ namespace DataAccessLayer.Service
 
         private IAccessFormRepository accessForms;
         private IAccessRepository accesses;
+        private IAvailabilityTypeRepository availabilityTypes;
         private ICandidateLanguageRepository candidateLanguages;
         private ICandidateProccesRepository candidateProcceses;
         private ICandidateProjectRoleRepository candidateProjectRoles;
@@ -68,6 +69,18 @@ namespace DataAccessLayer.Service
                     accesses = new AccessRepository(context);
                 }
                 return accesses;
+            }
+        }
+
+        public IAvailabilityTypeRepository AvailabilityTypes
+        {
+            get
+            {
+                if (availabilityTypes == null)
+                {
+                    availabilityTypes = new AvailabilityTypeRepository(context);
+                }
+                return availabilityTypes;
             }
         }
 
@@ -395,7 +408,7 @@ namespace DataAccessLayer.Service
             }
         }
 
-        public async void SaveAsync()
+        public async Task SaveAsync()
         {
             await context.SaveChangesAsync();
         }

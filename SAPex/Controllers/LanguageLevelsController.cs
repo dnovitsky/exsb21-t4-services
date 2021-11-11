@@ -1,12 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SAPex.Controllers;
-using SAPex.Models;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using BusinessLogicLayer.DtoModels;
+using BusinessLogicLayer.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SAPex
 {
     [Route("api/languagelevels")]
     [ApiController]
-    public class LanguageLevelsController : AbstractNameController<LanguageLevelViewModel>
+    public class LanguageLevelsController : ControllerBase
     {
+        private readonly ILanguageLevelService _languageLevelService;
+
+        public LanguageLevelsController(ILanguageLevelService service)
+        {
+            _languageLevelService = service;
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<LanguageLevelDtoModel>> GetLenguageLevelAsync()
+        {
+            return await _languageLevelService.GetAllLanguageLevelsAsync();
+        }
     }
 }
