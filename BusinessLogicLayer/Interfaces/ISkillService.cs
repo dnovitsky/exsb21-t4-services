@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using BusinessLogicLayer.DtoModels;
 using DbMigrations.EntityModels;
@@ -16,6 +15,5 @@ namespace BusinessLogicLayer.Interfaces
         void UpdateSkill(SkillDtoModel languageDto);
         Task<SkillDtoModel> FindSkillByIdAsync(Guid id);
         void DeleteSkill(Guid id);
-
     }
 }
