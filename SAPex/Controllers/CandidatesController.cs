@@ -5,20 +5,21 @@ using System.Threading.Tasks;
 using BusinessLogicLayer.DtoModels;
 using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Services;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using SAPex.Controllers.Mapping;
 using SAPex.Models;
 
 namespace SAPex.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/candidates")]
     public class CandidatesController : ControllerBase
     {
         protected readonly CandidateProfile profile = new CandidateProfile();
         private readonly ICandidateService _service;
 
-        public CandidatesController(ICandidateService service)
+        public CandidatesController(CandidateService service)
         {
             _service = service;
         }

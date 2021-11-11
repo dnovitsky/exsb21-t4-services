@@ -86,6 +86,7 @@ namespace SAPex
             services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
             services.AddScoped<ILanguageLevelService, LanguageLevelService>();
             services.AddScoped<ISkillService, SkillService>();
+            services.AddScoped<ICandidateService, CandidateService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

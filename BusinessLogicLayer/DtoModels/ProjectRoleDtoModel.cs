@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessLogicLayer.DtoModels.BaseModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.DtoModels
 {
-    public class ProjectRoleDtoModel
+    public class ProjectRoleDtoModel : ItemDtoModel
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
     }
 }

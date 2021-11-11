@@ -2,9 +2,8 @@
 
 namespace BusinessLogicLayer.DtoModels
 {
-    public class LanguageLevelDtoModel : ItemOrderLevelDtoModel
-    {        
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+    public class LanguageLevelDtoModel: ItemDtoModel
+    {
+        public int OrderLevel { get; set; }
     }
 }

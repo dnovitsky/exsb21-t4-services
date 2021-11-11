@@ -21,8 +21,8 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.Location, y => y.MapFrom(x => x.Location))
                     .ForMember(x => x.Skype, y => y.MapFrom(x => x.Skype))
                     .ForMember(x => x.Phone, y => y.MapFrom(x => x.Phone))
-                    .ForMember(x => x.ProfessionaCertificates, y => y.MapFrom(x => ""))
-                    .ForMember(x => x.AdditionalSkills, y => y.MapFrom(x => "")));
+                    .ForMember(x => x.ProfessionaCertificates, y => y.MapFrom(x => x.ProfessionaCertificates))
+                    .ForMember(x => x.AdditionalSkills, y => y.MapFrom(x => x.AdditionalSkills)));
             var mapper = new Mapper(config);
 
             CandidateEntityModel candidateEM = mapper.Map<CandidateDtoModel, CandidateEntityModel>(candidateDto);

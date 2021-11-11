@@ -8,7 +8,7 @@ namespace BusinessLogicLayer.DtoModels
 {
     public class CandidateProcessDtoModel
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; }
 
         public List<CandidateDtoModel> Candidates { get; set; }
 

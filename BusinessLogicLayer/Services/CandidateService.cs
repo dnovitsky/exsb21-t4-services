@@ -36,12 +36,12 @@ namespace BusinessLogicLayer.Services
             }
         }
 
-        public void DeleteCandidate(int id)
+        public void DeleteCandidate(Guid id)
         {
             unitOfWork.Languages.Delete(id);
         }
 
-        public async Task<CandidateDtoModel> FindCandidateByIdAsync(int id)
+        public async Task<CandidateDtoModel> FindCandidateByIdAsync(Guid id)
         {
             CandidateEntityModel candidateEM = await unitOfWork.Candidates.FindByIdAsync(id);
             CandidateDtoModel candidateDto = profile.mapToDto(candidateEM);
@@ -72,7 +72,7 @@ namespace BusinessLogicLayer.Services
             throw new NotImplementedException();
         }
 
-        Task<CandidateDtoModel> ICandidateService.FindCandidateByIdAsync(int id)
+        Task<CandidateDtoModel> ICandidateService.FindCandidateByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
