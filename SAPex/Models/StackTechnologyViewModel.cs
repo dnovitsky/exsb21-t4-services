@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SAPex.Models
 {
-    public class LanguageViewModel
+    public class StackTechnologyViewModel
     {
         public Guid? Id { get; set; }
 

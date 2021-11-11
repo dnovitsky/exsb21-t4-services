@@ -21,6 +21,7 @@ namespace BusinessLogicLayer.Services
         public LanguageService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
+            profile = new LanguageProfile();
         }
         public async Task<bool> AddLanguageAsync(LanguageDtoModel languageDto)
         {
@@ -70,7 +71,7 @@ namespace BusinessLogicLayer.Services
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+
         }
     }
 }

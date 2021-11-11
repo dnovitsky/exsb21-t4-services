@@ -8,7 +8,7 @@ using DbMigrations.EntityModels;
 
 namespace BusinessLogicLayer.Interfaces
 {
-    public interface ILanguageService :IDisposable
+    public interface ILanguageService : IDisposable
     {
         Task<bool> AddLanguageAsync(LanguageDtoModel languageDto);
         Task<IEnumerable<LanguageDtoModel>> GetAllLanguagesAsync();

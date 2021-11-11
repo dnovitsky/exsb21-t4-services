@@ -11,8 +11,35 @@ namespace DataAccessLayer.Repositories
 {
     public class LanguageRepository : Repository<LanguageEntityModel>, ILanguageRepository
     {
+        public AppDbContext db;
         public LanguageRepository(AppDbContext context)
             : base(context)
-        { }
+        {
+            db = context;
+        }
+
+        public async Task<LanguageEntityModel> FindByIdAsync(Guid id)
+        {
+            return await db.Languages.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<LanguageEntityModel>> GetAllAsync()
+        {
+            return await Task.Run(() => db.Languages.AsEnumerable());
+        }
+        public async Task CreateAsync(LanguageEntityModel item)
+        {
+            await db.Languages.AddAsync(item);
+        }
+
+        public void Update(LanguageEntityModel item)
+        {
+            db.Languages.Update(item);
+            // db.SaveChanges();
+        }
+        public void Delete(Guid id)
+        {
+
+        }
     }
 }
