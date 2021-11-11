@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -13,7 +13,9 @@ namespace DataAccessLayer.IRepositories
         Task<IEnumerable<UserFunctionalRoleEntityModel>> GetAllAsync();
         Task<IEnumerable<UserFunctionalRoleEntityModel>> FindByConditionAsync(Expression<Func<UserFunctionalRoleEntityModel, bool>> expression);
         Task<UserFunctionalRoleEntityModel> FindByIdAsync(Guid id);
+
         Task<UserFunctionalRoleEntityModel> CreateAsync(UserFunctionalRoleEntityModel item);
+
         void Update(UserFunctionalRoleEntityModel item);
         void Delete(Guid id);
     }

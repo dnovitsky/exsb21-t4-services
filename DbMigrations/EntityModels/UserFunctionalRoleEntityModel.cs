@@ -19,9 +19,9 @@ namespace DbMigrations.EntityModels
         public Guid Id { get; set; }
 
         public Guid FunctionalRoleId { get; set; }
-        public FunctionalRoleEntityModel FunctionalRole { get; set; }
+        public virtual FunctionalRoleEntityModel FunctionalRole { get; set; }
         public Guid UserId { get; set; }
-        public UserEntityModel User { get; set; }
+        public virtual UserEntityModel User { get; set; }
 
     }
 }

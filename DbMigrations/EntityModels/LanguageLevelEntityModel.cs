@@ -11,7 +11,7 @@ namespace DbMigrations.EntityModels
             UserLanguages = new List<UserLanguageEntityModel>();
         }
 
-        public IList<CandidateLanguageEntityModel> CandidateLanguages { get; set; }
-        public IList<UserLanguageEntityModel> UserLanguages { get; set; }
+        public virtual IList<CandidateLanguageEntityModel> CandidateLanguages { get; set; }
+        public virtual IList<UserLanguageEntityModel> UserLanguages { get; set; }
     }
 }

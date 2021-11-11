@@ -19,8 +19,8 @@ namespace DbMigrations.EntityModels
         public int Mark { get; set; }
         [Required]
         public Guid SkillId { get; set; }
-        public SkillEntityModel Skill { get; set; }
+        public virtual SkillEntityModel Skill { get; set; }
 
-        public IList<FeedbackEntityModel> Feedbacks  { get; set; }
+        public virtual IList<FeedbackEntityModel> Feedbacks  { get; set; }
     }
 }

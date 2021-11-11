@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -13,7 +13,9 @@ namespace DataAccessLayer.IRepositories
         Task<IEnumerable<TeamEntityModel>> GetAllAsync();
         Task<IEnumerable<TeamEntityModel>> FindByConditionAsync(Expression<Func<TeamEntityModel, bool>> expression);
         Task<TeamEntityModel> FindByIdAsync(Guid id);
+
         Task<TeamEntityModel> CreateAsync(TeamEntityModel item);
+
         void Update(TeamEntityModel item);
         void Delete(Guid id);
     }

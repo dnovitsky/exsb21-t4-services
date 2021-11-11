@@ -1,0 +1,7 @@
+﻿[*.cs]
+
+# Default severity for analyzer diagnostics with category 'StyleCop.CSharp.NamingRules'
+dotnet_analyzer_diagnostic.category-StyleCop.CSharp.NamingRules.severity = none
+
+# SA1305: Field names should not use Hungarian notation
+dotnet_diagnostic.SA1305.severity = none

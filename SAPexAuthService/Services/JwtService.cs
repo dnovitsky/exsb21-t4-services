@@ -4,53 +4,55 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 using DbMigrations.EntityModels;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using SAPex.Helpers;
-using SAPex.Models.Authorization;
+using SAPexAuthService.Models;
 
-namespace SAPex.Services.Jwt
+namespace SAPexAuthService.Services
 {
     public class JwtService
     {
         private readonly UserService _userService;
-        private readonly AppSettings _appSettings;
+        private readonly AppSettingsModel _appSettings;
         private readonly UserRefreshTokenService _refreshTokenService;
 
-        public JwtService(UserService userService, UserRefreshTokenService refreshTokenService, IOptions<AppSettings> appSettings)
+        public JwtService(UserService userService, UserRefreshTokenService refreshTokenService, IOptions<AppSettingsModel> appSettings)
         {
             _userService = userService;
             _appSettings = appSettings.Value;
             _refreshTokenService = refreshTokenService;
         }
 
-        public TokenCredentials Authenticate(UserCredentials credentials)
+        public async Task<TokenCredentialsModel> AuthenticateAsync(UserCredentialsModel credentials)
         {
-            var user = _userService.FindByEmailAndPassword(credentials.Email, credentials.Password);
+            var user = await _userService.FindByEmailAndPasswordAsync(credentials.Email, credentials.Password);
             if (user == null)
             {
                 return null;
             }
-
-            return GenerateTokenByUser(user);
+            var tokenCredentialsModel = await GenerateTokenByUserAsync(user);
+            return tokenCredentialsModel;
         }
 
-        public TokenCredentials VerifyAndRefreshToken(TokenCredentials tokenRequest)
+        public async Task<TokenCredentialsModel> VerifyAndRefreshTokenAsync(TokenCredentialsModel tokenRequest)
         {
-            var userRefreshTokenEntityModel = _refreshTokenService.FindByRefreshToken(tokenRequest.RefreshToken);
+            var userRefreshTokenEntityModel = await _refreshTokenService.FindByRefreshTokenAsync(tokenRequest.RefreshToken);
+   
             if (IsValidToken(userRefreshTokenEntityModel, tokenRequest))
             {
-                var user = _userService.FindById(userRefreshTokenEntityModel.UserId);
-                return GenerateTokenByUser(user);
+                var user = await _userService.FindByIdAsync(userRefreshTokenEntityModel.UserId);
+                var tokenCredentialsModel = await GenerateTokenByUserAsync(user);
+                return tokenCredentialsModel;
             }
 
             return null;
         }
 
-        public bool RevokeToken(string refreshToken)
+        public async Task<bool> RevokeTokenAsync(string refreshToken)
         {
-            var userRefresh = _refreshTokenService.FindByRefreshToken(refreshToken);
+            var userRefresh = await _refreshTokenService.FindByRefreshTokenAsync(refreshToken);
             if (userRefresh != null)
             {
                 userRefresh.IsRevoked = true;
@@ -61,7 +63,7 @@ namespace SAPex.Services.Jwt
             return false;
         }
 
-        private TokenCredentials GenerateTokenByUser(UserEntityModel user)
+        private async Task<TokenCredentialsModel> GenerateTokenByUserAsync(UserEntityModel user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -82,14 +84,15 @@ namespace SAPex.Services.Jwt
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            return new TokenCredentials
+            var refreshToken = await GenerateRefreshToken(token.Id, user.Id);
+            return new TokenCredentialsModel
             {
                 AccessToken = tokenHandler.WriteToken(token),
-                RefreshToken = GenerateRefreshToken(token.Id, user.Id),
+                RefreshToken = refreshToken,
             };
         }
 
-        private string GenerateRefreshToken(string jwtId, Guid userId)
+        private async Task<string> GenerateRefreshToken(string jwtId, Guid userId)
         {
             var refreshTokenEntityModel = new UserRefreshTokenEntityModel
             {
@@ -98,10 +101,10 @@ namespace SAPex.Services.Jwt
                 IsRevoked = false,
                 UserId = userId, // user.Id
                 AddedDate = DateTime.UtcNow,
-                ExpiryDate = DateTime.UtcNow.AddMonths(6),
+                ExpiryDate = DateTime.UtcNow.AddMonths(_appSettings.ExpMonth),
                 Token = RefreshTokenGenerateString(35) + Guid.NewGuid(),
             };
-            _refreshTokenService.Add(refreshTokenEntityModel);
+            await _refreshTokenService.Add(refreshTokenEntityModel);
             return refreshTokenEntityModel.Token;
         }
 
@@ -113,7 +116,7 @@ namespace SAPex.Services.Jwt
                 .Select(x => x[random.Next(x.Length)]).ToArray());
         }
 
-        private bool IsValidToken(UserRefreshTokenEntityModel userRefreshTokenEntityModel, TokenCredentials tokenRequest)
+        private bool IsValidToken(UserRefreshTokenEntityModel userRefreshTokenEntityModel, TokenCredentialsModel tokenRequest)
         {
             try
             {

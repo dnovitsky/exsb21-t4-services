@@ -15,6 +15,6 @@ namespace DbMigrations.EntityModels
         public DateTime ExpiryDate { get; set; }
 
         [ForeignKey(nameof(UserId))]
-        public UserEntityModel User { get; set; }
+        public virtual UserEntityModel User { get; set; }
     }
 }
