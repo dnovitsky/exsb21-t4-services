@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using DataAccessLayer.Service;
 using DbMigrations.EntityModels;
 
 namespace SAPexAuthService.Services
 {
-    public class UserRefreshTokenService
+    public class AuthUserRefreshTokenService
     {
         private IUnitOfWork _unitOfWork;
-        public UserRefreshTokenService(IUnitOfWork unitOfWork)
+        public AuthUserRefreshTokenService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
