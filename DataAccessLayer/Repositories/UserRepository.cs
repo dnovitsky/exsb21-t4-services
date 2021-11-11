@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DbMigrations.EntityModels;
+﻿using DbMigrations.EntityModels;
 using DbMigrations.Data;
 using DataAccessLayer.IRepositories;
-using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace DataAccessLayer.Repositories
 {

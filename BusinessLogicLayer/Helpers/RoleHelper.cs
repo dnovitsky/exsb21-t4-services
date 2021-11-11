@@ -13,7 +13,8 @@ namespace BusinessLogicLayer.Helpers
         {
             _dbContext = dbContext;
         }
-        private List<string> roles = new List<string> { "manager", "mentor", "interviewer", "recruiter", };
+        
+        private List<string> roles = new List<string> { "EDU manager", "Mentor", "Interviewer", "Recruiter", "Admin" };
         public void CreateTestData()
         {
             if (!_dbContext.FunctionalRoles.Any())

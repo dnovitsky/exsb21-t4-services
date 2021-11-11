@@ -54,6 +54,16 @@ namespace BusinessLogicLayer.Helpers
                     Location = "Minsk",
                     Phone = "+998998756393",
                     Skype = "Skype:username"
+                },
+            new UserEntityModel
+                {
+                    Name = "Eleon",
+                    Surname = "York",
+                    Email = "admin@gmail.com",
+                    Password = "admin123456",
+                    Location = "Minsk",
+                    Phone = "+998998756393",
+                    Skype = "Skype:username"
                 }
         };
         public  void CreateTestData()

@@ -13,45 +13,30 @@ namespace BusinessLogicLayer.Helpers
         {
             _dbContext = dbContext;
         }
+        Dictionary<string, string> dictionary = new Dictionary<string, string>
+        {
+            { "manager@gmail.com" , "EDU manager" },
+            { "mentor@gmail.com","Mentor" },
+            { "interviewer@gmail.com","Interviewer" },
+            { "recruiter@gmail.com","Recruiter" },
+            { "admin@gmail.com","Admin" },
+        };
         public void CreateTestData()
         {
             if (!_dbContext.UserFunctionalRoles.Any())
             {
-                var manager = _dbContext.Users.Where(x => x.Email == "manager@gmail.com").SingleOrDefault();
-                var managerRole = _dbContext.FunctionalRoles.Where(x => x.Name == "manager").SingleOrDefault();
-
-                _dbContext.UserFunctionalRoles.Add(new UserFunctionalRoleEntityModel
+                foreach (var dic in dictionary)
                 {
-                    FunctionalRoleId = managerRole.Id,
-                    UserId=manager.Id
-                });
+                    var user = _dbContext.Users.Where(x => x.Email == dic.Key).SingleOrDefault();
+                    var role = _dbContext.FunctionalRoles.Where(x => x.Name == dic.Value).SingleOrDefault();
 
-                var mentor = _dbContext.Users.Where(x => x.Email == "mentor@gmail.com").SingleOrDefault();
-                var mentorRole = _dbContext.FunctionalRoles.Where(x => x.Name == "mentor").SingleOrDefault();
+                    _dbContext.UserFunctionalRoles.Add(new UserFunctionalRoleEntityModel
+                    {
+                        FunctionalRoleId = role.Id,
+                        UserId = user.Id
+                    });
 
-                _dbContext.UserFunctionalRoles.Add(new UserFunctionalRoleEntityModel
-                {
-                    FunctionalRoleId = mentorRole.Id,
-                    UserId = mentor.Id
-                });
-
-                var interviewer = _dbContext.Users.Where(x => x.Email == "interviewer@gmail.com").SingleOrDefault();
-                var interviewerRole = _dbContext.FunctionalRoles.Where(x => x.Name == "interviewer").SingleOrDefault();
-
-                _dbContext.UserFunctionalRoles.Add(new UserFunctionalRoleEntityModel
-                {
-                    FunctionalRoleId = interviewerRole.Id,
-                    UserId = interviewer.Id
-                });
-
-                var recruiter = _dbContext.Users.Where(x => x.Email == "recruiter@gmail.com").SingleOrDefault();
-                var recruiterRole = _dbContext.FunctionalRoles.Where(x => x.Name == "recruiter").SingleOrDefault();
-
-                _dbContext.UserFunctionalRoles.Add(new UserFunctionalRoleEntityModel
-                {
-                    FunctionalRoleId = recruiterRole.Id,
-                    UserId = recruiter.Id
-                });
+                }
             }
 
             _dbContext.SaveChanges();

@@ -128,7 +128,6 @@ namespace SAPex
                 new RoleHelper(dbContext),
                 new UserRoleHelper(dbContext),
             };
-
             helpers.ForEach(helper => helper.CreateTestData());
 
             DbObjects.Initial(Configuration.GetConnectionString("DefaultConnection"));
