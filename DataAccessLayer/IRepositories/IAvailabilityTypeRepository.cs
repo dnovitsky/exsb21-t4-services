@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -13,7 +13,9 @@ namespace DataAccessLayer.IRepositories
         Task<PagedList<AvailabilityTypeEntityModel>> GetPageAsync(int pagesize, int pagenumber);
         Task<IEnumerable<AvailabilityTypeEntityModel>> FindByConditionAsync(Expression<Func<AvailabilityTypeEntityModel, bool>> expression);
         Task<AvailabilityTypeEntityModel> FindByIdAsync(Guid id);
+
         Task<AvailabilityTypeEntityModel> CreateAsync(AvailabilityTypeEntityModel item);
+
         void Update(AvailabilityTypeEntityModel item);
         void Delete(Guid id);
     }

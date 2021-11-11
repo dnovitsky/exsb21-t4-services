@@ -6,7 +6,6 @@ using DataAccessLayer.IRepositories;
 using System.Threading.Tasks;
 using DbMigrations.EntityModels;
 using DbMigrations.Data;
-using DataAccessLayer.IRepositories;
 
 namespace DataAccessLayer.Repositories
 {

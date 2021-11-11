@@ -12,7 +12,7 @@ namespace DbMigrations.Data
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
             var options = optionsBuilder.UseSqlServer(connectionString).Options;
-
+           
             using (AppDbContext db = new AppDbContext(options))
             {
                 if (!db.AvailabilityTypes.Any())
@@ -37,6 +37,7 @@ namespace DbMigrations.Data
                         Name = "6-infinity hours",
                         OrderLevel = 2,
                     });
+
                 }
 
                 if (!db.LanguageLevels.Any())

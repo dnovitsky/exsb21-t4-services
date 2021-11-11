@@ -37,10 +37,10 @@ namespace DbMigrations.EntityModels
         public DateTime EndRegistration { get; set; }
 
         
-        public IList<UserSandBoxEntityModel> UserSandboxes  { get; set; }
-        public IList<CandidateSandboxEntityModel> CandidateSandboxes  { get; set; }
-        public IList<TeamEntityModel> Teams { get; set; }
-        public IList<SandboxStackTechnologyEntityModel> SandboxStackTechnologies { get; set; }
+        public virtual IList<UserSandBoxEntityModel> UserSandboxes  { get; set; }
+        public virtual IList<CandidateSandboxEntityModel> CandidateSandboxes  { get; set; }
+        public virtual IList<TeamEntityModel> Teams { get; set; }
+        public virtual IList<SandboxStackTechnologyEntityModel> SandboxStackTechnologies { get; set; }
 
     }
 }

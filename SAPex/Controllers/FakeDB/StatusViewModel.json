@@ -1,1 +1,42 @@
-[{"Name":"Draft","Id":"be7ba319-03a4-4ecd-a13c-ae1cbfffd7cc"},{"Name":"Rejected","Id":"ea6da7df-72cc-41a1-9fd7-70a373b0af94"},{"Name":"Test","Id":"2ac99400-09a2-4872-bd69-0f555286267e"},{"Name":"Need Verification","Id":"c08eab63-a92d-4f3a-ba3f-a8de3acd9513"},{"Name":"Need Recruiter","Id":"30ae8876-359f-4c4a-88c2-8fbc0f66b388"},{"Name":"Approved","Id":"a1bec403-45e6-44ab-b78c-82d4d083ec19"},{"Name":"Questionable","Id":"3a34496a-9141-4c2a-8da4-a6e71a2b0449"},{"Name":"Interview Soft","Id":"94d2d509-118d-4e59-984e-3cda6019fc76"},{"Name":"Interview Rejected","Id":"e2732ba8-e870-4a28-8fb7-9e6cd129a770"},{"Name":"Interview Tech","Id":"13e82ea7-e78b-4185-963c-a2f23cf866e3"}]
+[
+  {
+    "Name": "Draft",
+    "Id": "be7ba319-03a4-4ecd-a13c-ae1cbfffd7cc"
+  },
+  {
+    "Name": "Rejected",
+    "Id": "ea6da7df-72cc-41a1-9fd7-70a373b0af94"
+  },
+  {
+    "Name": "Test",
+    "Id": "2ac99400-09a2-4872-bd69-0f555286267e"
+  },
+  {
+    "Name": "Need Verification",
+    "Id": "c08eab63-a92d-4f3a-ba3f-a8de3acd9513"
+  },
+  {
+    "Name": "Need Recruiter",
+    "Id": "30ae8876-359f-4c4a-88c2-8fbc0f66b388"
+  },
+  {
+    "Name": "Approved",
+    "Id": "a1bec403-45e6-44ab-b78c-82d4d083ec19"
+  },
+  {
+    "Name": "Questionable",
+    "Id": "3a34496a-9141-4c2a-8da4-a6e71a2b0449"
+  },
+  {
+    "Name": "Interview Soft",
+    "Id": "94d2d509-118d-4e59-984e-3cda6019fc76"
+  },
+  {
+    "Name": "Interview Rejected",
+    "Id": "e2732ba8-e870-4a28-8fb7-9e6cd129a770"
+  },
+  {
+    "Name": "Interview Tech",
+    "Id": "13e82ea7-e78b-4185-963c-a2f23cf866e3"
+  }
+]

@@ -19,8 +19,8 @@ namespace DbMigrations.EntityModels
         public Guid Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public IList<UserTechSkillEntityModel> UserTechSkills { get; set; }
-        public IList<RatingEntityModel> Ratings { get; set; }
-        public IList<CandidateTechSkillEntityModel> CandidateTechSkills { get; set; }
+        public virtual IList<UserTechSkillEntityModel> UserTechSkills { get; set; }
+        public virtual IList<RatingEntityModel> Ratings { get; set; }
+        public virtual IList<CandidateTechSkillEntityModel> CandidateTechSkills { get; set; }
     }
 }

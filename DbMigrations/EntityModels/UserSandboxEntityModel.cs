@@ -18,12 +18,12 @@ namespace DbMigrations.EntityModels
         public Guid Id { get; set; }
 
         public Guid SandBoxId { get; set; }
-        public SandboxEntityModel Sandbox {get;set;}
+        public virtual SandboxEntityModel Sandbox {get;set;}
         public Guid UserId { get; set; }
-        public UserEntityModel User { get; set; }
+        public virtual UserEntityModel User { get; set; }
 
         public string FunctionalRole { get; set; }
 
-        public IList<UserTeamEntityModel> UserTeams { get; set; }
+        public virtual IList<UserTeamEntityModel> UserTeams { get; set; }
     }
 }

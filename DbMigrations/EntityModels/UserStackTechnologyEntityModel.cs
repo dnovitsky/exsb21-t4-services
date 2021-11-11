@@ -11,9 +11,9 @@ namespace DbMigrations.EntityModels
         public Guid Id { get; set; }
 
         public Guid UserId { get; set; }
-        public UserEntityModel User { get; set; }
+        public virtual UserEntityModel User { get; set; }
         public Guid StackTechnologyId { get; set; }
-        public StackTechnologyEntityModel StackTechnology { get; set; }
+        public virtual StackTechnologyEntityModel StackTechnology { get; set; }
         
     }
 }

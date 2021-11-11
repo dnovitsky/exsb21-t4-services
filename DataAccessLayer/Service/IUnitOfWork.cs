@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using DataAccessLayer.IRepositories;
 
@@ -34,6 +34,8 @@ namespace DataAccessLayer.Service
         IUserStackTechnologyRepository UserStackTechnologies { get; }
         IUserTeamRepository UserTeams { get; }
         IUserTechSkillRepository UserTechSkills { get; }
+        IUserRefreshTokenRepository UserRefreshTokens { get; }
+
         Task SaveAsync();
     }
 }

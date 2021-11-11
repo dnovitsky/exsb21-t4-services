@@ -1,5 +1,7 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Text;
+using BusinessLogicLayer.Helpers;
 using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Services;
 using DataAccessLayer.Service;
@@ -13,9 +15,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using SAPex.Helpers;
-using SAPex.Services;
-using SAPex.Services.Jwt;
+using SAPexAuthService.Models;
+using SAPexAuthService.Services;
 
 namespace SAPex
 {
@@ -50,11 +51,15 @@ namespace SAPex
                     ClockSkew = TimeSpan.Zero,
                 };
             });
-
-            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-            services.AddSingleton<JwtService, JwtService>();
-            services.AddSingleton<UserService, UserService>();
-            services.AddSingleton<UserRefreshTokenService, UserRefreshTokenService>();
+            services.Configure<AppSettingsModel>(Configuration.GetSection("AppSettings"));
+            services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<UserService, UserService>();
+            services.AddScoped<UserRefreshTokenService, UserRefreshTokenService>();
+            services.AddScoped<JwtService, JwtService>();
+            services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
+            services.AddScoped<ILanguageLevelService, LanguageLevelService>();
+            services.AddScoped<ISkillService, SkillService>();
             services.AddSwaggerGen(c =>
             {
                 var jwtSecurityScheme = new OpenApiSecurityScheme
@@ -81,15 +86,10 @@ namespace SAPex
                 });
                 c.OperationFilter<SwaggerFileUploadOperationFilter>();
             });
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
-            services.AddScoped<ILanguageLevelService, LanguageLevelService>();
-            services.AddScoped<ISkillService, SkillService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext dbContext)
         {
             app.UseSwagger();
             app.UseSwaggerUI(options =>
@@ -120,6 +120,15 @@ namespace SAPex
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            dbContext.Database.Migrate();
+            List<IApplicationHelper> helpers = new List<IApplicationHelper>
+            {
+                new UserHelper(dbContext),
+                new RoleHelper(dbContext),
+                new UserRoleHelper(dbContext),
+            };
+            helpers.ForEach(helper => helper.CreateTestData());
 
             DbObjects.Initial(Configuration.GetConnectionString("DefaultConnection"));
         }
