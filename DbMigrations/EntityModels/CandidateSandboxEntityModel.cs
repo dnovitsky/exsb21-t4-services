@@ -42,6 +42,8 @@ namespace DbMigrations.EntityModels
 
         public bool IsJoinToExadel { get; set; }
 
+        public Guid SandboxLanguageId { get; set; }
+
         public bool IsAgreement { get; set; }
         [Required]
         public Guid AvailabilityTypeId { get; set; }

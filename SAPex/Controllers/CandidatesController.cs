@@ -19,7 +19,7 @@ namespace SAPex.Controllers
         protected readonly CandidateProfile profile = new CandidateProfile();
         private readonly ICandidateService _service;
 
-        public CandidatesController(CandidateService service)
+        public CandidatesController(ICandidateService service)
         {
             _service = service;
         }

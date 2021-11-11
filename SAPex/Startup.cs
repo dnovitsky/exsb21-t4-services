@@ -122,7 +122,8 @@ namespace SAPex
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            DbObjects.Initial(Configuration.GetConnectionString("DefaultConnection"));
+            TestDataHelper.InitTestData(Configuration.GetConnectionString("DefaultConnection"));
+            // DbObjects.Initial(Configuration.GetConnectionString("DefaultConnection"));
         }
     }
 }

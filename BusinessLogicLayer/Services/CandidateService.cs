@@ -14,20 +14,23 @@ namespace BusinessLogicLayer.Services
 {
     public class CandidateService : ICandidateService
     {
-        protected readonly CandidateProfile profile;
+        protected readonly CandidateProfile profile = new CandidateProfile();
         private readonly IUnitOfWork unitOfWork;
 
         public CandidateService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
-        public async Task<bool> AddCandidateAsync(CandidateDtoModel candidateDto)
+        public async Task<bool> AddCandidateAsync(CreateCandidateDtoModel candidateDto)
         {
             try
             {
-                CandidateEntityModel candidateEM = profile.mapToEM(candidateDto);
-                await Task.Run(() => unitOfWork.Candidates.CreateAsync(candidateEM));
-                unitOfWork.SaveAsync();
+                var candidate = await unitOfWork.Candidates.CreateAsync(profile.mapNewCandidateToEM(candidateDto));
+                var candidateSandBoxe = await unitOfWork.CandidateSandboxes.CreateAsync(profile.mapNewCandidateSandBoxToEM(candidate.Id, candidateDto));
+                var candidateLanguage = await unitOfWork.CandidateLanguages.CreateAsync(profile.mapNewCandidateLanguagesEM(candidate.Id, candidateDto));
+                var candidateTechSkill = await unitOfWork.CandidateTechSkills.CreateAsync(profile.mapNewCandidateTechSkillToEM(candidate.Id, candidateDto));
+
+                await unitOfWork.SaveAsync();
                 return true;
             }
             catch (Exception ex)
