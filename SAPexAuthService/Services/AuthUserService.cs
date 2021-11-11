@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DataAccessLayer.IRepositories;
 using DataAccessLayer.Service;
 using DbMigrations.EntityModels;
 
 namespace SAPexAuthService.Services
 {
-    public class UserService
+    public class AuthUserService
     {
         private IUnitOfWork _unitOfWork;
-        public UserService(IUnitOfWork unitOfWork)
+        public AuthUserService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

@@ -44,22 +44,29 @@ namespace SAPex
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings").GetSection("Secret").Value)),
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings").GetSection("Secret").Value)),
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero,
                 };
             });
-            services.Configure<AppSettingsModel>(Configuration.GetSection("AppSettings"));
-            services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<AppDbContext>(options => options
+                                                           .UseLazyLoadingProxies()
+                                                           .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<UserService, UserService>();
-            services.AddScoped<UserRefreshTokenService, UserRefreshTokenService>();
+
+            services.Configure<AppSettingsModel>(Configuration.GetSection("AppSettings"));
+            services.AddScoped<AuthUserService, AuthUserService>();
+            services.AddScoped<AuthUserRefreshTokenService, AuthUserRefreshTokenService>();
             services.AddScoped<JwtService, JwtService>();
+
             services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
             services.AddScoped<ILanguageLevelService, LanguageLevelService>();
             services.AddScoped<ISkillService, SkillService>();
+
             services.AddSwaggerGen(c =>
             {
                 var jwtSecurityScheme = new OpenApiSecurityScheme
@@ -122,7 +129,8 @@ namespace SAPex
             });
 
             dbContext.Database.Migrate();
-            List<IApplicationHelper> helpers = new List<IApplicationHelper>
+
+            List<IApplicationHelper> helpers = new ()
             {
                 new UserHelper(dbContext),
                 new RoleHelper(dbContext),

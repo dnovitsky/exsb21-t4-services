@@ -23,6 +23,7 @@ namespace DbMigrations.Data
         public DbSet<CandidateTechSkillEntityModel> CandidateTechSkills { get; set; }
 
         public DbSet<FeedbackEntityModel> Feedbacks { get; set; }
+        public DbSet<FileEntityModel> Files { get; set; }
         public DbSet<FormEntityModel> Forms { get; set; }
         public DbSet<FunctionalRoleEntityModel> FunctionalRoles { get; set; }
         public DbSet<LanguageEntityModel> Languages { get; set; }

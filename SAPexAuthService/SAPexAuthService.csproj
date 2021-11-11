@@ -9,7 +9,6 @@
     <None Remove="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Services\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
