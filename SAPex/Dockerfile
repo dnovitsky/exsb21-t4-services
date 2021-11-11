@@ -10,6 +10,7 @@ WORKDIR /src
 COPY ["DbMigrations/DbMigrations.csproj", "DbMigrations/"]
 COPY ["DataAccessLayer/DataAccessLayer.csproj", "DataAccessLayer/"]
 COPY ["BusinessLogicLayer/BusinessLogicLayer.csproj", "BusinessLogicLayer/"]
+COPY ["SAPexAuthService/SAPexAuthService.csproj", "SAPexAuthService/"]
 COPY ["SAPex/SAPex.csproj", "SAPex/"]
 
 RUN dotnet restore "SAPex/SAPex.csproj"
