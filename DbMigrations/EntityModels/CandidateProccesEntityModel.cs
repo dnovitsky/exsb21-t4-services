@@ -25,8 +25,16 @@ namespace DbMigrations.EntityModels
         [Required]
         public Guid FeedbackId { get; set; }
         public FeedbackEntityModel Feedback { get; set; }
+        public string Motivation { get; set; }
 
-      
+        public string CurrentJob { get; set; }
 
+        public string AvailabillityPerDay { get; set; }
+
+        public string TimeContact { get; set; }
+
+        public bool IsJoinToExadel { get; set; }
+
+        public bool IsAgreement { get; set; }
     }
 }

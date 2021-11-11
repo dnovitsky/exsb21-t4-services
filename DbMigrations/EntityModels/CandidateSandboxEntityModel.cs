@@ -36,5 +36,16 @@ namespace DbMigrations.EntityModels
         public Guid CandidateProccesId { get; set; }
         public CandidateProccesEntityModel CandidateProcces { get; set; }
 
+        public string Motivation { get; set; }
+
+        public string CurrentJob { get; set; }
+
+        public string AvailabillityPerDay { get; set; }
+
+        public string TimeContact { get; set; }
+
+        public bool IsJoinToExadel { get; set; }
+
+        public bool IsAgreement { get; set; }
     }
 }

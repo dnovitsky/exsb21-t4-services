@@ -11,6 +11,8 @@ namespace SAPex.Models
 
         public string Name { get; set; }
 
+        public string Surname { get; set; }
+
         public string Email { get; set; }
 
         public string Location { get; set; }
@@ -21,10 +23,10 @@ namespace SAPex.Models
 
         public string Education { get; set; }
 
-        public IList<LanguageViewModel> CandidateLanguages { get; set; }
+        public IList<dynamic> Languages { get; set; }
 
-        public IList<SkillViewModel> CandidateTechSkills { get; set; }
+        public IList<dynamic> TechSkills { get; set; }
 
-        public IList<SanboxViewModel> CandidateSandboxes { get; set; }
+        public IList<CandidateSandboxeViewModel> CandidateSandboxes { get; set; }
     }
 }

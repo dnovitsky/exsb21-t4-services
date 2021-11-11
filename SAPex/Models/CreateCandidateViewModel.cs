@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SAPex.Models
 {
-    public class CreateCondidateViewModel
+    public class CreateCandidateViewModel
     {
         [Required]
         public Guid SandboxId { get; set; }
@@ -18,16 +18,17 @@ namespace SAPex.Models
         public string Surname { get; set; }
 
         [Required]
-        public Guid LanguageLevelId { get; set; }
-
-        public Guid Language { get; set; } = Guid.NewGuid(); // set English as default language
+        public Guid EnglishLevelId { get; set; }
 
         [Required]
-        public Guid PrimaryTechnology { get; set; }
+        public Guid LanguageId { get; set; }
+
+        [Required]
+        public Guid PrimaryTechnologyId { get; set; }
 
         [Required]
         [Phone]
-        public string Phone { get; set; }
+        public string PhoneNumber { get; set; }
 
         [Required]
         public string Skype { get; set; }
@@ -43,18 +44,18 @@ namespace SAPex.Models
 
         public string CurrentJob { get; set; }
 
-        public string AvailabilityHoursPerDay { get; set; }
+        public string AvailabillityPerDay { get; set; }
 
-        public string BestTimeToContactToCandidate { get; set; }
-
-        [Required]
-        public bool IsPlaningToJoinExadel { get; set; }
+        public string TimeContact { get; set; }
 
         [Required]
-        public bool IsProvidePersonalData { get; set; }
+        public bool IsJoinToExadel { get; set; }
 
-        public List<string> ProfessionaCertificates { get; set; }
+        [Required]
+        public bool IsAgreement { get; set; }
 
-        public List<string> AdditionSkills { get; set; }
+        public string ProfessionaCertificates { get; set; }
+
+        public string AdditionalSkills { get; set; }
     }
 }
