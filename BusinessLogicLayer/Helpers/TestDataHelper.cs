@@ -20,7 +20,7 @@ namespace BusinessLogicLayer.Helpers
             {
 
                 Guid idSb1 = Guid.NewGuid();
-                Guid idSb2 = Guid.NewGuid();
+                Guid idSb2 = Guid.Parse("F158D307-DAB4-44E4-A148-B4E3D94B8447");
                 Guid idSb3 = Guid.NewGuid();
                 Guid idSb4 = Guid.NewGuid();
                 Guid idSb5 = Guid.NewGuid();
@@ -28,9 +28,9 @@ namespace BusinessLogicLayer.Helpers
                 Guid idSb7 = Guid.NewGuid();
                 Guid idSb8 = Guid.NewGuid();
 
-                Guid idLg1 = Guid.NewGuid();
+                Guid idLg1 = Guid.Parse("4019D15B-37AD-4ABF-B5B3-2A57318608FE");
                 Guid idLg2 = Guid.NewGuid();
-                Guid idLg3 = Guid.NewGuid();
+                Guid idLg3 = Guid.Parse("D1A3C67B-DB05-4646-A9FE-9243DBD79489");
                 Guid idLg4 = Guid.NewGuid();
                 Guid idLg5 = Guid.NewGuid();
 
@@ -159,7 +159,7 @@ namespace BusinessLogicLayer.Helpers
 
                     db.AvailabilityTypes.Add(new AvailabilityTypeEntityModel
                     {
-                        Id = Guid.NewGuid(),
+                        Id = Guid.Parse("276E9243-454C-48A0-A5D1-53558F0F80D0"),
                         Name = "6-infinity hours",
                         OrderLevel = 2,
                     });
@@ -184,7 +184,7 @@ namespace BusinessLogicLayer.Helpers
 
                     db.LanguageLevels.Add(new LanguageLevelEntityModel
                     {
-                        Id = Guid.NewGuid(),
+                        Id = Guid.Parse("B43BE624-15E2-4ED6-88A0-9E52DDF86C6B"),
                         Name = "Intermediate (B1)",
                         OrderLevel = 2,
                     });
@@ -257,7 +257,7 @@ namespace BusinessLogicLayer.Helpers
                     });
                     db.StackTechnologies.Add(new StackTechnologyEntityModel
                     {
-                        Id = Guid.NewGuid(),
+                        Id = Guid.Parse("D1D4E77B-B6D5-4B4D-9645-535C8B246189"),
                         Name = "Java"
                     });
                     db.StackTechnologies.Add(new StackTechnologyEntityModel
@@ -355,6 +355,61 @@ namespace BusinessLogicLayer.Helpers
                         Id = Guid.NewGuid(),
                         SandboxId = idSb3,
                         LanguageId = idLg4
+                    });
+                }
+                db.SaveChanges();
+
+                if (!db.Statuses.Any())
+                {
+                    db.Statuses.Add(new StatusEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Draft"
+                    });
+                    db.Statuses.Add(new StatusEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Rejected"
+                    });
+                    db.Statuses.Add(new StatusEntityModel
+                    {
+                        Id = Guid.Parse("406E7A53-C5EA-4F25-99A5-0EA3F25AF0BC"),
+                        Name = "Need verification"
+                    });
+                    db.Statuses.Add(new StatusEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Need a recruiter"
+                    });
+                    db.Statuses.Add(new StatusEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Interview Soft"
+                    });
+                    db.Statuses.Add(new StatusEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Interview Tech"
+                    });
+                    db.Statuses.Add(new StatusEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Approved"
+                    });
+                    db.Statuses.Add(new StatusEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Questionable"
+                    });
+                    db.Statuses.Add(new StatusEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Sandbox"
+                    });
+                    db.Statuses.Add(new StatusEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Final interview"
                     });
                 }
                 db.SaveChanges();

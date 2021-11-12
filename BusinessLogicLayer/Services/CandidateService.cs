@@ -26,12 +26,18 @@ namespace BusinessLogicLayer.Services
             try
             {
                 var candidate = await unitOfWork.Candidates.CreateAsync(profile.mapNewCandidateToEM(candidateDto));
-                var candidateSandBoxe = await unitOfWork.CandidateSandboxes.CreateAsync(profile.mapNewCandidateSandBoxToEM(candidate.Id, candidateDto));
-                var candidateLanguage = await unitOfWork.CandidateLanguages.CreateAsync(profile.mapNewCandidateLanguagesEM(candidate.Id, candidateDto));
-                var candidateTechSkill = await unitOfWork.CandidateTechSkills.CreateAsync(profile.mapNewCandidateTechSkillToEM(candidate.Id, candidateDto));
 
-                await unitOfWork.SaveAsync();
-                return true;
+                if (candidate != null)
+                {
+                    var candidateProcess = await unitOfWork.CandidateProcceses.CreateAsync(profile.mapNewCandidateProcessEM(candidateDto));
+                    var candidateSandBoxe = await unitOfWork.CandidateSandboxes.CreateAsync(profile.mapNewCandidateSandBoxToEM(candidate.Id, candidateDto, candidateProcess));
+                    var candidateLanguage = await unitOfWork.CandidateLanguages.CreateAsync(profile.mapNewCandidateLanguagesEM(candidate.Id, candidateDto));
+
+                    await unitOfWork.SaveAsync();
+                    return true;
+                }
+
+                return false;
             }
             catch (Exception ex)
             {

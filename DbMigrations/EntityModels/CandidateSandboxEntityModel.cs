@@ -16,12 +16,10 @@ namespace DbMigrations.EntityModels
         public Guid CandidateId { get; set; }
         public virtual CandidateEntityModel Candidate { get; set; }
 
-        [Required]
-        public Guid CandidateProjectRoleId { get; set; }
+        public Nullable<Guid> CandidateProjectRoleId { get; set; }
         public virtual CandidateProjectRoleEntityModel CandidateProjectRole { get; set; }
 
-        [Required]
-        public Guid TeamId { get; set; }
+        public Nullable<Guid> TeamId { get; set; }
         public virtual TeamEntityModel Team { get; set; }
 
         [Required]
@@ -35,8 +33,6 @@ namespace DbMigrations.EntityModels
         public string Motivation { get; set; }
 
         public string CurrentJob { get; set; }
-
-        public string AvailabillityPerDay { get; set; }
 
         public string TimeContact { get; set; }
 

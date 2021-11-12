@@ -21,7 +21,7 @@ namespace SAPex.Models
         public Guid EnglishLevelId { get; set; }
 
         [Required]
-        public Guid LanguageId { get; set; }
+        public Guid SandboxPreferredLanguageId { get; set; }
 
         [Required]
         public Guid PrimaryTechnologyId { get; set; }
@@ -44,7 +44,7 @@ namespace SAPex.Models
 
         public string CurrentJob { get; set; }
 
-        public string AvailabillityPerDay { get; set; }
+        public Guid AvailabillityTypeId { get; set; }
 
         public string TimeContact { get; set; }
 

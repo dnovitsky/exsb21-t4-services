@@ -16,7 +16,7 @@ namespace SAPex.Controllers
     [Route("api/candidates")]
     public class CandidatesController : ControllerBase
     {
-        protected readonly CandidateProfile profile = new CandidateProfile();
+        protected readonly CandidateMapper profile = new CandidateMapper();
         private readonly ICandidateService _service;
 
         public CandidatesController(ICandidateService service)
@@ -27,42 +27,31 @@ namespace SAPex.Controllers
         [HttpGet]
         public IEnumerable<CandidateViewModel> Get()
         {
-            // var newDto = new List<CandidateDtoModel>() { };
-            // var listViewM = profile.MapListToController<CandidateDtoModel, CandidateViewModel>(newDto);
-
-            // --
-            // --
-
             return new List<CandidateViewModel>();
         }
 
         [HttpGet("{id}")]
         public CandidateViewModel Get([FromRoute] Guid id)
         {
-            // var newDto = new CandidateDtoModel() { };
-            // var candidateDto = profile.MapFromT1ToT2o<CandidateDtoModel, CandidateViewModel>(newDto);
-
-            // --
-            // --
-
             return new CandidateViewModel();
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateCandidateViewModel requestData)
         {
-            await _service.AddCandidateAsync(profile.MapNewCandidateToDto(requestData));
+            var isCandidateCreated = await _service.AddCandidateAsync(profile.MapNewCandidateToDto(requestData));
 
-            return await Task.FromResult(Ok());
+            if (isCandidateCreated)
+            {
+                return await Task.FromResult(Ok());
+            }
+
+            return await Task.FromResult(Conflict());
         }
 
         [HttpPut("{id}")]
         public void Put([FromRoute] Guid id, [FromBody] CandidateViewModel updateCandidateFields)
         {
-            // var candidateDto = profile.MapFromT1ToT2o<CandidateViewModel, CandidateDtoModel>(updateCandidateFields);
-
-            // --
-            // --
         }
 
         [HttpDelete("{id}")]

@@ -4,14 +4,16 @@ using DbMigrations.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DbMigrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211111212941_AdditionalCandidatesMigration")]
+    partial class AdditionalCandidatesMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,7 +156,7 @@ namespace DbMigrations.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("FeedbackId")
+                    b.Property<Guid>("FeedbackId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("StatusId")
@@ -202,7 +204,7 @@ namespace DbMigrations.Migrations
                     b.Property<Guid>("CandidateProcessId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CandidateProjectRoleId")
+                    b.Property<Guid>("CandidateProjectRoleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CurrentJob")
@@ -226,7 +228,7 @@ namespace DbMigrations.Migrations
                     b.Property<Guid>("StackTechnologyId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("TeamId")
+                    b.Property<Guid>("TeamId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("TimeContact")
@@ -757,7 +759,9 @@ namespace DbMigrations.Migrations
                 {
                     b.HasOne("DbMigrations.EntityModels.FeedbackEntityModel", "Feedback")
                         .WithMany("CandidateProcceses")
-                        .HasForeignKey("FeedbackId");
+                        .HasForeignKey("FeedbackId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DbMigrations.EntityModels.StatusEntityModel", "Status")
                         .WithMany("CandidatesProcceses")
@@ -792,7 +796,9 @@ namespace DbMigrations.Migrations
 
                     b.HasOne("DbMigrations.EntityModels.CandidateProjectRoleEntityModel", "CandidateProjectRole")
                         .WithMany("CandidateSandboxes")
-                        .HasForeignKey("CandidateProjectRoleId");
+                        .HasForeignKey("CandidateProjectRoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DbMigrations.EntityModels.SandboxEntityModel", "Sandbox")
                         .WithMany("CandidateSandboxes")
@@ -808,7 +814,8 @@ namespace DbMigrations.Migrations
 
                     b.HasOne("DbMigrations.EntityModels.TeamEntityModel", "Team")
                         .WithMany()
-                        .HasForeignKey("TeamId");
+                        .HasForeignKey("TeamId")
+                        .IsRequired();
 
                     b.Navigation("AvailabilityType");
 

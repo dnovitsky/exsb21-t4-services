@@ -30,31 +30,28 @@ namespace BusinessLogicLayer.Mapping
             return candidateEM;
         }
 
-        public CandidateSandboxEntityModel mapNewCandidateSandBoxToEM(Guid candidateId, CreateCandidateDtoModel candidateDto)
+        public CandidateSandboxEntityModel mapNewCandidateSandBoxToEM(Guid candidateId, CreateCandidateDtoModel candidateDto, CandidateProccesEntityModel candidateProcess)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CreateCandidateDtoModel, CandidateSandboxEntityModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => Guid.NewGuid()))
-
                     .ForMember(x => x.CandidateId, y => y.MapFrom(x => candidateId))
+                    .ForMember(x => x.SandboxId, y => y.MapFrom(x => x.SandboxId))
+
+                    .ForMember(x => x.CandidateProcess, y => y.MapFrom(x => candidateProcess))
+
                     .ForMember(x => x.Motivation, y => y.MapFrom(x => x.Motivation))
                     .ForMember(x => x.CurrentJob, y => y.MapFrom(x => x.CurrentJob))
-                    .ForMember(x => x.AvailabillityPerDay, y => y.MapFrom(x => x.AvailabillityPerDay))
+                    .ForMember(x => x.AvailabilityTypeId, y => y.MapFrom(x => x.AvailabillityTypeId))
                     .ForMember(x => x.TimeContact, y => y.MapFrom(x => x.TimeContact))
                     .ForMember(x => x.IsJoinToExadel, y => y.MapFrom(x => x.IsJoinToExadel))
                     .ForMember(x => x.IsAgreement, y => y.MapFrom(x => x.IsAgreement))
-                    .ForMember(x => x.SandboxId, y => y.MapFrom(x => x.SandboxId))
 
-                    .ForMember(x => x.CandidateProjectRoleId, y => y.MapFrom(x => Guid.NewGuid()))
-                    .ForMember(x => x.TeamId, y => y.MapFrom(x => Guid.NewGuid()))
-                    .ForMember(x => x.StackTechnologyId, y => y.MapFrom(x => Guid.NewGuid()))
-                    .ForMember(x => x.CandidateProcessId, y => y.MapFrom(x => Guid.NewGuid()))
-                    .ForMember(x => x.AvailabilityTypeId, y => y.MapFrom(x => Guid.NewGuid()))
-
+                    .ForMember(x => x.StackTechnologyId, y => y.MapFrom(x => x.PrimaryTechnologyId))
                     .ForMember(x => x.SandboxLanguageId, y => y.MapFrom(x => x.SandboxPreferredLanguageId)));
             var mapper = new Mapper(config);
 
-            CandidateSandboxEntityModel candidateEM = mapper.Map<CreateCandidateDtoModel, CandidateSandboxEntityModel>(candidateDto);
-            return candidateEM;
+            CandidateSandboxEntityModel candidateSandboxEM = mapper.Map<CreateCandidateDtoModel, CandidateSandboxEntityModel>(candidateDto);
+            return candidateSandboxEM;
         }
 
         public CandidateTechSkillEntityModel mapNewCandidateTechSkillToEM(Guid candidateId, CreateCandidateDtoModel candidateDto)
@@ -65,8 +62,8 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.SkillId, y => y.MapFrom(x => x.PrimaryTechnologyId)));
             var mapper = new Mapper(config);
 
-            CandidateTechSkillEntityModel candidateEM = mapper.Map<CreateCandidateDtoModel, CandidateTechSkillEntityModel>(candidateDto);
-            return candidateEM;
+            CandidateTechSkillEntityModel candidateTechSkillEM = mapper.Map<CreateCandidateDtoModel, CandidateTechSkillEntityModel>(candidateDto);
+            return candidateTechSkillEM;
         }
 
         public CandidateLanguageEntityModel mapNewCandidateLanguagesEM(Guid candidateId, CreateCandidateDtoModel candidateDto)
@@ -74,12 +71,24 @@ namespace BusinessLogicLayer.Mapping
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CreateCandidateDtoModel, CandidateLanguageEntityModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => Guid.NewGuid()))
                     .ForMember(x => x.CandidateId, y => y.MapFrom(x => candidateId))
-                    .ForMember(x => x.LanguageId, y => y.MapFrom(x => Guid.NewGuid()))
+                    .ForMember(x => x.LanguageId, y => y.MapFrom(x => x.EnglishLanguageId))
                     .ForMember(x => x.LanguageLevelId, y => y.MapFrom(x => x.EnglishLevelId)));
             var mapper = new Mapper(config);
 
-            CandidateLanguageEntityModel candidateEM = mapper.Map<CreateCandidateDtoModel, CandidateLanguageEntityModel>(candidateDto);
-            return candidateEM;
+            CandidateLanguageEntityModel candidateLanguageEM = mapper.Map<CreateCandidateDtoModel, CandidateLanguageEntityModel>(candidateDto);
+            return candidateLanguageEM;
+        }
+
+        public CandidateProccesEntityModel mapNewCandidateProcessEM(CreateCandidateDtoModel candidateDto)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<CreateCandidateDtoModel, CandidateProccesEntityModel>()
+                    .ForMember(x => x.Id, y => y.MapFrom(x => Guid.NewGuid()))
+                    .ForMember(x => x.StatusId, y => y.MapFrom(x => x.DefaultProcessStatusId))
+                    .ForMember(x => x.TestResult, y => y.MapFrom(x => "")));
+            var mapper = new Mapper(config);
+
+            CandidateProccesEntityModel candidateProcessEM = mapper.Map<CreateCandidateDtoModel, CandidateProccesEntityModel>(candidateDto);
+            return candidateProcessEM;
         }
 
         public CandidateEntityModel mapToEM(CandidateDtoModel candidateDto)

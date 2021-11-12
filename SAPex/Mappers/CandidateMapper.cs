@@ -8,7 +8,7 @@ using SAPex.Models;
 
 namespace SAPex.Controllers.Mapping
 {
-    public class CandidateProfile : Profile
+    public class CandidateMapper : Profile
     {
         public CreateCandidateDtoModel MapNewCandidateToDto(CreateCandidateViewModel candidateVM)
         {
@@ -21,7 +21,7 @@ namespace SAPex.Controllers.Mapping
                     .ForMember(x => x.PhoneNumber, y => y.MapFrom(x => x.PhoneNumber))
                     .ForMember(x => x.Motivation, y => y.MapFrom(x => x.Motivation))
                     .ForMember(x => x.CurrentJob, y => y.MapFrom(x => x.CurrentJob))
-                    .ForMember(x => x.AvailabillityPerDay, y => y.MapFrom(x => x.AvailabillityPerDay))
+                    .ForMember(x => x.AvailabillityTypeId, y => y.MapFrom(x => x.AvailabillityTypeId))
                     .ForMember(x => x.TimeContact, y => y.MapFrom(x => x.TimeContact))
                     .ForMember(x => x.IsJoinToExadel, y => y.MapFrom(x => x.IsJoinToExadel))
                     .ForMember(x => x.ProfessionaCertificates, y => y.MapFrom(x => x.ProfessionaCertificates))
