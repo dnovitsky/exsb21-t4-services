@@ -27,7 +27,7 @@ namespace SAPex.Controllers
         private readonly SandboxMapper _mapper = new SandboxMapper();
         private readonly SandboxLanguageMapper _slmapper = new SandboxLanguageMapper();
         private readonly SandboxStackTechnologyMapper _sstmapper = new SandboxStackTechnologyMapper();
-        
+
         private readonly InputParametrsMapper _inputParamersMapper;
 
         public SandboxesController(ISandboxStackTechnologyService sandboxStackTechnologyService, ISandboxLanguagesService sandboxLanguagesService, ISandboxService sandboxService,
