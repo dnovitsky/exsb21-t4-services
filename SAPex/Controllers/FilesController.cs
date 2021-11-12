@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLogicLayer.DtoModels;
+using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
@@ -13,13 +16,21 @@ namespace SAPex.Controllers
     public class FilesController : ControllerBase
     {
         private readonly string _rootFilesPath = Directory.GetCurrentDirectory() + "/files/";
+        private readonly IFileService _fileService;
 
-        public FilesController()
+        public FilesController(IFileService service)
         {
+            _fileService = service;
             if (!Directory.Exists(_rootFilesPath))
             {
                 Directory.CreateDirectory(_rootFilesPath);
             }
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<FileDtoModel>> GetFileListAsync()
+        {
+            return await _fileService.GetAllFilesAsync();
         }
 
         [HttpGet("{id}")]
