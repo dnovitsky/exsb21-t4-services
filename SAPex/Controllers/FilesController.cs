@@ -34,11 +34,17 @@ namespace SAPex.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> DownloadFile([FromRoute] int id)
+        public async Task<ActionResult> DownloadFileAsync([FromRoute] Guid id)
         {
-            string existingFile = Directory.EnumerateFiles(_rootFilesPath, id.ToString() + ".*").FirstOrDefault();
             var provider = new FileExtensionContentTypeProvider();
 
+            FileDtoModel fileDtoModel = await _fileService.FindFileByIdAsync(id);
+            if (fileDtoModel == null)
+            {
+                return await Task.FromResult(NotFound());
+            }
+
+            string existingFile = Directory.EnumerateFiles(_rootFilesPath, fileDtoModel.FileName).FirstOrDefault();
             if (!provider.TryGetContentType(existingFile, out var contentType))
             {
                 contentType = "application/octet-stream";
@@ -49,7 +55,7 @@ namespace SAPex.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadFile(/* [FromHeader] String documentType, TODO review with FE */ [FromForm] IFormFile file)
+        public async Task<IActionResult> UploadFileAsync(/* [FromHeader] String documentType, TODO review with FE */ [FromForm] IFormFile file)
         {
             string filepath = _rootFilesPath + file.FileName;
 
@@ -60,6 +66,13 @@ namespace SAPex.Controllers
                 stream.CopyTo(outputFileStream);
                 return await Task.FromResult(Ok());
             }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteFileAsync([FromRoute] Guid id)
+        {
+            _fileService.DeleteFileById(id);
+            return await Task.FromResult(Ok());
         }
     }
 }
