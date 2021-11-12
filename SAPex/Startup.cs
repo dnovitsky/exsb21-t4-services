@@ -4,6 +4,8 @@ using System.Text;
 using BusinessLogicLayer.Helpers;
 using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Services;
+using DataAccessLayer.Service;
+using DbMigrations.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -148,7 +150,6 @@ namespace SAPex
             };
             helpers.ForEach(helper => helper.CreateTestData());
 
-            // DbObjects.Initial(Configuration.GetConnectionString("DefaultConnection"));
             TestDataHelper.InitTestData(Configuration.GetConnectionString("DefaultConnection"));
         }
     }
