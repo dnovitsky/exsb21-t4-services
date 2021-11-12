@@ -28,8 +28,8 @@ namespace BusinessLogicLayer.Services
             try
             {
                 LanguageEntityModel languageEM = profile.mapToEM(languageDto);
-                await Task.Run(() => unitOfWork.Languages.CreateAsync(languageEM));
-                unitOfWork.SaveAsync();
+                await unitOfWork.Languages.CreateAsync(languageEM);
+                await unitOfWork.SaveAsync();
                 return true;
             }
             catch(Exception ex)

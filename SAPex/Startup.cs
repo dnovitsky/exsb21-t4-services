@@ -1,13 +1,9 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Text;
 using BusinessLogicLayer.Helpers;
 using BusinessLogicLayer.Interfaces;
-using BusinessLogicLayer.Mapping;
 using BusinessLogicLayer.Services;
-using DataAccessLayer.IRepositories;
-using DataAccessLayer.Repositories;
-using DataAccessLayer.Service;
-using DbMigrations.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,9 +13,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using SAPex.Helpers;
-using SAPex.Services;
-using SAPex.Services.Jwt;
+using SAPexAuthService.Models;
+using SAPexAuthService.Services;
 
 namespace SAPex
 {
@@ -47,7 +42,8 @@ namespace SAPex
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings").GetSection("Secret").Value)),
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings").GetSection("Secret").Value)),
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = true,
@@ -55,10 +51,20 @@ namespace SAPex
                 };
             });
 
-            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-            services.AddSingleton<JwtService, JwtService>();
-            services.AddSingleton<UserService, UserService>();
-            services.AddSingleton<UserRefreshTokenService, UserRefreshTokenService>();
+            services.AddDbContext<AppDbContext>(options => options
+                                                           .UseLazyLoadingProxies()
+                                                           .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.Configure<AppSettingsModel>(Configuration.GetSection("AppSettings"));
+            services.AddScoped<AuthUserService, AuthUserService>();
+            services.AddScoped<AuthUserRefreshTokenService, AuthUserRefreshTokenService>();
+            services.AddScoped<JwtService, JwtService>();
+
+            services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
+            services.AddScoped<ILanguageLevelService, LanguageLevelService>();
+            services.AddScoped<ISkillService, SkillService>();
+
             services.AddSwaggerGen(c =>
             {
                 var jwtSecurityScheme = new OpenApiSecurityScheme
@@ -100,7 +106,7 @@ namespace SAPex
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext dbContext)
         {
             app.UseSwagger();
             app.UseSwaggerUI(options =>
@@ -132,6 +138,17 @@ namespace SAPex
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
+            dbContext.Database.Migrate();
+
+            List<IApplicationHelper> helpers = new ()
+            {
+                new UserHelper(dbContext),
+                new RoleHelper(dbContext),
+                new UserRoleHelper(dbContext),
+            };
+            helpers.ForEach(helper => helper.CreateTestData());
+
+            // DbObjects.Initial(Configuration.GetConnectionString("DefaultConnection"));
             TestDataHelper.InitTestData(Configuration.GetConnectionString("DefaultConnection"));
         }
     }

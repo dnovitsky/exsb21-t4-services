@@ -8,7 +8,6 @@ using BusinessLogicLayer.DtoModels;
 using BusinessLogicLayer.Mapping;
 using BusinessLogicLayer.Interfaces;
 using System.Linq.Expressions;
-using AutoMapper;
 using DataAccessLayer.Service;
 
 namespace BusinessLogicLayer.Services

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -15,6 +15,7 @@ namespace DataAccessLayer.IRepositories
         Task<LanguageEntityModel> FindByIdAsync(Guid id);
         Task<IEnumerable<LanguageEntityModel>> GetBySandboxId(Guid id);
         Task<LanguageEntityModel> CreateAsync(LanguageEntityModel item);
+
         void Update(LanguageEntityModel item);
         void Delete(Guid id);
     }

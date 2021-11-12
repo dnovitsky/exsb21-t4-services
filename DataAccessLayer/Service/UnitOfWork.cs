@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.IRepositories;
+using DataAccessLayer.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +42,7 @@ namespace DataAccessLayer.Service
         private IUserSandBoxRepository userSandBoxes;
         private IUserTeamRepository userTeams;
         private IUserTechSkillRepository userTechSkills;
+        private IUserRefreshTokenRepository userRefreshTokens;
 
         public UnitOfWork(AppDbContext context)
         {
@@ -408,9 +409,22 @@ namespace DataAccessLayer.Service
             }
         }
 
+
+        public IUserRefreshTokenRepository UserRefreshTokens
+        {
+            get
+            {
+                if (userRefreshTokens == null)
+                {
+                    userRefreshTokens = new UserRefreshTokenRepository(context);
+                }
+                return userRefreshTokens;
+            }
+        }
+
         public async Task SaveAsync()
         {
-            await context.SaveChangesAsync();
+             await context.SaveChangesAsync();
         }
 
         public void Save()
