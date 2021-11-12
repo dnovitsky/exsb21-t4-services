@@ -24,19 +24,12 @@ namespace BusinessLogicLayer.Services
             this.profile = new SandboxProfile();
         }
 
-        public async Task<bool> AddSandboxAsync(SandboxDtoModel sandboxDto)
+        public async Task<Guid> AddSandboxAsync(SandboxDtoModel sandboxDto)
         {
-            try
-            {
-                SandboxEntityModel sandbox = profile.mapToEM(sandboxDto);
-                await unitOfWork.Sandboxes.CreateAsync(sandbox);
-                await unitOfWork.SaveAsync();
-                return true;
-            }
-            catch(Exception ex)
-            {
-                return false;
-            }
+            SandboxEntityModel sandbox = profile.mapToEM(sandboxDto);
+            SandboxEntityModel a = await unitOfWork.Sandboxes.CreateAsync(sandbox);
+            await unitOfWork.SaveAsync();
+            return a.Id;
         }
         public async Task<SandboxDtoModel> FindSandboxByIdAsync(Guid id)
         {

@@ -29,6 +29,7 @@ namespace DataAccessLayer.Service
         private ILanguageLevelRepository languageLevels;
         private ILanguageRepository languages;
         private IRatingRepository ratings;
+        private ISandboxLanguageRepository sandboxLanguages;
         private ISandboxRepository sandboxes;
         private ISandboxStackTechnologyRepository sandboxStackTechnologies;
         private ISkillRepository skills;
@@ -214,6 +215,18 @@ namespace DataAccessLayer.Service
                     ratings = new RatingRepository(context);
                 }
                 return ratings;
+            }
+        }
+
+        public ISandboxLanguageRepository SandboxLanguages
+        {
+            get
+            {
+                if (sandboxLanguages == null)
+                {
+                    sandboxLanguages = new SandboxLanguageRepository(context);
+                }
+                return sandboxLanguages;
             }
         }
 
