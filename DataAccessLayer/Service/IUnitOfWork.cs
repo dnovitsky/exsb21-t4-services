@@ -16,6 +16,7 @@ namespace DataAccessLayer.Service
         ICandidateSandboxRepository CandidateSandboxes { get; }
         ICandidateTechSkillRepository CandidateTechSkills { get; }
         IFeedbackRepository Feedbacks { get; }
+        IFileRepository Files { get; }
         IFormRepository Forms { get; }
         IFunctionalRoleRepository FunctionalRoles { get; }
         ILanguageLevelRepository LanguageLevels { get; }
