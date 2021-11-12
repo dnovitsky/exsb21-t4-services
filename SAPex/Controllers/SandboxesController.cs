@@ -9,7 +9,6 @@ using DataAccessLayer.Service;
 using DbMigrations.Data;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
-using PagedList;
 using SAPex.Mappers;
 using SAPex.Models;
 using SAPex.Models.Validators;
@@ -24,6 +23,7 @@ namespace SAPex.Controllers
         private readonly IStackTechnologyService _stackTechnologyService;
         private readonly ILanguageService _languageService;
         private readonly SandboxMapper _mapper;
+        private readonly InputParametrsMapper _inputParamersMapper;
 
         public SandboxesController(ISandboxService sandboxService, IStackTechnologyService stackTechnologyService, ILanguageService languageService)
         {
@@ -31,6 +31,7 @@ namespace SAPex.Controllers
             _stackTechnologyService = stackTechnologyService;
             _languageService = languageService;
             _mapper = new SandboxMapper();
+            _inputParamersMapper = new InputParametrsMapper();
         }
 
         [HttpGet("{id}")]
@@ -40,73 +41,29 @@ namespace SAPex.Controllers
             IEnumerable<StackTechnologyDtoModel> stackTechnologyDtoModel = await _stackTechnologyService.GetStackTechnologiesBySandboxIdAsync(id);
             IEnumerable<LanguageDtoModel> languageDtoModel = await _languageService.GetLanguagesBySandboxIdAsync(id);
 
-            if (sandboxDtoModel == null)
-            {
-                return await Task.FromResult(NotFound());
-            }
-
             SandboxViewModel viewModel = _mapper.MapSbStackLgFromDtoToView(sandboxDtoModel, languageDtoModel, stackTechnologyDtoModel);
 
             return await Task.FromResult(Ok(viewModel)); // convert to json?
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetByPage(int pageNumber = 1, int pageSize = 5, string sortOrder = "name", string searchString = "")
+        public async Task<IActionResult> GetByPage(int pagenumber = 1, int pagesize = 10, string searchstring = "d", string sortfield = "name", int sorttype = 1)
         {
-            IEnumerable<SandboxDtoModel> dtoModels = await _sandboxService.GetAllSandboxesAsync(); // on what level goes null check? it should go directly to db?
+            // do not know why method does not work with class [FromRoute] InputParametrsViewModel sandboxParametrs
+            InputParametrsViewModel sandboxParametrs = new InputParametrsViewModel { PageNumber = pagenumber, PageSize = pagesize, SearchingString = searchstring, SortField = sortfield, SortType = sorttype };
+            PagedList<SandboxDtoModel> dtoModels = await _sandboxService.GetPagedSandboxesAsync(_inputParamersMapper.MapFromViewToDto(sandboxParametrs));
 
-            // IEnumerable<IEnumerable<StackTechnologyDtoModel>> stackTechnologyDtoModels =
-            // IEnumerable<LanguageDtoModel> languageDtoModel = await _languageService.GetLanguagesBySandboxIdAsync(id);
+            IList<SandboxViewModel> viewModels = new List<SandboxViewModel>(); // = _mapper.MapListSbFromDtoToView(dtoModels);
 
-            if (dtoModels == null)
+            foreach (var a in dtoModels.PageList)
             {
-                return await Task.FromResult(NotFound()); // return null
+                IEnumerable<StackTechnologyDtoModel> stackTechnologyDtoModel = await _stackTechnologyService.GetStackTechnologiesBySandboxIdAsync(a.Id);
+                IEnumerable<LanguageDtoModel> languageDtoModel = await _languageService.GetLanguagesBySandboxIdAsync(a.Id);
+
+                viewModels.Add(_mapper.MapSbStackLgFromDtoToView(a, languageDtoModel, stackTechnologyDtoModel));
             }
 
-            IEnumerable<SandboxViewModel> viewModels = _mapper.MapListSbFromDtoToView(dtoModels);
-
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                viewModels = viewModels.Where(s => s.Description.Contains(searchString)
-                                       || s.Name.Contains(searchString));
-            }
-
-            switch (sortOrder.ToLower())
-            {
-                case "name":
-                    viewModels = viewModels.OrderBy(s => s.Name).ToList();
-                    break;
-                case "maxcandidates":
-                    viewModels = viewModels.OrderBy(s => s.MaxCandidates).ToList();
-                    break;
-                case "createdate":
-                    viewModels = viewModels.OrderBy(s => s.CreateDate).ToList();
-                    break;
-                case "startdate":
-                    viewModels = viewModels.OrderBy(s => s.StartDate).ToList();
-                    break;
-                case "description":
-                    viewModels = viewModels.OrderBy(s => s.Description).ToList();
-                    break;
-                case "enddate":
-                    viewModels = viewModels.OrderBy(s => s.EndDate).ToList();
-                    break;
-                case "startregistration":
-                    viewModels = viewModels.OrderBy(s => s.StartRegistration).ToList();
-                    break;
-                case "endregistration":
-                    viewModels = viewModels
-                        .OrderBy(s => s.EndRegistration)
-                        .Skip(pageNumber - 1)
-                        .Take(pageSize)
-                        .ToList();
-                    break;
-
-                default:
-                    break;
-            }
-
-            return await Task.FromResult(Ok(viewModels.ToPagedList(pageNumber, pageSize)));
+            return await Task.FromResult(Ok(viewModels));
         }
 
         [HttpPost]
@@ -120,6 +77,11 @@ namespace SAPex.Controllers
             {
                 return await Task.FromResult(BadRequest());
             }
+
+            // foreach (var a in ids)
+            // {
+            //    Console.WriteLine(a);
+            // }
 
             await _sandboxService.AddSandboxAsync(_mapper.MapSbFromViewToDto(requestData)); // where is check on already exists
 

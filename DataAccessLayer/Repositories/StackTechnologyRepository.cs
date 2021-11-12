@@ -20,16 +20,16 @@ namespace DataAccessLayer.Repositories
 
         public async Task<IEnumerable<StackTechnologyEntityModel>> GetBySandboxId(Guid id)
         {
-            IEnumerable<SandboxStackTechnologyEntityModel> sandboxStackTech = db.SandboxStackTechnologies.Where(s => s.SandboxId == id);
+            SandboxEntityModel sandbox = db.Sandboxes.Find(id);
+            IEnumerable<SandboxStackTechnologyEntityModel> sandboxStackTechnologies = sandbox.SandboxStackTechnologies;
+
             IList<StackTechnologyEntityModel> stackTechnology = new List<StackTechnologyEntityModel> { };
 
-            foreach (var a in sandboxStackTech)
+            foreach (var a in sandboxStackTechnologies)
             {
                 stackTechnology.Add(db.StackTechnologies.Find(a.StackTechnologyId));
             }
             return stackTechnology;
-
-            // return db.StackTechnologies.ToList();
 
         }
     }

@@ -17,11 +17,13 @@ namespace BusinessLogicLayer.Services
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly SandboxProfile profile;
+        private readonly InputParametrsProfile inputParametrsProfile;
         
         public SandboxService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
             this.profile = new SandboxProfile();
+            inputParametrsProfile = new InputParametrsProfile();
         }
 
         public async Task<bool> AddSandboxAsync(SandboxDtoModel sandboxDto)
@@ -57,6 +59,19 @@ namespace BusinessLogicLayer.Services
         {
             IEnumerable<SandboxEntityModel> sandboxList = await Task.Run(() => unitOfWork.Sandboxes.GetAllAsync());
             return profile.mapListToDto(sandboxList);
+        }
+
+        public async Task<PagedList<SandboxDtoModel>> GetPagedSandboxesAsync(InputParametrsDtoModel parametrs)
+        {
+            PagedList<SandboxEntityModel> sandboxList = await Task.Run(() => unitOfWork.Sandboxes.GetPagedAsync(inputParametrsProfile.MapFromDtoToEntity(parametrs)));
+            PagedList<SandboxDtoModel> sandboxDtoList = new PagedList<SandboxDtoModel>
+            {
+                PageList = profile.mapListToDto(sandboxList.PageList),
+                TotalPages = sandboxList.TotalPages,
+                CurrentPage = sandboxList.CurrentPage
+            };
+
+            return sandboxDtoList;
         }
 
         public void UpdateSandbox(SandboxDtoModel sandboxDto)
