@@ -36,7 +36,7 @@ namespace BusinessLogicLayer.Helpers
 
                 Guid idSt1 = Guid.NewGuid();
                 Guid idSt2 = Guid.NewGuid();
-                Guid idSt3 = Guid.NewGuid();
+                Guid idSt3 = Guid.Parse("D1D4E77B-B6D5-4B4D-9645-535C8B246189");
                 Guid idSt4 = Guid.NewGuid();
                 Guid idSt5 = Guid.NewGuid();
 
@@ -247,71 +247,71 @@ namespace BusinessLogicLayer.Helpers
                 {
                     db.StackTechnologies.Add(new StackTechnologyEntityModel
                     {
-                        Id = Guid.NewGuid(),
+                        Id = idSt1,
                         Name = ".Net"
                     });
                     db.StackTechnologies.Add(new StackTechnologyEntityModel
                     {
-                        Id = Guid.NewGuid(),
+                        Id = idSt2,
                         Name = "JS"
                     });
                     db.StackTechnologies.Add(new StackTechnologyEntityModel
                     {
-                        Id = Guid.Parse("D1D4E77B-B6D5-4B4D-9645-535C8B246189"),
+                        Id = idSt3,
                         Name = "Java"
                     });
                     db.StackTechnologies.Add(new StackTechnologyEntityModel
                     {
-                        Id = Guid.NewGuid(),
+                        Id = idSt4,
                         Name = "Devops"
                     });
                     db.StackTechnologies.Add(new StackTechnologyEntityModel
                     {
-                        Id = Guid.NewGuid(),
+                        Id = idSt5,
                         Name = "Python"
                     });
                 }
                 db.SaveChanges();
 
-                //if (!db.SandboxStackTechnologies.Any())
-                //{
-                //    db.Add(new SandboxStackTechnologyEntityModel
-                //    {
-                //        Id = Guid.NewGuid(),
-                //        SandboxId = idSb1,
-                //        StackTechnologyId = idSt1
-                //    });
+                if (!db.SandboxStackTechnologies.Any())
+                {
+                    db.Add(new SandboxStackTechnologyEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        SandboxId = idSb1,
+                        StackTechnologyId = idSt1
+                    });
 
-                //    db.Add(new SandboxStackTechnologyEntityModel
-                //    {
-                //        Id = Guid.NewGuid(),
-                //        SandboxId = idSb1,
-                //        StackTechnologyId = idSt2
-                //    });
+                    db.Add(new SandboxStackTechnologyEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        SandboxId = idSb1,
+                        StackTechnologyId = idSt2
+                    });
 
-                //    db.Add(new SandboxStackTechnologyEntityModel
-                //    {
-                //        Id = Guid.NewGuid(),
-                //        SandboxId = idSb2,
-                //        StackTechnologyId = idSt2
-                //    });
+                    db.Add(new SandboxStackTechnologyEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        SandboxId = idSb2,
+                        StackTechnologyId = idSt2
+                    });
 
-                //    db.Add(new SandboxStackTechnologyEntityModel
-                //    {
-                //        Id = Guid.NewGuid(),
-                //        SandboxId = idSb2,
-                //        StackTechnologyId = idSt3
-                //    });
+                    db.Add(new SandboxStackTechnologyEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        SandboxId = idSb2,
+                        StackTechnologyId = idSt3
+                    });
 
-                //    db.Add(new SandboxStackTechnologyEntityModel
-                //    {
-                //        Id = Guid.NewGuid(),
-                //        SandboxId = idSb3,
-                //        StackTechnologyId = idSt4
-                //    });
+                    db.Add(new SandboxStackTechnologyEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        SandboxId = idSb3,
+                        StackTechnologyId = idSt4
+                    });
 
-                //}
-                //db.SaveChanges();
+                }
+                db.SaveChanges();
 
                 if (!db.SandboxLanguages.Any())
                 {
