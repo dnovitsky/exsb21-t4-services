@@ -10,7 +10,7 @@ namespace BusinessLogicLayer.Interfaces
 {
     public interface ISandboxService : IDisposable
     {
-        Task<bool> AddSandboxAsync(SandboxDtoModel sandboxDto);
+        Task<Guid> AddSandboxAsync(SandboxDtoModel sandboxDto);
         Task<IEnumerable<SandboxDtoModel>> GetAllSandboxesAsync();
         Task<PagedList<SandboxDtoModel>> GetPagedSandboxesAsync(InputParametrsDtoModel parametrs);
         Task<IEnumerable<SandboxDtoModel>> FindSandBoxesAsync(Expression<Func<SandboxEntityModel, bool>> expression);

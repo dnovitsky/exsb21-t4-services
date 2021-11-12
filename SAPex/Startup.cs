@@ -105,6 +105,8 @@ namespace SAPex
             services.AddScoped<ILanguageService, LanguageService>();
             services.AddScoped<IStackTechnologyService, StackTechnologyService>();
             services.AddScoped<ICandidateService, CandidateService>();
+            services.AddScoped<ISandboxLanguagesService, SandboxLanguageService>();
+            services.AddScoped<ISandboxStackTechnologyService, SandboxStackTechnologyService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

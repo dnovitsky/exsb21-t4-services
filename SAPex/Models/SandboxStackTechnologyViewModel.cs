@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 
 namespace SAPex.Models
 {
-    public class LanguageViewModel
+    public class SandboxStackTechnologyViewModel
     {
         public Guid Id { get; set; }
 
-        public string Name { get; set; }
+        public Guid SandboxId { get; set; }
+
+        public Guid StackTechnologyId { get; set; }
     }
 }

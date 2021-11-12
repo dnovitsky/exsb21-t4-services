@@ -12,6 +12,12 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Controllers\Validation\**" />
+    <Content Remove="Controllers\Validation\**" />
+    <EmbeddedResource Remove="Controllers\Validation\**" />
+    <None Remove="Controllers\Validation\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Models\" />
     <None Remove="Swashbuckle.AspNetCore" />
     <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
@@ -39,8 +45,5 @@
     <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
     <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj" />
     <ProjectReference Include="..\SAPexAuthService\SAPexAuthService.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\Validation\" />
   </ItemGroup>
 </Project>
