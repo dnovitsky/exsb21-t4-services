@@ -20,10 +20,9 @@ namespace DbMigrations.EntityModels
 
         public string TestResult { get; set; }
         [Required]
-        public DateTime CreateDate { get; set; }
+        public DateTime CreateDate { get; set; } = DateTime.Now;
 
-        [Required]
-        public Guid FeedbackId { get; set; }
+        public Nullable<Guid> FeedbackId { get; set; } = null;
         public virtual FeedbackEntityModel Feedback { get; set; }
 
       

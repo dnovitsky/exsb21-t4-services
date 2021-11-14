@@ -93,6 +93,20 @@ namespace SAPex
                 });
                 c.OperationFilter<SwaggerFileUploadOperationFilter>();
             });
+
+            services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            // services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
+            services.AddScoped<ILanguageLevelService, LanguageLevelService>();
+            services.AddScoped<ISandboxService, SandboxService>();
+            services.AddScoped<ISkillService, SkillService>();
+            services.AddScoped<ILanguageService, LanguageService>();
+            services.AddScoped<IStackTechnologyService, StackTechnologyService>();
+            services.AddScoped<ICandidateService, CandidateService>();
+            services.AddScoped<ISandboxLanguagesService, SandboxLanguageService>();
+            services.AddScoped<ISandboxStackTechnologyService, SandboxStackTechnologyService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -138,7 +152,7 @@ namespace SAPex
             };
             helpers.ForEach(helper => helper.CreateTestData());
 
-            DbObjects.Initial(Configuration.GetConnectionString("DefaultConnection"));
+            TestDataHelper.InitTestData(Configuration.GetConnectionString("DefaultConnection"));
         }
     }
 }

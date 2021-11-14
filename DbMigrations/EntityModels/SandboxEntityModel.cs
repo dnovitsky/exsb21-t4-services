@@ -16,6 +16,7 @@ namespace DbMigrations.EntityModels
             CandidateSandboxes = new List<CandidateSandboxEntityModel>();
             Teams = new List<TeamEntityModel>();
             SandboxStackTechnologies = new List<SandboxStackTechnologyEntityModel>();
+            SandboxLanguages = new List<SandboxLanguageEntityModel>();
         }
         [Key]
         public Guid Id { get; set; }
@@ -41,6 +42,8 @@ namespace DbMigrations.EntityModels
         public virtual IList<CandidateSandboxEntityModel> CandidateSandboxes  { get; set; }
         public virtual IList<TeamEntityModel> Teams { get; set; }
         public virtual IList<SandboxStackTechnologyEntityModel> SandboxStackTechnologies { get; set; }
+        public virtual IList<SandboxLanguageEntityModel> SandboxLanguages { get; set; }
+
 
     }
 }

@@ -22,6 +22,7 @@ namespace DataAccessLayer.Service
         ILanguageRepository Languages { get; }
         IRatingRepository Ratings { get; }
         ISandboxRepository Sandboxes { get; }
+        ISandboxLanguageRepository SandboxLanguages { get; }
         ISandboxStackTechnologyRepository SandboxStackTechnologies { get; }
         ISkillRepository Skills { get; }
         IStackTechnologyRepository StackTechnologies { get; }
