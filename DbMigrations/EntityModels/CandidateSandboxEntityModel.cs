@@ -16,12 +16,10 @@ namespace DbMigrations.EntityModels
         public Guid CandidateId { get; set; }
         public virtual CandidateEntityModel Candidate { get; set; }
 
-        [Required]
-        public Guid CandidateProjectRoleId { get; set; }
+        public Nullable<Guid> CandidateProjectRoleId { get; set; }
         public virtual CandidateProjectRoleEntityModel CandidateProjectRole { get; set; }
 
-        [Required]
-        public Guid TeamId { get; set; }
+        public Nullable<Guid> TeamId { get; set; }
         public virtual TeamEntityModel Team { get; set; }
 
         [Required]
@@ -32,6 +30,17 @@ namespace DbMigrations.EntityModels
         public Guid CandidateProcessId { get; set; }
         public virtual CandidateProccesEntityModel CandidateProcess { get; set; }
 
+        public string Motivation { get; set; }
+
+        public string CurrentJob { get; set; }
+
+        public string TimeContact { get; set; }
+
+        public bool IsJoinToExadel { get; set; }
+
+        public Guid SandboxLanguageId { get; set; }
+
+        public bool IsAgreement { get; set; }
         [Required]
         public Guid AvailabilityTypeId { get; set; }
         public virtual AvailabilityTypeEntityModel AvailabilityType { get; set; }

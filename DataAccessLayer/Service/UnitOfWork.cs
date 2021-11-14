@@ -29,6 +29,7 @@ namespace DataAccessLayer.Service
         private ILanguageLevelRepository languageLevels;
         private ILanguageRepository languages;
         private IRatingRepository ratings;
+        private ISandboxLanguageRepository sandboxLanguages;
         private ISandboxRepository sandboxes;
         private ISandboxStackTechnologyRepository sandboxStackTechnologies;
         private ISkillRepository skills;
@@ -46,7 +47,7 @@ namespace DataAccessLayer.Service
 
         public UnitOfWork(AppDbContext context)
         {
-            this.context= context;
+            this.context = context;
         }
 
         public IAccessFormRepository AccessForms
@@ -214,6 +215,18 @@ namespace DataAccessLayer.Service
                     ratings = new RatingRepository(context);
                 }
                 return ratings;
+            }
+        }
+
+        public ISandboxLanguageRepository SandboxLanguages
+        {
+            get
+            {
+                if (sandboxLanguages == null)
+                {
+                    sandboxLanguages = new SandboxLanguageRepository(context);
+                }
+                return sandboxLanguages;
             }
         }
 
@@ -425,6 +438,11 @@ namespace DataAccessLayer.Service
         public async Task SaveAsync()
         {
              await context.SaveChangesAsync();
+        }
+
+        public void Save()
+        {
+            context.SaveChanges();
         }
 
         private bool disposed = false;

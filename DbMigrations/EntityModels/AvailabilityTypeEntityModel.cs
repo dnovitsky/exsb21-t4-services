@@ -1,4 +1,4 @@
-﻿using DbMigrations.EntityModels.BaseModels;
+using DbMigrations.EntityModels.BaseModels;
 using System.Collections.Generic;
 
 namespace DbMigrations.EntityModels

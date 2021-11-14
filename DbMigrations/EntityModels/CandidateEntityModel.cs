@@ -20,6 +20,8 @@ namespace DbMigrations.EntityModels
         public string Name { get; set; }
         
         [Required]
+        public string Surname { get; set; }
+        [Required]
         public string Email { get; set; }
         
         [Required]
@@ -30,12 +32,11 @@ namespace DbMigrations.EntityModels
         
         [Required]
         public string Phone { get; set; }
-        
-        [Required]
-        public string Education { get; set; }
-        
-        [Required]
-        public string CV { get; set; }
+
+        public string ProfessionaCertificates { get; set; }
+
+        public string AdditionalSkills { get; set; }
+
 
         public virtual IList<CandidateLanguageEntityModel> CandidateLanguages { get; set; }
         

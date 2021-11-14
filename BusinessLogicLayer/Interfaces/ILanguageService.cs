@@ -8,11 +8,12 @@ using DbMigrations.EntityModels;
 
 namespace BusinessLogicLayer.Interfaces
 {
-    public interface ILanguageService :IDisposable
+    public interface ILanguageService : IDisposable
     {
         Task<bool> AddLanguageAsync(LanguageDtoModel languageDto);
         Task<IEnumerable<LanguageDtoModel>> GetAllLanguagesAsync();
         Task<IEnumerable<LanguageDtoModel>> FindLanguagesAsync(Expression<Func<LanguageEntityModel, bool>> expression);
+        Task<IEnumerable<LanguageDtoModel>> GetLanguagesBySandboxIdAsync(Guid id);
         void UpdateLanguage(LanguageDtoModel languageDto);
         Task<LanguageDtoModel> FindLanguageByIdAsync(Guid id);
         void DeleteLanguage(Guid id);

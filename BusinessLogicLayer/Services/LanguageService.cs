@@ -21,6 +21,7 @@ namespace BusinessLogicLayer.Services
         public LanguageService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
+            profile = new LanguageProfile();
         }
         public async Task<bool> AddLanguageAsync(LanguageDtoModel languageDto)
         {
@@ -61,6 +62,11 @@ namespace BusinessLogicLayer.Services
             return profile.mapListToDto(languagesEM);
         }
 
+        public async Task<IEnumerable<LanguageDtoModel>> GetLanguagesBySandboxIdAsync(Guid id)
+        {
+            IEnumerable<LanguageEntityModel> LanguagesEM = await Task.Run(() => unitOfWork.Languages.GetBySandboxId(id));
+            return profile.mapListToDto(LanguagesEM);
+        }
         public void UpdateLanguage(LanguageDtoModel languageDto)
         {            
             LanguageEntityModel languageEM = profile.mapToEM(languageDto);
@@ -70,7 +76,7 @@ namespace BusinessLogicLayer.Services
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+
         }
     }
 }
