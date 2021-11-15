@@ -1,4 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using BusinessLogicLayer.DtoModels;
+using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SAPexAuthService.Services;
@@ -10,18 +14,24 @@ namespace SAPex.Controllers
     [Authorize]
     public class UsersController : ControllerBase
     {
-        private readonly AuthUserService _authUserService;
+        private readonly IUserService _userService;
 
-        public UsersController(AuthUserService authUserService)
+        public UsersController(IUserService userService)
         {
-            _authUserService = authUserService;
+            _userService = userService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAsync()
+        public async Task<ActionResult<UserDtoModel>> GetAsync()
         {
-            var users = await _authUserService.FindAllAsync();
-            return Ok(users);
+            if (HttpContext.User.Identity is ClaimsIdentity identity)
+            {
+                var email = identity.FindFirst(ClaimTypes.Email).Value;
+                var users = await _userService.FindUsersAsync(x => x.Email == email);
+                return Ok(users.FirstOrDefault());
+            }
+
+            return NotFound();
         }
     }
 }
