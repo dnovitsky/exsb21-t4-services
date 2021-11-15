@@ -15,66 +15,84 @@ using SAPex.Models.Validators;
 
 namespace SAPex.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/skills")]
     [ApiController]
-    public class SkillController : ControllerBase
+    public class SkillsController : ControllerBase
     {
         private readonly ISkillService _skillService;
         private readonly SkillMapper _mapper = new SkillMapper();
 
-        public SkillController(ISkillService service)
+        public SkillsController(ISkillService service)
         {
             _skillService = service;
         }
 
-        // GET: api/<SkillController>
         [HttpGet]
         public async Task<IEnumerable<SkillViewModel>> GetAllSkills()
         {
             return _mapper.MapListSkillFromDtoToView(await _skillService.GetAllSkillsAsync());
         }
 
-        // GET api/<SkillController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             SkillDtoModel skillDto = await _skillService.FindSkillByIdAsync(id);
-            SkillViewModel skillVM = _mapper.MapSkillFromDtoToView(skillDto);
 
+            if (skillDto == null)
+            {
+                return await Task.FromResult(NotFound());
+            }
+
+            SkillViewModel skillVM = _mapper.MapSkillFromDtoToView(skillDto);
             return await Task.FromResult(Ok(skillVM));
         }
 
-        // POST api/<SkillController>
         [HttpPost]
-        public async Task<Guid> Post([FromBody] SkillViewModel skillVM)
+        public async Task<IActionResult> Post([FromBody] SkillViewModel skillVM)
         {
+            ValidationResult validationResult = new SkillValidator().Validate(skillVM);
+
+            if (!validationResult.IsValid)
+            {
+                return await Task.FromResult(BadRequest());
+            }
+
             SkillDtoModel skillDto = _mapper.MapSkillFromViewToDto(skillVM);
             SkillDtoModel newSkillDto = await _skillService.AddSkillAsync(skillDto);
-            return newSkillDto.Id;
+            return await Task.FromResult(Ok(newSkillDto.Id));
         }
 
-        // PUT api/<SkillController>/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] SkillViewModel skillVM)
         {
             SkillDtoModel skillDto = _mapper.MapSkillFromViewToDto(skillVM);
-            bool updateResult = await _skillService.UpdateSkill(skillDto);
+            ValidationResult validationResult = new SkillValidator().Validate(skillVM);
 
-            if (updateResult)
+            if (!validationResult.IsValid)
             {
-                return await Task.FromResult(Ok("Was Update"));
+                return await Task.FromResult(BadRequest());
             }
-            else
+            else if (skillDto == null)
             {
-                return await Task.FromResult(Ok("Wasn't Update"));
+                return await Task.FromResult(NotFound());
             }
+
+            bool updateResult = await _skillService.UpdateSkill(skillDto);
+            return await Task.FromResult(Ok("Was Updated"));
         }
 
-        // DELETE api/<SkillController>/5
         [HttpDelete("{id}")]
-        public async Task DeleteSkill(Guid id)
+        public async Task<IActionResult> DeleteSkill(Guid id)
         {
+            SkillDtoModel skillDto = await _skillService.FindSkillByIdAsync(id);
+
+            if (skillDto == null)
+            {
+                return await Task.FromResult(NotFound());
+            }
+
             await _skillService.DeleteSkill(id);
+            return await Task.FromResult(Ok());
         }
     }
 }
