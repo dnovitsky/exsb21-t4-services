@@ -16,7 +16,6 @@ namespace BusinessLogicLayer.Services
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly SkillProfile profile = new SkillProfile();
-        private readonly InputParametrsProfile inputParametrsProfile = new InputParametrsProfile();
 
         public SkillService(IUnitOfWork unitOfWork)
         {

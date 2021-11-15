@@ -413,6 +413,52 @@ namespace BusinessLogicLayer.Helpers
                     });
                 }
                 db.SaveChanges();
+
+                if (!db.Skills.Any())
+                {
+                    db.Skills.Add(new SkillEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Angular"
+                    });
+
+                    db.Skills.Add(new SkillEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "CSS"
+                    });
+
+                    db.Skills.Add(new SkillEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "JS"
+                    });
+
+                    db.Skills.Add(new SkillEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "GitHub"
+                    });
+
+                    db.Skills.Add(new SkillEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = ".Net"
+                    });
+
+                    db.Skills.Add(new SkillEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "C#"
+                    });
+
+                    db.Skills.Add(new SkillEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "MSSQL"
+                    });
+                }
+                db.SaveChanges();
             }
         }
     }
