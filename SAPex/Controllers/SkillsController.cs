@@ -65,18 +65,21 @@ namespace SAPex.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] SkillViewModel skillVM)
         {
-            SkillDtoModel skillDto = _mapper.MapSkillFromViewToDto(skillVM);
+            SkillDtoModel skillDtoCheck = await _skillService.FindSkillByIdAsync(id);
+
+            if (skillDtoCheck == null)
+            {
+                return await Task.FromResult(NotFound());
+            }
+
             ValidationResult validationResult = new SkillValidator().Validate(skillVM);
 
             if (!validationResult.IsValid)
             {
                 return await Task.FromResult(BadRequest());
             }
-            else if (skillDto == null)
-            {
-                return await Task.FromResult(NotFound());
-            }
 
+            SkillDtoModel skillDto = _mapper.MapSkillFromViewToDto(skillVM);
             bool updateResult = await _skillService.UpdateSkill(skillDto);
             return await Task.FromResult(Ok("Was Updated"));
         }
