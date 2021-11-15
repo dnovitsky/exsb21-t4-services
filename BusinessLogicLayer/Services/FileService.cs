@@ -51,7 +51,7 @@ namespace BusinessLogicLayer.Services
             return fileDto;
         }
 
-        public void DeleteFile(Guid id)
+        public void DeleteFileById(Guid id)
         {
             unitOfWork.Files.Delete(id);
         }

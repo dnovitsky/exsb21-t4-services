@@ -12,7 +12,7 @@ namespace BusinessLogicLayer.Interfaces
         Task<bool> AddFileAsync(FileDtoModel fileDto);
         Task<IEnumerable<FileDtoModel>> GetAllFilesAsync();
         Task<FileDtoModel> FindFileByIdAsync(Guid id);
-        void DeleteFile(Guid id);
+        void DeleteFileById(Guid id);
 
     }
 }
