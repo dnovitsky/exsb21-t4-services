@@ -10,5 +10,6 @@ namespace BusinessLogicLayer.DtoModels
        public string Email { get; set; }
        public string Location { get; set; }
        public IList<string> Roles { get; set; }
+       
     }
 }
