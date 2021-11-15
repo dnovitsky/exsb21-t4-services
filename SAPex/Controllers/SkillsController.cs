@@ -50,6 +50,11 @@ namespace SAPex.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] SkillViewModel skillVM)
         {
+            if (skillVM == null)
+            {
+                return await Task.FromResult(BadRequest());
+            }
+
             ValidationResult validationResult = new SkillValidator().Validate(skillVM);
 
             if (!validationResult.IsValid)
@@ -70,6 +75,11 @@ namespace SAPex.Controllers
             if (skillDtoCheck == null)
             {
                 return await Task.FromResult(NotFound());
+            }
+
+            if (skillVM == null)
+            {
+                return await Task.FromResult(BadRequest());
             }
 
             ValidationResult validationResult = new SkillValidator().Validate(skillVM);
