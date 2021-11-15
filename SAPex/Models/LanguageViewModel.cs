@@ -1,15 +1,14 @@
-﻿namespace SAPex.Models
-{
-    public class LanguageViewModel : AbstractNameViewModel
-    {
-        public LanguageViewModel()
-            : base()
-        {
-        }
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-        public LanguageViewModel(string name)
-            : base(name)
-        {
-        }
+namespace SAPex.Models
+{
+    public class LanguageViewModel
+    {
+        public Guid Id { get; set; }
+
+        public string Name { get; set; }
     }
 }

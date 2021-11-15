@@ -17,25 +17,21 @@ namespace BusinessLogicLayer.Services
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly SandboxProfile profile;
+        private readonly InputParametrsProfile inputParametrsProfile;
         
         public SandboxService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
+            this.profile = new SandboxProfile();
+            inputParametrsProfile = new InputParametrsProfile();
         }
 
-        public async Task<bool> AddSandboxAsync(SandboxDtoModel sandboxDto)
+        public async Task<Guid> AddSandboxAsync(SandboxDtoModel sandboxDto)
         {
-            try
-            {
-                SandboxEntityModel sandbox = profile.mapToEM(sandboxDto);
-                await unitOfWork.Sandboxes.CreateAsync(sandbox);
-                await unitOfWork.SaveAsync();
-                return true;
-            }
-            catch(Exception ex)
-            {
-                return false;
-            }
+            SandboxEntityModel sandbox = profile.mapToEM(sandboxDto);
+            SandboxEntityModel a = await unitOfWork.Sandboxes.CreateAsync(sandbox);
+            await unitOfWork.SaveAsync();
+            return a.Id;
         }
         public async Task<SandboxDtoModel> FindSandboxByIdAsync(Guid id)
         {
@@ -58,6 +54,19 @@ namespace BusinessLogicLayer.Services
             return profile.mapListToDto(sandboxList);
         }
 
+        public async Task<PagedList<SandboxDtoModel>> GetPagedSandboxesAsync(InputParametrsDtoModel parametrs)
+        {
+            PagedList<SandboxEntityModel> sandboxList = await Task.Run(() => unitOfWork.Sandboxes.GetPagedAsync(inputParametrsProfile.MapFromDtoToEntity(parametrs)));
+            PagedList<SandboxDtoModel> sandboxDtoList = new PagedList<SandboxDtoModel>
+            {
+                PageList = profile.mapListToDto(sandboxList.PageList),
+                TotalPages = sandboxList.TotalPages,
+                CurrentPage = sandboxList.CurrentPage
+            };
+
+            return sandboxDtoList;
+        }
+
         public void UpdateSandbox(SandboxDtoModel sandboxDto)
         {
                 SandboxEntityModel sandbox = profile.mapToEM(sandboxDto);
@@ -72,7 +81,7 @@ namespace BusinessLogicLayer.Services
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
 
     }
