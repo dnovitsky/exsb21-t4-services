@@ -18,12 +18,14 @@ namespace BusinessLogicLayer.Services
         private readonly IUnitOfWork unitOfWork;
         private readonly SandboxProfile profile;
         private readonly InputParametrsProfile inputParametrsProfile;
+        private readonly FilterParametrsProfile filterParametrsProfile;
         
         public SandboxService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
             this.profile = new SandboxProfile();
             inputParametrsProfile = new InputParametrsProfile();
+            filterParametrsProfile = new FilterParametrsProfile();
         }
 
         public async Task<Guid> AddSandboxAsync(SandboxDtoModel sandboxDto)
@@ -50,13 +52,15 @@ namespace BusinessLogicLayer.Services
 
         public async Task<IEnumerable<SandboxDtoModel>> GetAllSandboxesAsync()
         {
-            IEnumerable<SandboxEntityModel> sandboxList = await Task.Run(() => unitOfWork.Sandboxes.GetAllAsync());
+            IEnumerable<SandboxEntityModel> sandboxList = await unitOfWork.Sandboxes.GetAllAsync();
             return profile.mapListToDto(sandboxList);
         }
 
-        public async Task<PagedList<SandboxDtoModel>> GetPagedSandboxesAsync(InputParametrsDtoModel parametrs)
+        public async Task<PagedList<SandboxDtoModel>> GetPagedSandboxesAsync(InputParametrsDtoModel parametrs, FilterParametrsDtoModel filterParametrs)
         {
-            PagedList<SandboxEntityModel> sandboxList = await Task.Run(() => unitOfWork.Sandboxes.GetPagedAsync(inputParametrsProfile.MapFromDtoToEntity(parametrs)));
+            PagedList<SandboxEntityModel> sandboxList = await unitOfWork.Sandboxes.GetPagedAsync(
+                inputParametrsProfile.MapFromDtoToEntity(parametrs),
+                filterParametrsProfile.MapFromDtoToEntity(filterParametrs));
             PagedList<SandboxDtoModel> sandboxDtoList = new PagedList<SandboxDtoModel>
             {
                 PageList = profile.mapListToDto(sandboxList.PageList),

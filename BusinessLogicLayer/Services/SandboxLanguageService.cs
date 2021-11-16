@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessLogicLayer.Services
 {
-    public class SandboxLanguageService : ISandboxLanguagesService
+    public class SandboxLanguageService : ISandboxLanguageService
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly SandboxLanguagesProfile profile = new();
@@ -31,6 +31,26 @@ namespace BusinessLogicLayer.Services
                 SandboxLanguageEntityModel sandboxLanguageEM = profile.mapToEM(sandboxLanguageDto);
                 await unitOfWork.SandboxLanguages.CreateAsync(sandboxLanguageEM);
                 await unitOfWork.SaveAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> AddSandboxLanguagesListByIdsAsync(Guid sandboxId, IEnumerable<Guid> languageIds)
+        {
+            try
+            {
+                IList<SandboxLanguageDtoModel> sandboxLanguageDtoModels = new List<SandboxLanguageDtoModel>();
+
+                foreach (var id in languageIds)
+                {
+                    SandboxLanguageDtoModel item = new SandboxLanguageDtoModel { SandboxId = sandboxId, LanguageId = id };
+                    await AddSandboxLanguageAsync(item);
+                }
+
                 return true;
             }
             catch (Exception ex)
