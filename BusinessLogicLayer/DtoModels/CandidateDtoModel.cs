@@ -23,14 +23,6 @@ namespace BusinessLogicLayer.DtoModels
 
         public string CurrentJob { get; set; }
 
-        public string AvailabillityPerDay { get; set; }
-
-        public string TimeContact { get; set; }
-
-        public bool IsJoinToExadel { get; set; }
-
-        public bool IsAgreement { get; set; }
-
         public string ProfessionaCertificates { get; set; }
 
         public string AdditionalSkills { get; set; }
