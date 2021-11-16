@@ -9,11 +9,17 @@ namespace DbMigrations.EntityModels
     public class InputParametrsEntityModel
     {
         public int PageNumber;
+
         public int PageSize;
 
-        public int SortType;
-        public string SortField;
+        public SortType SortingType;
 
-        public string SearchingString;
+        public string SortField;
+    }
+
+    public enum SortType
+    {
+        Ascending,
+        Descending,
     }
 }

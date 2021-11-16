@@ -9,11 +9,18 @@ namespace BusinessLogicLayer.DtoModels
     public class InputParametrsDtoModel
     {
         public int PageNumber;
+
         public int PageSize;
 
-        public int SortType;
+        public SortType SortingType;
+
         public string SortField;
 
-        public string SearchingString;
+    }
+
+    public enum SortType
+    {
+        Ascending,
+        Descending,
     }
 }

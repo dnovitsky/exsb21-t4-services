@@ -10,5 +10,6 @@ namespace BusinessLogicLayer.Interfaces
     public interface ISandboxStackTechnologyService
     {
         Task<bool> AddSandboxStackTechnologyAsync(SandboxStackTechnologyDtoModel sandboxStackTechnologyDto);
+        Task<bool> AddSandboxStackTechnologyListByIdsAsync(Guid sandboxId, IEnumerable<Guid> stackTechnologyIds);
     }
 }

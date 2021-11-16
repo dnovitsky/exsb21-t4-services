@@ -25,9 +25,9 @@ namespace SAPex.Mappers
             return sandbox;
         }
 
-        public SandboxDtoModel MapSbFromViewToDto(SandboxViewModel sandboxView)
+        public SandboxDtoModel MapSbFromViewToDto(SandboxFieldsViewModel sandboxView)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<SandboxViewModel, SandboxDtoModel>()
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<SandboxFieldsViewModel, SandboxDtoModel>()
                     .ForMember(x => x.Name, y => y.MapFrom(x => x.Name))
                     .ForMember(x => x.Description, y => y.MapFrom(x => x.Description))
                     .ForMember(x => x.MaxCandidates, y => y.MapFrom(x => x.MaxCandidates))
@@ -38,7 +38,7 @@ namespace SAPex.Mappers
                     .ForMember(x => x.EndRegistration, y => y.MapFrom(x => x.EndRegistration)));
             var mapper = new Mapper(config);
 
-            SandboxDtoModel sandbox = mapper.Map<SandboxViewModel, SandboxDtoModel>(sandboxView);
+            SandboxDtoModel sandbox = mapper.Map<SandboxFieldsViewModel, SandboxDtoModel>(sandboxView);
             return sandbox;
         }
 

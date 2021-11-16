@@ -38,5 +38,25 @@ namespace BusinessLogicLayer.Services
                 return false;
             }
         }
+
+        public async Task<bool> AddSandboxStackTechnologyListByIdsAsync(Guid sandboxId, IEnumerable<Guid> stackTechnologyIds)
+        {
+            try
+            {
+                IList<SandboxStackTechnologyDtoModel> sandboxStackTechnologyDtoModels = new List<SandboxStackTechnologyDtoModel>();
+
+                foreach (var id in stackTechnologyIds)
+                {
+                    SandboxStackTechnologyDtoModel item = new SandboxStackTechnologyDtoModel { SandboxId = sandboxId, StackTechnologyId = id };
+                    await AddSandboxStackTechnologyAsync(item);
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }
