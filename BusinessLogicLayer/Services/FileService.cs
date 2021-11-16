@@ -16,7 +16,7 @@ namespace BusinessLogicLayer.Services
     public class FileService : IFileService
     {
         private readonly IUnitOfWork unitOfWork;
-        private readonly FileProfile profile;
+        private readonly FileProfile profile = new();
 
         public FileService(IUnitOfWork unitOfWork)
         {
@@ -40,7 +40,8 @@ namespace BusinessLogicLayer.Services
 
         public async Task<IEnumerable<FileDtoModel>> GetAllFilesAsync()
         {
-            IEnumerable<FileEntityModel> fileList = await Task.Run(() => unitOfWork.Files.GetAllAsync());
+            IEnumerable<FileEntityModel> fileList = await unitOfWork.Files.GetAllAsync();
+            
             return profile.mapListToDto(fileList);
         }
 

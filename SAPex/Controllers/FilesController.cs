@@ -58,8 +58,13 @@ namespace SAPex.Controllers
         public async Task<IActionResult> UploadFileAsync(/* [FromHeader] String documentType, TODO review with FE */ [FromForm] IFormFile file)
         {
             string filepath = _rootFilesPath + file.FileName;
-
+            FileDtoModel fileDtoModel = new ();
+            fileDtoModel.Id = new Guid();
+            fileDtoModel.FileName = file.FileName;
+            fileDtoModel.AwsS3Id = 1; // don't have this yet
+            fileDtoModel.CreateDate = DateTime.UtcNow;
             Stream stream = file.OpenReadStream();
+            await _fileService.AddFileAsync(fileDtoModel);
             using (FileStream outputFileStream = new FileStream(filepath, FileMode.Create))
             {
                 DirectoryInfo info = new DirectoryInfo(file.ContentDisposition);
@@ -71,8 +76,19 @@ namespace SAPex.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteFileAsync([FromRoute] Guid id)
         {
-            _fileService.DeleteFileById(id);
-            return await Task.FromResult(Ok());
+            FileDtoModel fileDtoModel = await _fileService.FindFileByIdAsync(id);
+            string filepath = _rootFilesPath + fileDtoModel.FileName;
+            FileInfo file = new FileInfo(filepath);
+            if (file.Exists)
+            {
+                file.Delete();
+                _fileService.DeleteFileById(id);
+                return await Task.FromResult(Ok());
+            }
+            else
+            {
+                return await Task.FromResult(BadRequest());
+            }
         }
     }
 }
