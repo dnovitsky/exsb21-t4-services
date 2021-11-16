@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using BusinessLogicLayer.DtoModels;
 using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +14,7 @@ namespace SAPex.Controllers
     [Authorize]
     public class UsersController : ControllerBase
     {
+        protected readonly UserMapper _mapper = new UserMapper();
         private readonly IUserService _userService;
 
         public UsersController(IUserService userService)
@@ -22,15 +22,14 @@ namespace SAPex.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<UserViewModel>> GetAsync()
+        [HttpGet("user-info")]
+        public async Task<ActionResult<UserViewModel>> GetUserInfoAsync()
         {
             if (HttpContext.User.Identity is ClaimsIdentity identity)
             {
                 var email = identity.FindFirst(ClaimTypes.Email).Value;
                 var users = await _userService.FindUsersAsync(x => x.Email == email);
-                UserViewModel model = users.FirstOrDefault();
-                return Ok(model);
+                return Ok(_mapper.MapUserFromDtoToView(users.FirstOrDefault()));
             }
 
             return NotFound();
