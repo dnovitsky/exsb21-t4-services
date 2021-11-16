@@ -21,7 +21,7 @@ namespace BusinessLogicLayer.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<UserDtoModel> FindInterviewerByIdAsync(Expression<Func<UserFunctionalRoleEntityModel, bool>> expression)
+        public async Task<UserDtoModel> FindByIdConditionAsync(Expression<Func<UserFunctionalRoleEntityModel, bool>> expression)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace BusinessLogicLayer.Services
             }
         }
 
-        public async Task<IEnumerable<UserDtoModel>> FindInterviewersAsync(Expression<Func<UserFunctionalRoleEntityModel, bool>> expression)
+        public async Task<IEnumerable<UserDtoModel>> FindAllByConditionAsync(Expression<Func<UserFunctionalRoleEntityModel, bool>> expression)
         {
 
             IEnumerable<UserFunctionalRoleEntityModel> interviewersId = await unitOfWork.UserFunctionalRoles.FindByConditionAsync(expression);
