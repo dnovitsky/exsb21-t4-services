@@ -425,13 +425,31 @@ namespace BusinessLogicLayer.Helpers
                     db.Skills.Add(new SkillEntityModel
                     {
                         Id = Guid.NewGuid(),
+                        Name = "Angular JS"
+                    });
+
+                    db.Skills.Add(new SkillEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "React"
+                    });
+
+                    db.Skills.Add(new SkillEntityModel
+                    {
+                        Id = Guid.NewGuid(),
                         Name = "CSS"
                     });
 
                     db.Skills.Add(new SkillEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        Name = "JS"
+                        Name = "JavaScript"
+                    });
+
+                    db.Skills.Add(new SkillEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "TypeScript"
                     });
 
                     db.Skills.Add(new SkillEntityModel
@@ -443,7 +461,25 @@ namespace BusinessLogicLayer.Helpers
                     db.Skills.Add(new SkillEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        Name = ".Net"
+                        Name = ".NET 5+"
+                    });
+
+                    db.Skills.Add(new SkillEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = ".NET Core"
+                    });
+
+                    db.Skills.Add(new SkillEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "ASP.net"
+                    });
+
+                    db.Skills.Add(new SkillEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Entity Framework"
                     });
 
                     db.Skills.Add(new SkillEntityModel
@@ -456,6 +492,48 @@ namespace BusinessLogicLayer.Helpers
                     {
                         Id = Guid.NewGuid(),
                         Name = "MSSQL"
+                    });
+
+                    db.Skills.Add(new SkillEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Docker"
+                    });
+
+                    db.Skills.Add(new SkillEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Git"
+                    });
+
+                    db.Skills.Add(new SkillEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "GitHub"
+                    });
+
+                    db.Skills.Add(new SkillEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Visual Studio"
+                    });
+
+                    db.Skills.Add(new SkillEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Visual Code"
+                    });
+
+                    db.Skills.Add(new SkillEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "AWS"
+                    });
+
+                    db.Skills.Add(new SkillEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Azure"
                     });
                 }
                 db.SaveChanges();
