@@ -12,6 +12,16 @@ namespace DataAccessLayer.Repositories
 {
     public class SandboxRepository : Repository<SandboxEntityModel>, ISandboxRepository
     {
+        const string Name = "name";
+        const string MaxCandidates = "maxcandidates";
+        const string CreateDate = "createdate";
+        const string StartDate = "startdate";
+        const string Description = "description";
+        const string EndDate = "enddate";
+        const string StartRegistration = "startregistration";
+        const string Endregistration = "endregistration";
+        const string DataType = "d";
+
         public AppDbContext db;
         public SandboxRepository(AppDbContext context)
             : base(context)
@@ -28,57 +38,72 @@ namespace DataAccessLayer.Repositories
         {
             return await Task.Run(() => db.Sandboxes.AsEnumerable());
         }
-        public async Task<PagedList<SandboxEntityModel>> GetPagedAsync(InputParametrsEntityModel parametrs)
+
+        public async Task<PagedList<SandboxEntityModel>> GetPagedAsync(InputParametrsEntityModel parametrs, FilterParametrsEntityModel filterParametrs)
         {
             int pageNumber = parametrs.PageNumber;
             int pageSize = parametrs.PageSize;
-            string searchString = parametrs.SearchingString;
-
+            SortType SortingType = parametrs.SortingType;
 
             int numberNotes = db.Sandboxes.Count();
             int totalPages = (int)Math.Ceiling((double)numberNotes / (double)pageSize);
 
             PagedList<SandboxEntityModel> pagedList = new PagedList<SandboxEntityModel>();
 
-            if (!string.IsNullOrEmpty(searchString))
+            pagedList.PageList = filterParametrs.SearchingDateField switch
             {
-                pagedList.PageList = db.Sandboxes.Where(s => s.Description.Contains(searchString)
-                                       || s.Name.Contains(searchString));
-            }
+                CreateDate => await Task.Run(() => db.Sandboxes
+                .Where(s => s.Name.Contains(filterParametrs.FirstSearchingTextString) &&
+                s.Description.Contains(filterParametrs.SecondSearchingTextString) &&
+                s.CreateDate.ToString().Contains(filterParametrs.SearchingDateString))),
 
-            switch (parametrs.SortField.ToLower())
+                StartDate => await Task.Run(() => db.Sandboxes
+                .Where(s => s.Name.Contains(filterParametrs.FirstSearchingTextString) &&
+                s.Description.Contains(filterParametrs.SecondSearchingTextString) &&
+                s.StartDate.ToString().Contains(filterParametrs.SearchingDateString))),
+
+                StartRegistration => await Task.Run(() => db.Sandboxes
+                .Where(s => s.Name.Contains(filterParametrs.FirstSearchingTextString) &&
+                s.Description.Contains(filterParametrs.SecondSearchingTextString) &&
+                s.StartRegistration.ToString().Contains(filterParametrs.SearchingDateString))),
+
+                _ => await Task.Run(() => db.Sandboxes
+                .Where(s => s.Name.Contains(filterParametrs.FirstSearchingTextString) &&
+                s.Description.Contains(filterParametrs.SecondSearchingTextString))),
+            };
+
+            pagedList.PageList = parametrs.SortField.ToLower() switch
             {
-                case "name":
-                    pagedList.PageList = pagedList.PageList.OrderBy(s => s.Name).ToList();
-                    break;
-                case "maxcandidates":
-                    pagedList.PageList = pagedList.PageList.OrderBy(s => s.MaxCandidates).ToList();
-                    break;
-                case "createdate":
-                    pagedList.PageList = pagedList.PageList.OrderBy(s => s.CreateDate).ToList();
-                    break;
-                case "startdate":
-                    pagedList.PageList = pagedList.PageList.OrderBy(s => s.StartDate).ToList();
-                    break;
-                case "description":
-                    pagedList.PageList = pagedList.PageList.OrderBy(s => s.Description).ToList();
-                    break;
-                case "enddate":
-                    pagedList.PageList = pagedList.PageList.OrderBy(s => s.EndDate).ToList();
-                    break;
-                case "startregistration":
-                    pagedList.PageList = pagedList.PageList.OrderBy(s => s.StartRegistration).ToList();
-                    break;
-                case "endregistration":
-                    pagedList.PageList = pagedList.PageList
-                        .OrderBy(s => s.EndRegistration)
-                        .Skip(pageNumber - 1)
-                        .Take(pageSize)
-                        .ToList();
-                    break;
-                default:
-                    break;
-            }
+                Name => (SortingType == 0 ?
+                pagedList.PageList.OrderBy(s => s.Name).ToList() :
+                pagedList.PageList.OrderByDescending(s => s.Name).ToList()),
+
+                MaxCandidates => (SortingType == 0 ?
+                pagedList.PageList.OrderBy(s => s.MaxCandidates).ToList() :
+                pagedList.PageList.OrderByDescending(s => s.MaxCandidates).ToList()),
+
+                CreateDate => (SortingType == 0 ?
+                pagedList.PageList.OrderBy(s => s.CreateDate).ToList() :
+                pagedList.PageList.OrderByDescending(s => s.CreateDate).ToList()),
+
+                StartDate => (SortingType == 0 ?
+                pagedList.PageList.OrderBy(s => s.StartDate).ToList() :
+                pagedList.PageList.OrderByDescending(s => s.StartDate).ToList()),
+
+                EndDate => (SortingType == 0 ?
+                pagedList.PageList.OrderBy(s => s.EndDate).ToList() :
+                pagedList.PageList.OrderByDescending(s => s.EndDate).ToList()),
+
+                StartRegistration => (SortingType == 0 ?
+                pagedList.PageList.OrderBy(s => s.StartRegistration).ToList() :
+                pagedList.PageList.OrderByDescending(s => s.StartRegistration).ToList()),
+
+                Endregistration => (SortingType == 0 ?
+                pagedList.PageList.OrderBy(s => s.EndRegistration).ToList() :
+                pagedList.PageList.OrderByDescending(s => s.EndRegistration).ToList()),
+
+                _ => pagedList.PageList.OrderBy(s => s.CreateDate).ToList(),
+            };
 
             pagedList.PageList = pagedList.PageList.Skip((pageNumber - 1) * pageSize).Take(pageSize);
             pagedList.TotalPages = totalPages;
@@ -95,7 +120,6 @@ namespace DataAccessLayer.Repositories
         public void Update(SandboxEntityModel item)
         {
             db.Sandboxes.Update(item);
-            // db.SaveChanges();
         }
         public void Delete(Guid id)
         {

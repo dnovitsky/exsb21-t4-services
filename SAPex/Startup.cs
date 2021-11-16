@@ -64,8 +64,6 @@ namespace SAPex
             services.AddScoped<JwtService, JwtService>();
 
             services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
-            services.AddScoped<ILanguageLevelService, LanguageLevelService>();
-            services.AddScoped<ISkillService, SkillService>();
 
             services.AddSwaggerGen(c =>
             {
@@ -128,6 +126,13 @@ namespace SAPex
                 app.UseHsts();
             }
 
+            // app.UseCors(s =>
+            // {
+            //    s.AllowAnyHeader();
+            //    s.AllowAnyMethod();
+            //    s.AllowAnyOrigin();
+            // });
+
             // app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -137,9 +142,7 @@ namespace SAPex
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllers();
             });
 
             dbContext.Database.Migrate();
