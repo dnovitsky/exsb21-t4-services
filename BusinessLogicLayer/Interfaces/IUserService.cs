@@ -11,8 +11,8 @@ namespace BusinessLogicLayer.Interfaces
     {
         Task<IEnumerable<UserDtoModel>> FindUsersAsync(Expression<Func<UserEntityModel, bool>> expression);
 
-        Task<UserDtoModel> FindInterviewerByIdAsync(Expression<Func<UserFunctionalRoleEntityModel, bool>> expression);
+        Task<UserDtoModel> FindByIdConditionAsync(Expression<Func<UserFunctionalRoleEntityModel, bool>> expression);
 
-        Task<IEnumerable<UserDtoModel>> FindInterviewersAsync(Expression<Func<UserFunctionalRoleEntityModel, bool>> expression);
+        Task<IEnumerable<UserDtoModel>> FindAllByConditionAsync(Expression<Func<UserFunctionalRoleEntityModel, bool>> expression);
     }
 }

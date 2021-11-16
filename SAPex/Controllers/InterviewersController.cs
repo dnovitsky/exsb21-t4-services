@@ -12,12 +12,12 @@ namespace SAPex.Controllers
 {
     [Route("api/interviewers")]
     [ApiController]
-    public class InterviewersConroller : ControllerBase
+    public class InterviewersController : ControllerBase
     {
         private readonly IUserService _userService;
         private readonly InterviewerMapper _mapper = new InterviewerMapper();
 
-        public InterviewersConroller(IUserService userService)
+        public InterviewersController(IUserService userService)
         {
             _userService = userService;
         }
@@ -25,7 +25,7 @@ namespace SAPex.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllInterviewers()
         {
-            IEnumerable<UserDtoModel> interviewersDto = await _userService.FindInterviewersAsync(s => s.FunctionalRole.Name == "Interviewer");
+            IEnumerable<UserDtoModel> interviewersDto = await _userService.FindAllByConditionAsync(s => s.FunctionalRole.Name == "Interviewer");
             IList<InterviewerViewModel> interviewerVM = new List<InterviewerViewModel>();
 
             foreach (var interviewer in interviewersDto)
@@ -39,7 +39,7 @@ namespace SAPex.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetInterviewerById(Guid id)
         {
-            UserDtoModel interviewerDto = await _userService.FindInterviewerByIdAsync(s => s.FunctionalRole.Name == "Interviewer" && s.UserId == id);
+            UserDtoModel interviewerDto = await _userService.FindByIdConditionAsync(s => s.FunctionalRole.Name == "Interviewer" && s.UserId == id);
 
             if (interviewerDto == null)
             {
