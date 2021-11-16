@@ -64,14 +64,6 @@ namespace SAPex
             services.AddScoped<AuthUserRefreshTokenService, AuthUserRefreshTokenService>();
             services.AddScoped<JwtService, JwtService>();
 
-<<<<<<< HEAD
-=======
-            services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
-            services.AddScoped<ILanguageLevelService, LanguageLevelService>();
-            services.AddScoped<ISkillService, SkillService>();
-            services.AddScoped<IFileService, FileService>();
-
->>>>>>> dev
             services.AddSwaggerGen(c =>
             {
                 var jwtSecurityScheme = new OpenApiSecurityScheme
@@ -109,6 +101,7 @@ namespace SAPex
             services.AddScoped<ISandboxLanguagesService, SandboxLanguageService>();
             services.AddScoped<ISandboxStackTechnologyService, SandboxStackTechnologyService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IFileService, FileService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
