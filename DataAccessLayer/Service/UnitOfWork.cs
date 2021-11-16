@@ -24,6 +24,7 @@ namespace DataAccessLayer.Service
         private ICandidateSandboxRepository candidateSandboxes;
         private ICandidateTechSkillRepository candidateTechSkills;
         private IFeedbackRepository feedbacks;
+        private IFileRepository files;
         private IFormRepository forms;
         private IFunctionalRoleRepository functionalRoles;
         private ILanguageLevelRepository languageLevels;
@@ -169,7 +170,17 @@ namespace DataAccessLayer.Service
                 return feedbacks;
             }
         }
-
+        public IFileRepository Files
+        {
+            get
+            {
+                if (files == null)
+                {
+                    files = new FileRepository(context);
+                }
+                return files;
+            }
+        }
         public IFunctionalRoleRepository FunctionalRoles
         {
             get
