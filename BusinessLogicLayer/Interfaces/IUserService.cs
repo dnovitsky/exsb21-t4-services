@@ -10,5 +10,9 @@ namespace BusinessLogicLayer.Interfaces
     public interface IUserService
     {
         Task<IEnumerable<UserDtoModel>> FindUsersAsync(Expression<Func<UserEntityModel, bool>> expression);
+
+        Task<UserDtoModel> FindInterviewerByIdAsync(Expression<Func<UserFunctionalRoleEntityModel, bool>> expression);
+
+        Task<IEnumerable<UserDtoModel>> FindInterviewersAsync(Expression<Func<UserFunctionalRoleEntityModel, bool>> expression);
     }
 }
