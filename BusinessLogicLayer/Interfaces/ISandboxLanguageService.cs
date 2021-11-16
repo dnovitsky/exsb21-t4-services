@@ -8,7 +8,7 @@ using BusinessLogicLayer.DtoModels;
 
 namespace BusinessLogicLayer.Interfaces
 {
-    public interface ISandboxLanguagesService
+    public interface ISandboxLanguageService
     {
         Task<bool> AddSandboxLanguageAsync(SandboxLanguageDtoModel sandboxLanguageDto);
         Task<bool> AddSandboxLanguagesListByIdsAsync(Guid sandboxId, IEnumerable<Guid> languageIds);

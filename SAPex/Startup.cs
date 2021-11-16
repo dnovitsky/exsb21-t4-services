@@ -92,16 +92,16 @@ namespace SAPex
             });
 
             services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
-            services.AddScoped<ILanguageLevelService, LanguageLevelService>();
-            services.AddScoped<ISandboxService, SandboxService>();
-            services.AddScoped<ISkillService, SkillService>();
-            services.AddScoped<ILanguageService, LanguageService>();
-            services.AddScoped<IStackTechnologyService, StackTechnologyService>();
             services.AddScoped<ICandidateService, CandidateService>();
-            services.AddScoped<ISandboxLanguagesService, SandboxLanguageService>();
-            services.AddScoped<ISandboxStackTechnologyService, SandboxStackTechnologyService>();
-            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFileService, FileService>();
+            services.AddScoped<ILanguageLevelService, LanguageLevelService>();
+            services.AddScoped<ILanguageService, LanguageService>();
+            services.AddScoped<ISandboxLanguageService, SandboxLanguageService>();
+            services.AddScoped<ISandboxService, SandboxService>();
+            services.AddScoped<ISandboxStackTechnologyService, SandboxStackTechnologyService>();
+            services.AddScoped<ISkillService, SkillService>();
+            services.AddScoped<IStackTechnologyService, StackTechnologyService>();
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -122,13 +122,6 @@ namespace SAPex
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
-            // app.UseCors(s =>
-            // {
-            //    s.AllowAnyHeader();
-            //    s.AllowAnyMethod();
-            //    s.AllowAnyOrigin();
-            // });
 
             // app.UseHttpsRedirection();
             app.UseStaticFiles();

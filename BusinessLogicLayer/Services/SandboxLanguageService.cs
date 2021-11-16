@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessLogicLayer.Services
 {
-    public class SandboxLanguageService : ISandboxLanguagesService
+    public class SandboxLanguageService : ISandboxLanguageService
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly SandboxLanguagesProfile profile = new();

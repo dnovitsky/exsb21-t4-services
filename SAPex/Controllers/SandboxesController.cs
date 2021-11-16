@@ -23,7 +23,7 @@ namespace SAPex.Controllers
         private readonly ISandboxService _sandboxService;
         private readonly IStackTechnologyService _stackTechnologyService;
         private readonly ILanguageService _languageService;
-        private readonly ISandboxLanguagesService _sandboxLanguageService;
+        private readonly ISandboxLanguageService _sandboxLanguageService;
         private readonly ISandboxStackTechnologyService _sandboxStackTechnologyService;
         private readonly SandboxMapper _mapper;
         private readonly SandboxLanguageMapper _slmapper;
@@ -32,7 +32,7 @@ namespace SAPex.Controllers
         private readonly FilterParametrsMapper _filterParametrsMapper;
 
         public SandboxesController(ISandboxStackTechnologyService sandboxStackTechnologyService,
-            ISandboxLanguagesService sandboxLanguagesService, ISandboxService sandboxService,
+            ISandboxLanguageService sandboxLanguagesService, ISandboxService sandboxService,
             IStackTechnologyService stackTechnologyService, ILanguageService languageService)
         {
             _sandboxStackTechnologyService = sandboxStackTechnologyService;
