@@ -26,13 +26,14 @@ namespace BusinessLogicLayer.Services
             SkillEntityModel skillEM = profile.mapToEM(skillDto);
             await unitOfWork.Skills.CreateAsync(skillEM);
             await unitOfWork.SaveAsync();
-            var skillDto2 = profile.mapToDto(skillEM);
-            return skillDto2;
+            var newSkillDto = profile.mapToDto(skillEM);
+            return newSkillDto;
         }
 
-        public void DeleteSkill(Guid id)
+        public async Task DeleteSkill(Guid id)
         {
             unitOfWork.Skills.Delete(id);
+            await unitOfWork.SaveAsync();
         }
 
         public async Task<SkillDtoModel> FindSkillByIdAsync(Guid id)
@@ -50,15 +51,23 @@ namespace BusinessLogicLayer.Services
 
         public async Task<IEnumerable<SkillDtoModel>> GetAllSkillsAsync()
         {
-            IEnumerable<SkillEntityModel> skillsEM = await Task.Run(() => unitOfWork.Skills.GetAllAsync());
+            IEnumerable<SkillEntityModel> skillsEM = await unitOfWork.Skills.GetAllAsync();
             return profile.mapListToDto(skillsEM);
         }
 
-        public void UpdateSkill(SkillDtoModel skillDto)
+        public async Task<bool> UpdateSkill(SkillDtoModel skillDto)
         {
-            SkillEntityModel skillEM = profile.mapToEM(skillDto);
-            unitOfWork.Skills.Update(skillEM);
-            unitOfWork.SaveAsync();
+            try
+            {
+                SkillEntityModel skillEM = profile.mapToEM(skillDto);
+                unitOfWork.Skills.Update(skillEM);
+                await unitOfWork.SaveAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
     }
