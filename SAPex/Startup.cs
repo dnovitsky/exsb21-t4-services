@@ -64,6 +64,9 @@ namespace SAPex
             services.AddScoped<JwtService, JwtService>();
 
             services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
+            services.AddScoped<ILanguageLevelService, LanguageLevelService>();
+            services.AddScoped<ISkillService, SkillService>();
+            services.AddScoped<IFileService, FileService>();
 
             services.AddSwaggerGen(c =>
             {
