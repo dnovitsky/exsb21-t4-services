@@ -1,15 +1,11 @@
-﻿namespace SAPex.Models
-{
-    public class SkillViewModel : AbstractNameViewModel
-    {
-        public SkillViewModel()
-            : base()
-        {
-        }
+﻿using System;
 
-        public SkillViewModel(string name)
-            : base(name)
-        {
-        }
+namespace SAPex.Models
+{
+    public class SkillViewModel
+    {
+        public Guid Id { get; set; }
+
+        public string Name { get; set; }
     }
 }
