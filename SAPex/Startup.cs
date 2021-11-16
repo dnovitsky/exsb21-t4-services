@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using AutoMapper;
 using BusinessLogicLayer.Helpers;
 using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Services;
@@ -63,10 +64,6 @@ namespace SAPex
             services.AddScoped<AuthUserRefreshTokenService, AuthUserRefreshTokenService>();
             services.AddScoped<JwtService, JwtService>();
 
-            services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
-            services.AddScoped<ILanguageLevelService, LanguageLevelService>();
-            services.AddScoped<ISkillService, SkillService>();
-
             services.AddSwaggerGen(c =>
             {
                 var jwtSecurityScheme = new OpenApiSecurityScheme
@@ -94,10 +91,6 @@ namespace SAPex
                 c.OperationFilter<SwaggerFileUploadOperationFilter>();
             });
 
-            services.AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            // services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
             services.AddScoped<ILanguageLevelService, LanguageLevelService>();
             services.AddScoped<ISandboxService, SandboxService>();
@@ -107,6 +100,8 @@ namespace SAPex
             services.AddScoped<ICandidateService, CandidateService>();
             services.AddScoped<ISandboxLanguagesService, SandboxLanguageService>();
             services.AddScoped<ISandboxStackTechnologyService, SandboxStackTechnologyService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IFileService, FileService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

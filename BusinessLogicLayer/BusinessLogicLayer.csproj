@@ -16,8 +16,10 @@
 
   <ItemGroup>
     <None Remove="Helpers\" />
+    <None Remove="Mapping\BaseMappings\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
+    <Folder Include="Mapping\BaseMappings\" />
   </ItemGroup>
 </Project>
