@@ -31,7 +31,8 @@ namespace SAPex.Controllers
         private readonly InputParametrsMapper _inputParamersMapper;
         private readonly FilterParametrsMapper _filterParametrsMapper;
 
-        public SandboxesController(ISandboxStackTechnologyService sandboxStackTechnologyService, ISandboxLanguagesService sandboxLanguagesService, ISandboxService sandboxService,
+        public SandboxesController(ISandboxStackTechnologyService sandboxStackTechnologyService,
+            ISandboxLanguagesService sandboxLanguagesService, ISandboxService sandboxService,
             IStackTechnologyService stackTechnologyService, ILanguageService languageService)
         {
             _sandboxStackTechnologyService = sandboxStackTechnologyService;
@@ -76,7 +77,7 @@ namespace SAPex.Controllers
             return await Task.FromResult(Ok(viewModels));
         }
 
-        [HttpGet("bypage")]
+        [HttpGet("filter")]
         public async Task<IActionResult> GetFilter([FromQuery] InputParametrsViewModel sandboxParametrs, [FromQuery] FilterParametrsViewModel filterParametrs)
         {
             PagedList<SandboxDtoModel> dtoPageListModels = await _sandboxService.GetPagedSandboxesAsync(
@@ -98,51 +99,15 @@ namespace SAPex.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] SandboxViewModel requestData)
+        public async Task<IActionResult> Post(
+            [FromBody] SandboxFieldsViewModel sandboxFields,
+            [FromQuery] IEnumerable<Guid> languageIds,
+            [FromQuery] IEnumerable<Guid> stackTechnologyIds)
         {
-            ValidationResult validationResult = new SandboxValidator().Validate(requestData);
+            Guid sandboxId = await _sandboxService.AddSandboxAsync(_mapper.MapSbFromViewToDto(sandboxFields));
 
-            if (!validationResult.IsValid)
-            {
-                return await Task.FromResult(BadRequest());
-            }
-
-            IEnumerable<StackTechnologyViewModel> stackTechnologyVM = requestData.StackTechnologies;
-            requestData.StackTechnologies = null;
-            IEnumerable<LanguageViewModel> languagesVM = requestData.Languages;
-            requestData.Languages = null;
-
-            Guid sandId = await _sandboxService.AddSandboxAsync(_mapper.MapSbFromViewToDto(requestData));
-
-            IList<SandboxLanguageViewModel> sandboxLanguageVM = new List<SandboxLanguageViewModel>();
-
-            foreach (var elem in languagesVM)
-            {
-                SandboxLanguageViewModel example = new SandboxLanguageViewModel { SandboxId = sandId, LanguageId = elem.Id };
-                sandboxLanguageVM.Add(example);
-            }
-
-            IEnumerable<SandboxLanguageDtoModel> sandboxLanguagesDto = _slmapper.MapListSBLFromVMToDto(sandboxLanguageVM);
-
-            foreach (var elem in sandboxLanguagesDto)
-            {
-                await _sandboxLanguageService.AddSandboxLanguageAsync(elem);
-            }
-
-            IList<SandboxStackTechnologyViewModel> sandboxStackTechnologiesVM = new List<SandboxStackTechnologyViewModel>();
-
-            foreach (var elem in sandboxStackTechnologiesVM)
-            {
-                SandboxStackTechnologyViewModel example = new SandboxStackTechnologyViewModel { SandboxId = sandId, StackTechnologyId = elem.Id };
-                sandboxStackTechnologiesVM.Add(example);
-            }
-
-            IEnumerable<SandboxStackTechnologyDtoModel> sandboxStackTechnologiesDto = _sstmapper.MapListSBSTFromVMToDto(sandboxStackTechnologiesVM);
-
-            foreach (var elem in sandboxStackTechnologiesDto)
-            {
-                await _sandboxStackTechnologyService.AddSandboxStackTechnologyAsync(elem);
-            }
+            await _sandboxLanguageService.AddSandboxLanguagesListByIdsAsync(sandboxId, languageIds);
+            await _sandboxStackTechnologyService.AddSandboxStackTechnologyListByIdsAsync(sandboxId, stackTechnologyIds);
 
             return await Task.FromResult(Ok());
         }

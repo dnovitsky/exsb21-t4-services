@@ -11,5 +11,6 @@ namespace BusinessLogicLayer.Interfaces
     public interface ISandboxLanguagesService
     {
         Task<bool> AddSandboxLanguageAsync(SandboxLanguageDtoModel sandboxLanguageDto);
+        Task<bool> AddSandboxLanguagesListByIdsAsync(Guid sandboxId, IEnumerable<Guid> languageIds);
     }
 }

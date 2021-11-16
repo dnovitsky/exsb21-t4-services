@@ -38,5 +38,25 @@ namespace BusinessLogicLayer.Services
                 return false;
             }
         }
+
+        public async Task<bool> AddSandboxLanguagesListByIdsAsync(Guid sandboxId, IEnumerable<Guid> languageIds)
+        {
+            try
+            {
+                IList<SandboxLanguageDtoModel> sandboxLanguageDtoModels = new List<SandboxLanguageDtoModel>();
+
+                foreach (var id in languageIds)
+                {
+                    SandboxLanguageDtoModel item = new SandboxLanguageDtoModel { SandboxId = sandboxId, LanguageId = id };
+                    await AddSandboxLanguageAsync(item);
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }
