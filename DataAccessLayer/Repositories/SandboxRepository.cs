@@ -73,6 +73,11 @@ namespace DataAccessLayer.Repositories
                 s.Description.Contains(filterParametrs.SecondSearchingTextString))),
             };
 
+            if( filterParametrs.SearchingStatus != SearchStatus.None)
+            { 
+                pagedList.PageList = pagedList.PageList.Where(s => s.Status == (StatusName)filterParametrs.SearchingStatus);
+            }
+
             pagedList.PageList = parametrs.SortField.ToLower() switch
             {
                 Name => (SortingType == 0 ?
