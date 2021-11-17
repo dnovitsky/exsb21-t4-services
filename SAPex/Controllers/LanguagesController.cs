@@ -43,11 +43,6 @@ namespace SAPex.Controllers
         {
             IEnumerable<LanguageDtoModel> dtoModels = await _service.GetAllLanguagesAsync();
 
-            if (dtoModels == null)
-            {
-                return await Task.FromResult(NotFound());
-            }
-
             IEnumerable<LanguageViewModel> viewModels = _mapper.MapListLanguageFromDtoToView(dtoModels);
 
             return await Task.FromResult(Ok(viewModels));

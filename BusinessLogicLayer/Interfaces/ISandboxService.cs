@@ -12,7 +12,7 @@ namespace BusinessLogicLayer.Interfaces
     {
         Task<Guid> AddSandboxAsync(SandboxDtoModel sandboxDto);
         Task<IEnumerable<SandboxDtoModel>> GetAllSandboxesAsync();
-        Task<PagedList<SandboxDtoModel>> GetPagedSandboxesAsync(InputParametrsDtoModel parametrs);
+        Task<PagedList<SandboxDtoModel>> GetPagedSandboxesAsync(InputParametrsDtoModel parametrs, FilterParametrsDtoModel filterParametrs);
         Task<IEnumerable<SandboxDtoModel>> FindSandBoxesAsync(Expression<Func<SandboxEntityModel, bool>> expression);
         void UpdateSandbox(SandboxDtoModel sandboxDto);
         Task<SandboxDtoModel> FindSandboxByIdAsync(Guid id);

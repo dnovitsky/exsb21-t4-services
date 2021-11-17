@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BusinessLogicLayer.DtoModels;
@@ -18,6 +19,35 @@ namespace BusinessLogicLayer.Services
         public UserService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
+        }
+
+        public async Task<UserDtoModel> FindByIdConditionAsync(Expression<Func<UserFunctionalRoleEntityModel, bool>> expression)
+        {
+            try
+            {
+                IEnumerable<UserFunctionalRoleEntityModel> interviewersId = await unitOfWork.UserFunctionalRoles.FindByConditionAsync(expression);
+                UserEntityModel user = await unitOfWork.Users.FindByIdAsync(interviewersId.First().UserId);
+                return profile.mapToDto(user);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public async Task<IEnumerable<UserDtoModel>> FindAllByConditionAsync(Expression<Func<UserFunctionalRoleEntityModel, bool>> expression)
+        {
+
+            IEnumerable<UserFunctionalRoleEntityModel> interviewersId = await unitOfWork.UserFunctionalRoles.FindByConditionAsync(expression);
+
+            IList<UserEntityModel> userInterviewers = new List<UserEntityModel>();
+
+            foreach (var interviewer in interviewersId)
+            {
+                UserEntityModel user = await unitOfWork.Users.FindByIdAsync(interviewer.UserId);
+                userInterviewers.Add(user);
+            }
+            return profile.mapListToDto(userInterviewers);
         }
 
         public async Task<IEnumerable<UserDtoModel>> FindUsersAsync(Expression<Func<UserEntityModel, bool>> expression)

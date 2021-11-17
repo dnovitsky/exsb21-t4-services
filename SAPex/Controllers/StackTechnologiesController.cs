@@ -44,11 +44,6 @@ namespace SAPex.Controllers
         {
             IEnumerable<StackTechnologyDtoModel> dtoModels = await _service.GetAllStackTechnologiesAsync(); // on what level goes null check? it should go directly to db?
 
-            if (dtoModels == null)
-            {
-                return await Task.FromResult(NotFound()); // return null
-            }
-
             IEnumerable<StackTechnologyViewModel> viewModels = _mapper.MapListStackTechnologyFromDtoToView(dtoModels);
 
             return await Task.FromResult(Ok(viewModels));
