@@ -37,6 +37,8 @@ namespace DataAccessLayer.Service
         IUserTeamRepository UserTeams { get; }
         IUserTechSkillRepository UserTechSkills { get; }
         IUserRefreshTokenRepository UserRefreshTokens { get; }
+        ICalendarEventRepository CalendarEvents { get; }
+        IInterviewEventRepository InterviewEvents { get; }
 
         Task SaveAsync();
     }
