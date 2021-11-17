@@ -36,5 +36,66 @@ namespace SAPex.Controllers.Mapping
             CreateCandidateDtoModel candidateDto = mapper.Map<CreateCandidateViewModel, CreateCandidateDtoModel>(candidateVM);
             return candidateDto;
         }
+
+        public CandidateViewModel MapCandidateDtoToVM(CandidateDtoModel candidateVM)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateDtoModel, CandidateViewModel>()
+                    .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
+                    .ForMember(x => x.Name, y => y.MapFrom(x => x.Name))
+                    .ForMember(x => x.Surname, y => y.MapFrom(x => x.Surname))
+                    .ForMember(x => x.Email, y => y.MapFrom(x => x.Email))
+                    .ForMember(x => x.Location, y => y.MapFrom(x => x.Location))
+                    .ForMember(x => x.Skype, y => y.MapFrom(x => x.Skype))
+                    .ForMember(x => x.Phone, y => y.MapFrom(x => x.Phone))
+                    .ForMember(x => x.ProfessionaCertificates, y => y.MapFrom(x => x.ProfessionaCertificates))
+                    .ForMember(x => x.CurrentJob, y => y.MapFrom(x => x.CurrentJob))
+                    .ForMember(x => x.AdditionalSkills, y => y.MapFrom(x => x.AdditionalSkills))
+                    .ForMember(x => x.CandidateLanguages, y => y.MapFrom(x => x.CandidateLanguages))
+                    .ForMember(x => x.CandidateTechSkills, y => y.MapFrom(x => x.CandidateTechSkills))
+                    .ForMember(x => x.CandidateSandboxes, y => y.MapFrom(x => x.CandidateSandboxes)));
+
+            var mapper = new Mapper(config);
+
+            CandidateViewModel candidateDto = mapper.Map<CandidateDtoModel, CandidateViewModel>(candidateVM);
+            return candidateDto;
+        }
+
+        public IEnumerable<CandidateViewModel> MapCandidateDtoToVM(IEnumerable<CandidateDtoModel> candidateEM)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateDtoModel, CandidateViewModel>()
+                    .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
+                    .ForMember(x => x.Name, y => y.MapFrom(x => x.Name))
+                    .ForMember(x => x.Surname, y => y.MapFrom(x => x.Surname))
+                    .ForMember(x => x.Email, y => y.MapFrom(x => x.Email))
+                    .ForMember(x => x.Location, y => y.MapFrom(x => x.Location))
+                    .ForMember(x => x.Skype, y => y.MapFrom(x => x.Skype))
+                    .ForMember(x => x.Phone, y => y.MapFrom(x => x.Phone))
+                    .ForMember(x => x.ProfessionaCertificates, y => y.MapFrom(x => x.ProfessionaCertificates))
+                    .ForMember(x => x.CurrentJob, y => y.MapFrom(x => x.CurrentJob))
+                    .ForMember(x => x.AdditionalSkills, y => y.MapFrom(x => x.AdditionalSkills))
+                    .ForMember(x => x.CandidateLanguages, y => y.MapFrom(x => x.CandidateLanguages))
+                    .ForMember(x => x.CandidateTechSkills, y => y.MapFrom(x => x.CandidateTechSkills))
+                    .ForMember(x => x.CandidateSandboxes, y => y.MapFrom(x => x.CandidateSandboxes)));
+
+            var mapper = new Mapper(config);
+
+            IList<CandidateViewModel> candidateDtoList = new List<CandidateViewModel>()
+            {
+                mapper.Map<CandidateDtoModel, CandidateViewModel>(candidateEM.FirstOrDefault()),
+            };
+            int i = 0;
+            foreach (var candidate in candidateEM)
+            {
+                if (i != 0)
+                {
+                    CandidateViewModel candidateDto = mapper.Map<CandidateDtoModel, CandidateViewModel>(candidate);
+                    candidateDtoList.Add(candidateDto);
+                }
+
+                i++;
+            }
+
+            return candidateDtoList;
+        }
     }
 }

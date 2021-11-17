@@ -19,16 +19,14 @@ namespace BusinessLogicLayer.DtoModels
 
         public string Phone { get; set; }
 
-        public string Motivation { get; set; }
-
         public string CurrentJob { get; set; }
 
         public string ProfessionaCertificates { get; set; }
 
         public string AdditionalSkills { get; set; }
 
-        public List<CandidateLanguageDtoModel> CandidateLanguages { get; set; }
-        public List<CandidateTechSkillDtoModel> CandidateTechSkills { get; set; }
-        public List<CandidateSandboxDtoModel> CandidateSandboxes { get; set; }
+        public IList<CandidateLanguageDtoModel> CandidateLanguages { get; set; }
+        public IList<CandidateTechSkillDtoModel> CandidateTechSkills { get; set; }
+        public IList<CandidateSandboxDtoModel> CandidateSandboxes { get; set; }
     }
 }
