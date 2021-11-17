@@ -10,13 +10,10 @@ namespace BusinessLogicLayer.DtoModels
     {
         public Guid Id { get; set; }
 
-        public List<CandidateDtoModel> Candidates { get; set; }
-
         public string Status { get; set; }
         public string TestResult { get; set; }
         public DateTime CreateDate { get; set; }
 
-        // FeedbackList
-        public List<dynamic> Feedbacks { get; set; } = new ();
+        public FeedbackDtoModel Feedback { get; set; }
     }
 }

@@ -11,6 +11,10 @@ namespace BusinessLogicLayer.Mapping
 {
     public class CandidateProfile : Profile
     {
+        private readonly CandidateSandboxProfile candidateSandboxProfile = new CandidateSandboxProfile();
+        private readonly CandidateTechSkillProfile candidateTechSkillProfile = new CandidateTechSkillProfile();
+        private readonly CandidateLanguagesProfile candidateLanguagesProfile = new CandidateLanguagesProfile();
+
         public CandidateEntityModel mapNewCandidateToEM(CreateCandidateDtoModel candidateDto)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CreateCandidateDtoModel, CandidateEntityModel>()
@@ -108,52 +112,49 @@ namespace BusinessLogicLayer.Mapping
             return candidateEM;
         }
 
-        public CandidateDtoModel mapToDto(CandidateEntityModel candidateEM)
+        public CandidateDtoModel mapCandidateEMToCandidateDto(CandidateEntityModel candidateEM)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateEntityModel, CandidateDtoModel>()
+                    .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.Name, y => y.MapFrom(x => x.Name))
                     .ForMember(x => x.Surname, y => y.MapFrom(x => x.Surname))
                     .ForMember(x => x.Email, y => y.MapFrom(x => x.Email))
                     .ForMember(x => x.Location, y => y.MapFrom(x => x.Location))
                     .ForMember(x => x.Skype, y => y.MapFrom(x => x.Skype))
                     .ForMember(x => x.Phone, y => y.MapFrom(x => x.Phone))
-                    .ForMember(x => x.CandidateLanguages, y => y.MapFrom(x => x.CandidateLanguages))
-                    .ForMember(x => x.CandidateTechSkills, y => y.MapFrom(x => x.CandidateTechSkills))
-                    .ForMember(x => x.CandidateSandboxes, y => y.MapFrom(x => x.CandidateSandboxes)));
+                    .ForMember(x => x.CandidateLanguages, y => y.MapFrom(x => candidateLanguagesProfile.mapListToDto(x.CandidateLanguages)))
+                    .ForMember(x => x.CandidateTechSkills, y => y.MapFrom(x => candidateTechSkillProfile.mapListToDto(x.CandidateTechSkills)))
+                    .ForMember(x => x.CandidateSandboxes, y => y.MapFrom(x => candidateSandboxProfile.mapListToDto(x.CandidateSandboxes))));
             var mapper = new Mapper(config);
-            // Выполняем сопоставление
+
             CandidateDtoModel candidateDto = mapper.Map<CandidateEntityModel, CandidateDtoModel>(candidateEM);
             return candidateDto;
         }
 
-        public IEnumerable<CandidateDtoModel> mapListToDto(IEnumerable<CandidateEntityModel> candidateEM)
+        public IEnumerable<CandidateDtoModel> mapCandidateEMListToCandidateDtoList(IEnumerable<CandidateEntityModel> candidateEM)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateEntityModel, CandidateDtoModel>()
+                    .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.Name, y => y.MapFrom(x => x.Name))
                     .ForMember(x => x.Surname, y => y.MapFrom(x => x.Surname))
                     .ForMember(x => x.Email, y => y.MapFrom(x => x.Email))
                     .ForMember(x => x.Location, y => y.MapFrom(x => x.Location))
                     .ForMember(x => x.Skype, y => y.MapFrom(x => x.Skype))
                     .ForMember(x => x.Phone, y => y.MapFrom(x => x.Phone))
-                    .ForMember(x => x.CandidateLanguages, y => y.MapFrom(x => x.CandidateLanguages))
-                    .ForMember(x => x.CandidateTechSkills, y => y.MapFrom(x => x.CandidateTechSkills))
-                    .ForMember(x => x.CandidateSandboxes, y => y.MapFrom(x => x.CandidateSandboxes)));
+                    .ForMember(x => x.CandidateLanguages, y => y.MapFrom(x => candidateLanguagesProfile.mapListToDto(x.CandidateLanguages)))
+                    .ForMember(x => x.CandidateTechSkills, y => y.MapFrom(x => candidateTechSkillProfile.mapListToDto(x.CandidateTechSkills)))
+                    .ForMember(x => x.CandidateSandboxes, y => y.MapFrom(x => candidateSandboxProfile.mapListToDto(x.CandidateSandboxes))));
             var mapper = new Mapper(config);
 
 
             IList<CandidateDtoModel> candidateDtoList = new List<CandidateDtoModel>()
             {
-                mapper.Map<CandidateEntityModel, CandidateDtoModel>(candidateEM.FirstOrDefault())
             };
-            int i = 0;
+
             foreach (var candidate in candidateEM)
             {
-                if (i != 0)
-                {
-                    CandidateDtoModel candidateDto = mapper.Map<CandidateEntityModel, CandidateDtoModel>(candidate);
-                    candidateDtoList.Add(candidateDto);
-                }
-                i++;
+                CandidateDtoModel candidateDto = mapper.Map<CandidateEntityModel, CandidateDtoModel>(candidate);
+                candidateDtoList.Add(candidateDto);
             }
             return candidateDtoList;
         }

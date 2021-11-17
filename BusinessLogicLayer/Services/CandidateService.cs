@@ -53,20 +53,20 @@ namespace BusinessLogicLayer.Services
         public async Task<CandidateDtoModel> FindCandidateByIdAsync(Guid id)
         {
             CandidateEntityModel candidateEM = await unitOfWork.Candidates.FindByIdAsync(id);
-            CandidateDtoModel candidateDto = profile.mapToDto(candidateEM);
+            CandidateDtoModel candidateDto = profile.mapCandidateEMToCandidateDto(candidateEM);
             return candidateDto;
         }
 
         public async Task<IEnumerable<CandidateDtoModel>> FindCandidateAsync(Expression<Func<CandidateEntityModel, bool>> expression)
         {
             IEnumerable<CandidateEntityModel> candidateEM = await unitOfWork.Candidates.FindByConditionAsync(expression);
-            return profile.mapListToDto(candidateEM);
+            return profile.mapCandidateEMListToCandidateDtoList(candidateEM);
         }
 
         public async Task<IEnumerable<CandidateDtoModel>> GetAllCandidateAsync()
         {
-            IEnumerable<CandidateEntityModel> candidateEM = await Task.Run(() => unitOfWork.Candidates.GetAllAsync());
-            return profile.mapListToDto(candidateEM);
+            IEnumerable<CandidateEntityModel> candidateEM = await unitOfWork.Candidates.GetAllAsync();
+            return profile.mapCandidateEMListToCandidateDtoList(candidateEM);
         }
 
         public void UpdateCandidate(CandidateDtoModel candidateDto)
@@ -77,11 +77,6 @@ namespace BusinessLogicLayer.Services
         }
 
         public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<CandidateDtoModel> ICandidateService.FindCandidateByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
