@@ -48,23 +48,25 @@ namespace BusinessLogicLayer.Helpers
                         Name = ".Net & JS",
                         MaxCandidates = 10,
                         Description = "description .Net & JS",
-                        CreateDate = new DateTime(2021, 1, 1),
-                        StartDate = new DateTime(2021, 1, 2),
-                        EndDate = new DateTime(2021, 1, 3),
-                        StartRegistration = new DateTime(2021, 1, 4),
-                        EndRegistration = new DateTime(2021, 1, 5),
-                    });
+                        CreateDate = new DateTime(2021, 10, 1),
+                        StartDate = new DateTime(2021, 12, 2),
+                        EndDate = new DateTime(2021, 12, 30),
+                        StartRegistration = new DateTime(2021, 11, 11),
+                        EndRegistration = new DateTime(2021, 11, 30),
+                        Status = StatusName.Draft,
+                    });;
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
                         Id = idSb2,
                         Name = "Python",
                         MaxCandidates = 22,
                         Description = "description Python",
-                        CreateDate = new DateTime(2021, 2, 1),
-                        StartDate = new DateTime(2021, 2, 2),
-                        EndDate = new DateTime(2021, 2, 3),
-                        StartRegistration = new DateTime(2021, 2, 4),
-                        EndRegistration = new DateTime(2021, 2, 5),
+                        CreateDate = new DateTime(2021, 11, 1),
+                        StartDate = new DateTime(2021, 12, 3),
+                        EndDate = new DateTime(2021, 12, 30),
+                        StartRegistration = new DateTime(2021, 11, 25),
+                        EndRegistration = new DateTime(2021, 11, 30),
+                        Status = StatusName.Active,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
@@ -72,11 +74,12 @@ namespace BusinessLogicLayer.Helpers
                         Name = "PHP",
                         MaxCandidates = 33,
                         Description = "description PHP",
-                        CreateDate = new DateTime(2021, 3, 1),
-                        StartDate = new DateTime(2021, 3, 2),
-                        EndDate = new DateTime(2021, 3, 3),
-                        StartRegistration = new DateTime(2021, 3, 4),
-                        EndRegistration = new DateTime(2021, 3, 5),
+                        CreateDate = new DateTime(2021, 10, 1),
+                        StartDate = new DateTime(2021, 12, 2),
+                        EndDate = new DateTime(2021, 12, 30),
+                        StartRegistration = new DateTime(2021, 11, 16),
+                        EndRegistration = new DateTime(2021, 11, 25),
+                        Status = StatusName.Active,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
@@ -84,11 +87,12 @@ namespace BusinessLogicLayer.Helpers
                         Name = "C++",
                         MaxCandidates = 45,
                         Description = "description C++",
-                        CreateDate = new DateTime(2021, 4, 1),
-                        StartDate = new DateTime(2021, 4, 2),
-                        EndDate = new DateTime(2021, 4, 3),
-                        StartRegistration = new DateTime(2021, 4, 4),
-                        EndRegistration = new DateTime(2021, 4, 5),
+                        CreateDate = new DateTime(2021, 5, 1),
+                        StartDate = new DateTime(2021, 12, 6),
+                        EndDate = new DateTime(2021, 12, 30),
+                        StartRegistration = new DateTime(2021, 11, 4),
+                        EndRegistration = new DateTime(2021, 11, 7),
+                        Status = StatusName.Active,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
@@ -97,10 +101,11 @@ namespace BusinessLogicLayer.Helpers
                         MaxCandidates = 56,
                         Description = "description QA",
                         CreateDate = new DateTime(2021, 5, 1),
-                        StartDate = new DateTime(2021, 5, 2),
-                        EndDate = new DateTime(2021, 5, 3),
-                        StartRegistration = new DateTime(2021, 5, 4),
-                        EndRegistration = new DateTime(2021, 5, 5),
+                        StartDate = new DateTime(2021, 11, 16),
+                        EndDate = new DateTime(2021, 11, 30),
+                        StartRegistration = new DateTime(2021, 10, 10),
+                        EndRegistration = new DateTime(2021, 10, 15),
+                        Status = StatusName.Active,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
@@ -109,10 +114,11 @@ namespace BusinessLogicLayer.Helpers
                         MaxCandidates = 62,
                         Description = "description BA",
                         CreateDate = new DateTime(2021, 6, 1),
-                        StartDate = new DateTime(2021, 6, 2),
-                        EndDate = new DateTime(2021, 6, 3),
+                        StartDate = new DateTime(2021, 7, 2),
+                        EndDate = new DateTime(2021, 7, 3),
                         StartRegistration = new DateTime(2021, 6, 4),
                         EndRegistration = new DateTime(2021, 6, 5),
+                        Status = StatusName.Active,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
@@ -125,6 +131,7 @@ namespace BusinessLogicLayer.Helpers
                         EndDate = new DateTime(2021, 7, 3),
                         StartRegistration = new DateTime(2021, 7, 4),
                         EndRegistration = new DateTime(2021, 7, 5),
+                        Status = StatusName.Draft,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
@@ -137,6 +144,7 @@ namespace BusinessLogicLayer.Helpers
                         EndDate = new DateTime(2021, 8, 3),
                         StartRegistration = new DateTime(2021, 8, 4),
                         EndRegistration = new DateTime(2021, 8, 5),
+                        Status = StatusName.Draft,
                     });
                 }
                 db.SaveChanges();

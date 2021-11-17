@@ -16,5 +16,8 @@ namespace BusinessLogicLayer.DtoModels
         public DateTime EndDate { get; set; }
         public DateTime StartRegistration { get; set; }
         public DateTime EndRegistration { get; set; }
+        public StatusName Status { get; set; }
     }
+
+    public enum StatusName { Draft, Active, Registration, Application, Inprogress, Archive };
 }
