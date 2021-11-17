@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.DtoModels
 {
-    public class CandidateLanguageDtoModel
+    public class RatingDtoModel
     {
         public Guid Id { get; set; }
 
-        public LanguageDtoModel Language { get; set; }
+        public int Mark { get; set; }
 
-        public LanguageLevelDtoModel LanguageLevel { get; set; }
+        public Guid SkillId { get; set; }
+        public virtual SkillDtoModel Skill { get; set; }
     }
 }
