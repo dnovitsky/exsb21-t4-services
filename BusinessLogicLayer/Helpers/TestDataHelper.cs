@@ -40,6 +40,23 @@ namespace BusinessLogicLayer.Helpers
                 Guid idSt4 = Guid.NewGuid();
                 Guid idSt5 = Guid.NewGuid();
 
+                Guid languageLevelGuid1 = Guid.NewGuid();
+                Guid languageLevelGuid2 = Guid.NewGuid();
+                Guid languageLevelGuid3 = Guid.NewGuid();
+                Guid languageLevelGuid4 = Guid.NewGuid();
+
+                Guid skillGuid1 = Guid.NewGuid();
+                Guid skillGuid2 = Guid.NewGuid();
+                Guid skillGuid3 = Guid.NewGuid();
+
+                Guid statusGuid1 = Guid.NewGuid();
+                Guid statusGuid2 = Guid.NewGuid();
+                Guid statusGuid3 = Guid.NewGuid();
+
+                Guid availabilityType1 = Guid.NewGuid();
+                Guid availabilityType2 = Guid.NewGuid();
+                Guid availabilityType3 = Guid.Parse("276E9243-454C-48A0-A5D1-53558F0F80D0");
+
                 if (!db.Sandboxes.Any())
                 {
                     db.Sandboxes.Add(new SandboxEntityModel
@@ -145,21 +162,21 @@ namespace BusinessLogicLayer.Helpers
                 {
                     db.AvailabilityTypes.Add(new AvailabilityTypeEntityModel
                     {
-                        Id = Guid.NewGuid(),
+                        Id = availabilityType1,
                         Name = "Less than 4 hours",
                         OrderLevel = 0,
                     });
 
                     db.AvailabilityTypes.Add(new AvailabilityTypeEntityModel
                     {
-                        Id = Guid.NewGuid(),
+                        Id = availabilityType2,
                         Name = "4-6 hours",
                         OrderLevel = 1,
                     });
 
                     db.AvailabilityTypes.Add(new AvailabilityTypeEntityModel
                     {
-                        Id = Guid.Parse("276E9243-454C-48A0-A5D1-53558F0F80D0"),
+                        Id = availabilityType3,
                         Name = "6-infinity hours",
                         OrderLevel = 2,
                     });
@@ -170,14 +187,14 @@ namespace BusinessLogicLayer.Helpers
                 {
                     db.LanguageLevels.Add(new LanguageLevelEntityModel
                     {
-                        Id = Guid.NewGuid(),
+                        Id = languageLevelGuid1,
                         Name = "Beginner (A1)",
                         OrderLevel = 0,
                     });
 
                     db.LanguageLevels.Add(new LanguageLevelEntityModel
                     {
-                        Id = Guid.NewGuid(),
+                        Id = languageLevelGuid2,
                         Name = "Elementary (A2)",
                         OrderLevel = 1,
                     });
@@ -191,14 +208,14 @@ namespace BusinessLogicLayer.Helpers
 
                     db.LanguageLevels.Add(new LanguageLevelEntityModel
                     {
-                        Id = Guid.NewGuid(),
+                        Id = languageLevelGuid3,
                         Name = "Upper-Intermediate (B2)",
                         OrderLevel = 3,
                     });
 
                     db.LanguageLevels.Add(new LanguageLevelEntityModel
                     {
-                        Id = Guid.NewGuid(),
+                        Id = languageLevelGuid4,
                         Name = "Advanced (C1)",
                         OrderLevel = 4,
                     });
@@ -363,7 +380,7 @@ namespace BusinessLogicLayer.Helpers
                 {
                     db.Statuses.Add(new StatusEntityModel
                     {
-                        Id = Guid.NewGuid(),
+                        Id = statusGuid1,
                         Name = "Draft"
                     });
                     db.Statuses.Add(new StatusEntityModel
@@ -378,7 +395,7 @@ namespace BusinessLogicLayer.Helpers
                     });
                     db.Statuses.Add(new StatusEntityModel
                     {
-                        Id = Guid.NewGuid(),
+                        Id = statusGuid2,
                         Name = "Need a recruiter"
                     });
                     db.Statuses.Add(new StatusEntityModel
@@ -393,7 +410,7 @@ namespace BusinessLogicLayer.Helpers
                     });
                     db.Statuses.Add(new StatusEntityModel
                     {
-                        Id = Guid.NewGuid(),
+                        Id = statusGuid3,
                         Name = "Approved"
                     });
                     db.Statuses.Add(new StatusEntityModel
@@ -442,7 +459,7 @@ namespace BusinessLogicLayer.Helpers
 
                     db.Skills.Add(new SkillEntityModel
                     {
-                        Id = Guid.NewGuid(),
+                        Id = skillGuid1,
                         Name = "JavaScript"
                     });
 
@@ -454,7 +471,7 @@ namespace BusinessLogicLayer.Helpers
 
                     db.Skills.Add(new SkillEntityModel
                     {
-                        Id = Guid.NewGuid(),
+                        Id = skillGuid2,
                         Name = "GitHub"
                     });
 
@@ -466,7 +483,7 @@ namespace BusinessLogicLayer.Helpers
 
                     db.Skills.Add(new SkillEntityModel
                     {
-                        Id = Guid.NewGuid(),
+                        Id = skillGuid3,
                         Name = ".NET Core"
                     });
 
@@ -534,6 +551,222 @@ namespace BusinessLogicLayer.Helpers
                     {
                         Id = Guid.NewGuid(),
                         Name = "Azure"
+                    });
+                }
+                db.SaveChanges();
+                
+                var candidateLangId1 = Guid.NewGuid();
+                var candidateLangId2 = Guid.NewGuid();
+                var candidateLangId3 = Guid.NewGuid();
+
+                var candidateId1 = Guid.NewGuid();
+                var candidateId2 = Guid.NewGuid();
+                var candidateId3 = Guid.NewGuid();
+
+                var candidateTechSkillId1 = Guid.NewGuid();
+                var candidateTechSkillId2 = Guid.NewGuid();
+                var candidateTechSkillId3 = Guid.NewGuid();
+
+                var candidateProcessId1 = Guid.NewGuid();
+                var candidateProcessId2 = Guid.NewGuid();
+                var candidateProcessId3 = Guid.NewGuid();
+
+                var candidateSandboxId1 = Guid.NewGuid();
+                var candidateSandboxId2 = Guid.NewGuid();
+                var candidateSandboxId3 = Guid.NewGuid();
+
+                if (!db.Candidates.Any())
+                {
+                    db.Candidates.Add(new CandidateEntityModel
+                    {
+                        Id = candidateId1,
+                        Name = "Tom",
+                        Surname = "Tomison",
+                        Email = "Tom@tomomo.com",
+                        Location = "11",
+                        Skype = "skypeTom",
+                        Phone = "+375441234567",
+                        ProfessionaCertificates = "",
+                        AdditionalSkills = ""
+                    });
+                    db.Candidates.Add(new CandidateEntityModel
+                    {
+                        Id = candidateId2,
+                        Name = "Jim",
+                        Surname = "Jimimison",
+                        Email = "Jim@tomomo.com",
+                        Location = "11",
+                        Skype = "skypeTom",
+                        Phone = "+375331234567",
+                        ProfessionaCertificates = "",
+                        AdditionalSkills = ""
+                    });
+                    db.Candidates.Add(new CandidateEntityModel
+                    {
+                        Id = candidateId3,
+                        Name = "Goga",
+                        Surname = "Gogison",
+                        Email = "Goga@tomomo.com",
+                        Location = "11",
+                        Skype = "skypeTom",
+                        Phone = "+375291234567",
+                        ProfessionaCertificates = "",
+                        AdditionalSkills = ""
+                    });
+                }
+                db.SaveChanges();
+
+                if (!db.CandidateLanguages.Any())
+                {
+                    db.CandidateLanguages.Add(new CandidateLanguageEntityModel
+                    {
+                        Id = candidateLangId1,
+                        CandidateId = candidateId1,
+                        LanguageId = idLg1,
+                        LanguageLevelId = languageLevelGuid2
+                    });
+                    db.CandidateLanguages.Add(new CandidateLanguageEntityModel
+                    {
+                        Id = candidateLangId2,
+                        LanguageId = idLg3,
+                        CandidateId = candidateId2,
+                        LanguageLevelId = languageLevelGuid1
+                    });
+                    db.CandidateLanguages.Add(new CandidateLanguageEntityModel
+                    {
+                        Id = candidateLangId3,
+                        LanguageId = idLg4,
+                        CandidateId = candidateId3,
+                        LanguageLevelId = languageLevelGuid3
+                    });
+                }
+                db.SaveChanges();
+
+                if (!db.CandidateTechSkills.Any())
+                {
+                    db.CandidateTechSkills.Add(new CandidateTechSkillEntityModel
+                    {
+                        Id = candidateTechSkillId1,
+                        SkillId = skillGuid1,
+                        CandidateId = candidateId1,
+                    });
+                    db.CandidateTechSkills.Add(new CandidateTechSkillEntityModel
+                    {
+                        Id = candidateTechSkillId2,
+                        SkillId = skillGuid2,
+                        CandidateId = candidateId2,
+                    });
+                    db.CandidateTechSkills.Add(new CandidateTechSkillEntityModel
+                    {
+                        Id = candidateTechSkillId3,
+                        SkillId = skillGuid3,
+                        CandidateId = candidateId3,
+                    });
+                }
+                db.SaveChanges();
+
+                if (!db.CandidatesProcceses.Any())
+                {
+                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
+                    {
+                        Id = candidateProcessId1,
+                        StatusId = statusGuid1,
+                        TestResult = "",
+                        CreateDate = DateTime.Now,
+                        FeedbackId = null
+                    });
+                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
+                    {
+                        Id = candidateProcessId2,
+                        StatusId = statusGuid2,
+                        TestResult = "",
+                        CreateDate = DateTime.Now,
+                        FeedbackId = null
+                    });
+                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
+                    {
+                        Id = candidateProcessId3,
+                        StatusId = statusGuid3,
+                        TestResult = "",
+                        CreateDate = DateTime.Now,
+                        FeedbackId = null
+                    });
+                }
+                db.SaveChanges();
+
+                var candidateProjectRolesId1 = Guid.NewGuid();
+                var candidateProjectRolesId2 = Guid.NewGuid();
+                var candidateProjectRolesId3 = Guid.NewGuid();
+
+                if (!db.CandidateProjectRoles.Any())
+                {
+                    db.CandidateProjectRoles.Add(new CandidateProjectRoleEntityModel
+                    {
+                        Id = candidateProjectRolesId1,
+                        Name = "Role 1"
+                    });
+                    db.CandidateProjectRoles.Add(new CandidateProjectRoleEntityModel
+                    {
+                        Id = candidateProjectRolesId2,
+                        Name = "Role 1"
+                    });
+                    db.CandidateProjectRoles.Add(new CandidateProjectRoleEntityModel
+                    {
+                        Id = candidateProjectRolesId3,
+                        Name = "Role 1"
+                    });
+                }
+                db.SaveChanges();
+
+                if (!db.CandidateSandboxes.Any())
+                {
+                    db.CandidateSandboxes.Add(new CandidateSandboxEntityModel
+                    {
+                        Id = candidateSandboxId1,
+                        SandboxId = idSb2,
+                        CandidateId = candidateId3,
+                        CandidateProjectRoleId = candidateProjectRolesId3,
+                        TeamId = null,
+                        StackTechnologyId = idSt1,
+                        CandidateProcessId = candidateProcessId2,
+                        Motivation = "Motivation 1",
+                        TimeContact = "10:00",
+                        IsJoinToExadel = true,
+                        SandboxLanguageId = languageLevelGuid3,
+                        IsAgreement = false,
+                        AvailabilityTypeId = availabilityType3
+                    });
+                    db.CandidateSandboxes.Add(new CandidateSandboxEntityModel
+                    {
+                        Id = candidateSandboxId2,
+                        SandboxId = idSb1,
+                        CandidateId = candidateId1,
+                        CandidateProjectRoleId = candidateProjectRolesId1,
+                        TeamId = null,
+                        StackTechnologyId = idSt2,
+                        CandidateProcessId = candidateProcessId1,
+                        Motivation = "Motivation 1",
+                        TimeContact = "10:00",
+                        IsJoinToExadel = true,
+                        SandboxLanguageId = languageLevelGuid1,
+                        IsAgreement = false,
+                        AvailabilityTypeId = availabilityType2
+                    });
+                    db.CandidateSandboxes.Add(new CandidateSandboxEntityModel
+                    {
+                        Id = candidateSandboxId3,
+                        SandboxId = idSb3,
+                        CandidateId = candidateId2,
+                        CandidateProjectRoleId = candidateProjectRolesId2,
+                        TeamId = null,
+                        StackTechnologyId = idSt1,
+                        CandidateProcessId = candidateProcessId1,
+                        Motivation = "Motivation 1",
+                        TimeContact = "10:00",
+                        IsJoinToExadel = true,
+                        SandboxLanguageId = languageLevelGuid2,
+                        IsAgreement = false,
+                        AvailabilityTypeId = availabilityType1
                     });
                 }
                 db.SaveChanges();

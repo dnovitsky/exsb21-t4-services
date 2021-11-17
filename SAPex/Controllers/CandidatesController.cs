@@ -24,19 +24,37 @@ namespace SAPex.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        public IEnumerable<CandidateViewModel> Get()
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAll()
         {
-            return new List<CandidateViewModel>();
+            IEnumerable<CandidateDtoModel> candiddatesDto = await _service.GetAllCandidateAsync();
+
+            if (candiddatesDto != null)
+            {
+                var candidatesVM = profile.MapCandidateDtoToVM(candiddatesDto);
+
+                return await Task.FromResult(Ok(candidatesVM));
+            }
+
+            return await Task.FromResult(Conflict());
         }
 
         [HttpGet("{id}")]
-        public CandidateViewModel Get([FromRoute] Guid id)
+        public async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            return new CandidateViewModel();
+            CandidateDtoModel candiddateDto = await _service.FindCandidateByIdAsync(id);
+
+            if (candiddateDto != null)
+            {
+                var candidateVM = profile.MapCandidateDtoToVM(candiddateDto);
+
+                return await Task.FromResult(Ok(candidateVM));
+            }
+
+            return await Task.FromResult(Conflict());
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> Post([FromBody] CreateCandidateViewModel requestData)
         {
             var isCandidateCreated = await _service.AddCandidateAsync(profile.MapNewCandidateToDto(requestData));

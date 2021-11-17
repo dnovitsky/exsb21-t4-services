@@ -21,12 +21,16 @@ namespace SAPex.Models
 
         public string Phone { get; set; }
 
-        public string Education { get; set; }
+        public string CurrentJob { get; set; }
 
-        public IList<dynamic> Languages { get; set; }
+        public string ProfessionaCertificates { get; set; }
 
-        public IList<dynamic> TechSkills { get; set; }
+        public string AdditionalSkills { get; set; }
 
-        public IList<CandidateSandboxeViewModel> CandidateSandboxes { get; set; }
+        public IList<dynamic> CandidateLanguages { get; set; }
+
+        public IList<dynamic> CandidateTechSkills { get; set; }
+
+        public IList<dynamic> CandidateSandboxes { get; set; }
     }
 }

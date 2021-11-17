@@ -19,6 +19,5 @@ namespace DbMigrations.EntityModels
         [Required]
         public Guid CandidateId { get; set; }
         public virtual CandidateEntityModel Candidate { get; set; }
-        
     }
 }
