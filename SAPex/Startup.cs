@@ -103,6 +103,8 @@ namespace SAPex
             services.AddScoped<ISkillService, SkillService>();
             services.AddScoped<IStackTechnologyService, StackTechnologyService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICalendarEventService, CalendarEventService>();
+            services.AddScoped<IInterviewEventService, InterviewEventService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

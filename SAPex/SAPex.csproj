@@ -19,6 +19,7 @@
     <Content Remove="Controllers\Validation\**" />
     <EmbeddedResource Remove="Controllers\Validation\**" />
     <None Remove="Controllers\Validation\**" />
+    <None Remove="Mappers\Base\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Models\" />
@@ -65,5 +66,6 @@
     <Content Update="Controllers\FakeDB\StatusViewModel.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Folder Include="Mappers\Base\" />
   </ItemGroup>
 </Project>
