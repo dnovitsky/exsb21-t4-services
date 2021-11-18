@@ -4,14 +4,16 @@ using DbMigrations.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DbMigrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211116160834_AddFieldStatusToSandbox")]
+    partial class AddFieldStatusToSandbox
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,28 +78,6 @@ namespace DbMigrations.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AvailabilityTypes");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.CalendarEventEntityModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("InterviewerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InterviewerId");
-
-                    b.ToTable("CalendarEvents");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateEntityModel", b =>
@@ -371,33 +351,6 @@ namespace DbMigrations.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FunctionalRoles");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.InterviewEventEntityModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CalendarEventId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CandidateSandboxId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CalendarEventId");
-
-                    b.HasIndex("CandidateSandboxId");
-
-                    b.ToTable("InterviewEvents");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.LanguageEntityModel", b =>
@@ -833,17 +786,6 @@ namespace DbMigrations.Migrations
                     b.Navigation("FunctionalRole");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.CalendarEventEntityModel", b =>
-                {
-                    b.HasOne("DbMigrations.EntityModels.UserEntityModel", "User")
-                        .WithMany()
-                        .HasForeignKey("InterviewerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateLanguageEntityModel", b =>
                 {
                     b.HasOne("DbMigrations.EntityModels.CandidateEntityModel", "Candidate")
@@ -979,25 +921,6 @@ namespace DbMigrations.Migrations
                     b.Navigation("Rating");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.InterviewEventEntityModel", b =>
-                {
-                    b.HasOne("DbMigrations.EntityModels.CalendarEventEntityModel", "CalendarEvent")
-                        .WithMany("InterviewEvents")
-                        .HasForeignKey("CalendarEventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DbMigrations.EntityModels.CandidateSandboxEntityModel", "CandidateSandbox")
-                        .WithMany()
-                        .HasForeignKey("CandidateSandboxId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CalendarEvent");
-
-                    b.Navigation("CandidateSandbox");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.RatingEntityModel", b =>
@@ -1200,11 +1123,6 @@ namespace DbMigrations.Migrations
             modelBuilder.Entity("DbMigrations.EntityModels.AvailabilityTypeEntityModel", b =>
                 {
                     b.Navigation("CandidateSandboxes");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.CalendarEventEntityModel", b =>
-                {
-                    b.Navigation("InterviewEvents");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateEntityModel", b =>

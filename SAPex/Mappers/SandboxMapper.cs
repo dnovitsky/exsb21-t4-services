@@ -18,6 +18,7 @@ namespace SAPex.Mappers
                     .ForMember(x => x.StartDate, y => y.MapFrom(x => x.StartDate))
                     .ForMember(x => x.EndDate, y => y.MapFrom(x => x.EndDate))
                     .ForMember(x => x.StartRegistration, y => y.MapFrom(x => x.StartRegistration))
+                    .ForMember(x => x.Status, y => y.MapFrom(x => x.Status))
                     .ForMember(x => x.EndRegistration, y => y.MapFrom(x => x.EndRegistration)));
             var mapper = new Mapper(config);
 
@@ -35,6 +36,7 @@ namespace SAPex.Mappers
                     .ForMember(x => x.StartDate, y => y.MapFrom(x => x.StartDate))
                     .ForMember(x => x.EndDate, y => y.MapFrom(x => x.EndDate))
                     .ForMember(x => x.StartRegistration, y => y.MapFrom(x => x.StartRegistration))
+                    .ForMember(x => x.Status, y => y.MapFrom(x => x.Status))
                     .ForMember(x => x.EndRegistration, y => y.MapFrom(x => x.EndRegistration)));
             var mapper = new Mapper(config);
 
@@ -52,6 +54,7 @@ namespace SAPex.Mappers
                    .ForMember(x => x.StartDate, y => y.MapFrom(x => x.StartDate))
                    .ForMember(x => x.EndDate, y => y.MapFrom(x => x.EndDate))
                    .ForMember(x => x.StartRegistration, y => y.MapFrom(x => x.StartRegistration))
+                   .ForMember(x => x.Status, y => y.MapFrom(x => x.Status))
                    .ForMember(x => x.EndRegistration, y => y.MapFrom(x => x.EndRegistration)));
             var mapper = new Mapper(config);
 

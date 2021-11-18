@@ -16,17 +16,19 @@ namespace BusinessLogicLayer.DtoModels
             SecondSearchingTextString = string.Empty;
             SearchingDateField = string.Empty;
             SearchingDateString = string.Empty;
+            SearchingStatus = SearchStatus.None;
         }
 
         public FilterParametrsDtoModel(string firstField, string firstString, string secondField,
-            string secondString, string dateField, string dateString)
+            string secondString, string dateField, string dateString, SearchStatus searchStatus)
         {
-            FirstSearchingTextField = string.Empty;
-            FirstSearchingTextString = string.Empty;
-            SecondSearchingTextField = string.Empty;
-            SecondSearchingTextString = string.Empty;
-            SearchingDateField = string.Empty;
-            SearchingDateString = string.Empty;
+            FirstSearchingTextField = firstField;
+            FirstSearchingTextString = firstString;
+            SecondSearchingTextField = secondField;
+            SecondSearchingTextString = secondString;
+            SearchingDateField = dateField;
+            SearchingDateString = dateString;
+            SearchingStatus = searchStatus;
         }
 
         public string FirstSearchingTextField { get; set; }
@@ -40,5 +42,18 @@ namespace BusinessLogicLayer.DtoModels
         public string SearchingDateField { get; set; }
 
         public string SearchingDateString { get; set; }
+
+        public SearchStatus SearchingStatus { get; set; }
+    }
+
+    public enum SearchStatus
+    {
+        None = -1,
+        Draft,
+        Active,
+        Registration,
+        Application,
+        Inprogress,
+        Archive,
     }
 }

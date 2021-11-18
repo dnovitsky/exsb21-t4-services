@@ -5,3 +5,9 @@ dotnet_analyzer_diagnostic.category-StyleCop.CSharp.NamingRules.severity = none
 
 # SA1305: Field names should not use Hungarian notation
 dotnet_diagnostic.SA1305.severity = none
+
+# SA1314: Type parameter names should begin with T
+dotnet_diagnostic.SA1314.severity = none
+
+# SA1202: Elements should be ordered by access
+dotnet_diagnostic.SA1202.severity = none

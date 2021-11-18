@@ -38,27 +38,51 @@ namespace DbMigrations.EntityModels
         [DefaultValue(null)]
         public DateTime? EndRegistration { get; set; }
 
-        //[Required]
-        //[DefaultValue(0)]
-        //public int Status 
-        //{
-        //    get
-        //    {
-        //        if( Status == 1) // 1 - в архиве, 0 - активный
-        //        {
-        //            return 1;
-        //        }
+        [Required]
+        [DefaultValue(StatusName.Draft)]
+        private StatusName status;
+        
+        public StatusName Status
+        {
+            get
+            {
+               if (status == StatusName.Draft)
+               {
+                    return status;
+               }
 
-        //        if( DateTime.Now > EndDate)
-        //        {
-        //            return 1;
-        //        }
+               if( status == StatusName.Active && DateTime.Now < StartRegistration )
+               {
+                    return status;
+               }
 
+               if( StartRegistration <= DateTime.Now && DateTime.Now <= EndRegistration )
+               {
+                    status = StatusName.Registration;
+                    return status;
+               }
 
+               if ( EndRegistration < DateTime.Now && DateTime.Now < StartDate )
+               {
+                    status = StatusName.Application;
+                    return status;
+               }
 
-        //        return 0; 
-        //    } 
-        //    set { value = 0 } }
+               if ( StartDate <= DateTime.Now && DateTime.Now <= EndDate )
+               {
+                    status = StatusName.Inprogress;
+                    return status;
+               }
+
+               if ( DateTime.Now > EndDate)
+               {
+                    status = StatusName.Archive;
+               }
+
+               return status;
+            }
+            set { status = value; }
+        }
 
 
         public virtual IList<UserSandBoxEntityModel> UserSandboxes  { get; set; }
@@ -69,4 +93,6 @@ namespace DbMigrations.EntityModels
 
 
     }
+
+    public enum StatusName { Draft, Active, Registration, Application, Inprogress, Archive };
 }
