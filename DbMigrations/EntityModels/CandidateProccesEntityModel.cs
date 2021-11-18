@@ -24,8 +24,5 @@ namespace DbMigrations.EntityModels
 
         public Nullable<Guid> FeedbackId { get; set; } = null;
         public virtual FeedbackEntityModel Feedback { get; set; }
-
-      
-
     }
 }
