@@ -775,6 +775,66 @@ namespace BusinessLogicLayer.Helpers
                     });
                 }
                 db.SaveChanges();
+
+                var ratingId1 = Guid.NewGuid();
+                var ratingId2 = Guid.NewGuid();
+                var ratingId3 = Guid.NewGuid();
+
+                if (!db.Ratings.Any())
+                {
+                    db.Ratings.Add(new RatingEntityModel
+                    {
+                        Id = ratingId1,
+                        Mark = 69,
+                        SkillId = skillGuid1
+                    });
+
+                    db.Ratings.Add(new RatingEntityModel
+                    {
+                        Id = ratingId2,
+                        Mark = 13,
+                        SkillId = skillGuid2
+                    });
+
+                    db.Ratings.Add(new RatingEntityModel
+                    {
+                        Id = ratingId3,
+                        Mark = 77,
+                        SkillId = skillGuid3
+                    });
+                }
+
+                if (!db.Feedbacks.Any())
+                {
+                    db.Feedbacks.Add(new FeedbackEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        UserId = db.Users.Where(u=>u.Email== "mentor@gmail.com").FirstOrDefault().Id,
+                        RatingId = ratingId1,
+                        CreateDate = DateTime.Now,
+                        UserReview = "Chay, indiyskiy chay",
+                        CandidateProccesId = candidateProcessId1
+                    });
+                    db.Feedbacks.Add(new FeedbackEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        UserId = db.Users.Where(u => u.Email == "interviewer@gmail.com").FirstOrDefault().Id,
+                        RatingId = ratingId2,
+                        CreateDate = DateTime.Now,
+                        UserReview = "Slon, indiyskiy slon",
+                        CandidateProccesId = candidateProcessId1
+                    });
+                    db.Feedbacks.Add(new FeedbackEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        UserId = db.Users.Where(u => u.Email == "recruiter@gmail.com").FirstOrDefault().Id,
+                        RatingId = ratingId3,
+                        CreateDate = DateTime.Now,
+                        UserReview = "Pod pivo poydet",
+                        CandidateProccesId = candidateProcessId1
+                    });
+                }
+                db.SaveChanges();
             }
         }
     }
