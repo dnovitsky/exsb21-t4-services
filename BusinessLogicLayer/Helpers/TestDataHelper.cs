@@ -673,35 +673,6 @@ namespace BusinessLogicLayer.Helpers
                 }
                 db.SaveChanges();
 
-                if (!db.CandidatesProcceses.Any())
-                {
-                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
-                    {
-                        Id = candidateProcessId1,
-                        StatusId = statusGuid1,
-                        TestResult = "",
-                        CreateDate = DateTime.Now,
-                        FeedbackId = null
-                    });
-                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
-                    {
-                        Id = candidateProcessId2,
-                        StatusId = statusGuid2,
-                        TestResult = "",
-                        CreateDate = DateTime.Now,
-                        FeedbackId = null
-                    });
-                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
-                    {
-                        Id = candidateProcessId3,
-                        StatusId = statusGuid3,
-                        TestResult = "",
-                        CreateDate = DateTime.Now,
-                        FeedbackId = null
-                    });
-                }
-                db.SaveChanges();
-
                 var candidateProjectRolesId1 = Guid.NewGuid();
                 var candidateProjectRolesId2 = Guid.NewGuid();
                 var candidateProjectRolesId3 = Guid.NewGuid();
@@ -736,7 +707,6 @@ namespace BusinessLogicLayer.Helpers
                         CandidateProjectRoleId = candidateProjectRolesId3,
                         TeamId = null,
                         StackTechnologyId = idSt1,
-                        CandidateProcessId = candidateProcessId2,
                         Motivation = "Motivation 1",
                         TimeContact = "10:00",
                         IsJoinToExadel = true,
@@ -752,7 +722,6 @@ namespace BusinessLogicLayer.Helpers
                         CandidateProjectRoleId = candidateProjectRolesId1,
                         TeamId = null,
                         StackTechnologyId = idSt2,
-                        CandidateProcessId = candidateProcessId1,
                         Motivation = "Motivation 1",
                         TimeContact = "10:00",
                         IsJoinToExadel = true,
@@ -768,13 +737,41 @@ namespace BusinessLogicLayer.Helpers
                         CandidateProjectRoleId = candidateProjectRolesId2,
                         TeamId = null,
                         StackTechnologyId = idSt1,
-                        CandidateProcessId = candidateProcessId1,
                         Motivation = "Motivation 1",
                         TimeContact = "10:00",
                         IsJoinToExadel = true,
                         SandboxLanguageId = languageLevelGuid2,
                         IsAgreement = false,
                         AvailabilityTypeId = availabilityType1
+                    });
+                }
+                db.SaveChanges();
+
+                if (!db.CandidatesProcceses.Any())
+                {
+                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
+                    {
+                        Id = candidateProcessId1,
+                        StatusId = statusGuid1,
+                        CandidateSandboxId = candidateSandboxId1,
+                        TestResult = "",
+                        CreateDate = DateTime.Now
+                    });
+                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
+                    {
+                        Id = candidateProcessId2,
+                        StatusId = statusGuid2,
+                        CandidateSandboxId = candidateSandboxId2,
+                        TestResult = "",
+                        CreateDate = DateTime.Now
+                    });
+                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
+                    {
+                        Id = candidateProcessId3,
+                        StatusId = statusGuid3,
+                        CandidateSandboxId = candidateSandboxId3,
+                        TestResult = "",
+                        CreateDate = DateTime.Now
                     });
                 }
                 db.SaveChanges();

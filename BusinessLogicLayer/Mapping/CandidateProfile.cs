@@ -40,9 +40,6 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.Id, y => y.MapFrom(x => Guid.NewGuid()))
                     .ForMember(x => x.CandidateId, y => y.MapFrom(x => candidateId))
                     .ForMember(x => x.SandboxId, y => y.MapFrom(x => x.SandboxId))
-
-                    .ForMember(x => x.CandidateProcess, y => y.MapFrom(x => candidateProcess))
-
                     .ForMember(x => x.Motivation, y => y.MapFrom(x => x.Motivation))
                     .ForMember(x => x.CurrentJob, y => y.MapFrom(x => x.CurrentJob))
                     .ForMember(x => x.AvailabilityTypeId, y => y.MapFrom(x => x.AvailabillityTypeId))
