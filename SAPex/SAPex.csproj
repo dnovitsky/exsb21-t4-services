@@ -16,6 +16,7 @@
     <Content Remove="Controllers\Validation\**" />
     <EmbeddedResource Remove="Controllers\Validation\**" />
     <None Remove="Controllers\Validation\**" />
+    <None Remove="Mappers\Base\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Models\" />
@@ -45,5 +46,8 @@
     <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
     <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj" />
     <ProjectReference Include="..\SAPexAuthService\SAPexAuthService.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mappers\Base\" />
   </ItemGroup>
 </Project>
