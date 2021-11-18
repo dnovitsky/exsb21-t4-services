@@ -29,6 +29,7 @@ namespace DataAccessLayer.Service
         private IFunctionalRoleRepository functionalRoles;
         private ILanguageLevelRepository languageLevels;
         private ILanguageRepository languages;
+        private ILocationRepository locations;
         private IRatingRepository ratings;
         private ISandboxLanguageRepository sandboxLanguages;
         private ISandboxRepository sandboxes;
@@ -216,6 +217,18 @@ namespace DataAccessLayer.Service
                     languages = new LanguageRepository(context);
                 }
                 return languages;
+            }
+        }
+
+        public ILocationRepository Locations
+        {
+            get
+            {
+                if (locations == null)
+                {
+                    locations = new LocationRepository(context);
+                }
+                return locations;
             }
         }
 

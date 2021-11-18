@@ -583,6 +583,113 @@ namespace BusinessLogicLayer.Helpers
                 var candidateSandboxId2 = Guid.NewGuid();
                 var candidateSandboxId3 = Guid.NewGuid();
 
+                var locationId1 = Guid.NewGuid();
+                var locationId2 = Guid.NewGuid();
+                var locationId3 = Guid.NewGuid();
+                var locationId4 = Guid.NewGuid();
+                var locationId5 = Guid.NewGuid();
+                var locationId6 = Guid.NewGuid();
+
+                if (!db.Locations.Any())
+                {
+                    db.Locations.Add(new LocationEntityModel
+                    {
+                        Id = locationId1,
+                        Name = "Minsk"
+                    });
+                    db.Locations.Add(new LocationEntityModel
+                    {
+                        Id = locationId2,
+                        Name = "Gomel"
+                    });
+                    db.Locations.Add(new LocationEntityModel
+                    {
+                        Id = locationId3,
+                        Name = "Brest"
+                    });
+                    db.Locations.Add(new LocationEntityModel
+                    {
+                        Id = locationId4,
+                        Name = "Moscow"
+                    });
+                    db.Locations.Add(new LocationEntityModel
+                    {
+                        Id = locationId5,
+                        Name = "Warsaw"
+                    });
+                    db.Locations.Add(new LocationEntityModel
+                    {
+                        Id = locationId6,
+                        Name = "Kiev"
+                    });
+                }
+                db.SaveChanges();
+
+                if (!db.Users.Any())
+                {
+                    db.Users.Add(new UserEntityModel
+                    {
+                        Name = "June",
+                        Surname = "Cullen",
+                        Email = "manager@gmail.com",
+                        Password = "manager123456",
+                        LocationId = locationId6,
+                        Phone = "+998998756090",
+                        Skype = "Skype:username"
+                    });
+                    db.Users.Add(new UserEntityModel
+                    {
+                        Name = "Helena",
+                        Surname = "Ford",
+                        Email = "mentor@gmail.com",
+                        Password = "mentor123456",
+                        LocationId = locationId2,
+                        Phone = "+998998756191",
+                        Skype = "Skype:username"
+                    });
+                    db.Users.Add(new UserEntityModel
+                    {
+                        Name = "Bill",
+                        Surname = "York",
+                        Email = "interviewer@gmail.com",
+                        Password = "interviewer123456",
+                        LocationId = locationId5,
+                        Phone = "+998998756292",
+                        Skype = "Skype:username"
+                    });
+                    db.Users.Add(new UserEntityModel
+                    {
+                        Name = "Matilda",
+                        Surname = "Gisburg",
+                        Email = "recruiter@gmail.com",
+                        Password = "recruiter123456",
+                        LocationId = locationId1,
+                        Phone = "+998998756393",
+                        Skype = "Skype:username"
+                    });
+                    db.Users.Add(new UserEntityModel
+                    {
+                        Name = "Eleon",
+                        Surname = "York",
+                        Email = "admin@gmail.com",
+                        Password = "admin123456",
+                        LocationId = locationId2,
+                        Phone = "+998998756393",
+                        Skype = "Skype:username"
+                    });
+                    db.Users.Add(new UserEntityModel
+                    {
+                        Name = "Franklin",
+                        Surname = "Benjamin",
+                        Email = "gbenjamin@gmail.com",
+                        Password = "admin123456",
+                        LocationId = locationId3,
+                        Phone = "+998198752393",
+                        Skype = "Skype:username"
+                    });
+                }
+                db.SaveChanges();
+
                 if (!db.Candidates.Any())
                 {
                     db.Candidates.Add(new CandidateEntityModel
@@ -591,7 +698,7 @@ namespace BusinessLogicLayer.Helpers
                         Name = "Tom",
                         Surname = "Tomison",
                         Email = "Tom@tomomo.com",
-                        Location = "11",
+                        LocationId = locationId3,
                         Skype = "skypeTom",
                         Phone = "+375441234567",
                         ProfessionaCertificates = "",
@@ -603,7 +710,7 @@ namespace BusinessLogicLayer.Helpers
                         Name = "Jim",
                         Surname = "Jimimison",
                         Email = "Jim@tomomo.com",
-                        Location = "11",
+                        LocationId = locationId2,
                         Skype = "skypeTom",
                         Phone = "+375331234567",
                         ProfessionaCertificates = "",
@@ -615,7 +722,7 @@ namespace BusinessLogicLayer.Helpers
                         Name = "Goga",
                         Surname = "Gogison",
                         Email = "Goga@tomomo.com",
-                        Location = "11",
+                        LocationId = locationId5,
                         Skype = "skypeTom",
                         Phone = "+375291234567",
                         ProfessionaCertificates = "",

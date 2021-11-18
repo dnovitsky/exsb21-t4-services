@@ -13,6 +13,7 @@ namespace BusinessLogicLayer.Helpers
         {
             _dbContext = dbContext;
         }
+        /*
         private List<UserEntityModel> users = new List<UserEntityModel>
         {
             new UserEntityModel
@@ -66,13 +67,16 @@ namespace BusinessLogicLayer.Helpers
                     Skype = "Skype:username"
                 }
         };
+        */
         public  void CreateTestData()
         {
-            if (!_dbContext.Users.Any())
+            /*
+             * if (!_dbContext.Users.Any())
             {
                 users.ForEach(user =>  _dbContext.Users.Add(user) );
             }
             _dbContext.SaveChanges();
+            */
         }
 
         public  void ClearTestData()
