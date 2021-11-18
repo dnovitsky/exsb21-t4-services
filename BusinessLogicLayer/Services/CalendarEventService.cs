@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,8 +14,7 @@ namespace BusinessLogicLayer.Services
     public class CalendarEventService : ICalendarEventService
     {
         private readonly IUnitOfWork unitOfWork;
-        private readonly CalendarEventProfile profile = new ();
-        private readonly InterviewEventProfile interviewProfile = new();
+        private readonly CalendarEventProfile profile = new();
 
         public CalendarEventService(IUnitOfWork unitOfWork)
         {
@@ -24,21 +24,28 @@ namespace BusinessLogicLayer.Services
         public async Task<IEnumerable<CalendarEventDtoModel>> GetAllCalendarEventsAsync()
         {
             IEnumerable<CalendarEventEntityModel> calendarEvents = await unitOfWork.CalendarEvents.GetAllAsync();
-            IList<CalendarEventDtoModel> dtoEvents = new List<CalendarEventDtoModel>();
-            foreach (CalendarEventEntityModel calendarEvent in calendarEvents)
+            foreach (var calendar in calendarEvents)
             {
-                CalendarEventDtoModel dtoEvent = profile.mapToDto(calendarEvent);
-                dtoEvent.InterviewEvents = interviewProfile.mapListToDto(calendarEvent.InterviewEvents);
-                dtoEvents.Add(dtoEvent);
+                calendar.InterviewEvents = new List<InterviewEventEntityModel>() { new InterviewEventEntityModel() };
             }
-            return dtoEvents;
+            return profile.mapListToDto(calendarEvents);
         }
 
         public async Task<CalendarEventDtoModel> CreateCalendarEventAsync(CalendarEventDtoModel calendarEvent)
         {
-            var calendar = await unitOfWork.CalendarEvents.CreateAsync(profile.mapToEM(calendarEvent));
-            await unitOfWork.SaveAsync();
-            return profile.mapToDto(calendar);
+            var check = await unitOfWork.CalendarEvents.FindByConditionAsync(
+                x => x.InterviewerId == calendarEvent.InterviewerId && (
+                (x.StartTime < calendarEvent.StartTime && calendarEvent.StartTime < x.EndTime) ||
+                (x.StartTime < calendarEvent.EndTime && calendarEvent.EndTime < x.EndTime)));
+            if (!check.Any())
+            {
+                var calendar = await unitOfWork.CalendarEvents.CreateAsync(profile.mapToEM(calendarEvent));
+                await unitOfWork.SaveAsync();
+                return profile.mapToDto(calendar);
+            }
+
+            return null;
+            
         }
 
         public async Task<IEnumerable<CalendarEventDtoModel>> CreateAllCalendarEventsAsync(IEnumerable<CalendarEventDtoModel> calendarEvents,string email)

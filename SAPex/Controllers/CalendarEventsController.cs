@@ -56,15 +56,7 @@ namespace SAPex.Controllers
         public async Task<IEnumerable<CalendarEventViewModel>> GetAsync([FromRoute] DateTime dateTime)
         {
             IEnumerable<CalendarEventDtoModel> calendarEvents = await _calendarEventService.GetCalendarEventsByDayAsync(dateTime);
-            IList<CalendarEventViewModel> viewEvents = new List<CalendarEventViewModel>();
-            foreach (CalendarEventDtoModel calendarEvent in calendarEvents)
-            {
-                CalendarEventViewModel viewEvent = _mapper.DtoToView(calendarEvent);
-                viewEvent.InterviewEvents = _mapperInterview.ListDtoToListView(calendarEvent.InterviewEvents);
-                viewEvents.Add(viewEvent);
-            }
-
-            return viewEvents;
+            return _mapper.ListDtoToListView(calendarEvents);
         }
     }
 }

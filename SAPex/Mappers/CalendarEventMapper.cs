@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using BusinessLogicLayer.DtoModels;
 using SAPex.Mappers.Base;
 using SAPex.Models;
@@ -10,6 +7,8 @@ namespace SAPex.Mappers
 {
     public class CalendarEventMapper : BaseMapper<CalendarEventDtoModel, CalendarEventViewModel>
     {
+        private InterviewEventMapper _mapper = new ();
+
         protected override Mapper DtoToViewMapper()
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CalendarEventDtoModel, CalendarEventViewModel>()
@@ -18,7 +17,8 @@ namespace SAPex.Mappers
                     .ForMember(x => x.Name, y => y.MapFrom(x => x.Name))
                     .ForMember(x => x.Surname, y => y.MapFrom(x => x.Surname))
                     .ForMember(x => x.StartTime, y => y.MapFrom(x => x.StartTime))
-                    .ForMember(x => x.EndTime, y => y.MapFrom(x => x.EndTime)));
+                    .ForMember(x => x.EndTime, y => y.MapFrom(x => x.EndTime))
+                    .ForMember(x => x.InterviewEvents, y => y.MapFrom(x => _mapper.ListDtoToListView(x.InterviewEvents))));
             return new Mapper(config);
         }
 

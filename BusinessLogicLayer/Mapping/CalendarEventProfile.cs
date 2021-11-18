@@ -7,6 +7,7 @@ namespace BusinessLogicLayer.Mapping
 {
     public class CalendarEventProfile : BaseProfile<CalendarEventDtoModel, CalendarEventEntityModel>
     {
+        private readonly InterviewEventProfile profile = new ();
         protected override Mapper DtoModelToEntityModelMapper()
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CalendarEventDtoModel, CalendarEventEntityModel>()
@@ -26,7 +27,8 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.Name, y => y.MapFrom(x => x.User.Name))
                     .ForMember(x => x.Surname, y => y.MapFrom(x => x.User.Surname))
                     .ForMember(x => x.StartTime, y => y.MapFrom(x => x.StartTime))
-                    .ForMember(x => x.EndTime, y => y.MapFrom(x => x.EndTime)));
+                    .ForMember(x => x.EndTime, y => y.MapFrom(x => x.EndTime))
+                    .ForMember(x => x.InterviewEvents, y => y.MapFrom(x => profile.mapListToDto(x.InterviewEvents))));
 
             return new Mapper(config);
         }

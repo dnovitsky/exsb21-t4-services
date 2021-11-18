@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogicLayer.DtoModels;
 using BusinessLogicLayer.Interfaces;
@@ -25,10 +26,26 @@ namespace BusinessLogicLayer.Services
             return profile.mapListToDto(interviewEvents);
         }
 
-        public async Task<InterviewEventDtoModel> CreateInterviewEventAsync(InterviewEventDtoModel calendarEvent)
+        public async Task<InterviewEventDtoModel> CreateInterviewEventAsync(InterviewEventDtoModel interviewEvent)
         {
-            var entityModel = await unitOfWork.InterviewEvents.CreateAsync(profile.mapToEM(calendarEvent));
-            return profile.mapToDto(entityModel);
+            var calendarCheck = await unitOfWork.CalendarEvents.FindByIdAsync(interviewEvent.CalendarEventId);
+
+            if (calendarCheck.StartTime <= interviewEvent.StartTime && interviewEvent.EndTime <= calendarCheck.EndTime)
+            {
+                var check = await unitOfWork.InterviewEvents.FindByConditionAsync(
+                x => x.CalendarEventId == interviewEvent.CalendarEventId && (
+                (x.StartTime < interviewEvent.StartTime && interviewEvent.StartTime < x.EndTime) ||
+                (x.StartTime < interviewEvent.EndTime && interviewEvent.EndTime < x.EndTime)));
+
+                if (!check.Any())
+                {
+                    var entityModel = await unitOfWork.InterviewEvents.CreateAsync(profile.mapToEM(interviewEvent));
+                    return profile.mapToDto(entityModel);
+                }
+            }
+            return null;
+
+            
         }
 
         
