@@ -42,9 +42,7 @@ namespace BusinessLogicLayer.Services
         public async Task<bool> AddSandboxLanguagesListByIdsAsync(Guid sandboxId, IEnumerable<Guid> languageIds)
         {
             try
-            {
-                IList<SandboxLanguageDtoModel> sandboxLanguageDtoModels = new List<SandboxLanguageDtoModel>();
-
+            { 
                 foreach (var id in languageIds)
                 {
                     SandboxLanguageDtoModel item = new SandboxLanguageDtoModel { SandboxId = sandboxId, LanguageId = id };
@@ -58,5 +56,40 @@ namespace BusinessLogicLayer.Services
                 return false;
             }
         }
+
+        public async Task<bool> UpdateSandboxLanguagesListByIdsAsync(Guid sandboxId, IEnumerable<Guid> languageIds)
+        {
+            try
+            {
+                IList<SandboxLanguageDtoModel> sandboxLanguageDtoModels = new List<SandboxLanguageDtoModel>();
+
+                foreach (var id in languageIds)
+                {
+                    SandboxLanguageDtoModel item = new SandboxLanguageDtoModel { SandboxId = sandboxId, LanguageId = id };
+                    
+                }
+
+                await unitOfWork.SandboxLanguages.Update()
+                await unitOfWork.SaveAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+
+
+
+
+
+        // public void UpdateSandboxLanguage(LanguageDtoModel languageDto)
+        // {
+        //    LanguageEntityModel languageEM = profile.mapToEM(languageDto);
+        //    unitOfWork.Languages.Update(languageEM);
+        //    unitOfWork.SaveAsync();
+        // }
     }
 }

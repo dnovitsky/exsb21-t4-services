@@ -50,13 +50,19 @@ namespace SAPex.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            SandboxDtoModel sandboxDtoModel = await _sandboxService.FindSandboxByIdAsync(id); // on what level goes null check? it should go directly to db?
+            SandboxDtoModel sandboxDtoModel = await _sandboxService.FindSandboxByIdAsync(id);
+
+            if (sandboxDtoModel == null)
+            {
+                return NotFound();
+            }
+
             IEnumerable<StackTechnologyDtoModel> stackTechnologiesDtoModel = await _stackTechnologyService.GetStackTechnologiesBySandboxIdAsync(id);
             IEnumerable<LanguageDtoModel> languagesDtoModel = await _languageService.GetLanguagesBySandboxIdAsync(id);
 
             SandboxViewModel viewModel = _mapper.MapSbStackLgFromDtoToView(sandboxDtoModel, languagesDtoModel, stackTechnologiesDtoModel);
 
-            return await Task.FromResult(Ok(viewModel)); // convert to json?
+            return await Task.FromResult(Ok(viewModel));
         }
 
         [HttpGet("all")]
@@ -99,7 +105,7 @@ namespace SAPex.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(
+        public async Task<IActionResult> Create(
             [FromBody] SandboxFieldsViewModel sandboxFields,
             [FromQuery] IEnumerable<Guid> languageIds,
             [FromQuery] IEnumerable<Guid> stackTechnologyIds)
@@ -109,19 +115,42 @@ namespace SAPex.Controllers
             await _sandboxLanguageService.AddSandboxLanguagesListByIdsAsync(sandboxId, languageIds);
             await _sandboxStackTechnologyService.AddSandboxStackTechnologyListByIdsAsync(sandboxId, stackTechnologyIds);
 
-            return await Task.FromResult(Ok());
+            return await Task.FromResult(Ok(sandboxId));
         }
 
-        // [HttpPut]
-        // public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] SandboxViewModel requestData) // ? id
-        // {
-        //    ValidationResult validationResult = new SandboxValidator().Validate(requestData); // check if already exists update
-        //    if (!validationResult.IsValid)
-        //    {
-        //        return await Task.FromResult(BadRequest());
-        //    }
-        //    _service.UpdateSandbox(_mapper.MapSbFromViewToDto(requestData)); // where goes check on exist
-        //    return await Task.FromResult(Ok());
-        // }
+        [HttpPut]
+        public async Task<IActionResult> Update([FromRoute] Guid id,
+            [FromBody] SandboxFieldsViewModel sandboxFields,
+            [FromQuery] IEnumerable<Guid> languageIds,
+            [FromQuery] IEnumerable<Guid> stackTechnologyIds)
+        {
+            SandboxDtoModel sandboxDtoModel = await _sandboxService.FindSandboxByIdAsync(id);
+
+            if (sandboxDtoModel == null)
+            {
+                return await Task.FromResult(NotFound());
+            }
+
+            _sandboxService.UpdateSandbox(_mapper.MapSbFromViewToDto(sandboxFields));
+
+            await _sandboxLanguageService.UpdateSandboxLanguagesListByIdsAsync();
+            await _sandboxStackTechnologyService.UpdateStackTechnologyListByIdsAsync();
+
+            // await _sandboxLanguageService.AddSandboxLanguagesListByIdsAsync(sandboxId, languageIds);
+            // await _sandboxStackTechnologyService.AddSandboxStackTechnologyListByIdsAsync(sandboxId, stackTechnologyIds);
+
+            // await _sandboxLanguageService.Update
+            // await _sandboxStackTechnologyService.
+
+            return await Task.FromResult(Ok(id));
+
+            // ValidationResult validationResult = new SandboxValidator().Validate(requestData);
+            // if (!validationResult.IsValid)
+            // {
+            //    return await Task.FromResult(BadRequest());
+            // }
+            // _service.UpdateSandbox(_mapper.MapSbFromViewToDto(requestData));
+            // return await Task.FromResult(Ok());
+        }
     }
 }
