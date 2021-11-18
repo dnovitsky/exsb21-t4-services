@@ -24,10 +24,6 @@ namespace BusinessLogicLayer.Services
         public async Task<IEnumerable<CalendarEventDtoModel>> GetAllCalendarEventsAsync()
         {
             IEnumerable<CalendarEventEntityModel> calendarEvents = await unitOfWork.CalendarEvents.GetAllAsync();
-            foreach (var calendar in calendarEvents)
-            {
-                calendar.InterviewEvents = new List<InterviewEventEntityModel>() { new InterviewEventEntityModel() };
-            }
             return profile.mapListToDto(calendarEvents);
         }
 
@@ -48,11 +44,13 @@ namespace BusinessLogicLayer.Services
             
         }
 
+
         public async Task<IEnumerable<CalendarEventDtoModel>> CreateAllCalendarEventsAsync(IEnumerable<CalendarEventDtoModel> calendarEvents,string email)
         {
             IList<CalendarEventDtoModel> calendars = new List<CalendarEventDtoModel>();
             var users = await unitOfWork.Users.FindByConditionAsync(x => x.Email == email);
             var user = users.FirstOrDefault();
+
             foreach (var calendarEvent in calendarEvents)
             {
                 calendarEvent.InterviewerId = user.Id;

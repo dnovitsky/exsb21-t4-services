@@ -21,7 +21,6 @@ namespace SAPex.Controllers
         private readonly ICalendarEventService _calendarEventService;
 
         private readonly CalendarEventMapper _mapper = new ();
-        private readonly InterviewEventMapper _mapperInterview = new ();
         private readonly CreateCalendarEventMapper _mapperCreate = new ();
 
         public CalendarEventsController(ICalendarEventService calendarEventService)
