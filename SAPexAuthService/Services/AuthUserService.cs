@@ -27,9 +27,9 @@ namespace SAPexAuthService.Services
             return user.First();
         }
 
-        public async Task<UserEntityModel> FindByEmailAndPasswordAsync(string email, string password)
+        public async Task<UserEntityModel> FindByEmail(string email)
         {
-            var users = await _unitOfWork.Users.FindByConditionAsync(x => x.Email == email && x.Password == password);
+            var users = await _unitOfWork.Users.FindByConditionAsync(x => x.Email == email);
             return users.FirstOrDefault();
         }
 
