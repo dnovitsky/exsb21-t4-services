@@ -24,7 +24,6 @@ namespace DbMigrations.EntityModels
         [Required]
         public string Email { get; set; }
         
-        [Required]
         public Guid LocationId { get; set; }
         public virtual LocationEntityModel Location { get; set; }
 

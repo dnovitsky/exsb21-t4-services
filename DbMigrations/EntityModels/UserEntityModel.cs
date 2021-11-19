@@ -21,9 +21,10 @@ namespace DbMigrations.EntityModels
         public string Name { get; set; }
         [Required]
         public string Surname { get; set; }
-        [Required]
+        
         public Guid LocationId { get; set; }
         public virtual LocationEntityModel Location { get; set; }
+
         [Required]
         public string Email { get; set; }
         [Required]
