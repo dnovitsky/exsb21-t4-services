@@ -20,6 +20,7 @@ namespace DataAccessLayer.Repositories
         const string EndDate = "enddate";
         const string StartRegistration = "startregistration";
         const string Endregistration = "endregistration";
+        const string Status = "status";
         const string DataType = "d";
 
         public AppDbContext db;
@@ -27,7 +28,6 @@ namespace DataAccessLayer.Repositories
             : base(context)
         {
             db = context;
-            // db.Add()
         }
 
         public async Task<SandboxEntityModel> FindByIdAsync(Guid id)
@@ -73,6 +73,11 @@ namespace DataAccessLayer.Repositories
                 s.Description.Contains(filterParametrs.SecondSearchingTextString))),
             };
 
+            if( filterParametrs.SearchingStatus != SearchStatus.None)
+            { 
+                pagedList.PageList = pagedList.PageList.Where(s => s.Status == (StatusName)filterParametrs.SearchingStatus);
+            }
+
             pagedList.PageList = parametrs.SortField.ToLower() switch
             {
                 Name => (SortingType == 0 ?
@@ -102,6 +107,10 @@ namespace DataAccessLayer.Repositories
                 Endregistration => (SortingType == 0 ?
                 pagedList.PageList.OrderBy(s => s.EndRegistration).ToList() :
                 pagedList.PageList.OrderByDescending(s => s.EndRegistration).ToList()),
+
+                Status => (SortingType == 0 ?
+                pagedList.PageList.OrderBy(s => s.Status).ToList() :
+                pagedList.PageList.OrderByDescending(s => s.Status).ToList()),
 
                 _ => pagedList.PageList.OrderBy(s => s.CreateDate).ToList(),
             };

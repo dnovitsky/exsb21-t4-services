@@ -65,23 +65,25 @@ namespace BusinessLogicLayer.Helpers
                         Name = ".Net & JS",
                         MaxCandidates = 10,
                         Description = "description .Net & JS",
-                        CreateDate = new DateTime(2021, 1, 1),
-                        StartDate = new DateTime(2021, 1, 2),
-                        EndDate = new DateTime(2021, 1, 3),
-                        StartRegistration = new DateTime(2021, 1, 4),
-                        EndRegistration = new DateTime(2021, 1, 5),
-                    });
+                        CreateDate = new DateTime(2021, 10, 1),
+                        StartDate = new DateTime(2021, 12, 2),
+                        EndDate = new DateTime(2021, 12, 30),
+                        StartRegistration = new DateTime(2021, 11, 11),
+                        EndRegistration = new DateTime(2021, 11, 30),
+                        Status = StatusName.Draft,
+                    });;
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
                         Id = idSb2,
                         Name = "Python",
                         MaxCandidates = 22,
                         Description = "description Python",
-                        CreateDate = new DateTime(2021, 2, 1),
-                        StartDate = new DateTime(2021, 2, 2),
-                        EndDate = new DateTime(2021, 2, 3),
-                        StartRegistration = new DateTime(2021, 2, 4),
-                        EndRegistration = new DateTime(2021, 2, 5),
+                        CreateDate = new DateTime(2021, 11, 1),
+                        StartDate = new DateTime(2021, 12, 3),
+                        EndDate = new DateTime(2021, 12, 30),
+                        StartRegistration = new DateTime(2021, 11, 25),
+                        EndRegistration = new DateTime(2021, 11, 30),
+                        Status = StatusName.Active,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
@@ -89,11 +91,12 @@ namespace BusinessLogicLayer.Helpers
                         Name = "PHP",
                         MaxCandidates = 33,
                         Description = "description PHP",
-                        CreateDate = new DateTime(2021, 3, 1),
-                        StartDate = new DateTime(2021, 3, 2),
-                        EndDate = new DateTime(2021, 3, 3),
-                        StartRegistration = new DateTime(2021, 3, 4),
-                        EndRegistration = new DateTime(2021, 3, 5),
+                        CreateDate = new DateTime(2021, 10, 1),
+                        StartDate = new DateTime(2021, 12, 2),
+                        EndDate = new DateTime(2021, 12, 30),
+                        StartRegistration = new DateTime(2021, 11, 16),
+                        EndRegistration = new DateTime(2021, 11, 25),
+                        Status = StatusName.Active,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
@@ -101,11 +104,12 @@ namespace BusinessLogicLayer.Helpers
                         Name = "C++",
                         MaxCandidates = 45,
                         Description = "description C++",
-                        CreateDate = new DateTime(2021, 4, 1),
-                        StartDate = new DateTime(2021, 4, 2),
-                        EndDate = new DateTime(2021, 4, 3),
-                        StartRegistration = new DateTime(2021, 4, 4),
-                        EndRegistration = new DateTime(2021, 4, 5),
+                        CreateDate = new DateTime(2021, 5, 1),
+                        StartDate = new DateTime(2021, 12, 6),
+                        EndDate = new DateTime(2021, 12, 30),
+                        StartRegistration = new DateTime(2021, 11, 4),
+                        EndRegistration = new DateTime(2021, 11, 7),
+                        Status = StatusName.Active,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
@@ -114,10 +118,11 @@ namespace BusinessLogicLayer.Helpers
                         MaxCandidates = 56,
                         Description = "description QA",
                         CreateDate = new DateTime(2021, 5, 1),
-                        StartDate = new DateTime(2021, 5, 2),
-                        EndDate = new DateTime(2021, 5, 3),
-                        StartRegistration = new DateTime(2021, 5, 4),
-                        EndRegistration = new DateTime(2021, 5, 5),
+                        StartDate = new DateTime(2021, 11, 16),
+                        EndDate = new DateTime(2021, 11, 30),
+                        StartRegistration = new DateTime(2021, 10, 10),
+                        EndRegistration = new DateTime(2021, 10, 15),
+                        Status = StatusName.Active,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
@@ -126,10 +131,11 @@ namespace BusinessLogicLayer.Helpers
                         MaxCandidates = 62,
                         Description = "description BA",
                         CreateDate = new DateTime(2021, 6, 1),
-                        StartDate = new DateTime(2021, 6, 2),
-                        EndDate = new DateTime(2021, 6, 3),
+                        StartDate = new DateTime(2021, 7, 2),
+                        EndDate = new DateTime(2021, 7, 3),
                         StartRegistration = new DateTime(2021, 6, 4),
                         EndRegistration = new DateTime(2021, 6, 5),
+                        Status = StatusName.Active,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
@@ -142,6 +148,7 @@ namespace BusinessLogicLayer.Helpers
                         EndDate = new DateTime(2021, 7, 3),
                         StartRegistration = new DateTime(2021, 7, 4),
                         EndRegistration = new DateTime(2021, 7, 5),
+                        Status = StatusName.Draft,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
@@ -154,6 +161,7 @@ namespace BusinessLogicLayer.Helpers
                         EndDate = new DateTime(2021, 8, 3),
                         StartRegistration = new DateTime(2021, 8, 4),
                         EndRegistration = new DateTime(2021, 8, 5),
+                        Status = StatusName.Draft,
                     });
                 }
                 db.SaveChanges();
@@ -665,35 +673,6 @@ namespace BusinessLogicLayer.Helpers
                 }
                 db.SaveChanges();
 
-                if (!db.CandidatesProcceses.Any())
-                {
-                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
-                    {
-                        Id = candidateProcessId1,
-                        StatusId = statusGuid1,
-                        TestResult = "",
-                        CreateDate = DateTime.Now,
-                        FeedbackId = null
-                    });
-                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
-                    {
-                        Id = candidateProcessId2,
-                        StatusId = statusGuid2,
-                        TestResult = "",
-                        CreateDate = DateTime.Now,
-                        FeedbackId = null
-                    });
-                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
-                    {
-                        Id = candidateProcessId3,
-                        StatusId = statusGuid3,
-                        TestResult = "",
-                        CreateDate = DateTime.Now,
-                        FeedbackId = null
-                    });
-                }
-                db.SaveChanges();
-
                 var candidateProjectRolesId1 = Guid.NewGuid();
                 var candidateProjectRolesId2 = Guid.NewGuid();
                 var candidateProjectRolesId3 = Guid.NewGuid();
@@ -728,7 +707,6 @@ namespace BusinessLogicLayer.Helpers
                         CandidateProjectRoleId = candidateProjectRolesId3,
                         TeamId = null,
                         StackTechnologyId = idSt1,
-                        CandidateProcessId = candidateProcessId2,
                         Motivation = "Motivation 1",
                         TimeContact = "10:00",
                         IsJoinToExadel = true,
@@ -744,7 +722,6 @@ namespace BusinessLogicLayer.Helpers
                         CandidateProjectRoleId = candidateProjectRolesId1,
                         TeamId = null,
                         StackTechnologyId = idSt2,
-                        CandidateProcessId = candidateProcessId1,
                         Motivation = "Motivation 1",
                         TimeContact = "10:00",
                         IsJoinToExadel = true,
@@ -760,13 +737,101 @@ namespace BusinessLogicLayer.Helpers
                         CandidateProjectRoleId = candidateProjectRolesId2,
                         TeamId = null,
                         StackTechnologyId = idSt1,
-                        CandidateProcessId = candidateProcessId1,
                         Motivation = "Motivation 1",
                         TimeContact = "10:00",
                         IsJoinToExadel = true,
                         SandboxLanguageId = languageLevelGuid2,
                         IsAgreement = false,
                         AvailabilityTypeId = availabilityType1
+                    });
+                }
+                db.SaveChanges();
+
+                if (!db.CandidatesProcceses.Any())
+                {
+                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
+                    {
+                        Id = candidateProcessId1,
+                        StatusId = statusGuid1,
+                        CandidateSandboxId = candidateSandboxId1,
+                        TestResult = "",
+                        CreateDate = DateTime.Now
+                    });
+                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
+                    {
+                        Id = candidateProcessId2,
+                        StatusId = statusGuid2,
+                        CandidateSandboxId = candidateSandboxId2,
+                        TestResult = "",
+                        CreateDate = DateTime.Now
+                    });
+                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
+                    {
+                        Id = candidateProcessId3,
+                        StatusId = statusGuid3,
+                        CandidateSandboxId = candidateSandboxId3,
+                        TestResult = "",
+                        CreateDate = DateTime.Now
+                    });
+                }
+                db.SaveChanges();
+
+                var ratingId1 = Guid.NewGuid();
+                var ratingId2 = Guid.NewGuid();
+                var ratingId3 = Guid.NewGuid();
+
+                if (!db.Ratings.Any())
+                {
+                    db.Ratings.Add(new RatingEntityModel
+                    {
+                        Id = ratingId1,
+                        Mark = 69,
+                        SkillId = skillGuid1
+                    });
+
+                    db.Ratings.Add(new RatingEntityModel
+                    {
+                        Id = ratingId2,
+                        Mark = 13,
+                        SkillId = skillGuid2
+                    });
+
+                    db.Ratings.Add(new RatingEntityModel
+                    {
+                        Id = ratingId3,
+                        Mark = 77,
+                        SkillId = skillGuid3
+                    });
+                }
+
+                if (!db.Feedbacks.Any())
+                {
+                    db.Feedbacks.Add(new FeedbackEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        UserId = db.Users.Where(u=>u.Email== "mentor@gmail.com").FirstOrDefault().Id,
+                        RatingId = ratingId1,
+                        CreateDate = DateTime.Now,
+                        UserReview = "Chay, indiyskiy chay",
+                        CandidateProccesId = candidateProcessId1
+                    });
+                    db.Feedbacks.Add(new FeedbackEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        UserId = db.Users.Where(u => u.Email == "interviewer@gmail.com").FirstOrDefault().Id,
+                        RatingId = ratingId2,
+                        CreateDate = DateTime.Now,
+                        UserReview = "Slon, indiyskiy slon",
+                        CandidateProccesId = candidateProcessId1
+                    });
+                    db.Feedbacks.Add(new FeedbackEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        UserId = db.Users.Where(u => u.Email == "recruiter@gmail.com").FirstOrDefault().Id,
+                        RatingId = ratingId3,
+                        CreateDate = DateTime.Now,
+                        UserReview = "Pod pivo poydet",
+                        CandidateProccesId = candidateProcessId1
                     });
                 }
                 db.SaveChanges();

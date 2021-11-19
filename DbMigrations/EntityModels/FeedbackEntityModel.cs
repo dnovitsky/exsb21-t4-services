@@ -9,10 +9,6 @@ namespace DbMigrations.EntityModels
 {
     public class FeedbackEntityModel
     {
-        public FeedbackEntityModel()
-        {
-            CandidateProcceses = new List<CandidateProccesEntityModel>();
-        }
 
         [Key]
         public Guid Id { get; set; }
@@ -30,6 +26,8 @@ namespace DbMigrations.EntityModels
         [Required]
         public string UserReview { get; set; }
 
-        public virtual IList<CandidateProccesEntityModel> CandidateProcceses { get; set; }
+        [Required]
+        public Guid CandidateProccesId { get; set; }
+        public virtual CandidateProccesEntityModel CandidateProcces { get; set; }
     }
 }

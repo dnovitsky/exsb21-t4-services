@@ -78,6 +78,28 @@ namespace DbMigrations.Migrations
                     b.ToTable("AvailabilityTypes");
                 });
 
+            modelBuilder.Entity("DbMigrations.EntityModels.CalendarEventEntityModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("InterviewerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InterviewerId");
+
+                    b.ToTable("CalendarEvents");
+                });
+
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateEntityModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -151,11 +173,11 @@ namespace DbMigrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CandidateSandboxId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("FeedbackId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("StatusId")
                         .HasColumnType("uniqueidentifier");
@@ -165,7 +187,7 @@ namespace DbMigrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FeedbackId");
+                    b.HasIndex("CandidateSandboxId");
 
                     b.HasIndex("StatusId");
 
@@ -197,9 +219,6 @@ namespace DbMigrations.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CandidateId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CandidateProcessId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("CandidateProjectRoleId")
@@ -237,8 +256,6 @@ namespace DbMigrations.Migrations
                     b.HasIndex("AvailabilityTypeId");
 
                     b.HasIndex("CandidateId");
-
-                    b.HasIndex("CandidateProcessId");
 
                     b.HasIndex("CandidateProjectRoleId");
 
@@ -278,6 +295,9 @@ namespace DbMigrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CandidateProccesId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -292,6 +312,8 @@ namespace DbMigrations.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CandidateProccesId");
 
                     b.HasIndex("RatingId");
 
@@ -349,6 +371,33 @@ namespace DbMigrations.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FunctionalRoles");
+                });
+
+            modelBuilder.Entity("DbMigrations.EntityModels.InterviewEventEntityModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CalendarEventId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CandidateSandboxId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CalendarEventId");
+
+                    b.HasIndex("CandidateSandboxId");
+
+                    b.ToTable("InterviewEvents");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.LanguageEntityModel", b =>
@@ -434,6 +483,9 @@ namespace DbMigrations.Migrations
 
                     b.Property<DateTime>("StartRegistration")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -781,6 +833,17 @@ namespace DbMigrations.Migrations
                     b.Navigation("FunctionalRole");
                 });
 
+            modelBuilder.Entity("DbMigrations.EntityModels.CalendarEventEntityModel", b =>
+                {
+                    b.HasOne("DbMigrations.EntityModels.UserEntityModel", "User")
+                        .WithMany()
+                        .HasForeignKey("InterviewerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateLanguageEntityModel", b =>
                 {
                     b.HasOne("DbMigrations.EntityModels.CandidateEntityModel", "Candidate")
@@ -810,9 +873,11 @@ namespace DbMigrations.Migrations
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateProccesEntityModel", b =>
                 {
-                    b.HasOne("DbMigrations.EntityModels.FeedbackEntityModel", "Feedback")
-                        .WithMany("CandidateProcceses")
-                        .HasForeignKey("FeedbackId");
+                    b.HasOne("DbMigrations.EntityModels.CandidateSandboxEntityModel", "CandidateSandbox")
+                        .WithMany("CandidateProcesses")
+                        .HasForeignKey("CandidateSandboxId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DbMigrations.EntityModels.StatusEntityModel", "Status")
                         .WithMany("CandidatesProcceses")
@@ -820,7 +885,7 @@ namespace DbMigrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Feedback");
+                    b.Navigation("CandidateSandbox");
 
                     b.Navigation("Status");
                 });
@@ -836,12 +901,6 @@ namespace DbMigrations.Migrations
                     b.HasOne("DbMigrations.EntityModels.CandidateEntityModel", "Candidate")
                         .WithMany("CandidateSandboxes")
                         .HasForeignKey("CandidateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DbMigrations.EntityModels.CandidateProccesEntityModel", "CandidateProcess")
-                        .WithMany()
-                        .HasForeignKey("CandidateProcessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -868,8 +927,6 @@ namespace DbMigrations.Migrations
                     b.Navigation("AvailabilityType");
 
                     b.Navigation("Candidate");
-
-                    b.Navigation("CandidateProcess");
 
                     b.Navigation("CandidateProjectRole");
 
@@ -901,6 +958,12 @@ namespace DbMigrations.Migrations
 
             modelBuilder.Entity("DbMigrations.EntityModels.FeedbackEntityModel", b =>
                 {
+                    b.HasOne("DbMigrations.EntityModels.CandidateProccesEntityModel", "CandidateProcces")
+                        .WithMany("Feedbacks")
+                        .HasForeignKey("CandidateProccesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DbMigrations.EntityModels.RatingEntityModel", "Rating")
                         .WithMany("Feedbacks")
                         .HasForeignKey("RatingId")
@@ -913,9 +976,30 @@ namespace DbMigrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("CandidateProcces");
+
                     b.Navigation("Rating");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DbMigrations.EntityModels.InterviewEventEntityModel", b =>
+                {
+                    b.HasOne("DbMigrations.EntityModels.CalendarEventEntityModel", "CalendarEvent")
+                        .WithMany("InterviewEvents")
+                        .HasForeignKey("CalendarEventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DbMigrations.EntityModels.CandidateSandboxEntityModel", "CandidateSandbox")
+                        .WithMany()
+                        .HasForeignKey("CandidateSandboxId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CalendarEvent");
+
+                    b.Navigation("CandidateSandbox");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.RatingEntityModel", b =>
@@ -1120,6 +1204,11 @@ namespace DbMigrations.Migrations
                     b.Navigation("CandidateSandboxes");
                 });
 
+            modelBuilder.Entity("DbMigrations.EntityModels.CalendarEventEntityModel", b =>
+                {
+                    b.Navigation("InterviewEvents");
+                });
+
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateEntityModel", b =>
                 {
                     b.Navigation("CandidateLanguages");
@@ -1129,14 +1218,19 @@ namespace DbMigrations.Migrations
                     b.Navigation("CandidateTechSkills");
                 });
 
+            modelBuilder.Entity("DbMigrations.EntityModels.CandidateProccesEntityModel", b =>
+                {
+                    b.Navigation("Feedbacks");
+                });
+
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateProjectRoleEntityModel", b =>
                 {
                     b.Navigation("CandidateSandboxes");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.FeedbackEntityModel", b =>
+            modelBuilder.Entity("DbMigrations.EntityModels.CandidateSandboxEntityModel", b =>
                 {
-                    b.Navigation("CandidateProcceses");
+                    b.Navigation("CandidateProcesses");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.FormEntityModel", b =>
