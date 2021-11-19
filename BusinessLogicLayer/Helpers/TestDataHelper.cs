@@ -673,35 +673,6 @@ namespace BusinessLogicLayer.Helpers
                 }
                 db.SaveChanges();
 
-                if (!db.CandidatesProcceses.Any())
-                {
-                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
-                    {
-                        Id = candidateProcessId1,
-                        StatusId = statusGuid1,
-                        TestResult = "",
-                        CreateDate = DateTime.Now,
-                        FeedbackId = null
-                    });
-                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
-                    {
-                        Id = candidateProcessId2,
-                        StatusId = statusGuid2,
-                        TestResult = "",
-                        CreateDate = DateTime.Now,
-                        FeedbackId = null
-                    });
-                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
-                    {
-                        Id = candidateProcessId3,
-                        StatusId = statusGuid3,
-                        TestResult = "",
-                        CreateDate = DateTime.Now,
-                        FeedbackId = null
-                    });
-                }
-                db.SaveChanges();
-
                 var candidateProjectRolesId1 = Guid.NewGuid();
                 var candidateProjectRolesId2 = Guid.NewGuid();
                 var candidateProjectRolesId3 = Guid.NewGuid();
@@ -736,7 +707,6 @@ namespace BusinessLogicLayer.Helpers
                         CandidateProjectRoleId = candidateProjectRolesId3,
                         TeamId = null,
                         StackTechnologyId = idSt1,
-                        CandidateProcessId = candidateProcessId2,
                         Motivation = "Motivation 1",
                         TimeContact = "10:00",
                         IsJoinToExadel = true,
@@ -752,7 +722,6 @@ namespace BusinessLogicLayer.Helpers
                         CandidateProjectRoleId = candidateProjectRolesId1,
                         TeamId = null,
                         StackTechnologyId = idSt2,
-                        CandidateProcessId = candidateProcessId1,
                         Motivation = "Motivation 1",
                         TimeContact = "10:00",
                         IsJoinToExadel = true,
@@ -768,7 +737,6 @@ namespace BusinessLogicLayer.Helpers
                         CandidateProjectRoleId = candidateProjectRolesId2,
                         TeamId = null,
                         StackTechnologyId = idSt1,
-                        CandidateProcessId = candidateProcessId1,
                         Motivation = "Motivation 1",
                         TimeContact = "10:00",
                         IsJoinToExadel = true,
@@ -779,6 +747,94 @@ namespace BusinessLogicLayer.Helpers
                 }
                 db.SaveChanges();
 
+                if (!db.CandidatesProcceses.Any())
+                {
+                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
+                    {
+                        Id = candidateProcessId1,
+                        StatusId = statusGuid1,
+                        CandidateSandboxId = candidateSandboxId1,
+                        TestResult = "",
+                        CreateDate = DateTime.Now
+                    });
+                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
+                    {
+                        Id = candidateProcessId2,
+                        StatusId = statusGuid2,
+                        CandidateSandboxId = candidateSandboxId2,
+                        TestResult = "",
+                        CreateDate = DateTime.Now
+                    });
+                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
+                    {
+                        Id = candidateProcessId3,
+                        StatusId = statusGuid3,
+                        CandidateSandboxId = candidateSandboxId3,
+                        TestResult = "",
+                        CreateDate = DateTime.Now
+                    });
+                }
+                db.SaveChanges();
+
+                var ratingId1 = Guid.NewGuid();
+                var ratingId2 = Guid.NewGuid();
+                var ratingId3 = Guid.NewGuid();
+
+                if (!db.Ratings.Any())
+                {
+                    db.Ratings.Add(new RatingEntityModel
+                    {
+                        Id = ratingId1,
+                        Mark = 69,
+                        SkillId = skillGuid1
+                    });
+
+                    db.Ratings.Add(new RatingEntityModel
+                    {
+                        Id = ratingId2,
+                        Mark = 13,
+                        SkillId = skillGuid2
+                    });
+
+                    db.Ratings.Add(new RatingEntityModel
+                    {
+                        Id = ratingId3,
+                        Mark = 77,
+                        SkillId = skillGuid3
+                    });
+                }
+
+                if (!db.Feedbacks.Any())
+                {
+                    db.Feedbacks.Add(new FeedbackEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        UserId = db.Users.Where(u=>u.Email== "mentor@gmail.com").FirstOrDefault().Id,
+                        RatingId = ratingId1,
+                        CreateDate = DateTime.Now,
+                        UserReview = "Chay, indiyskiy chay",
+                        CandidateProccesId = candidateProcessId1
+                    });
+                    db.Feedbacks.Add(new FeedbackEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        UserId = db.Users.Where(u => u.Email == "interviewer@gmail.com").FirstOrDefault().Id,
+                        RatingId = ratingId2,
+                        CreateDate = DateTime.Now,
+                        UserReview = "Slon, indiyskiy slon",
+                        CandidateProccesId = candidateProcessId1
+                    });
+                    db.Feedbacks.Add(new FeedbackEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        UserId = db.Users.Where(u => u.Email == "recruiter@gmail.com").FirstOrDefault().Id,
+                        RatingId = ratingId3,
+                        CreateDate = DateTime.Now,
+                        UserReview = "Pod pivo poydet",
+                        CandidateProccesId = candidateProcessId1
+                    });
+                }
+                db.SaveChanges();
             }
         }
     }

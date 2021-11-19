@@ -10,7 +10,7 @@ namespace BusinessLogicLayer.DtoModels
     {
         public Guid Id { get; set; }
 
-        public string Status { get; set; }
+        public StatusDtoModel Status { get; set; }
         public string TestResult { get; set; }
         public DateTime CreateDate { get; set; }
 

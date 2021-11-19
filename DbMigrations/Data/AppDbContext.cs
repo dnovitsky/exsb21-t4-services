@@ -48,6 +48,8 @@ namespace DbMigrations.Data
         public DbSet<UserStackTechnologyEntityModel> UserStackTechnologies { get; set; }
         public DbSet<UserTeamEntityModel> UserTeams { get; set; }
         public DbSet<UserTechSkillEntityModel> UserTechSkills { get; set; }
+        public DbSet<CalendarEventEntityModel> CalendarEvents { get; set; }
+        public DbSet<InterviewEventEntityModel> InterviewEvents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
