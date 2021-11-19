@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DbMigrations.EntityModels
 {
     public class CandidateSandboxEntityModel
     {
+        public CandidateSandboxEntityModel()
+        {
+            CandidateProcesses = new List<CandidateProccesEntityModel>();
+        }
+
         [Key]
         public Guid Id { get; set; }
 
@@ -26,9 +32,6 @@ namespace DbMigrations.EntityModels
         public Guid StackTechnologyId { get; set; }
         public virtual StackTechnologyEntityModel StackTechnology { get; set; }
 
-        [Required]
-        public Guid CandidateProcessId { get; set; }
-        public virtual CandidateProccesEntityModel CandidateProcess { get; set; }
 
         public string Motivation { get; set; }
 
@@ -44,5 +47,7 @@ namespace DbMigrations.EntityModels
         [Required]
         public Guid AvailabilityTypeId { get; set; }
         public virtual AvailabilityTypeEntityModel AvailabilityType { get; set; }
+
+        public virtual IList<CandidateProccesEntityModel> CandidateProcesses { get; set; }
     }
 }

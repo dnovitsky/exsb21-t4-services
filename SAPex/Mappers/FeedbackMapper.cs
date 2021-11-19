@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
 using BusinessLogicLayer.DtoModels;
-using BusinessLogicLayer.Mapping.BaseMappings;
 using DbMigrations.EntityModels;
+using SAPex.Mappers.Base;
+using SAPex.Models;
 
-namespace BusinessLogicLayer.Mapping
+namespace SAPex.Mappers
 {
-    internal class FeedbackProfile : BaseProfile<FeedbackDtoModel, FeedbackEntityModel>
+    public class FeedbackMapper : BaseMapper<FeedbackDtoModel, FeedbackViewModel>
     {
-
-        protected override Mapper DtoModelToEntityModelMapper()
+        protected override Mapper ViewToDtoMapper()
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<FeedbackDtoModel, FeedbackEntityModel>()
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<FeedbackViewModel, FeedbackDtoModel>()
                     .ForMember(x => x.UserId, y => y.MapFrom(x => x.UserId))
                     .ForMember(x => x.RatingId, y => y.MapFrom(x => x.RatingId))
                     .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate))
@@ -20,9 +20,9 @@ namespace BusinessLogicLayer.Mapping
             return new Mapper(config);
         }
 
-        protected override Mapper EntityModelToDtoModelMapper()
+        protected override Mapper DtoToViewMapper()
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<FeedbackEntityModel, FeedbackDtoModel>()
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<FeedbackDtoModel, FeedbackViewModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.UserId, y => y.MapFrom(x => x.UserId))
                     .ForMember(x => x.RatingId, y => y.MapFrom(x => x.RatingId))
