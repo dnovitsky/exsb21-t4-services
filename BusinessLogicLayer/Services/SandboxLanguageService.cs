@@ -66,10 +66,10 @@ namespace BusinessLogicLayer.Services
                 foreach (var id in languageIds)
                 {
                     SandboxLanguageDtoModel item = new SandboxLanguageDtoModel { SandboxId = sandboxId, LanguageId = id };
-                    
+                    sandboxLanguageDtoModels.Add(item);
                 }
 
-                await unitOfWork.SandboxLanguages.Update()
+                await unitOfWork.SandboxLanguages.UpdateBySandboxId(profile.mapListFromDtoToEntity(sandboxLanguageDtoModels));
                 await unitOfWork.SaveAsync();
 
                 return true;
@@ -80,16 +80,5 @@ namespace BusinessLogicLayer.Services
             }
         }
 
-
-
-
-
-
-        // public void UpdateSandboxLanguage(LanguageDtoModel languageDto)
-        // {
-        //    LanguageEntityModel languageEM = profile.mapToEM(languageDto);
-        //    unitOfWork.Languages.Update(languageEM);
-        //    unitOfWork.SaveAsync();
-        // }
     }
 }

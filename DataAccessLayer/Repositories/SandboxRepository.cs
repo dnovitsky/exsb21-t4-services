@@ -51,68 +51,68 @@ namespace DataAccessLayer.Repositories
 
             PagedList<SandboxEntityModel> pagedList = new PagedList<SandboxEntityModel>();
 
-            pagedList.PageList = filterParametrs.SearchingDateField switch
+            pagedList.PageList = filterParametrs.SearchingDateField.ToLower() switch
             {
                 CreateDate => await Task.Run(() => db.Sandboxes
                 .Where(s => s.Name.Contains(filterParametrs.FirstSearchingTextString) &&
                 s.Description.Contains(filterParametrs.SecondSearchingTextString) &&
-                s.CreateDate.ToString().Contains(filterParametrs.SearchingDateString))),
+                s.CreateDate.ToString().Contains(filterParametrs.SearchingDateString)).AsEnumerable()),
 
                 StartDate => await Task.Run(() => db.Sandboxes
                 .Where(s => s.Name.Contains(filterParametrs.FirstSearchingTextString) &&
                 s.Description.Contains(filterParametrs.SecondSearchingTextString) &&
-                s.StartDate.ToString().Contains(filterParametrs.SearchingDateString))),
+                s.StartDate.ToString().Contains(filterParametrs.SearchingDateString)).AsEnumerable()),
 
                 StartRegistration => await Task.Run(() => db.Sandboxes
                 .Where(s => s.Name.Contains(filterParametrs.FirstSearchingTextString) &&
                 s.Description.Contains(filterParametrs.SecondSearchingTextString) &&
-                s.StartRegistration.ToString().Contains(filterParametrs.SearchingDateString))),
+                s.StartRegistration.ToString().Contains(filterParametrs.SearchingDateString)).AsEnumerable()),
 
                 _ => await Task.Run(() => db.Sandboxes
                 .Where(s => s.Name.Contains(filterParametrs.FirstSearchingTextString) &&
-                s.Description.Contains(filterParametrs.SecondSearchingTextString))),
+                s.Description.Contains(filterParametrs.SecondSearchingTextString)).AsEnumerable()),
             };
 
-            if( filterParametrs.SearchingStatus != SearchStatus.None)
+            if ( filterParametrs.SearchingStatus != SearchStatus.None)
             { 
-                pagedList.PageList = pagedList.PageList.Where(s => s.Status == (StatusName)filterParametrs.SearchingStatus);
+                pagedList.PageList = pagedList.PageList.Where(s => s.Status == (StatusName)filterParametrs.SearchingStatus).ToList();
             }
 
             pagedList.PageList = parametrs.SortField.ToLower() switch
             {
                 Name => (SortingType == 0 ?
-                pagedList.PageList.OrderBy(s => s.Name).ToList() :
-                pagedList.PageList.OrderByDescending(s => s.Name).ToList()),
+                pagedList.PageList.OrderBy(s => s.Name).AsEnumerable() :
+                pagedList.PageList.OrderByDescending(s => s.Name).AsEnumerable()),
 
                 MaxCandidates => (SortingType == 0 ?
-                pagedList.PageList.OrderBy(s => s.MaxCandidates).ToList() :
-                pagedList.PageList.OrderByDescending(s => s.MaxCandidates).ToList()),
+                pagedList.PageList.OrderBy(s => s.MaxCandidates).AsEnumerable() :
+                pagedList.PageList.OrderByDescending(s => s.MaxCandidates).AsEnumerable()),
 
                 CreateDate => (SortingType == 0 ?
-                pagedList.PageList.OrderBy(s => s.CreateDate).ToList() :
-                pagedList.PageList.OrderByDescending(s => s.CreateDate).ToList()),
+                pagedList.PageList.OrderBy(s => s.CreateDate).AsEnumerable() :
+                pagedList.PageList.OrderByDescending(s => s.CreateDate).AsEnumerable()),
 
                 StartDate => (SortingType == 0 ?
-                pagedList.PageList.OrderBy(s => s.StartDate).ToList() :
-                pagedList.PageList.OrderByDescending(s => s.StartDate).ToList()),
+                pagedList.PageList.OrderBy(s => s.StartDate).AsEnumerable() :
+                pagedList.PageList.OrderByDescending(s => s.StartDate).AsEnumerable()),
 
                 EndDate => (SortingType == 0 ?
-                pagedList.PageList.OrderBy(s => s.EndDate).ToList() :
-                pagedList.PageList.OrderByDescending(s => s.EndDate).ToList()),
+                pagedList.PageList.OrderBy(s => s.EndDate).AsEnumerable() :
+                pagedList.PageList.OrderByDescending(s => s.EndDate).AsEnumerable()),
 
                 StartRegistration => (SortingType == 0 ?
-                pagedList.PageList.OrderBy(s => s.StartRegistration).ToList() :
-                pagedList.PageList.OrderByDescending(s => s.StartRegistration).ToList()),
+                pagedList.PageList.OrderBy(s => s.StartRegistration).AsEnumerable() :
+                pagedList.PageList.OrderByDescending(s => s.StartRegistration).AsEnumerable()),
 
                 Endregistration => (SortingType == 0 ?
-                pagedList.PageList.OrderBy(s => s.EndRegistration).ToList() :
-                pagedList.PageList.OrderByDescending(s => s.EndRegistration).ToList()),
+                pagedList.PageList.OrderBy(s => s.EndRegistration).AsEnumerable() :
+                pagedList.PageList.OrderByDescending(s => s.EndRegistration).AsEnumerable()),
 
                 Status => (SortingType == 0 ?
-                pagedList.PageList.OrderBy(s => s.Status).ToList() :
-                pagedList.PageList.OrderByDescending(s => s.Status).ToList()),
+                pagedList.PageList.OrderBy(s => s.Status).AsEnumerable() :
+                pagedList.PageList.OrderByDescending(s => s.Status).AsEnumerable()),
 
-                _ => pagedList.PageList.OrderBy(s => s.CreateDate).ToList(),
+                _ => pagedList.PageList.OrderBy(s => s.CreateDate).AsEnumerable(),
             };
 
             pagedList.PageList = pagedList.PageList.Skip((pageNumber - 1) * pageSize).Take(pageSize);
@@ -127,9 +127,9 @@ namespace DataAccessLayer.Repositories
             await db.Sandboxes.AddAsync(item);
         }
 
-        public void Update(SandboxEntityModel item)
+        public async Task Update(SandboxEntityModel item)
         {
-            db.Sandboxes.Update(item);
+           // await Task.(()db.Sandboxes.Update(item);
         }
         public void Delete(Guid id)
         {

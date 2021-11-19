@@ -94,10 +94,13 @@ namespace SAPex.Controllers
 
             foreach (var item in dtoPageListModels.PageList)
             {
-                IEnumerable<StackTechnologyDtoModel> stackTechnologyDtoModels = await _stackTechnologyService.GetStackTechnologiesBySandboxIdAsync(item.Id);
-                IEnumerable<LanguageDtoModel> languageDtoModels = await _languageService.GetLanguagesBySandboxIdAsync(item.Id);
+                if (item != null)
+                {
+                    IEnumerable<StackTechnologyDtoModel> stackTechnologyDtoModels = await _stackTechnologyService.GetStackTechnologiesBySandboxIdAsync(item.Id);
+                    IEnumerable<LanguageDtoModel> languageDtoModels = await _languageService.GetLanguagesBySandboxIdAsync(item.Id);
 
-                viewModels.Add(_mapper.MapSbStackLgFromDtoToView(item, languageDtoModels, stackTechnologyDtoModels));
+                    viewModels.Add(_mapper.MapSbStackLgFromDtoToView(item, languageDtoModels, stackTechnologyDtoModels));
+                }
             }
 
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(dtoPageListModels.TotalPages));
@@ -118,39 +121,26 @@ namespace SAPex.Controllers
             return await Task.FromResult(Ok(sandboxId));
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update([FromRoute] Guid id,
-            [FromBody] SandboxFieldsViewModel sandboxFields,
-            [FromQuery] IEnumerable<Guid> languageIds,
-            [FromQuery] IEnumerable<Guid> stackTechnologyIds)
-        {
-            SandboxDtoModel sandboxDtoModel = await _sandboxService.FindSandboxByIdAsync(id);
+        // [HttpPut]
+        // public async Task<IActionResult> Update(
+        //    [FromBody] SandboxFieldsViewModel sandboxFields,
+        //    [FromQuery] IEnumerable<Guid> languageIds,
+        //    [FromQuery] IEnumerable<Guid> stackTechnologyIds)
+        // {
+        //    // SandboxDtoModel sandboxDtoModel = await _sandboxService.FindSandboxByIdAsync(id);
 
-            if (sandboxDtoModel == null)
-            {
-                return await Task.FromResult(NotFound());
-            }
+        // // if (sandboxDtoModel == null)
+        //    // {
+        //    //    return await Task.FromResult(NotFound());
+        //    // }
 
-            _sandboxService.UpdateSandbox(_mapper.MapSbFromViewToDto(sandboxFields));
+        // _sandboxService.UpdateSandbox(_mapper.MapSbFromViewToDto(sandboxFields));
 
-            await _sandboxLanguageService.UpdateSandboxLanguagesListByIdsAsync();
-            await _sandboxStackTechnologyService.UpdateStackTechnologyListByIdsAsync();
+        // // await _sandboxLanguageService.UpdateSandboxLanguagesListByIdsAsync(sandboxId, languageIds);
 
-            // await _sandboxLanguageService.AddSandboxLanguagesListByIdsAsync(sandboxId, languageIds);
-            // await _sandboxStackTechnologyService.AddSandboxStackTechnologyListByIdsAsync(sandboxId, stackTechnologyIds);
+        // // await _sandboxStackTechnologyService.UpdateStackTechnologyListByIdsAsync(sandboxId, stackTechnologyIds);
 
-            // await _sandboxLanguageService.Update
-            // await _sandboxStackTechnologyService.
-
-            return await Task.FromResult(Ok(id));
-
-            // ValidationResult validationResult = new SandboxValidator().Validate(requestData);
-            // if (!validationResult.IsValid)
-            // {
-            //    return await Task.FromResult(BadRequest());
-            // }
-            // _service.UpdateSandbox(_mapper.MapSbFromViewToDto(requestData));
-            // return await Task.FromResult(Ok());
-        }
+        // return await Task.FromResult(Ok());
+        // }
     }
 }

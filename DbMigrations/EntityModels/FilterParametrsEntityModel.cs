@@ -14,7 +14,7 @@ namespace DbMigrations.EntityModels
             FirstSearchingTextString = string.Empty;
             SecondSearchingTextField = string.Empty;
             SecondSearchingTextString = string.Empty;
-            SearchingDateField = string.Empty;
+            SearchingDateField = "no";// string.Empty;
             SearchingDateString = string.Empty;
             SearchingStatus = SearchStatus.None;
         }
