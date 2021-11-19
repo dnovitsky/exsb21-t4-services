@@ -11,6 +11,11 @@ namespace BusinessLogicLayer.Mapping
 {
     public class LocationProfile
     {
+        public LocationEntityModel mapToEM(string locationName)
+        {
+            return this.mapToEM(new LocationDtoModel(locationName));
+        }
+
         public LocationEntityModel mapToEM(LocationDtoModel locationDto)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<LocationDtoModel, LocationEntityModel>()

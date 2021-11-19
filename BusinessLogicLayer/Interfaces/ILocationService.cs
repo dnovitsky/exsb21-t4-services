@@ -11,9 +11,10 @@ namespace BusinessLogicLayer.Interfaces
     public interface ILocationService : IDisposable
     {
         Task<bool> AddLocationAsync(LocationDtoModel languageDto);
-        Task<IEnumerable<LocationDtoModel>> GetAllLocationAsync();
-        Task<IEnumerable<LocationDtoModel>> FindLocationAsync(Expression<Func<LocationEntityModel, bool>> expression);
-        Task<IEnumerable<LocationDtoModel>> GetLocationBySandboxIdAsync(Guid id);
+        Task<Nullable<Guid>> AddLocationByNameAsync(string locationName);
+        Task<IEnumerable<LocationDtoModel>> GetAllLocationsAsync();
+        Task<IEnumerable<LocationDtoModel>> FindLocationsAsync(Expression<Func<LocationEntityModel, bool>> expression);
+        // Task<IEnumerable<LocationDtoModel>> GetLocationBySandboxIdAsync(Guid id);
         void UpdateLocation(LocationDtoModel languageDto);
         Task<LocationDtoModel> FindLocationByIdAsync(Guid id);
         void DeleteLocation(Guid id);

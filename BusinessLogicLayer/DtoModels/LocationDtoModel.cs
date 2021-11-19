@@ -9,5 +9,13 @@ namespace BusinessLogicLayer.DtoModels
 {
     public class LocationDtoModel: ItemDtoModel
     {
+        public LocationDtoModel()
+        {
+        }
+        public LocationDtoModel(string locationName)
+        {
+            this.Name = locationName;
+            this.Id = Guid.NewGuid();
+        }
     }
 }

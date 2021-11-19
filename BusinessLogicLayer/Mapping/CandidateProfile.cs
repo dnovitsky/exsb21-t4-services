@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLogicLayer.DtoModels;
+using BusinessLogicLayer.Interfaces;
+using DataAccessLayer.Service;
 using DbMigrations.EntityModels;
 using System;
 using System.Collections.Generic;
@@ -14,20 +16,36 @@ namespace BusinessLogicLayer.Mapping
         private readonly CandidateSandboxProfile candidateSandboxProfile = new CandidateSandboxProfile();
         private readonly CandidateTechSkillProfile candidateTechSkillProfile = new CandidateTechSkillProfile();
         private readonly CandidateLanguagesProfile candidateLanguagesProfile = new CandidateLanguagesProfile();
+        private readonly LocationProfile locationProfile = new LocationProfile();
+
+        private IUnitOfWork _unitOfWork;
+
+        public CandidateProfile(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
 
         public CandidateEntityModel mapNewCandidateToEM(CreateCandidateDtoModel candidateDto)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<CreateCandidateDtoModel, CandidateEntityModel>()
-                    .ForMember(x => x.Id, y => y.MapFrom(x => Guid.NewGuid()))
+            Func<Guid> f0 = this._getId;
+            Func<string, string> f1 = this._getName;
+            Func<string, string> f2 = this._getSurname;
+            Func<string, string> f3 = this._getEmail;
+            Func<string, string> f4 = this._getSkype;
+            Func<string, string> f5 = this._getPhone;
 
-                    .ForMember(x => x.Name, y => y.MapFrom(x => x.Name))
-                    .ForMember(x => x.Surname, y => y.MapFrom(x => x.Surname))
-                    .ForMember(x => x.Email, y => y.MapFrom(x => x.Email))
-                    .ForMember(x => x.Location, y => y.MapFrom(x => x.Location))
-                    .ForMember(x => x.Skype, y => y.MapFrom(x => x.Skype))
-                    .ForMember(x => x.Phone, y => y.MapFrom(x => x.PhoneNumber))
-                    .ForMember(x => x.ProfessionaCertificates, y => y.MapFrom(x => x.ProfessionaCertificates))
-                    .ForMember(x => x.AdditionalSkills, y => y.MapFrom(x => x.AdditionalSkills)));
+            Func<string, Guid> fL = this.getLocationId;
+
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<CreateCandidateDtoModel, CandidateEntityModel>()
+                    .ForMember(dest => dest.Id, opt => opt.MapFrom(x => f0()))
+                    .ForMember(dest => dest.Name, opt => opt.MapFrom(x => f1(x.Name)))
+                    .ForMember(dest => dest.Surname, opt => opt.MapFrom(x => f2(x.Surname)))
+                    .ForMember(dest => dest.Email, opt => opt.MapFrom(x => f3(x.Email)))
+                    .ForMember(dest => dest.Skype, opt => opt.MapFrom(x => f4(x.Skype)))
+                    .ForMember(dest => dest.Phone, opt => opt.MapFrom(x => f5(x.PhoneNumber)))
+                    .ForMember(dest => dest.LocationId, opt => opt.MapFrom(x => fL(x.Location)))
+                    .ForMember(dest => dest.ProfessionaCertificates, opt => opt.MapFrom(x => x.ProfessionaCertificates))
+                    .ForMember(dest => dest.AdditionalSkills, opt => opt.MapFrom(x => x.AdditionalSkills)));
             var mapper = new Mapper(config);
 
             CandidateEntityModel candidateEM = mapper.Map<CreateCandidateDtoModel, CandidateEntityModel>(candidateDto);
@@ -154,6 +172,42 @@ namespace BusinessLogicLayer.Mapping
                 candidateDtoList.Add(candidateDto);
             }
             return candidateDtoList;
+        }
+        //-------------------------------------------------------------
+        private Guid getLocationId(string locationName)
+        {
+            var t = _unitOfWork.Locations.CreateAsync(locationProfile.mapToEM(locationName)).Id;
+            return Guid.Parse("BE3D2A9B-8DB7-485D-8AF2-C607109EB210");
+        }
+
+        private Guid _getId()
+        {
+            return Guid.NewGuid();
+        }
+
+        private string _getName(string a)
+        {
+            return a;
+        }
+
+        private string _getSurname(string a)
+        {
+            return a;
+        }
+
+        private string _getEmail(string a)
+        {
+            return a;
+        }
+
+        private string _getSkype(string a)
+        {
+            return a;
+        }
+
+        private string _getPhone(string a)
+        {
+            return a;
         }
     }
 }

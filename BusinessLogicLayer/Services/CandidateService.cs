@@ -14,12 +14,14 @@ namespace BusinessLogicLayer.Services
 {
     public class CandidateService : ICandidateService
     {
-        protected readonly CandidateProfile profile = new CandidateProfile();
+        protected readonly CandidateProfile profile;
+        protected readonly LocationProfile locationProfile = new LocationProfile();
         private readonly IUnitOfWork unitOfWork;
 
         public CandidateService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
+            this.profile = new CandidateProfile(unitOfWork);
         }
         public async Task<bool> AddCandidateAsync(CreateCandidateDtoModel candidateDto)
         {

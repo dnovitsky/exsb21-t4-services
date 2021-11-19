@@ -13,7 +13,7 @@ using DataAccessLayer.Service;
 
 namespace BusinessLogicLayer.Services
 {
-    public class LocationService
+    public class LocationService: ILocationService
     {
         protected readonly LocationProfile profile;
         private readonly IUnitOfWork unitOfWork;
@@ -23,12 +23,28 @@ namespace BusinessLogicLayer.Services
             this.unitOfWork = unitOfWork;
             profile = new LocationProfile();
         }
-        public async Task<bool> AddLocationAsync(LocationDtoModel languageDto)
+
+        public async Task<Nullable<Guid>> AddLocationByNameAsync(string locationName)
         {
             try
             {
-                LocationEntityModel languageEM = profile.mapToEM(languageDto);
-                await unitOfWork.Locations.CreateAsync(languageEM);
+                LocationEntityModel locationEM = profile.mapToEM(new LocationDtoModel(locationName));
+                var location = await unitOfWork.Locations.CreateAsync(locationEM);
+                await unitOfWork.SaveAsync();
+                return location.Id;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<bool> AddLocationAsync(LocationDtoModel locationDto)
+        {
+            try
+            {
+                LocationEntityModel locationEM = profile.mapToEM(locationDto);
+                await unitOfWork.Locations.CreateAsync(locationEM);
                 await unitOfWork.SaveAsync();
                 return true;
             }
@@ -45,27 +61,27 @@ namespace BusinessLogicLayer.Services
 
         public async Task<LocationDtoModel> FindLocationByIdAsync(Guid id)
         {
-            LocationEntityModel languageEM = await unitOfWork.Locations.FindByIdAsync(id);
-            LocationDtoModel languageDto = profile.mapToDto(languageEM);
-            return languageDto;
+            LocationEntityModel locationEM = await unitOfWork.Locations.FindByIdAsync(id);
+            LocationDtoModel locationDto = profile.mapToDto(locationEM);
+            return locationDto;
         }
 
         public async Task<IEnumerable<LocationDtoModel>> FindLocationsAsync(Expression<Func<LocationEntityModel, bool>> expression)
         {
-            IEnumerable<LocationEntityModel> languagesEM = await unitOfWork.Locations.FindByConditionAsync(expression);
-            return profile.mapListToDto(languagesEM);
+            IEnumerable<LocationEntityModel> locationEM = await unitOfWork.Locations.FindByConditionAsync(expression);
+            return profile.mapListToDto(locationEM);
         }
 
         public async Task<IEnumerable<LocationDtoModel>> GetAllLocationsAsync()
         {
-            IEnumerable<LocationEntityModel> languagesEM = await Task.Run(() => unitOfWork.Locations.GetAllAsync());
-            return profile.mapListToDto(languagesEM);
+            IEnumerable<LocationEntityModel> locations = await unitOfWork.Locations.GetAllAsync();
+            return profile.mapListToDto(locations);
         }
 
-        public void UpdateLocation(LocationDtoModel languageDto)
+        public void UpdateLocation(LocationDtoModel locationDto)
         {
-            LocationEntityModel languageEM = profile.mapToEM(languageDto);
-            unitOfWork.Locations.Update(languageEM);
+            LocationEntityModel locationEM = profile.mapToEM(locationDto);
+            unitOfWork.Locations.Update(locationEM);
             unitOfWork.SaveAsync();
         }
 
