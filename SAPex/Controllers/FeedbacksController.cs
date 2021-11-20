@@ -45,6 +45,13 @@ namespace SAPex.Controllers
             return await Task.FromResult(Ok(feedbacksVM));
         }
 
+        [HttpGet("currentUserAndProcces")]
+        public async Task<IActionResult> GetAllFeedbacksInCandidateSandbox(Guid userId, Guid candidateProccesId)
+        {
+            IEnumerable<FeedbackViewModel> feedbacksVM = _mapper.ListDtoToListView(await _feedbackService.GetFeedbacksByUserIdAndCandidatePrId(userId, candidateProccesId));
+            return await Task.FromResult(Ok(feedbacksVM));
+        }
+
         [HttpGet("feedback/{feedbackId}")]
         public async Task<IActionResult> GetFeedbackById(Guid feedbackId)
         {
@@ -69,6 +76,43 @@ namespace SAPex.Controllers
             FeedbackDtoModel feedbackDto = _mapper.ViewToDto(feedbackVM);
             Guid feedbackId = await _feedbackService.CreateFeedbackAsync(feedbackDto);
             return await Task.FromResult(Ok(feedbackId));
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(Guid id, string userReview)
+        {
+            FeedbackDtoModel feedbackDtoCheck = await _feedbackService.GetFeedbackByIdAsync(id);
+
+            if (feedbackDtoCheck == null)
+            {
+                return await Task.FromResult(NotFound());
+            }
+
+            // ValidationResult validationResult = new FeedbackValidator().Validate(feedbackVM);
+            // if (!validationResult.IsValid)
+            // {
+            //    return await Task.FromResult(BadRequest());
+            // }
+
+            FeedbackViewModel newFeedbackVM = new FeedbackViewModel
+            {
+                Id = id,
+                UserId = feedbackDtoCheck.UserId,
+                RatingId = feedbackDtoCheck.RatingId,
+                CreateDate = DateTime.Now,
+                UserReview = userReview,
+                CandidateProccesId = feedbackDtoCheck.CandidateProccesId,
+            };
+
+            FeedbackDtoModel feedbackDto = _mapper.ViewToDto(newFeedbackVM);
+            bool check = await _feedbackService.UpdateFeedback(feedbackDto);
+
+            if (check)
+            {
+                return await Task.FromResult(Ok($"Was Updated! Check by id: {id}"));
+            }
+
+            return await Task.FromResult(Ok("Doesn't update"));
         }
     }
 }

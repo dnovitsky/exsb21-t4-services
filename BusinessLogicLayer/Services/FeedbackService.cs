@@ -5,6 +5,7 @@ using DataAccessLayer.Service;
 using DbMigrations.EntityModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,8 @@ namespace BusinessLogicLayer.Services
     public class FeedbackService : IFeedbackService
     {
         private readonly IUnitOfWork unitOfWork;
-        private readonly FeedbackProfile profile = new FeedbackProfile();
+        private readonly UserProfile userProfile = new();
+        private readonly FeedbackProfile profile = new();
         private readonly CandidateProcessProfile processProfile = new();
 
         public FeedbackService(IUnitOfWork unitOfWork)
@@ -61,6 +63,31 @@ namespace BusinessLogicLayer.Services
             }
 
             return feedbacksDto;
+        }
+
+        public async Task<IEnumerable<FeedbackDtoModel>> GetFeedbacksByUserIdAndCandidatePrId(Guid userId, Guid candidateProccesId)
+        {
+            IEnumerable<FeedbackDtoModel> feedbacksDtoCandidateProcces = profile.mapListToDto(await unitOfWork.Feedbacks.FindByConditionAsync(f => f.CandidateProccesId == candidateProccesId));
+            IEnumerable<FeedbackDtoModel> feedbacksDto = feedbacksDtoCandidateProcces.Where(f => f.UserId == userId);
+            return feedbacksDto;
+        }
+
+        public async Task<bool> UpdateFeedback(FeedbackDtoModel feedbackDto)
+        {
+            try
+            {
+                FeedbackEntityModel feedbackEM = profile.mapToEM(feedbackDto);
+                feedbackEM.Rating = await unitOfWork.Ratings.FindByIdAsync(feedbackEM.RatingId);
+                feedbackEM.User = await unitOfWork.Users.FindByIdAsync(feedbackEM.UserId);
+                feedbackEM.CandidateProcces = await unitOfWork.CandidateProcceses.FindByIdAsync(feedbackEM.CandidateProccesId);
+                unitOfWork.Feedbacks.Update(feedbackEM);
+                await unitOfWork.SaveAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

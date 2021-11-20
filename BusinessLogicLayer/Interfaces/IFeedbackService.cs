@@ -13,11 +13,15 @@ namespace BusinessLogicLayer.Interfaces
         Task<Guid> CreateFeedbackAsync(FeedbackDtoModel feedbackDto); //+
 
         Task<FeedbackDtoModel> GetFeedbackByIdAsync(Guid feedbackId); //+
-        
+
+        Task<IEnumerable<FeedbackDtoModel>> GetFeedbacksByUserIdAndCandidatePrId(Guid userId, Guid candidateProccesId);
+
         Task<IEnumerable<FeedbackDtoModel>> GetAllFeedbacksInCandidateSandbox(Guid candidateSandboxId); //+
 
         Task<IEnumerable<FeedbackDtoModel>> GetFeedbacksOfUser(Guid userId);
 
         Task<IEnumerable<FeedbackDtoModel>> GetFeedbacksCandidateProcces(Guid candidateProccesId); //+
+
+        Task<bool> UpdateFeedback(FeedbackDtoModel feedbackDto);
     }
 }
