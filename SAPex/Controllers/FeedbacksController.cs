@@ -24,7 +24,7 @@ namespace SAPex.Controllers
             _feedbackService = service;
         }
 
-        [HttpGet("feedback/{feedbackId}")]
+        [HttpGet("{feedbackId}")]
         public async Task<IActionResult> GetFeedbackById(Guid feedbackId)
         {
             FeedbackViewModel feedbackVM = _mapper.DtoToView(await _feedbackService.GetFeedbackByIdAsync(feedbackId));
