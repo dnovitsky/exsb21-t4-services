@@ -24,34 +24,6 @@ namespace SAPex.Controllers
             _feedbackService = service;
         }
 
-        [HttpGet("candidateProcces/{candidateProccesId}")]
-        public async Task<IActionResult> GetFeedbackOfCurrentProcces(Guid candidateProccesId)
-        {
-            IEnumerable<FeedbackViewModel> feedbacksVM = _mapper.ListDtoToListView(await _feedbackService.GetFeedbacksCandidateProcces(candidateProccesId));
-            return await Task.FromResult(Ok(feedbacksVM));
-        }
-
-        [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetUserFeedbacks(Guid userId)
-        {
-            IEnumerable<FeedbackViewModel> feedbacksVM = _mapper.ListDtoToListView(await _feedbackService.GetFeedbacksOfUser(userId));
-            return await Task.FromResult(Ok(feedbacksVM));
-        }
-
-        [HttpGet("candidateSandbox/{candidateSandboxId}")]
-        public async Task<IActionResult> GetAllFeedbacksInCandidateSandbox(Guid candidateSandboxId)
-        {
-            IEnumerable<FeedbackViewModel> feedbacksVM = _mapper.ListDtoToListView(await _feedbackService.GetAllFeedbacksInCandidateSandbox(candidateSandboxId));
-            return await Task.FromResult(Ok(feedbacksVM));
-        }
-
-        [HttpGet("currentUserAndProcces")]
-        public async Task<IActionResult> GetAllFeedbacksInCandidateSandbox(Guid userId, Guid candidateProccesId)
-        {
-            IEnumerable<FeedbackViewModel> feedbacksVM = _mapper.ListDtoToListView(await _feedbackService.GetFeedbacksByUserIdAndCandidatePrId(userId, candidateProccesId));
-            return await Task.FromResult(Ok(feedbacksVM));
-        }
-
         [HttpGet("feedback/{feedbackId}")]
         public async Task<IActionResult> GetFeedbackById(Guid feedbackId)
         {

@@ -37,41 +37,6 @@ namespace BusinessLogicLayer.Services
             return profile.mapToDto(await unitOfWork.Feedbacks.FindByIdAsync(feedbackId));
         }
 
-        public async Task<IEnumerable<FeedbackDtoModel>> GetFeedbacksCandidateProcces(Guid candidateProccesId)
-        {
-            return profile.mapListToDto(await unitOfWork.Feedbacks.FindByConditionAsync(f=>f.CandidateProccesId == candidateProccesId));
-        }
-
-        public async Task<IEnumerable<FeedbackDtoModel>> GetFeedbacksOfUser(Guid userId)
-        {
-            return profile.mapListToDto(await unitOfWork.Feedbacks.FindByConditionAsync(f => f.UserId == userId));
-        }
-
-        public async Task<IEnumerable<FeedbackDtoModel>> GetAllFeedbacksInCandidateSandbox(Guid candidateSandboxId)
-        {
-            IEnumerable<CandidateProcessDtoModel> candidateProcessesDto = processProfile.mapListToDto(await unitOfWork.CandidateProcceses.FindByConditionAsync(s => s.CandidateSandboxId == candidateSandboxId));
-            IList<FeedbackDtoModel> feedbacksDto = new List<FeedbackDtoModel>();
-
-            foreach(var candidateProcces in candidateProcessesDto)
-            {
-                IEnumerable <FeedbackDtoModel> feedbackDtos= profile.mapListToDto(await unitOfWork.Feedbacks.FindByConditionAsync(f => f.CandidateProccesId == candidateProcces.Id));
-                
-                foreach(var feedback in feedbackDtos)
-                {
-                    feedbacksDto.Add(feedback);
-                }
-            }
-
-            return feedbacksDto;
-        }
-
-        public async Task<IEnumerable<FeedbackDtoModel>> GetFeedbacksByUserIdAndCandidatePrId(Guid userId, Guid candidateProccesId)
-        {
-            IEnumerable<FeedbackDtoModel> feedbacksDtoCandidateProcces = profile.mapListToDto(await unitOfWork.Feedbacks.FindByConditionAsync(f => f.CandidateProccesId == candidateProccesId));
-            IEnumerable<FeedbackDtoModel> feedbacksDto = feedbacksDtoCandidateProcces.Where(f => f.UserId == userId);
-            return feedbacksDto;
-        }
-
         public async Task<bool> UpdateFeedback(FeedbackDtoModel feedbackDto)
         {
             try
