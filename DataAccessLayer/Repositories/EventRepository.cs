@@ -5,9 +5,9 @@ using DbMigrations.EntityModels;
 
 namespace DataAccessLayer.Repositories
 {
-    public class CalendarEventRepository : Repository<CalendarEventEntityModel>, ICalendarEventRepository
+    public class EventRepository : Repository<EventEntityModel>, IEventRepository
     {
-        public CalendarEventRepository(AppDbContext context)
+        public EventRepository(AppDbContext context)
             : base(context)
         { }
     }

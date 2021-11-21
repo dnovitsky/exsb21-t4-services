@@ -45,8 +45,7 @@ namespace DataAccessLayer.Service
         private IUserTeamRepository userTeams;
         private IUserTechSkillRepository userTechSkills;
         private IUserRefreshTokenRepository userRefreshTokens;
-        private ICalendarEventRepository calendarEvents;
-        private IInterviewEventRepository interviewEvents;
+        private IEventRepository events;
 
         public UnitOfWork(AppDbContext context)
         {
@@ -448,26 +447,15 @@ namespace DataAccessLayer.Service
             }
         }
 
-        public ICalendarEventRepository CalendarEvents
+        public IEventRepository Events
         {
             get
             {
-                if (calendarEvents == null)
+                if (events == null)
                 {
-                    calendarEvents = new CalendarEventRepository(context);
+                    events = new EventRepository(context);
                 }
-                return calendarEvents;
-            }
-        }
-        public IInterviewEventRepository InterviewEvents
-        {
-            get
-            {
-                if (interviewEvents == null)
-                {
-                    interviewEvents = new InterviewEventRepository(context);
-                }
-                return interviewEvents;
+                return events;
             }
         }
 
