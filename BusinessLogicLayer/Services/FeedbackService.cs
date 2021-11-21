@@ -5,6 +5,7 @@ using DataAccessLayer.Service;
 using DbMigrations.EntityModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,8 @@ namespace BusinessLogicLayer.Services
     public class FeedbackService : IFeedbackService
     {
         private readonly IUnitOfWork unitOfWork;
-        private readonly FeedbackProfile profile = new FeedbackProfile();
+        private readonly UserProfile userProfile = new();
+        private readonly FeedbackProfile profile = new();
         private readonly CandidateProcessProfile processProfile = new();
 
         public FeedbackService(IUnitOfWork unitOfWork)
@@ -35,32 +37,22 @@ namespace BusinessLogicLayer.Services
             return profile.mapToDto(await unitOfWork.Feedbacks.FindByIdAsync(feedbackId));
         }
 
-        public async Task<IEnumerable<FeedbackDtoModel>> GetFeedbacksCandidateProcces(Guid candidateProccesId)
+        public async Task<bool> UpdateFeedback(FeedbackDtoModel feedbackDto)
         {
-            return profile.mapListToDto(await unitOfWork.Feedbacks.FindByConditionAsync(f=>f.CandidateProccesId == candidateProccesId));
-        }
-
-        public async Task<IEnumerable<FeedbackDtoModel>> GetFeedbacksOfUser(Guid userId)
-        {
-            return profile.mapListToDto(await unitOfWork.Feedbacks.FindByConditionAsync(f => f.UserId == userId));
-        }
-
-        public async Task<IEnumerable<FeedbackDtoModel>> GetAllFeedbacksInCandidateSandbox(Guid candidateSandboxId)
-        {
-            IEnumerable<CandidateProcessDtoModel> candidateProcessesDto = processProfile.mapListToDto(await unitOfWork.CandidateProcceses.FindByConditionAsync(s => s.CandidateSandboxId == candidateSandboxId));
-            IList<FeedbackDtoModel> feedbacksDto = new List<FeedbackDtoModel>();
-
-            foreach(var candidateProcces in candidateProcessesDto)
+            try
             {
-                IEnumerable <FeedbackDtoModel> feedbackDtos= profile.mapListToDto(await unitOfWork.Feedbacks.FindByConditionAsync(f => f.CandidateProccesId == candidateProcces.Id));
-                
-                foreach(var feedback in feedbackDtos)
-                {
-                    feedbacksDto.Add(feedback);
-                }
+                FeedbackEntityModel feedbackEM = profile.mapToEM(feedbackDto);
+                feedbackEM.Rating = await unitOfWork.Ratings.FindByIdAsync(feedbackEM.RatingId);
+                feedbackEM.User = await unitOfWork.Users.FindByIdAsync(feedbackEM.UserId);
+                feedbackEM.CandidateProcces = await unitOfWork.CandidateProcceses.FindByIdAsync(feedbackEM.CandidateProccesId);
+                unitOfWork.Feedbacks.Update(feedbackEM);
+                await unitOfWork.SaveAsync();
+                return true;
             }
-
-            return feedbacksDto;
+            catch
+            {
+                return false;
+            }
         }
     }
 }
