@@ -27,8 +27,8 @@ namespace SAPexAuthService.Services
 
         public async Task<TokenCredentialsModel> AuthenticateAsync(UserCredentialsModel credentials)
         {
-            var user = await _userService.FindByEmailAndPasswordAsync(credentials.Email, credentials.Password);
-            if (user == null)
+            var user = await _userService.FindByEmailAsync(credentials.Email);
+            if (user == null || !BCrypt.Net.BCrypt.Verify(credentials.Password,user.Password))
             {
                 return null;
             }
