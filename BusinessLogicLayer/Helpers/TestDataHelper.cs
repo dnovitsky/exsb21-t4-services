@@ -19,26 +19,42 @@ namespace BusinessLogicLayer.Helpers
             using (AppDbContext db = new AppDbContext(options))
             {
 
-                Guid idSb1 = Guid.NewGuid();
-                Guid idSb2 = Guid.Parse("F158D307-DAB4-44E4-A148-B4E3D94B8447");
-                Guid idSb3 = Guid.NewGuid();
-                Guid idSb4 = Guid.NewGuid();
-                Guid idSb5 = Guid.NewGuid();
-                Guid idSb6 = Guid.NewGuid();
-                Guid idSb7 = Guid.NewGuid();
-                Guid idSb8 = Guid.NewGuid();
+                Guid SandboxId1 = Guid.NewGuid();
+                Guid SandboxId2 = Guid.Parse("F158D307-DAB4-44E4-A148-B4E3D94B8447");
+                Guid SandboxId3 = Guid.NewGuid();
+                Guid SandboxId4 = Guid.NewGuid();
+                Guid SandboxId5 = Guid.NewGuid();
+                Guid SandboxId6 = Guid.NewGuid();
+                Guid SandboxId7 = Guid.NewGuid();
+                Guid SandboxId8 = Guid.NewGuid();
 
-                Guid idLg1 = Guid.Parse("4019D15B-37AD-4ABF-B5B3-2A57318608FE");
-                Guid idLg2 = Guid.NewGuid();
-                Guid idLg3 = Guid.Parse("D1A3C67B-DB05-4646-A9FE-9243DBD79489");
-                Guid idLg4 = Guid.NewGuid();
-                Guid idLg5 = Guid.NewGuid();
+                Guid LanguageId1 = Guid.Parse("4019D15B-37AD-4ABF-B5B3-2A57318608FE");
+                Guid LanguageId2 = Guid.NewGuid();
+                Guid LanguageId3 = Guid.Parse("D1A3C67B-DB05-4646-A9FE-9243DBD79489");
+                Guid LanguageId4 = Guid.NewGuid();
+                Guid LanguageId5 = Guid.NewGuid();
 
-                Guid idSt1 = Guid.NewGuid();
-                Guid idSt2 = Guid.NewGuid();
-                Guid idSt3 = Guid.Parse("D1D4E77B-B6D5-4B4D-9645-535C8B246189");
-                Guid idSt4 = Guid.NewGuid();
-                Guid idSt5 = Guid.NewGuid();
+                Guid StackTechnologyId1 = Guid.NewGuid();
+                Guid StackTechnologyId2 = Guid.NewGuid();
+                Guid StackTechnologyId3 = Guid.Parse("D1D4E77B-B6D5-4B4D-9645-535C8B246189");
+                Guid StackTechnologyId4 = Guid.NewGuid();
+                Guid StackTechnologyId5 = Guid.NewGuid();
+
+                Guid UserId1 = Guid.NewGuid();
+                Guid UserId2 = Guid.NewGuid();
+                Guid UserId3 = Guid.NewGuid();
+                Guid UserId4 = Guid.NewGuid();
+                Guid UserId5 = Guid.NewGuid();
+                Guid UserId6 = Guid.NewGuid();
+                Guid UserId7 = Guid.NewGuid();
+                Guid UserId8 = Guid.NewGuid();
+                Guid UserId9 = Guid.NewGuid();
+                Guid UserId10 = Guid.NewGuid();
+                Guid UserId11 = Guid.NewGuid();
+                Guid UserId12 = Guid.NewGuid();
+                Guid UserId13 = Guid.NewGuid();
+                Guid UserId14 = Guid.NewGuid();
+                Guid UserId15 = Guid.NewGuid();
 
                 Guid languageLevelGuid1 = Guid.NewGuid();
                 Guid languageLevelGuid2 = Guid.NewGuid();
@@ -57,11 +73,13 @@ namespace BusinessLogicLayer.Helpers
                 Guid availabilityType2 = Guid.NewGuid();
                 Guid availabilityType3 = Guid.Parse("276E9243-454C-48A0-A5D1-53558F0F80D0");
 
+                Guid UserFunctionalRoleId1 = Guid.NewGuid();
+
                 if (!db.Sandboxes.Any())
                 {
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
-                        Id = idSb1,
+                        Id = SandboxId1,
                         Name = ".Net & JS",
                         MaxCandidates = 10,
                         Description = "description .Net & JS",
@@ -74,7 +92,7 @@ namespace BusinessLogicLayer.Helpers
                     });;
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
-                        Id = idSb2,
+                        Id = SandboxId2,
                         Name = "Python",
                         MaxCandidates = 22,
                         Description = "description Python",
@@ -87,7 +105,7 @@ namespace BusinessLogicLayer.Helpers
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
-                        Id = idSb3,
+                        Id = SandboxId3,
                         Name = "PHP",
                         MaxCandidates = 33,
                         Description = "description PHP",
@@ -100,7 +118,7 @@ namespace BusinessLogicLayer.Helpers
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
-                        Id = idSb4,
+                        Id = SandboxId4,
                         Name = "C++",
                         MaxCandidates = 45,
                         Description = "description C++",
@@ -113,7 +131,7 @@ namespace BusinessLogicLayer.Helpers
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
-                        Id = idSb5,
+                        Id = SandboxId5,
                         Name = "QA",
                         MaxCandidates = 56,
                         Description = "description QA",
@@ -126,7 +144,7 @@ namespace BusinessLogicLayer.Helpers
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
-                        Id = idSb6,
+                        Id = SandboxId6,
                         Name = "BA",
                         MaxCandidates = 62,
                         Description = "description BA",
@@ -139,7 +157,7 @@ namespace BusinessLogicLayer.Helpers
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
-                        Id = idSb7,
+                        Id = SandboxId7,
                         Name = "Manager",
                         MaxCandidates = 77,
                         Description = "description Manager",
@@ -152,7 +170,7 @@ namespace BusinessLogicLayer.Helpers
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
-                        Id = idSb8,
+                        Id = SandboxId8,
                         Name = "Devops",
                         MaxCandidates = 81,
                         Description = "description Devops",
@@ -242,27 +260,27 @@ namespace BusinessLogicLayer.Helpers
                 {
                     db.Languages.Add(new LanguageEntityModel
                     {
-                        Id = idLg1,
+                        Id = LanguageId1,
                         Name = "English"
                     });
                     db.Languages.Add(new LanguageEntityModel
                     {
-                        Id = idLg2,
+                        Id = LanguageId2,
                         Name = "Russian"
                     });
                     db.Languages.Add(new LanguageEntityModel
                     {
-                        Id = idLg3,
+                        Id = LanguageId3,
                         Name = "Georgian"
                     });
                     db.Languages.Add(new LanguageEntityModel
                     {
-                        Id = idLg4,
+                        Id = LanguageId4,
                         Name = "Latvian"
                     });
                     db.Languages.Add(new LanguageEntityModel
                     {
-                        Id = idLg5,
+                        Id = LanguageId5,
                         Name = "Polish"
                     });
                 }
@@ -272,67 +290,179 @@ namespace BusinessLogicLayer.Helpers
                 {
                     db.StackTechnologies.Add(new StackTechnologyEntityModel
                     {
-                        Id = idSt1,
+                        Id = StackTechnologyId1,
                         Name = ".Net"
                     });
                     db.StackTechnologies.Add(new StackTechnologyEntityModel
                     {
-                        Id = idSt2,
+                        Id = StackTechnologyId2,
                         Name = "JS"
                     });
                     db.StackTechnologies.Add(new StackTechnologyEntityModel
                     {
-                        Id = idSt3,
+                        Id = StackTechnologyId3,
                         Name = "Java"
                     });
                     db.StackTechnologies.Add(new StackTechnologyEntityModel
                     {
-                        Id = idSt4,
+                        Id = StackTechnologyId4,
                         Name = "Devops"
                     });
                     db.StackTechnologies.Add(new StackTechnologyEntityModel
                     {
-                        Id = idSt5,
+                        Id = StackTechnologyId5,
                         Name = "Python"
+                    });
+                }
+                db.SaveChanges();
+
+                if (!db.Statuses.Any())
+                {
+                    db.Users.Add(new UserEntityModel
+                    {
+                        Id = UserId1,
+                        Name = "Jonh",
+                        Surname = "Connor",
+                        Email = "JohnConnor@gmail.com",
+                        Password = "123456",
+                        Location = "Gomel",
+                        Phone = "+998998756090",
+                        Skype = "Skype:username"
+                    });
+
+                    db.Users.Add(new UserEntityModel
+                    {
+                        Id = UserId2,
+                        Name = "Korben",
+                        Surname = "Dallas",
+                        Email = "Korben@gmail.com",
+                        Password = "123456",
+                        Location = "Mogilev",
+                        Phone = "+998998756090",
+                        Skype = "Skype:username"
+                    });
+
+                    db.Users.Add(new UserEntityModel
+                    {
+                        Id = UserId3,
+                        Name = "Forrest",
+                        Surname = "Gump",
+                        Email = "Forrest@gmail.com",
+                        Password = "123456",
+                        Location = "Vitebsk",
+                        Phone = "+998998756090",
+                        Skype = "Skype:username"
+                    });
+
+                    db.Users.Add(new UserEntityModel
+                    {
+                        Id = UserId4,
+                        Name = "Jeffrey",
+                        Surname = "Lebowski",
+                        Email = "Jeffrey@gmail.com",
+                        Password = "123456",
+                        Location = "Minsk",
+                        Phone = "+998998756090",
+                        Skype = "Skype:username"
+                    });
+
+                    db.Users.Add(new UserEntityModel
+                    {
+                        Id = UserId5,
+                        Name = "Elen",
+                        Surname = "Ripley",
+                        Email = "Elen@gmail.com",
+                        Password = "123456",
+                        Location = "Mogilev",
+                        Phone = "+998998756090",
+                        Skype = "Skype:username"
+                    });
+
+                    db.Users.Add(new UserEntityModel
+                    {
+                        Id = UserId6,
+                        Name = "John",
+                        Surname = "Mclaughlin",
+                        Email = "JohnMc@gmail.com",
+                        Password = "123456",
+                        Location = "Ukraine",
+                        Phone = "+998998756090",
+                        Skype = "Skype:username"
+                    });
+
+                    db.Users.Add(new UserEntityModel
+                    {
+                        Id = UserId7,
+                        Name = "Tyler",
+                        Surname = "Durden",
+                        Email = "Tyler@gmail.com",
+                        Password = "123456",
+                        Location = "Russia",
+                        Phone = "+998998756090",
+                        Skype = "Skype:username"
+                    });
+
+                    db.Users.Add(new UserEntityModel
+                    {
+                        Id = UserId8,
+                        Name = "Harry",
+                        Surname = "Potter",
+                        Email = "Harry@gmail.com",
+                        Password = "123456",
+                        Location = "Borisov",
+                        Phone = "+998998756090",
+                        Skype = "Skype:username"
+                    });
+
+                    db.Users.Add(new UserEntityModel
+                    {
+                        Id = UserId9,
+                        Name = "James",
+                        Surname = "Bond",
+                        Email = "James@gmail.com",
+                        Password = "123456",
+                        Location = "Ukraine",
+                        Phone = "+998998756090",
+                        Skype = "Skype:username"
                     });
                 }
                 db.SaveChanges();
 
                 if (!db.SandboxStackTechnologies.Any())
                 {
-                    db.Add(new SandboxStackTechnologyEntityModel
+                    db.SandboxStackTechnologies.Add(new SandboxStackTechnologyEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        SandboxId = idSb1,
-                        StackTechnologyId = idSt1
+                        SandboxId = SandboxId1,
+                        StackTechnologyId = StackTechnologyId1
                     });
 
-                    db.Add(new SandboxStackTechnologyEntityModel
+                    db.SandboxStackTechnologies.Add(new SandboxStackTechnologyEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        SandboxId = idSb1,
-                        StackTechnologyId = idSt2
+                        SandboxId = SandboxId1,
+                        StackTechnologyId = StackTechnologyId2
                     });
 
-                    db.Add(new SandboxStackTechnologyEntityModel
+                    db.SandboxStackTechnologies.Add(new SandboxStackTechnologyEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        SandboxId = idSb2,
-                        StackTechnologyId = idSt2
+                        SandboxId = SandboxId2,
+                        StackTechnologyId = StackTechnologyId2
                     });
 
-                    db.Add(new SandboxStackTechnologyEntityModel
+                    db.SandboxStackTechnologies.Add(new SandboxStackTechnologyEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        SandboxId = idSb2,
-                        StackTechnologyId = idSt3
+                        SandboxId = SandboxId2,
+                        StackTechnologyId = StackTechnologyId3
                     });
 
-                    db.Add(new SandboxStackTechnologyEntityModel
+                    db.SandboxStackTechnologies.Add(new SandboxStackTechnologyEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        SandboxId = idSb3,
-                        StackTechnologyId = idSt4
+                        SandboxId = SandboxId3,
+                        StackTechnologyId = StackTechnologyId4
                     });
 
                 }
@@ -340,46 +470,180 @@ namespace BusinessLogicLayer.Helpers
 
                 if (!db.SandboxLanguages.Any())
                 {
-                    db.Add(new SandboxLanguageEntityModel
+                    db.SandboxLanguages.Add(new SandboxLanguageEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        SandboxId = idSb1,
-                        LanguageId = idLg1
+                        SandboxId = SandboxId1,
+                        LanguageId = LanguageId1
                     });
 
-                    db.Add(new SandboxLanguageEntityModel
+                    db.SandboxLanguages.Add(new SandboxLanguageEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        SandboxId = idSb1,
-                        LanguageId = idLg2
+                        SandboxId = SandboxId1,
+                        LanguageId = LanguageId2
                     });
 
-                    db.Add(new SandboxLanguageEntityModel
+                    db.SandboxLanguages.Add(new SandboxLanguageEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        SandboxId = idSb2,
-                        LanguageId = idLg1
+                        SandboxId = SandboxId2,
+                        LanguageId = LanguageId1
                     });
 
-                    db.Add(new SandboxLanguageEntityModel
+                    db.SandboxLanguages.Add(new SandboxLanguageEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        SandboxId = idSb2,
-                        LanguageId = idLg3
+                        SandboxId = SandboxId2,
+                        LanguageId = LanguageId3
                     });
 
-                    db.Add(new SandboxLanguageEntityModel
+                    db.SandboxLanguages.Add(new SandboxLanguageEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        SandboxId = idSb3,
-                        LanguageId = idLg1
+                        SandboxId = SandboxId3,
+                        LanguageId = LanguageId1
                     });
 
-                    db.Add(new SandboxLanguageEntityModel
+                    db.SandboxLanguages.Add(new SandboxLanguageEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        SandboxId = idSb3,
-                        LanguageId = idLg4
+                        SandboxId = SandboxId3,
+                        LanguageId = LanguageId4
+                    });
+                }
+                db.SaveChanges();
+
+                if (!db.UserSandBoxes.Any())
+                {
+                    db.UserSandBoxes.Add(new UserSandBoxEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId1,
+                        SandBoxId = SandboxId1,
+                    });
+
+                    db.UserSandBoxes.Add(new UserSandBoxEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId2,
+                        SandBoxId = SandboxId1,
+                    });
+
+                    db.UserSandBoxes.Add(new UserSandBoxEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId3,
+                        SandBoxId = SandboxId1,
+                    });
+
+                    db.UserSandBoxes.Add(new UserSandBoxEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId4,
+                        SandBoxId = SandboxId1,
+                    });
+
+                    db.UserSandBoxes.Add(new UserSandBoxEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId5,
+                        SandBoxId = SandboxId2,
+                    });
+
+                    db.UserSandBoxes.Add(new UserSandBoxEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId6,
+                        SandBoxId = SandboxId2,
+                    });
+
+                    db.UserSandBoxes.Add(new UserSandBoxEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId7,
+                        SandBoxId = SandboxId2,
+                    });
+
+                    db.UserSandBoxes.Add(new UserSandBoxEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId8,
+                        SandBoxId = SandboxId3,
+                    });
+
+                    db.UserSandBoxes.Add(new UserSandBoxEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId9,
+                        SandBoxId = SandboxId3,
+                    });
+                }
+                db.SaveChanges();
+
+                if (!db.Statuses.Any())
+                {
+                    db.UserFunctionalRoles.Add(new UserFunctionalRoleEntityModel
+                    {
+                        Id = UserFunctionalRoleId1,
+                        UserId = UserId1,
+                        FunctionalRoleId = db.FunctionalRoles.Where(x => x.Name == "Mentor").FirstOrDefault().Id,
+                    });
+
+                    db.UserFunctionalRoles.Add(new UserFunctionalRoleEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId2,
+                        FunctionalRoleId = db.FunctionalRoles.Where(x => x.Name == "Interviewer").FirstOrDefault().Id,
+                    });
+
+                    db.UserFunctionalRoles.Add(new UserFunctionalRoleEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId3,
+                        FunctionalRoleId = db.FunctionalRoles.Where(x => x.Name == "Recruiter").FirstOrDefault().Id,
+                    });
+
+                    db.UserFunctionalRoles.Add(new UserFunctionalRoleEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId4,
+                        FunctionalRoleId = db.FunctionalRoles.Where(x => x.Name == "Mentor").FirstOrDefault().Id,
+                    });
+
+                    db.UserFunctionalRoles.Add(new UserFunctionalRoleEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId5,
+                        FunctionalRoleId = db.FunctionalRoles.Where(x => x.Name == "Interviewer").FirstOrDefault().Id,
+                    });
+
+                    db.UserFunctionalRoles.Add(new UserFunctionalRoleEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId6,
+                        FunctionalRoleId = db.FunctionalRoles.Where(x => x.Name == "Recruiter").FirstOrDefault().Id,
+                    });
+
+                    db.UserFunctionalRoles.Add(new UserFunctionalRoleEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId7,
+                        FunctionalRoleId = db.FunctionalRoles.Where(x => x.Name == "Mentor").FirstOrDefault().Id,
+                    });
+
+                    db.UserFunctionalRoles.Add(new UserFunctionalRoleEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId8,
+                        FunctionalRoleId = db.FunctionalRoles.Where(x => x.Name == "Interviewer").FirstOrDefault().Id,
+                    });
+
+                    db.UserFunctionalRoles.Add(new UserFunctionalRoleEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId9,
+                        FunctionalRoleId = db.FunctionalRoles.Where(x => x.Name == "Recruiter").FirstOrDefault().Id,
                     });
                 }
                 db.SaveChanges();
@@ -630,20 +894,20 @@ namespace BusinessLogicLayer.Helpers
                     {
                         Id = candidateLangId1,
                         CandidateId = candidateId1,
-                        LanguageId = idLg1,
+                        LanguageId = LanguageId1,
                         LanguageLevelId = languageLevelGuid2
                     });
                     db.CandidateLanguages.Add(new CandidateLanguageEntityModel
                     {
                         Id = candidateLangId2,
-                        LanguageId = idLg3,
+                        LanguageId = LanguageId3,
                         CandidateId = candidateId2,
                         LanguageLevelId = languageLevelGuid1
                     });
                     db.CandidateLanguages.Add(new CandidateLanguageEntityModel
                     {
                         Id = candidateLangId3,
-                        LanguageId = idLg4,
+                        LanguageId = LanguageId4,
                         CandidateId = candidateId3,
                         LanguageLevelId = languageLevelGuid3
                     });
@@ -702,11 +966,11 @@ namespace BusinessLogicLayer.Helpers
                     db.CandidateSandboxes.Add(new CandidateSandboxEntityModel
                     {
                         Id = candidateSandboxId1,
-                        SandboxId = idSb2,
+                        SandboxId = SandboxId2,
                         CandidateId = candidateId3,
                         CandidateProjectRoleId = candidateProjectRolesId3,
                         TeamId = null,
-                        StackTechnologyId = idSt1,
+                        StackTechnologyId = StackTechnologyId1,
                         Motivation = "Motivation 1",
                         TimeContact = "10:00",
                         IsJoinToExadel = true,
@@ -717,11 +981,11 @@ namespace BusinessLogicLayer.Helpers
                     db.CandidateSandboxes.Add(new CandidateSandboxEntityModel
                     {
                         Id = candidateSandboxId2,
-                        SandboxId = idSb1,
+                        SandboxId = SandboxId1,
                         CandidateId = candidateId1,
                         CandidateProjectRoleId = candidateProjectRolesId1,
                         TeamId = null,
-                        StackTechnologyId = idSt2,
+                        StackTechnologyId = StackTechnologyId2,
                         Motivation = "Motivation 1",
                         TimeContact = "10:00",
                         IsJoinToExadel = true,
@@ -732,11 +996,11 @@ namespace BusinessLogicLayer.Helpers
                     db.CandidateSandboxes.Add(new CandidateSandboxEntityModel
                     {
                         Id = candidateSandboxId3,
-                        SandboxId = idSb3,
+                        SandboxId = SandboxId3,
                         CandidateId = candidateId2,
                         CandidateProjectRoleId = candidateProjectRolesId2,
                         TeamId = null,
-                        StackTechnologyId = idSt1,
+                        StackTechnologyId = StackTechnologyId1,
                         Motivation = "Motivation 1",
                         TimeContact = "10:00",
                         IsJoinToExadel = true,

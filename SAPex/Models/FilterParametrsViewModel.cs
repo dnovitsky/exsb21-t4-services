@@ -15,11 +15,11 @@ namespace SAPex.Models
             SecondSearchingTextString = string.Empty;
             SearchingDateField = string.Empty;
             SearchingDateString = string.Empty;
-            SearchingStatus = SearchStatus.None;
+            SearchingStatus = "None";
         }
 
         public FilterParametrsViewModel(string firstField, string firstString, string secondField,
-            string secondString, string dateField, string dateString, SearchStatus searchStatus)
+            string secondString, string dateField, string dateString, string searchStatus)
         {
             FirstSearchingTextField = firstField;
             FirstSearchingTextString = firstString;
@@ -42,17 +42,6 @@ namespace SAPex.Models
 
         public string SearchingDateString { get; set; }
 
-        public SearchStatus SearchingStatus { get; set; }
-    }
-
-    public enum SearchStatus
-    {
-        None = -1,
-        Draft,
-        Active,
-        Registration,
-        Application,
-        Inprogress,
-        Archive,
+        public string SearchingStatus { get; set; }
     }
 }

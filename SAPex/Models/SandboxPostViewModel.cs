@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SAPex.Models
 {
-    public class SandboxViewModel
+    public class SandboxPostViewModel
     {
-        public Guid? Id { get; set; }
-
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -29,14 +25,14 @@ namespace SAPex.Models
 
         public string Status { get; set; }
 
-        public IEnumerable<StackTechnologyViewModel> StackTechnologies { get; set; }
+        public IEnumerable<Guid> StackTechnologyIds { get; set; }
 
-        public IEnumerable<LanguageViewModel> Languages { get; set; }
+        public IEnumerable<Guid> LanguageIds { get; set; }
 
-        public IEnumerable<MentorViewModel> Mentors { get; set; }
+        public IEnumerable<Guid> MentorIds { get; set; }
 
-        public IEnumerable<RecruiterViewModel> Recruiters { get; set; }
+        public IEnumerable<Guid> RecruiterIds { get; set; }
 
-        public IEnumerable<InterviewerViewModel> Interviewers { get; set; }
+        public IEnumerable<Guid> InterviewersIds { get; set; }
     }
 }
