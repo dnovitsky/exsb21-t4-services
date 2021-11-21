@@ -13,7 +13,9 @@ using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.Options;
 using SAPex.Models;
+using SAPexAuthService.Models;
 
 namespace SAPex.Controllers
 {
@@ -23,14 +25,13 @@ namespace SAPex.Controllers
     {
         private readonly string _rootFilesPath = Directory.GetCurrentDirectory() + "/files/";
         private readonly IFileService _fileService;
-        private readonly string _aWSAccessKey = "AKIAVI4HFF2MX564KFHS";
-        private readonly string _aWSSecretKey = "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";
-        private readonly string _aWSBucketName = "sapex-file-bucket";
+        private readonly AwsSettingsModel _awsconfig;
         private readonly RegionEndpoint _regconfig = RegionEndpoint.EUNorth1;
 
-        public FilesController(IFileService service)
+        public FilesController(IFileService service, IOptions<AwsSettingsModel> awsconfig)
         {
             _fileService = service;
+            _awsconfig = awsconfig.Value;
             if (!Directory.Exists(_rootFilesPath))
             {
                 Directory.CreateDirectory(_rootFilesPath);
@@ -49,14 +50,14 @@ namespace SAPex.Controllers
             try
             {
                 FileDtoModel fileDtoModel = await _fileService.FindFileByIdAsync(id);
-                var credentials = new BasicAWSCredentials(_aWSAccessKey, _aWSSecretKey);
+                var credentials = new BasicAWSCredentials(_awsconfig.AwsAccessKey, _awsconfig.AwsSecretKey);
                 var config = new AmazonS3Config();
                 config.RegionEndpoint = _regconfig;
                 using var client = new AmazonS3Client(credentials, config);
                 var fileTransferUtility = new TransferUtility(client);
                 var objectResponse = await fileTransferUtility.S3Client.GetObjectAsync(new GetObjectRequest()
                 {
-                    BucketName = _aWSBucketName,
+                    BucketName = _awsconfig.AwsBucketName,
                     Key = fileDtoModel.FileName,
                 });
 
@@ -86,7 +87,7 @@ namespace SAPex.Controllers
         {
             try
             {
-                var credentials = new BasicAWSCredentials(_aWSAccessKey, _aWSSecretKey);
+                var credentials = new BasicAWSCredentials(_awsconfig.AwsAccessKey, _awsconfig.AwsSecretKey);
                 var config = new AmazonS3Config();
                 config.RegionEndpoint = _regconfig;
                 using var client = new AmazonS3Client(credentials, config);
@@ -97,7 +98,7 @@ namespace SAPex.Controllers
                 {
                     InputStream = newMemoryStream,
                     Key = fileName,
-                    BucketName = _aWSBucketName,
+                    BucketName = _awsconfig.AwsBucketName,
                     CannedACL = S3CannedACL.PublicRead,
                 };
                 var fileTransferUtility = new TransferUtility(client);
@@ -131,14 +132,14 @@ namespace SAPex.Controllers
                 FileDtoModel fileDtoModel = await _fileService.FindFileByIdAsync(id);
                 _fileService.DeleteFileById(id);
 
-                var credentials = new BasicAWSCredentials(_aWSAccessKey, _aWSSecretKey);
+                var credentials = new BasicAWSCredentials(_awsconfig.AwsAccessKey, _awsconfig.AwsSecretKey);
                 var config = new AmazonS3Config();
                 config.RegionEndpoint = _regconfig;
                 using var client = new AmazonS3Client(credentials, config);
                 var fileTransferUtility = new TransferUtility(client);
                 await fileTransferUtility.S3Client.DeleteObjectAsync(new DeleteObjectRequest()
                 {
-                    BucketName = _aWSBucketName,
+                    BucketName = _awsconfig.AwsBucketName,
                     Key = fileDtoModel.FileName,
                 });
             }
