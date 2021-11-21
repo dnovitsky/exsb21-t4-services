@@ -66,6 +66,7 @@ namespace BusinessLogicLayer.Services
         public async Task<IEnumerable<CandidateDtoModel>> GetAllCandidateAsync()
         {
             IEnumerable<CandidateEntityModel> candidateEM = await unitOfWork.Candidates.GetAllAsync();
+
             return profile.mapCandidateEMListToCandidateDtoList(candidateEM);
         }
 

@@ -12,7 +12,7 @@ namespace BusinessLogicLayer.DtoModels
 
         public SandboxDtoModel Sandbox { get; set; }
 
-        public CandidateProcessDtoModel CandidateProcess { get; set; }
+        public IEnumerable<CandidateProcessDtoModel> CandidateProcesses { get; set; }
 
         public CandidateProjectRoleDtoModel? CandidateProjectRole { get; set; }
 
