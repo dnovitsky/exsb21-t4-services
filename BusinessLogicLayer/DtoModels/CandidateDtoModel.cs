@@ -13,7 +13,7 @@ namespace BusinessLogicLayer.DtoModels
 
         public string Email { get; set; }
 
-        public string Location { get; set; }
+        public LocationDtoModel Location { get; set; }
  
         public string Skype { get; set; }
 
@@ -26,7 +26,9 @@ namespace BusinessLogicLayer.DtoModels
         public string AdditionalSkills { get; set; }
 
         public IList<CandidateLanguageDtoModel> CandidateLanguages { get; set; }
+
         public IList<CandidateTechSkillDtoModel> CandidateTechSkills { get; set; }
+
         public IList<CandidateSandboxDtoModel> CandidateSandboxes { get; set; }
     }
 }

@@ -21,6 +21,7 @@ namespace DataAccessLayer.Service
         IFunctionalRoleRepository FunctionalRoles { get; }
         ILanguageLevelRepository LanguageLevels { get; }
         ILanguageRepository Languages { get; }
+        ILocationRepository Locations { get; }
         IRatingRepository Ratings { get; }
         ISandboxRepository Sandboxes { get; }
         ISandboxLanguageRepository SandboxLanguages { get; }

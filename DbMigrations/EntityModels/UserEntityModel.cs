@@ -14,8 +14,6 @@ namespace DbMigrations.EntityModels
             UserLanguages = new List<UserLanguageEntityModel>();
             Feedbacks = new List<FeedbackEntityModel>();
             UserStackTechnologies = new List<UserStackTechnologyEntityModel>();
-
-
         }
         [Key]
         public Guid Id { get; set; }
@@ -23,8 +21,10 @@ namespace DbMigrations.EntityModels
         public string Name { get; set; }
         [Required]
         public string Surname { get; set; }
-        [Required]
-        public string Location { get; set; }
+
+        public Nullable<Guid> LocationId { get; set; }
+        public virtual LocationEntityModel Location { get; set; }
+
         [Required]
         public string Email { get; set; }
         [Required]
@@ -41,6 +41,5 @@ namespace DbMigrations.EntityModels
         public virtual IList<FeedbackEntityModel> Feedbacks { get; set; }
 
         public virtual IList<UserStackTechnologyEntityModel> UserStackTechnologies { get; set; }
-
     }
 }

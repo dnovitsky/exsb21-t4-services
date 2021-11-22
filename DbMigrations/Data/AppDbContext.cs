@@ -27,6 +27,8 @@ namespace DbMigrations.Data
         public DbSet<FormEntityModel> Forms { get; set; }
         public DbSet<FunctionalRoleEntityModel> FunctionalRoles { get; set; }
         public DbSet<LanguageEntityModel> Languages { get; set; }
+
+        public DbSet<LocationEntityModel> Locations { get; set; }
         public DbSet<LanguageLevelEntityModel> LanguageLevels { get; set; }
         public DbSet<RatingEntityModel> Ratings { get; set; }
 

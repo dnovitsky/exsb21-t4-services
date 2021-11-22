@@ -21,12 +21,12 @@ namespace DbMigrations.EntityModels
         
         [Required]
         public string Surname { get; set; }
-        [Required]
+
         public string Email { get; set; }
-        
-        [Required]
-        public string Location { get; set; }
-        
+
+        public Nullable<Guid> LocationId { get; set; }
+        public virtual LocationEntityModel Location { get; set; }
+
         [Required]
         public string Skype { get; set; }
         

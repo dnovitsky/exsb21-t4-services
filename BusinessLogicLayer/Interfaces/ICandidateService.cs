@@ -11,7 +11,7 @@ namespace BusinessLogicLayer.Interfaces
 {
     public interface ICandidateService
     {
-        Task<bool> AddCandidateAsync(CreateCandidateDtoModel candidateDto);
+        Task<CandidateDtoModel> AddCandidateAsync(CreateCandidateDtoModel candidateDto);
         Task<IEnumerable<CandidateDtoModel>> GetAllCandidateAsync();
         Task<IEnumerable<CandidateDtoModel>> FindCandidateAsync(Expression<Func<CandidateEntityModel, bool>> expression);
         void UpdateCandidate(CandidateDtoModel candidateDto);
