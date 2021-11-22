@@ -24,28 +24,7 @@ namespace SAPex.Controllers
             _feedbackService = service;
         }
 
-        [HttpGet("candidateProcces/{candidateProccesId}")]
-        public async Task<IActionResult> GetFeedbackOfCurrentProcces(Guid candidateProccesId)
-        {
-            IEnumerable<FeedbackViewModel> feedbacksVM = _mapper.ListDtoToListView(await _feedbackService.GetFeedbacksCandidateProcces(candidateProccesId));
-            return await Task.FromResult(Ok(feedbacksVM));
-        }
-
-        [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetUserFeedbacks(Guid userId)
-        {
-            IEnumerable<FeedbackViewModel> feedbacksVM = _mapper.ListDtoToListView(await _feedbackService.GetFeedbacksOfUser(userId));
-            return await Task.FromResult(Ok(feedbacksVM));
-        }
-
-        [HttpGet("candidateSandbox/{candidateSandboxId}")]
-        public async Task<IActionResult> GetAllFeedbacksInCandidateSandbox(Guid candidateSandboxId)
-        {
-            IEnumerable<FeedbackViewModel> feedbacksVM = _mapper.ListDtoToListView(await _feedbackService.GetAllFeedbacksInCandidateSandbox(candidateSandboxId));
-            return await Task.FromResult(Ok(feedbacksVM));
-        }
-
-        [HttpGet("feedback/{feedbackId}")]
+        [HttpGet("{feedbackId}")]
         public async Task<IActionResult> GetFeedbackById(Guid feedbackId)
         {
             FeedbackViewModel feedbackVM = _mapper.DtoToView(await _feedbackService.GetFeedbackByIdAsync(feedbackId));
@@ -69,6 +48,43 @@ namespace SAPex.Controllers
             FeedbackDtoModel feedbackDto = _mapper.ViewToDto(feedbackVM);
             Guid feedbackId = await _feedbackService.CreateFeedbackAsync(feedbackDto);
             return await Task.FromResult(Ok(feedbackId));
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(Guid id, string userReview)
+        {
+            FeedbackDtoModel feedbackDtoCheck = await _feedbackService.GetFeedbackByIdAsync(id);
+
+            if (feedbackDtoCheck == null)
+            {
+                return await Task.FromResult(NotFound());
+            }
+
+            // ValidationResult validationResult = new FeedbackValidator().Validate(feedbackVM);
+            // if (!validationResult.IsValid)
+            // {
+            //    return await Task.FromResult(BadRequest());
+            // }
+
+            FeedbackViewModel newFeedbackVM = new FeedbackViewModel
+            {
+                Id = id,
+                UserId = feedbackDtoCheck.UserId,
+                RatingId = feedbackDtoCheck.RatingId,
+                CreateDate = DateTime.Now,
+                UserReview = userReview,
+                CandidateProccesId = feedbackDtoCheck.CandidateProccesId,
+            };
+
+            FeedbackDtoModel feedbackDto = _mapper.ViewToDto(newFeedbackVM);
+            bool check = await _feedbackService.UpdateFeedback(feedbackDto);
+
+            if (check)
+            {
+                return await Task.FromResult(Ok($"Was Updated! Check by id: {id}"));
+            }
+
+            return await Task.FromResult(Ok("Doesn't update"));
         }
     }
 }
