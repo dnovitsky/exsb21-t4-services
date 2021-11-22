@@ -51,21 +51,6 @@
     <ProjectReference Include="..\SAPexAuthService\SAPexAuthService.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Content Update="Controllers\FakeDB\FunctionalRoleViewModel.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Controllers\FakeDB\LanguageLevelViewModel.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Controllers\FakeDB\LanguageViewModel.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Controllers\FakeDB\SkillViewModel.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Controllers\FakeDB\StatusViewModel.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Folder Include="Mappers\Base\" />
   </ItemGroup>
 </Project>
