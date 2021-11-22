@@ -18,33 +18,30 @@ namespace BusinessLogicLayer.Helpers
             { "manager@gmail.com" , "EDU manager" },
             { "mentor@gmail.com","Mentor" },
             { "interviewer@gmail.com","Interviewer" },
+            { "developer.noor.cullen@gmail.com","Interviewer"},
             { "recruiter@gmail.com","Recruiter" },
             { "admin@gmail.com","Admin" },
         };
         public void CreateTestData()
         {
-            if (!_dbContext.UserFunctionalRoles.Any())
-            {
                 foreach (var dic in dictionary)
                 {
                     var user = _dbContext.Users.Where(x => x.Email == dic.Key).SingleOrDefault();
                     var role = _dbContext.FunctionalRoles.Where(x => x.Name == dic.Value).SingleOrDefault();
 
-                    _dbContext.UserFunctionalRoles.Add(new UserFunctionalRoleEntityModel
-                    {
-                        FunctionalRoleId = role.Id,
-                        UserId = user.Id
-                    });
-
+                    var user_role= _dbContext.UserFunctionalRoles.Where(x => x.UserId == user.Id && x.FunctionalRoleId == role.Id).FirstOrDefault();
+                    if(user_role ==null)
+                        _dbContext.UserFunctionalRoles.Add(new UserFunctionalRoleEntityModel
+                        {
+                            FunctionalRoleId = role.Id,
+                            UserId = user.Id
+                        });
                 }
-            }
-
-            _dbContext.SaveChanges();
+                _dbContext.SaveChanges();
         }
 
         public void ClearTestData()
         {
-            throw new NotImplementedException();
         }
     }
 }
