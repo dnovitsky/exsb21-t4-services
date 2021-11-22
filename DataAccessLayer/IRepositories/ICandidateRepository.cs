@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccessLayer.Service;
 using DbMigrations.EntityModels;
 
 namespace DataAccessLayer.IRepositories
@@ -13,7 +14,7 @@ namespace DataAccessLayer.IRepositories
         Task<IEnumerable<CandidateEntityModel>> GetAllAsync();
         Task<IEnumerable<CandidateEntityModel>> FindByConditionAsync(Expression<Func<CandidateEntityModel, bool>> expression);
         Task<CandidateEntityModel> FindByIdAsync(Guid id);
-
+        Task<PagedList<CandidateEntityModel>> GetPagedAsync(InputParametrsEntityModel parametrs, FilterParametrsEntityModel filterParametrs);
         Task<CandidateEntityModel> CreateAsync(CandidateEntityModel item);
 
         void Update(CandidateEntityModel item);

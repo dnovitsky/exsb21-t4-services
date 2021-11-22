@@ -96,13 +96,5 @@ namespace SAPex.Controllers.Mapping
 
             return candidateDtoList;
         }
-
-        private Dictionary<string, Guid> _DefaultValues = new Dictionary<string, Guid>()
-        {
-            { "DefaultProcessId",  Guid.Parse("") },
-            { "DefaultLanguageId",  Guid.Parse("") },
-            { "3",  Guid.Parse("") },
-            { "4",  Guid.Parse("") },
-        };
     }
 }

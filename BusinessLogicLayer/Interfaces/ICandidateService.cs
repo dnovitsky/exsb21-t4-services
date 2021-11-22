@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer.DtoModels;
+using DataAccessLayer.Service;
 using DbMigrations.EntityModels;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace BusinessLogicLayer.Interfaces
         Task<CandidateDtoModel> AddCandidateAsync(CreateCandidateDtoModel candidateDto);
         Task<IEnumerable<CandidateDtoModel>> GetAllCandidateAsync();
         Task<IEnumerable<CandidateDtoModel>> FindCandidateAsync(Expression<Func<CandidateEntityModel, bool>> expression);
+        Task<PagedList<CandidateDtoModel>> GetPagedSandboxesAsync(InputParametrsDtoModel parametrs, FilterParametrsDtoModel filterParametrs);
         void UpdateCandidate(CandidateDtoModel candidateDto);
         Task<CandidateDtoModel> FindCandidateByIdAsync(Guid id);
         void DeleteCandidate(Guid id);

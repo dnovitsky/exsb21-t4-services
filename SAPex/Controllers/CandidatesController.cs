@@ -5,9 +5,12 @@ using System.Threading.Tasks;
 using BusinessLogicLayer.DtoModels;
 using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Services;
+using DataAccessLayer.Service;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SAPex.Controllers.Mapping;
+using SAPex.Mappers;
 using SAPex.Models;
 
 namespace SAPex.Controllers
@@ -18,10 +21,14 @@ namespace SAPex.Controllers
     {
         protected readonly CandidateMapper profile = new CandidateMapper();
         private readonly ICandidateService _service;
+        private readonly InputParametrsMapper _inputParamersMapper;
+        private readonly FilterParametrsMapper _filterParametrsMapper;
 
         public CandidatesController(ICandidateService service)
         {
             _service = service;
+            _inputParamersMapper = new InputParametrsMapper();
+            _filterParametrsMapper = new FilterParametrsMapper();
         }
 
         [HttpGet("all")]
@@ -65,6 +72,30 @@ namespace SAPex.Controllers
             }
 
             return await Task.FromResult(Conflict());
+        }
+
+        [HttpGet("filter")]
+        public async Task<IActionResult> GetFilter([FromQuery] InputParametrsViewModel sandboxParametrs, [FromQuery] FilterParametrsViewModel filterParametrs)
+        {
+            PagedList<CandidateDtoModel> dtoPageListModels = await _service.GetPagedSandboxesAsync(
+                _inputParamersMapper.MapFromViewToDto(sandboxParametrs),
+                _filterParametrsMapper.MapFromViewToDto(filterParametrs));
+
+            IList<CandidateViewModel> viewModels = new List<CandidateViewModel>();
+
+            foreach (var item in dtoPageListModels.PageList)
+            {
+                /*
+                IEnumerable<StackTechnologyDtoModel> stackTechnologyDtoModels = await _stackTechnologyService.GetStackTechnologiesBySandboxIdAsync(item.Id);
+                IEnumerable<LanguageDtoModel> languageDtoModels = await _languageService.GetLanguagesBySandboxIdAsync(item.Id);
+
+                viewModels.Add(_mapper.MapSbStackLgFromDtoToView(item, languageDtoModels, stackTechnologyDtoModels));
+                */
+                viewModels.Add(profile.MapCandidateDtoToVM(item));
+            }
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(dtoPageListModels.TotalPages));
+            return await Task.FromResult(Ok(viewModels));
         }
 
         [HttpPut("{id}")]
