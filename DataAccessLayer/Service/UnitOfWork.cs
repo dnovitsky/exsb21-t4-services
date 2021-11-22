@@ -47,6 +47,7 @@ namespace DataAccessLayer.Service
         private IUserRefreshTokenRepository userRefreshTokens;
         private ICalendarEventRepository calendarEvents;
         private IInterviewEventRepository interviewEvents;
+        private IGoogleAccessTokenRepository googleAccessTokens;
 
         public UnitOfWork(AppDbContext context)
         {
@@ -468,6 +469,18 @@ namespace DataAccessLayer.Service
                     interviewEvents = new InterviewEventRepository(context);
                 }
                 return interviewEvents;
+            }
+        }
+
+        public IGoogleAccessTokenRepository GoogleAccessTokens
+        {
+            get
+            {
+                if (googleAccessTokens == null)
+                {
+                    googleAccessTokens = new GoogleAccessTokenRepository(context);
+                }
+                return googleAccessTokens;
             }
         }
 
