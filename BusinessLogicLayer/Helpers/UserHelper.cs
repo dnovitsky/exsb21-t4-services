@@ -78,16 +78,25 @@ namespace BusinessLogicLayer.Helpers
         };
         public  void CreateTestData()
         {
-            if (!_dbContext.Users.Any())
+            foreach (var user in users)
             {
-                users.ForEach(user =>  _dbContext.Users.Add(user) );
+                var entity = _dbContext.Users.Where(x => x.Email == user.Email).FirstOrDefault();
+                if (entity != null) _dbContext.Users.Remove(entity);
+                user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+                _dbContext.Users.Add(user);
             }
             _dbContext.SaveChanges();
         }
 
         public  void ClearTestData()
         {
-            throw new NotImplementedException();
+            foreach (var user in users)
+            {
+                var entity = _dbContext.Users.Where(x => x.Email == user.Email).FirstOrDefault();
+                if (entity == null) break;
+                _dbContext.Remove(entity);
+            }
+            _dbContext.SaveChanges();
         }
     }
 }
