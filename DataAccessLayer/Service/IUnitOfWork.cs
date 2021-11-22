@@ -40,6 +40,7 @@ namespace DataAccessLayer.Service
         IUserRefreshTokenRepository UserRefreshTokens { get; }
         ICalendarEventRepository CalendarEvents { get; }
         IInterviewEventRepository InterviewEvents { get; }
+        IGoogleAccessTokenRepository GoogleAccessTokens { get; }
 
         Task SaveAsync();
     }
