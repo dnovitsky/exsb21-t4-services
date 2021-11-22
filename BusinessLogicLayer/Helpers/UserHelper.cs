@@ -81,9 +81,7 @@ namespace BusinessLogicLayer.Helpers
             foreach (var user in users)
             {
                 var entity = _dbContext.Users.Where(x => x.Email == user.Email).FirstOrDefault();
-                if (entity != null) _dbContext.Users.Remove(entity);
-                user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
-                _dbContext.Users.Add(user);
+                if (entity == null) _dbContext.Users.Add(user);
             }
             _dbContext.SaveChanges();
         }
