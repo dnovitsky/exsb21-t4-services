@@ -11,6 +11,10 @@ namespace DbMigrations.EntityModels
     
     public class CandidateProccesEntityModel
     {
+        public CandidateProccesEntityModel()
+        {
+            Feedbacks = new List<FeedbackEntityModel>();
+        }
         [Key]
         public Guid Id { get; set; }
 
@@ -18,11 +22,14 @@ namespace DbMigrations.EntityModels
         public Guid StatusId { get; set; }
         public virtual StatusEntityModel Status { get; set; }
 
+        [Required]
+        public Guid CandidateSandboxId { get; set; }
+        public virtual CandidateSandboxEntityModel CandidateSandbox { get; set; }
+
         public string TestResult { get; set; }
         [Required]
         public DateTime CreateDate { get; set; } = DateTime.Now;
 
-        public Nullable<Guid> FeedbackId { get; set; } = null;
-        public virtual FeedbackEntityModel Feedback { get; set; }
+        public virtual IList<FeedbackEntityModel> Feedbacks { get; set; }
     }
 }

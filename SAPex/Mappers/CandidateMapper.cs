@@ -60,7 +60,7 @@ namespace SAPex.Controllers.Mapping
             return candidateDto;
         }
 
-        public IEnumerable<CandidateViewModel> MapCandidateDtoToVM(IEnumerable<CandidateDtoModel> candidateEM)
+        public IEnumerable<CandidateViewModel> MapCandidateDtoToVM(IEnumerable<CandidateDtoModel> candidateVM)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateDtoModel, CandidateViewModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
@@ -81,10 +81,9 @@ namespace SAPex.Controllers.Mapping
 
             IList<CandidateViewModel> candidateDtoList = new List<CandidateViewModel>()
             {
-                mapper.Map<CandidateDtoModel, CandidateViewModel>(candidateEM.FirstOrDefault()),
             };
             int i = 0;
-            foreach (var candidate in candidateEM)
+            foreach (var candidate in candidateVM)
             {
                 if (i != 0)
                 {

@@ -10,11 +10,14 @@ namespace BusinessLogicLayer.DtoModels
     {
         public Guid Id { get; set; }
 
-        public UserDtoModel User { get; set; }
+        public Guid UserId { get; set; }
 
         public Guid RatingId { get; set; }
 
         public DateTime CreateDate { get; set; }
+
         public string UserReview { get; set; }
+
+        public Guid CandidateProccesId { get; set; }
     }
 }

@@ -57,11 +57,11 @@ namespace SAPex.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> Post([FromBody] CreateCandidateViewModel requestData)
         {
-            var isCandidateCreated = await _service.AddCandidateAsync(profile.MapNewCandidateToDto(requestData));
+            var candidate = await _service.AddCandidateAsync(profile.MapNewCandidateToDto(requestData));
 
-            if (isCandidateCreated)
+            if (candidate != null)
             {
-                return await Task.FromResult(Ok());
+                return await Task.FromResult(Ok(candidate));
             }
 
             return await Task.FromResult(Conflict());

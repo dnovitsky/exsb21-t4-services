@@ -27,8 +27,20 @@ namespace SAPex.Models
 
         public DateTime EndRegistration { get; set; }
 
+        public StatusName Status { get; set; }
+
         public IEnumerable<StackTechnologyViewModel> StackTechnologies { get; set; }
 
         public IEnumerable<LanguageViewModel> Languages { get; set; }
+    }
+
+    public enum StatusName
+    {
+        Draft,
+        Active,
+        Registration,
+        Application,
+        Inprogress,
+        Archive,
     }
 }

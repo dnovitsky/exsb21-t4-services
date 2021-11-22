@@ -43,5 +43,27 @@ namespace BusinessLogicLayer.Mapping.BaseMappings
             }
             return listDto;
         }
+
+        public IEnumerable<T> mapListToEM(IEnumerable<E> values)
+        {
+            var mapper = DtoModelToEntityModelMapper();
+
+            IList<T> listEM = new List<T>()
+            {
+                mapper.Map<E, T>(values.FirstOrDefault())
+            };
+
+            int i = 0;
+            foreach (var avail in values)
+            {
+                if (i != 0)
+                {
+                    T em = mapper.Map<E, T>(avail);
+                    listEM.Add(em);
+                }
+                i++;
+            }
+            return listEM;
+        }
     }
 }
