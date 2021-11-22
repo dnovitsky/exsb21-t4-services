@@ -13,6 +13,7 @@ namespace BusinessLogicLayer.Helpers
         {
             _dbContext = dbContext;
         }
+
         private List<UserEntityModel> users = new List<UserEntityModel>
         {
             new UserEntityModel
@@ -21,7 +22,7 @@ namespace BusinessLogicLayer.Helpers
                     Surname = "Cullen",
                     Email = "manager@gmail.com",
                     Password = "manager123456",
-                    Location = "Minsk",
+                    LocationId = null,
                     Phone = "+998998756090",
                     Skype = "Skype:username"
                 },
@@ -31,7 +32,7 @@ namespace BusinessLogicLayer.Helpers
                     Surname = "Ford",
                     Email = "mentor@gmail.com",
                     Password = "mentor123456",
-                    Location = "Minsk",
+                    LocationId = null,
                     Phone = "+998998756191",
                     Skype = "Skype:username"
                 },
@@ -41,7 +42,17 @@ namespace BusinessLogicLayer.Helpers
                     Surname = "York",
                     Email = "interviewer@gmail.com",
                     Password = "interviewer123456",
-                    Location = "Minsk",
+                    LocationId = null,
+                    Phone = "+998998756292",
+                    Skype = "Skype:username"
+                },
+            new UserEntityModel
+                {
+                    Name = "Nurmukhammad",
+                    Surname = "Sunatullaev",
+                    Email = "developer.noor.cullen@gmail.com",
+                    Password = "interviewer123456",
+                    LocationId = null,
                     Phone = "+998998756292",
                     Skype = "Skype:username"
                 },
@@ -51,7 +62,7 @@ namespace BusinessLogicLayer.Helpers
                     Surname = "Gisburg",
                     Email = "recruiter@gmail.com",
                     Password = "recruiter123456",
-                    Location = "Minsk",
+                    LocationId = null,
                     Phone = "+998998756393",
                     Skype = "Skype:username"
                 },
@@ -61,23 +72,31 @@ namespace BusinessLogicLayer.Helpers
                     Surname = "York",
                     Email = "admin@gmail.com",
                     Password = "admin123456",
-                    Location = "Minsk",
+                    LocationId = null,
                     Phone = "+998998756393",
                     Skype = "Skype:username"
                 }
         };
+        
         public  void CreateTestData()
         {
-            if (!_dbContext.Users.Any())
+            foreach (var user in users)
             {
-                users.ForEach(user =>  _dbContext.Users.Add(user) );
+                var entity = _dbContext.Users.Where(x => x.Email == user.Email).FirstOrDefault();
+                if (entity == null) _dbContext.Users.Add(user);
             }
             _dbContext.SaveChanges();
         }
 
         public  void ClearTestData()
         {
-            throw new NotImplementedException();
+            foreach (var user in users)
+            {
+                var entity = _dbContext.Users.Where(x => x.Email == user.Email).FirstOrDefault();
+                if (entity == null) break;
+                _dbContext.Remove(entity);
+            }
+            _dbContext.SaveChanges();
         }
     }
 }

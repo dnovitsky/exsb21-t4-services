@@ -15,6 +15,7 @@ namespace BusinessLogicLayer.DtoModels
         public Guid RatingId { get; set; }
 
         public DateTime CreateDate { get; set; }
+
         public string UserReview { get; set; }
 
         public Guid CandidateProccesId { get; set; }

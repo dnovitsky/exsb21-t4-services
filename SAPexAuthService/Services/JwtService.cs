@@ -63,7 +63,7 @@ namespace SAPexAuthService.Services
             return false;
         }
 
-        private async Task<TokenCredentialsModel> GenerateTokenByUserAsync(UserEntityModel user)
+        internal async Task<TokenCredentialsModel> GenerateTokenByUserAsync(UserEntityModel user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
