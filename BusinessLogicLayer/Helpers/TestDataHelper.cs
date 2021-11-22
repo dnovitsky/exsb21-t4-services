@@ -163,8 +163,8 @@ namespace BusinessLogicLayer.Helpers
                         EndRegistration = new DateTime(2021, 8, 5),
                         Status = StatusName.Draft,
                     });
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
 
                 if (!db.AvailabilityTypes.Any())
                 {
@@ -188,8 +188,8 @@ namespace BusinessLogicLayer.Helpers
                         Name = "6-infinity hours",
                         OrderLevel = 2,
                     });
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
 
                 if (!db.LanguageLevels.Any())
                 {
@@ -234,9 +234,8 @@ namespace BusinessLogicLayer.Helpers
                         Name = "Proficient (C2)",
                         OrderLevel = 5,
                     });
-
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
 
                 if (!db.Languages.Any())
                 {
@@ -265,8 +264,8 @@ namespace BusinessLogicLayer.Helpers
                         Id = idLg5,
                         Name = "Polish"
                     });
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
 
                 if (!db.StackTechnologies.Any())
                 {
@@ -295,8 +294,8 @@ namespace BusinessLogicLayer.Helpers
                         Id = idSt5,
                         Name = "Python"
                     });
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
 
                 if (!db.SandboxStackTechnologies.Any())
                 {
@@ -334,9 +333,9 @@ namespace BusinessLogicLayer.Helpers
                         SandboxId = idSb3,
                         StackTechnologyId = idSt4
                     });
+                    db.SaveChanges();
 
                 }
-                db.SaveChanges();
 
                 if (!db.SandboxLanguages.Any())
                 {
@@ -381,8 +380,8 @@ namespace BusinessLogicLayer.Helpers
                         SandboxId = idSb3,
                         LanguageId = idLg4
                     });
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
 
                 if (!db.Statuses.Any())
                 {
@@ -436,8 +435,8 @@ namespace BusinessLogicLayer.Helpers
                         Id = Guid.NewGuid(),
                         Name = "Final interview"
                     });
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
 
                 if (!db.Skills.Any())
                 {
@@ -560,8 +559,8 @@ namespace BusinessLogicLayer.Helpers
                         Id = Guid.NewGuid(),
                         Name = "Azure"
                     });
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
                 
                 var candidateLangId1 = Guid.NewGuid();
                 var candidateLangId2 = Guid.NewGuid();
@@ -622,8 +621,8 @@ namespace BusinessLogicLayer.Helpers
                         Id = locationId6,
                         Name = "Kiev"
                     });
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
 
                 if (!db.Candidates.Any())
                 {
@@ -663,8 +662,8 @@ namespace BusinessLogicLayer.Helpers
                         ProfessionaCertificates = "",
                         AdditionalSkills = ""
                     });
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
 
                 if (!db.CandidateLanguages.Any())
                 {
@@ -689,8 +688,8 @@ namespace BusinessLogicLayer.Helpers
                         CandidateId = candidateId3,
                         LanguageLevelId = languageLevelGuid3
                     });
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
 
                 if (!db.CandidateTechSkills.Any())
                 {
@@ -712,8 +711,8 @@ namespace BusinessLogicLayer.Helpers
                         SkillId = skillGuid3,
                         CandidateId = candidateId3,
                     });
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
 
                 var candidateProjectRolesId1 = Guid.NewGuid();
                 var candidateProjectRolesId2 = Guid.NewGuid();
@@ -736,8 +735,8 @@ namespace BusinessLogicLayer.Helpers
                         Id = candidateProjectRolesId3,
                         Name = "Role 1"
                     });
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
 
                 if (!db.CandidateSandboxes.Any())
                 {
@@ -786,8 +785,8 @@ namespace BusinessLogicLayer.Helpers
                         IsAgreement = false,
                         AvailabilityTypeId = availabilityType1
                     });
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
 
                 if (!db.CandidatesProcceses.Any())
                 {
@@ -815,8 +814,8 @@ namespace BusinessLogicLayer.Helpers
                         TestResult = "",
                         CreateDate = DateTime.Now
                     });
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
 
                 var ratingId1 = Guid.NewGuid();
                 var ratingId2 = Guid.NewGuid();
@@ -844,6 +843,7 @@ namespace BusinessLogicLayer.Helpers
                         Mark = 77,
                         SkillId = skillGuid3
                     });
+                    db.SaveChanges();
                 }
 
                 if (!db.Feedbacks.Any())
@@ -875,8 +875,8 @@ namespace BusinessLogicLayer.Helpers
                         UserReview = "Pod pivo poydet",
                         CandidateProccesId = candidateProcessId1
                     });
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
             }
         }
     }

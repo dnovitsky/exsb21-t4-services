@@ -52,7 +52,7 @@ namespace BusinessLogicLayer.Helpers
                     Surname = "Sunatullaev",
                     Email = "developer.noor.cullen@gmail.com",
                     Password = "interviewer123456",
-                    Location = "Ankara",
+                    LocationId = null,
                     Phone = "+998998756292",
                     Skype = "Skype:username"
                 },
