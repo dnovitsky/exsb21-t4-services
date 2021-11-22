@@ -13,7 +13,7 @@ namespace BusinessLogicLayer.DtoModels
 
         public string Email { get; set; }
 
-        public string Location { get; set; }
+        public LocationDtoModel Location { get; set; }
  
         public string Skype { get; set; }
 
