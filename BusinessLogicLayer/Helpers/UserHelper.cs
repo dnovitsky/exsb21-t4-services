@@ -48,6 +48,16 @@ namespace BusinessLogicLayer.Helpers
                 },
             new UserEntityModel
                 {
+                    Name = "Nurmukhammad",
+                    Surname = "Sunatullaev",
+                    Email = "developer.noor.cullen@gmail.com",
+                    Password = "interviewer123456",
+                    LocationId = null,
+                    Phone = "+998998756292",
+                    Skype = "Skype:username"
+                },
+            new UserEntityModel
+                {
                     Name = "Matilda",
                     Surname = "Gisburg",
                     Email = "recruiter@gmail.com",
@@ -70,16 +80,23 @@ namespace BusinessLogicLayer.Helpers
         
         public  void CreateTestData()
         {
-            if (!_dbContext.Users.Any())
+            foreach (var user in users)
             {
-                users.ForEach(user =>  _dbContext.Users.Add(user) );
+                var entity = _dbContext.Users.Where(x => x.Email == user.Email).FirstOrDefault();
+                if (entity == null) _dbContext.Users.Add(user);
             }
             _dbContext.SaveChanges();
         }
 
         public  void ClearTestData()
         {
-            throw new NotImplementedException();
+            foreach (var user in users)
+            {
+                var entity = _dbContext.Users.Where(x => x.Email == user.Email).FirstOrDefault();
+                if (entity == null) break;
+                _dbContext.Remove(entity);
+            }
+            _dbContext.SaveChanges();
         }
     }
 }

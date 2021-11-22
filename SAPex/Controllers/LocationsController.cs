@@ -11,12 +11,12 @@ namespace SAPex.Controllers
 {
     [ApiController]
     [Route("api/locations")]
-    public class LocationController : ControllerBase
+    public class LocationsController : ControllerBase
     {
         protected readonly LocationMapper profile = new LocationMapper();
         private readonly ILocationService _service;
 
-        public LocationController(ILocationService service)
+        public LocationsController(ILocationService service)
         {
             _service = service;
         }
