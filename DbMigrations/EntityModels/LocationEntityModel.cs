@@ -15,6 +15,14 @@ namespace DbMigrations.EntityModels
             Users = new List<UserEntityModel>();
         }
 
+        public LocationEntityModel(string name)
+        {
+            Candidates = new List<CandidateEntityModel>();
+            Users = new List<UserEntityModel>();
+            Id = Guid.NewGuid();
+            Name = name;
+        }
+
         [Key]
         public Guid Id { get; set; }
         [Required]

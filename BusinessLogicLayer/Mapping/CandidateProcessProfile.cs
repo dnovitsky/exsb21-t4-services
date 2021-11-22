@@ -27,6 +27,7 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.Status, y => y.MapFrom(x => statusProfile.mapToDto(x.Status)))
                     .ForMember(x => x.TestResult, y => y.MapFrom(x => x.TestResult))
+                    .ForMember(x => x.Feedbacks, y => y.MapFrom(x => feedbackProfile.mapListToDto(x.Feedbacks)))
                     .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate)));
 
             return new Mapper(config);

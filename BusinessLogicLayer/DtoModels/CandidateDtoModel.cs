@@ -26,7 +26,9 @@ namespace BusinessLogicLayer.DtoModels
         public string AdditionalSkills { get; set; }
 
         public IList<CandidateLanguageDtoModel> CandidateLanguages { get; set; }
+
         public IList<CandidateTechSkillDtoModel> CandidateTechSkills { get; set; }
+
         public IList<CandidateSandboxDtoModel> CandidateSandboxes { get; set; }
     }
 }

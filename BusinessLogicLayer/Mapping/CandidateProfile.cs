@@ -25,34 +25,26 @@ namespace BusinessLogicLayer.Mapping
             _unitOfWork = unitOfWork;
         }
 
-        public CandidateEntityModel mapNewCandidateToEM(CreateCandidateDtoModel candidateDto)
+        public CandidateEntityModel MapNewCandidateToEM(Guid LocationId, CreateCandidateDtoModel candidateDto)
         {
-            Func<Guid> f0 = this._getId;
-            Func<string, string> f1 = this._getName;
-            Func<string, string> f2 = this._getSurname;
-            Func<string, string> f3 = this._getEmail;
-            Func<string, string> f4 = this._getSkype;
-            Func<string, string> f5 = this._getPhone;
-
-            Func<string, Guid> fL = this.getLocationId;
-
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CreateCandidateDtoModel, CandidateEntityModel>()
-                    .ForMember(dest => dest.Id, opt => opt.MapFrom(x => f0()))
-                    .ForMember(dest => dest.Name, opt => opt.MapFrom(x => f1(x.Name)))
-                    .ForMember(dest => dest.Surname, opt => opt.MapFrom(x => f2(x.Surname)))
-                    .ForMember(dest => dest.Email, opt => opt.MapFrom(x => f3(x.Email)))
-                    .ForMember(dest => dest.Skype, opt => opt.MapFrom(x => f4(x.Skype)))
-                    .ForMember(dest => dest.Phone, opt => opt.MapFrom(x => f5(x.PhoneNumber)))
-                    .ForMember(dest => dest.LocationId, opt => opt.MapFrom(x => fL(x.Location)))
+                    .ForMember(dest => dest.Id, opt => opt.MapFrom(x => Guid.NewGuid()))
+                    .ForMember(dest => dest.Name, opt => opt.MapFrom(x => x.Name))
+                    .ForMember(dest => dest.Surname, opt => opt.MapFrom(x => x.Surname))
+                    .ForMember(dest => dest.Email, opt => opt.MapFrom(x => x.Email))
+                    .ForMember(dest => dest.Skype, opt => opt.MapFrom(x => x.Skype))
+                    .ForMember(dest => dest.Phone, opt => opt.MapFrom(x => x.PhoneNumber))
+                    .ForMember(dest => dest.LocationId, opt => opt.MapFrom(x => LocationId))
                     .ForMember(dest => dest.ProfessionaCertificates, opt => opt.MapFrom(x => x.ProfessionaCertificates))
                     .ForMember(dest => dest.AdditionalSkills, opt => opt.MapFrom(x => x.AdditionalSkills)));
             var mapper = new Mapper(config);
 
             CandidateEntityModel candidateEM = mapper.Map<CreateCandidateDtoModel, CandidateEntityModel>(candidateDto);
+     
             return candidateEM;
         }
 
-        public CandidateSandboxEntityModel mapNewCandidateSandBoxToEM(Guid candidateId, CreateCandidateDtoModel candidateDto, CandidateProccesEntityModel candidateProcess)
+        public CandidateSandboxEntityModel MapNewCandidateSandBoxToEM(Guid candidateId, CreateCandidateDtoModel candidateDto)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CreateCandidateDtoModel, CandidateSandboxEntityModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => Guid.NewGuid()))
@@ -73,7 +65,7 @@ namespace BusinessLogicLayer.Mapping
             return candidateSandboxEM;
         }
 
-        public CandidateTechSkillEntityModel mapNewCandidateTechSkillToEM(Guid candidateId, CreateCandidateDtoModel candidateDto)
+        public CandidateTechSkillEntityModel MapNewCandidateTechSkillToEM(Guid candidateId, CreateCandidateDtoModel candidateDto)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CreateCandidateDtoModel, CandidateTechSkillEntityModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => Guid.NewGuid()))
@@ -85,12 +77,12 @@ namespace BusinessLogicLayer.Mapping
             return candidateTechSkillEM;
         }
 
-        public CandidateLanguageEntityModel mapNewCandidateLanguagesEM(Guid candidateId, CreateCandidateDtoModel candidateDto)
+        public CandidateLanguageEntityModel MapNewCandidateLanguagesEM(Guid candidateId, Guid defaultLanguageId, CreateCandidateDtoModel candidateDto)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CreateCandidateDtoModel, CandidateLanguageEntityModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => Guid.NewGuid()))
                     .ForMember(x => x.CandidateId, y => y.MapFrom(x => candidateId))
-                    .ForMember(x => x.LanguageId, y => y.MapFrom(x => x.EnglishLanguageId))
+                    .ForMember(x => x.LanguageId, y => y.MapFrom(x => defaultLanguageId))
                     .ForMember(x => x.LanguageLevelId, y => y.MapFrom(x => x.EnglishLevelId)));
             var mapper = new Mapper(config);
 
@@ -98,19 +90,20 @@ namespace BusinessLogicLayer.Mapping
             return candidateLanguageEM;
         }
 
-        public CandidateProccesEntityModel mapNewCandidateProcessEM(CreateCandidateDtoModel candidateDto)
+        public CandidateProccesEntityModel MapNewCandidateProcessEM(Guid candidateSandboxId, Guid defaultStatusId, CreateCandidateDtoModel candidateDto)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CreateCandidateDtoModel, CandidateProccesEntityModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => Guid.NewGuid()))
-                    .ForMember(x => x.StatusId, y => y.MapFrom(x => x.DefaultProcessStatusId))
-                    .ForMember(x => x.TestResult, y => y.MapFrom(x => "")));
+                    .ForMember(x => x.TestResult, y => y.MapFrom(x => ""))
+                    .ForMember(x => x.StatusId, y => y.MapFrom(x => defaultStatusId))
+                    .ForMember(x => x.CandidateSandboxId, y => y.MapFrom(x => candidateSandboxId)));
             var mapper = new Mapper(config);
 
             CandidateProccesEntityModel candidateProcessEM = mapper.Map<CreateCandidateDtoModel, CandidateProccesEntityModel>(candidateDto);
             return candidateProcessEM;
         }
 
-        public CandidateEntityModel mapToEM(CandidateDtoModel candidateDto)
+        public CandidateEntityModel MapToEM(CandidateDtoModel candidateDto)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateDtoModel, CandidateEntityModel>()
                     .ForMember(x => x.Name, y => y.MapFrom(x => x.Name))
@@ -127,7 +120,7 @@ namespace BusinessLogicLayer.Mapping
             return candidateEM;
         }
 
-        public CandidateDtoModel mapCandidateEMToCandidateDto(CandidateEntityModel candidateEM)
+        public CandidateDtoModel MapCandidateEMToCandidateDto(CandidateEntityModel candidateEM)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateEntityModel, CandidateDtoModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
@@ -146,7 +139,7 @@ namespace BusinessLogicLayer.Mapping
             return candidateDto;
         }
 
-        public IEnumerable<CandidateDtoModel> mapCandidateEMListToCandidateDtoList(IEnumerable<CandidateEntityModel> candidateEM)
+        public IEnumerable<CandidateDtoModel> MapCandidateEMListToCandidateDtoList(IEnumerable<CandidateEntityModel> candidateEM)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateEntityModel, CandidateDtoModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
@@ -172,42 +165,6 @@ namespace BusinessLogicLayer.Mapping
                 candidateDtoList.Add(candidateDto);
             }
             return candidateDtoList;
-        }
-        //-------------------------------------------------------------
-        private Guid getLocationId(string locationName)
-        {
-            var t = _unitOfWork.Locations.CreateAsync(locationProfile.mapToEM(locationName)).Id;
-            return Guid.Parse("BE3D2A9B-8DB7-485D-8AF2-C607109EB210");
-        }
-
-        private Guid _getId()
-        {
-            return Guid.NewGuid();
-        }
-
-        private string _getName(string a)
-        {
-            return a;
-        }
-
-        private string _getSurname(string a)
-        {
-            return a;
-        }
-
-        private string _getEmail(string a)
-        {
-            return a;
-        }
-
-        private string _getSkype(string a)
-        {
-            return a;
-        }
-
-        private string _getPhone(string a)
-        {
-            return a;
         }
     }
 }
