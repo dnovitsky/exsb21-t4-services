@@ -1,6 +1,8 @@
 ﻿using DataAccessLayer.IRepositories;
 using DbMigrations.Data;
 using DbMigrations.EntityModels;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,13 +13,7 @@ namespace DataAccessLayer.Repositories
         private AppDbContext db;
         public SandboxLanguageRepository(AppDbContext context)
             : base(context)
-        {
-            db = context;
-        }
+        {}
 
-        public async Task UpdateBySandboxId(IEnumerable<SandboxLanguageEntityModel> sandboxLanguages)
-        {
-            db.SandboxLanguages.UpdateRange(sandboxLanguages);
-        }
     }
 }

@@ -143,9 +143,17 @@ namespace SAPex.Controllers
         public async Task<IActionResult> Update(Guid id, [FromBody] SandboxPutViewModel sandboxViewModel)
         {
             sandboxViewModel.Id = id;
-            _sandboxService.UpdateSandbox(_mapper.MapSbFromViewToDto(sandboxViewModel));
 
             await _sandboxLanguageService.UpdateSandboxLanguagesListByIdsAsync(id, sandboxViewModel.LanguageIds);
+            await _sandboxStackTechnologyService.UpdateSandboxStackTechnologiesListByIdsAsync(id, sandboxViewModel.StackTechnologyIds);
+
+            await _userSandboxService.DeleteUserSandboxListByIdsAsync(id);
+
+            await _userSandboxService.AddUserSandboxListByIdsAsync(id, sandboxViewModel.MentorIds);
+            await _userSandboxService.AddUserSandboxListByIdsAsync(id, sandboxViewModel.InterviewersIds);
+            await _userSandboxService.AddUserSandboxListByIdsAsync(id, sandboxViewModel.RecruiterIds);
+
+            _sandboxService.UpdateSandbox(_mapper.MapSbFromViewToDto(sandboxViewModel));
 
             return await Task.FromResult(Ok());
         }

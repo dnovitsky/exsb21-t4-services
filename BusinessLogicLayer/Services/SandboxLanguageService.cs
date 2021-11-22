@@ -61,17 +61,14 @@ namespace BusinessLogicLayer.Services
         {
             try
             {
-                IList<SandboxLanguageDtoModel> sandboxLanguageDtoModels = new List<SandboxLanguageDtoModel>();
 
-                foreach (var id in languageIds)
-                {
-                    SandboxLanguageDtoModel item = new SandboxLanguageDtoModel { SandboxId = sandboxId, LanguageId = id };
-                    sandboxLanguageDtoModels.Add(item);
-                }
+                IEnumerable<SandboxLanguageEntityModel> listToDelete = await unitOfWork.SandboxLanguages.FindByConditionAsync(x => x.SandboxId == sandboxId);
 
-                await unitOfWork.SandboxLanguages.UpdateBySandboxId(profile.mapListFromDtoToEntity(sandboxLanguageDtoModels));
+                unitOfWork.SandboxLanguages.DeleteRange(listToDelete);
+
+                await AddSandboxLanguagesListByIdsAsync(sandboxId, languageIds);
                 await unitOfWork.SaveAsync();
-
+               
                 return true;
             }
             catch (Exception ex)

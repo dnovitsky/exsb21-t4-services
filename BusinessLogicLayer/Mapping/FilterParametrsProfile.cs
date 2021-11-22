@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
 using BusinessLogicLayer.DtoModels;
+using DataAccessLayer.Models;
 using DbMigrations.EntityModels;
 
 namespace BusinessLogicLayer.Mapping
 {
     public class FilterParametrsProfile : Profile
     {
-        public FilterParametrsEntityModel MapFromDtoToEntity(FilterParametrsDtoModel filterParametrsDto)
+        public FilterParametrsDalModel MapFromDtoToDal(FilterParametrsDtoModel filterParametrsDto)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<FilterParametrsDtoModel, FilterParametrsEntityModel>()
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<FilterParametrsDtoModel, FilterParametrsDalModel>()
                     .ForMember(x => x.FirstSearchingTextField, y => y.MapFrom(x => x.FirstSearchingTextField))
                     .ForMember(x => x.FirstSearchingTextString, y => y.MapFrom(x => x.FirstSearchingTextString))
                     .ForMember(x => x.SecondSearchingTextField, y => y.MapFrom(x => x.SecondSearchingTextField))
@@ -19,8 +20,8 @@ namespace BusinessLogicLayer.Mapping
 
             var mapper = new Mapper(config);
 
-            FilterParametrsEntityModel filterParametrsEntity = mapper.Map<FilterParametrsDtoModel, FilterParametrsEntityModel>(filterParametrsDto);
-            return filterParametrsEntity;
+            FilterParametrsDalModel filterParametrsDal = mapper.Map<FilterParametrsDtoModel, FilterParametrsDalModel>(filterParametrsDto);
+            return filterParametrsDal;
         }
     }
 }

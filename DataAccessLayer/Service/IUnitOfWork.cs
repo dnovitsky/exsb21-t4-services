@@ -41,5 +41,7 @@ namespace DataAccessLayer.Service
         IInterviewEventRepository InterviewEvents { get; }
 
         Task SaveAsync();
+
+        public void Save();
     }
 }

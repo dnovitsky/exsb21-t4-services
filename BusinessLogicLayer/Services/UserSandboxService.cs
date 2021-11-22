@@ -55,5 +55,21 @@ namespace BusinessLogicLayer.Services
                 return false;
             }
         }
+
+        public async Task<bool> DeleteUserSandboxListByIdsAsync(Guid sandboxId)
+        {
+            try
+            {
+                IEnumerable<UserSandBoxEntityModel> listToDelete = await unitOfWork.UserSandBoxes.FindByConditionAsync(x => x.SandBoxId == sandboxId);
+                unitOfWork.UserSandBoxes.DeleteRange(listToDelete);
+                await unitOfWork.SaveAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

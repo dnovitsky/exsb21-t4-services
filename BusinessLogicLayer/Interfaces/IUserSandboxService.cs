@@ -13,5 +13,6 @@ namespace BusinessLogicLayer.Interfaces
 
         Task<bool> AddUserSandboxListByIdsAsync(Guid sandboxId, IEnumerable<Guid> stackTechnologyIds);
 
+        Task<bool> DeleteUserSandboxListByIdsAsync(Guid sandboxId);
     }
 }

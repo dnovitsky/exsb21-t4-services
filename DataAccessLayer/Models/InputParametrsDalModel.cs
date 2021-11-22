@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DbMigrations.EntityModels
+namespace DataAccessLayer.Models
 {
-    public class InputParametrsEntityModel
+    public class InputParametrsDalModel
     {
         public int PageNumber;
 

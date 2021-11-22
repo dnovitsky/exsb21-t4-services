@@ -7,6 +7,7 @@ using DbMigrations.EntityModels;
 using DbMigrations.Data;
 using DataAccessLayer.IRepositories;
 using DataAccessLayer.Service;
+using DataAccessLayer.Models;
 
 namespace DataAccessLayer.Repositories
 {
@@ -40,7 +41,7 @@ namespace DataAccessLayer.Repositories
             return await Task.Run(() => db.Sandboxes.AsEnumerable());
         }
 
-        public async Task<PagedList<SandboxEntityModel>> GetPagedAsync(InputParametrsEntityModel parametrs, FilterParametrsEntityModel filterParametrs)
+        public async Task<PagedList<SandboxEntityModel>> GetPagedAsync(InputParametrsDalModel parametrs, FilterParametrsDalModel filterParametrs)
         {
             int pageNumber = parametrs.PageNumber;
             int pageSize = parametrs.PageSize;

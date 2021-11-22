@@ -60,7 +60,7 @@ namespace BusinessLogicLayer.Services
         {
             PagedList<SandboxEntityModel> sandboxList = await unitOfWork.Sandboxes.GetPagedAsync(
                 inputParametrsProfile.MapFromDtoToEntity(parametrs),
-                filterParametrsProfile.MapFromDtoToEntity(filterParametrs));
+                filterParametrsProfile.MapFromDtoToDal(filterParametrs));
             PagedList<SandboxDtoModel> sandboxDtoList = new PagedList<SandboxDtoModel>
             {
                 PageList = profile.mapListToDto(sandboxList.PageList),
@@ -75,7 +75,7 @@ namespace BusinessLogicLayer.Services
         {
                 SandboxEntityModel sandbox = profile.mapToEM(sandboxDto);
                 unitOfWork.Sandboxes.Update(sandbox);
-                unitOfWork.SaveAsync();
+                unitOfWork.Save();
         }
 
         public void DeleteSandbox(Guid id)

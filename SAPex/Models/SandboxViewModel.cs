@@ -17,15 +17,15 @@ namespace SAPex.Models
 
         public int MaxCandidates { get; set; }
 
-        public string CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }
 
-        public string StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
-        public string EndDate { get; set; }
+        public DateTime EndDate { get; set; }
 
-        public string StartRegistration { get; set; }
+        public DateTime StartRegistration { get; set; }
 
-        public string EndRegistration { get; set; }
+        public DateTime EndRegistration { get; set; }
 
         public string Status { get; set; }
 

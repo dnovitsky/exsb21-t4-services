@@ -9,20 +9,18 @@ namespace SAPex.Mappers
 {
     public class SandboxMapper : Profile
     {
-        private const string _dateFormat = "d";
-
         public SandboxViewModel MapSbFromDtoToView(SandboxDtoModel sandboxDto)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<SandboxDtoModel, SandboxViewModel>()
                     .ForMember(x => x.Name, y => y.MapFrom(x => x.Name))
                     .ForMember(x => x.Description, y => y.MapFrom(x => x.Description))
                     .ForMember(x => x.MaxCandidates, y => y.MapFrom(x => x.MaxCandidates))
-                    .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate.ToString(_dateFormat)))
-                    .ForMember(x => x.StartDate, y => y.MapFrom(x => x.StartDate.ToString(_dateFormat)))
-                    .ForMember(x => x.EndDate, y => y.MapFrom(x => x.EndDate.ToString(_dateFormat)))
-                    .ForMember(x => x.StartRegistration, y => y.MapFrom(x => x.StartRegistration.ToString(_dateFormat)))
+                    .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate))
+                    .ForMember(x => x.StartDate, y => y.MapFrom(x => x.StartDate))
+                    .ForMember(x => x.EndDate, y => y.MapFrom(x => x.EndDate))
+                    .ForMember(x => x.StartRegistration, y => y.MapFrom(x => x.StartRegistration))
                     .ForMember(x => x.Status, y => y.MapFrom(x => x.Status.ToString()))
-                    .ForMember(x => x.EndRegistration, y => y.MapFrom(x => x.EndRegistration.ToString(_dateFormat))));
+                    .ForMember(x => x.EndRegistration, y => y.MapFrom(x => x.EndRegistration)));
             var mapper = new Mapper(config);
 
             SandboxViewModel sandbox = mapper.Map<SandboxDtoModel, SandboxViewModel>(sandboxDto);
@@ -72,12 +70,12 @@ namespace SAPex.Mappers
                    .ForMember(x => x.Name, y => y.MapFrom(x => x.Name))
                    .ForMember(x => x.Description, y => y.MapFrom(x => x.Description))
                    .ForMember(x => x.MaxCandidates, y => y.MapFrom(x => x.MaxCandidates))
-                   .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate.ToString(_dateFormat)))
-                   .ForMember(x => x.StartDate, y => y.MapFrom(x => x.StartDate.ToString(_dateFormat)))
-                   .ForMember(x => x.EndDate, y => y.MapFrom(x => x.EndDate.ToString(_dateFormat)))
-                   .ForMember(x => x.StartRegistration, y => y.MapFrom(x => x.StartRegistration.ToString(_dateFormat)))
+                   .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate))
+                   .ForMember(x => x.StartDate, y => y.MapFrom(x => x.StartDate))
+                   .ForMember(x => x.EndDate, y => y.MapFrom(x => x.EndDate))
+                   .ForMember(x => x.StartRegistration, y => y.MapFrom(x => x.StartRegistration))
                    .ForMember(x => x.Status, y => y.MapFrom(x => x.Status.ToString()))
-                   .ForMember(x => x.EndRegistration, y => y.MapFrom(x => x.EndRegistration.ToString(_dateFormat))));
+                   .ForMember(x => x.EndRegistration, y => y.MapFrom(x => x.EndRegistration)));
             var mapper = new Mapper(config);
 
             IList<SandboxViewModel> sandboxViewList = new List<SandboxViewModel>()

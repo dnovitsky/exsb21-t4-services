@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BusinessLogicLayer.DtoModels;
+using DataAccessLayer.Models;
 using DbMigrations.EntityModels;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ namespace BusinessLogicLayer.Mapping
 {
     class InputParametrsProfile : Profile
     {
-        public InputParametrsEntityModel MapFromDtoToEntity(InputParametrsDtoModel inputParametrsDto)
+        public InputParametrsDalModel MapFromDtoToEntity(InputParametrsDtoModel inputParametrsDto)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<InputParametrsDtoModel, InputParametrsEntityModel>()
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<InputParametrsDtoModel, InputParametrsDalModel>()
                     .ForMember(x => x.PageNumber, y => y.MapFrom(x => x.PageNumber))
                     .ForMember(x => x.PageSize, y => y.MapFrom(x => x.PageSize))
                     .ForMember(x => x.SortField, y => y.MapFrom(x => x.SortField))
@@ -21,7 +22,7 @@ namespace BusinessLogicLayer.Mapping
 
             var mapper = new Mapper(config);
 
-            InputParametrsEntityModel inputParametrsEntity = mapper.Map<InputParametrsDtoModel, InputParametrsEntityModel>(inputParametrsDto);
+            InputParametrsDalModel inputParametrsEntity = mapper.Map<InputParametrsDtoModel, InputParametrsDalModel>(inputParametrsDto);
             return inputParametrsEntity;
         }
     }
