@@ -14,6 +14,6 @@ namespace BusinessLogicLayer.DtoModels
         public string TestResult { get; set; }
         public DateTime CreateDate { get; set; }
 
-        public IList<FeedbackDtoModel> Feedbacks { get; set; }
+        public IEnumerable<FeedbackDtoModel> Feedbacks { get; set; }
     }
 }
