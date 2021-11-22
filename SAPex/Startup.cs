@@ -105,6 +105,7 @@ namespace SAPex
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICalendarEventService, CalendarEventService>();
             services.AddScoped<IInterviewEventService, InterviewEventService>();
+            services.AddScoped<IFeedbackService, FeedbackService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -145,6 +146,7 @@ namespace SAPex
                 new UserHelper(dbContext),
                 new RoleHelper(dbContext),
                 new UserRoleHelper(dbContext),
+                new PasswordHelper(dbContext),
             };
             helpers.ForEach(helper => helper.CreateTestData());
 

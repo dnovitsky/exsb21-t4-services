@@ -17,8 +17,8 @@ namespace BusinessLogicLayer.Mapping
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateSandboxDtoModel, CandidateSandboxEntityModel>()
                    .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.Sandbox, y => y.MapFrom(x => x.Sandbox))
-                    .ForMember(x => x.CandidateProcess, y => y.MapFrom(x => x.CandidateProcess))
-                    .ForMember(x => x.CandidateProjectRole, y => y.MapFrom(x => x.CandidateProjectRole)));
+                    .ForMember(x => x.CandidateProjectRole, y => y.MapFrom(x => x.CandidateProjectRole))
+                    .ForMember(x => x.CandidateProcesses, y => y.MapFrom(x => x.CandidateProcesses)));
 
             return new Mapper(config);
         }
@@ -28,8 +28,8 @@ namespace BusinessLogicLayer.Mapping
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateSandboxEntityModel, CandidateSandboxDtoModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.Sandbox, y => y.MapFrom(x => sandboxProfile.mapToDto(x.Sandbox)))
-                    .ForMember(x => x.CandidateProcess, y => y.MapFrom(x => candidateProcessProfile.mapToDto(x.CandidateProcess)))
-                    .ForMember(x => x.CandidateProjectRole, y => y.MapFrom(x => candidateProjectRoleProfile.mapToDto(x.CandidateProjectRole))));
+                    .ForMember(x => x.CandidateProjectRole, y => y.MapFrom(x => candidateProjectRoleProfile.mapToDto(x.CandidateProjectRole)))
+                    .ForMember(x => x.CandidateProcesses, y => y.MapFrom(x => candidateProcessProfile.mapListToDto(x.CandidateProcesses))));
 
             return new Mapper(config);
         }
