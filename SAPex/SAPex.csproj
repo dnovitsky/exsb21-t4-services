@@ -46,6 +46,7 @@
     <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
     <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj" />
     <ProjectReference Include="..\SAPexAuthService\SAPexAuthService.csproj" />
+    <ProjectReference Include="..\SAPexSMTPMailService\SAPexSMTPMailService.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Mappers\Base\" />
