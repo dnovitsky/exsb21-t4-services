@@ -5,6 +5,7 @@ using AutoMapper;
 using BusinessLogicLayer.Helpers;
 using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Services;
+using DataAccessLayer.Models;
 using DataAccessLayer.Service;
 using DbMigrations.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

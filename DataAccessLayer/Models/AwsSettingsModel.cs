@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SAPexAuthService.Models
+namespace DataAccessLayer.Models
 {
     public class AwsSettingsModel
     {
@@ -13,6 +13,5 @@ namespace SAPexAuthService.Models
         public string AwsSecretKey { get; set; }
 
         public string AwsBucketName { get; set; }
-        
     }
 }

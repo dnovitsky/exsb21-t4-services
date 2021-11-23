@@ -5,13 +5,10 @@ using Amazon.S3.Model;
 using Amazon.S3.Transfer;
 using BusinessLogicLayer.DtoModels;
 using BusinessLogicLayer.Interfaces;
+using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Http;
-using SAPexAuthService.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Services

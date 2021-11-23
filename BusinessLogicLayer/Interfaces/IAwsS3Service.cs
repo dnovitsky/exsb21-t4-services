@@ -1,14 +1,8 @@
 ﻿using Amazon.S3.Model;
 using BusinessLogicLayer.DtoModels;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using SAPexAuthService.Models;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using DataAccessLayer.Models;
 
 namespace BusinessLogicLayer.Interfaces
 {
