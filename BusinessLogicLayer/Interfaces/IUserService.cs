@@ -14,5 +14,7 @@ namespace BusinessLogicLayer.Interfaces
         Task<UserDtoModel> FindByIdConditionAsync(Expression<Func<UserFunctionalRoleEntityModel, bool>> expression);
 
         Task<IEnumerable<UserDtoModel>> FindAllByConditionAsync(Expression<Func<UserFunctionalRoleEntityModel, bool>> expression);
+
+        Task<IEnumerable<UserDtoModel>> GetUsersBySandboxIdConditionFuncRole(Expression<Func<UserFunctionalRoleEntityModel, bool>> expression, Guid sandboxId);
     }
 }

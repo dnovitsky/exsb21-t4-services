@@ -72,5 +72,13 @@ namespace DataAccessLayer.Repositories
                 set.Remove(del_item);
             }
         }
+
+        public virtual void DeleteRange(IEnumerable<T> items)
+        {
+            if(items != null)
+            {
+                set.RemoveRange(items);
+            }
+        }
     }
 }
