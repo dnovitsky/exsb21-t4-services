@@ -84,14 +84,18 @@ namespace BusinessLogicLayer.Services
             var eventEntity = _mapper.Map<EventEntityModel>(value);
 
             eventEntity = await _unitOfWork.Events.CreateAsync(eventEntity);
-            
-            
-            var start = new DateTimeGoogleModel();
-            start.DateTime = value.StartTime.ToString();
-            start.TimeZone = "UTC";
-            var end = new DateTimeGoogleModel();
-            end.DateTime = value.EndTime.ToString();
-            end.TimeZone = "UTC";
+
+
+            var start = new DateTimeGoogleModel
+            {
+                DateTime = value.StartTime.ToString(),
+                TimeZone = "UTC"
+            };
+            var end = new DateTimeGoogleModel
+            {
+                DateTime = value.EndTime.ToString(),
+                TimeZone = "UTC"
+            };
             var attendees = new List<AttendeeGoogleModel>();
             foreach (var member in members)
             {
