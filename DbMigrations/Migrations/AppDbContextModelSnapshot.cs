@@ -113,8 +113,9 @@ namespace DbMigrations.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("LocationId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -136,8 +137,6 @@ namespace DbMigrations.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LocationId");
 
                     b.ToTable("Candidates");
                 });
@@ -465,21 +464,6 @@ namespace DbMigrations.Migrations
                     b.ToTable("LanguageLevels");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.LocationEntityModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Locations");
-                });
-
             modelBuilder.Entity("DbMigrations.EntityModels.RatingEntityModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -656,8 +640,9 @@ namespace DbMigrations.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("LocationId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -680,8 +665,6 @@ namespace DbMigrations.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LocationId");
 
                     b.ToTable("Users");
                 });
@@ -772,6 +755,9 @@ namespace DbMigrations.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FunctionalRole")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("SandBoxId")
                         .HasColumnType("uniqueidentifier");
@@ -887,15 +873,6 @@ namespace DbMigrations.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.CandidateEntityModel", b =>
-                {
-                    b.HasOne("DbMigrations.EntityModels.LocationEntityModel", "Location")
-                        .WithMany("Candidates")
-                        .HasForeignKey("LocationId");
-
-                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateLanguageEntityModel", b =>
@@ -1127,15 +1104,6 @@ namespace DbMigrations.Migrations
                     b.Navigation("Sandbox");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.UserEntityModel", b =>
-                {
-                    b.HasOne("DbMigrations.EntityModels.LocationEntityModel", "Location")
-                        .WithMany("Users")
-                        .HasForeignKey("LocationId");
-
-                    b.Navigation("Location");
-                });
-
             modelBuilder.Entity("DbMigrations.EntityModels.UserFunctionalRoleEntityModel", b =>
                 {
                     b.HasOne("DbMigrations.EntityModels.FunctionalRoleEntityModel", "FunctionalRole")
@@ -1333,13 +1301,6 @@ namespace DbMigrations.Migrations
                     b.Navigation("CandidateLanguages");
 
                     b.Navigation("UserLanguages");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.LocationEntityModel", b =>
-                {
-                    b.Navigation("Candidates");
-
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.RatingEntityModel", b =>
