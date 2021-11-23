@@ -12,7 +12,6 @@ namespace DbMigrations.EntityModels
         public SkillEntityModel()
         {
             UserTechSkills = new List<UserTechSkillEntityModel>();
-            Ratings = new List<RatingEntityModel>();
             CandidateTechSkills = new List<CandidateTechSkillEntityModel>();
         }
         [Key]
@@ -20,7 +19,6 @@ namespace DbMigrations.EntityModels
         [Required]
         public string Name { get; set; }
         public virtual IList<UserTechSkillEntityModel> UserTechSkills { get; set; }
-        public virtual IList<RatingEntityModel> Ratings { get; set; }
         public virtual IList<CandidateTechSkillEntityModel> CandidateTechSkills { get; set; }
     }
 }

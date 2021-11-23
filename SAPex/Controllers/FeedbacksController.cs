@@ -70,7 +70,9 @@ namespace SAPex.Controllers
             {
                 Id = id,
                 UserId = feedbackDtoCheck.UserId,
-                RatingId = feedbackDtoCheck.RatingId,
+                MentoreGrade = feedbackDtoCheck.MentoreGrade,
+                InterviewerGrade = feedbackDtoCheck.InterviewerGrade,
+                AdminGrade = feedbackDtoCheck.AdminGrade,
                 CreateDate = DateTime.Now,
                 UserReview = userReview,
                 CandidateProccesId = feedbackDtoCheck.CandidateProccesId,

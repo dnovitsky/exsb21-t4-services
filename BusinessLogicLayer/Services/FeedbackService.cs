@@ -42,7 +42,6 @@ namespace BusinessLogicLayer.Services
             try
             {
                 FeedbackEntityModel feedbackEM = profile.mapToEM(feedbackDto);
-                feedbackEM.Rating = await unitOfWork.Ratings.FindByIdAsync(feedbackEM.RatingId);
                 feedbackEM.User = await unitOfWork.Users.FindByIdAsync(feedbackEM.UserId);
                 feedbackEM.CandidateProcces = await unitOfWork.CandidateProcceses.FindByIdAsync(feedbackEM.CandidateProccesId);
                 unitOfWork.Feedbacks.Update(feedbackEM);

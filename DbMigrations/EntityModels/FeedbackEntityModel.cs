@@ -17,9 +17,11 @@ namespace DbMigrations.EntityModels
         public Guid UserId { get; set; }
         public virtual UserEntityModel User { get; set; }
 
-        [Required]
-        public Guid RatingId { get; set; }
-        public virtual RatingEntityModel Rating { get; set; }
+        public int? MentoreGrade { get; set; }
+
+        public int? InterviewerGrade { get; set; }
+
+        public int? AdminGrade { get; set; }
 
         [Required]
         public DateTime CreateDate { get; set; }

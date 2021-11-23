@@ -91,7 +91,7 @@ namespace BusinessLogicLayer.Services
 
         public async Task<CandidateDtoModel> FindCandidateByIdAsync(Guid id)
         {
-            CandidateEntityModel candidateEM = await unitOfWork.Candidates.FindByIdAsync(id);
+            CandidateEntityModel candidateEM = await unitOfWork.Candidates.FindByIdAsync(id); 
             CandidateDtoModel candidateDto = profile.MapCandidateEMToCandidateDto(candidateEM);
             return candidateDto;
         }
