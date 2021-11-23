@@ -14,7 +14,7 @@ namespace BusinessLogicLayer.Helpers
             _dbContext = dbContext;
         }
         
-        private List<string> roles = new List<string> { "EDU manager", "Mentor", "Interviewer", "Recruiter", "Admin" };
+        private List<string> roles = new() { "EDU manager", "Mentor", "Interviewer", "Recruiter", "Admin" };
         public void CreateTestData()
         {
             if (!_dbContext.FunctionalRoles.Any())
@@ -34,7 +34,13 @@ namespace BusinessLogicLayer.Helpers
 
         public void ClearTestData()
         {
-            throw new NotImplementedException();
+            foreach (var role in roles)
+            {
+                var entity = _dbContext.FunctionalRoles.Where(x => x.Name == role).FirstOrDefault();
+                if (entity == null) break;
+                _dbContext.Remove(entity);
+            }
+            _dbContext.SaveChanges();
         }
     }
 }

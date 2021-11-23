@@ -8,6 +8,7 @@ namespace BusinessLogicLayer.Helpers
     public class PasswordHelper : IApplicationHelper
     {
         private AppDbContext _dbContext;
+        private const string CONST_TITLE = "3fa85f64-5717-4562-b3fc-2c963f66afa6";
         public PasswordHelper(AppDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -17,6 +18,7 @@ namespace BusinessLogicLayer.Helpers
             { "manager@gmail.com" , "manager123456" },
             { "mentor@gmail.com","mentor123456" },
             { "interviewer@gmail.com","interviewer123456" },
+            { "developer.noor.cullen@gmail.com","interviewer123456"},
             { "recruiter@gmail.com","recruiter123456" },
             { "admin@gmail.com","admin123456" },
         };
@@ -25,10 +27,10 @@ namespace BusinessLogicLayer.Helpers
         {
             foreach (var dic in dictionary)
             {
-                var user = _dbContext.Users.Where(x => x.Email == dic.Key && x.Password == dic.Value).FirstOrDefault();
+                var user = _dbContext.Users.Where(x => x.Email == dic.Key).FirstOrDefault();
                 if (user != null)
                 {
-                    user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+                    user.Password = BCrypt.Net.BCrypt.HashPassword(CONST_TITLE+dic.Value);
                     _dbContext.Update(user);
                 }
             }

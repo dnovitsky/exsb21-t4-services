@@ -17,7 +17,7 @@ namespace SAPexAuthService.Services
         private readonly AuthUserService _userService;
         private readonly AppSettingsModel _appSettings;
         private readonly AuthUserRefreshTokenService _refreshTokenService;
-
+        private const string CONST_TITLE = "3fa85f64-5717-4562-b3fc-2c963f66afa6";
         public JwtService(AuthUserService userService, AuthUserRefreshTokenService refreshTokenService, IOptions<AppSettingsModel> appSettings)
         {
             _userService = userService;
@@ -28,7 +28,7 @@ namespace SAPexAuthService.Services
         public async Task<TokenCredentialsModel> AuthenticateAsync(UserCredentialsModel credentials)
         {
             var user = await _userService.FindByEmailAsync(credentials.Email);
-            if (user == null || !BCrypt.Net.BCrypt.Verify(credentials.Password,user.Password))
+            if (user == null || !BCrypt.Net.BCrypt.Verify(CONST_TITLE+credentials.Password,user.Password))
             {
                 return null;
             }
@@ -63,7 +63,7 @@ namespace SAPexAuthService.Services
             return false;
         }
 
-        private async Task<TokenCredentialsModel> GenerateTokenByUserAsync(UserEntityModel user)
+        internal async Task<TokenCredentialsModel> GenerateTokenByUserAsync(UserEntityModel user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);

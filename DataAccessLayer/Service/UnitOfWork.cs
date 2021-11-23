@@ -29,6 +29,7 @@ namespace DataAccessLayer.Service
         private IFunctionalRoleRepository functionalRoles;
         private ILanguageLevelRepository languageLevels;
         private ILanguageRepository languages;
+        private ILocationRepository locations;
         private IRatingRepository ratings;
         private ISandboxLanguageRepository sandboxLanguages;
         private ISandboxRepository sandboxes;
@@ -45,7 +46,13 @@ namespace DataAccessLayer.Service
         private IUserTeamRepository userTeams;
         private IUserTechSkillRepository userTechSkills;
         private IUserRefreshTokenRepository userRefreshTokens;
+<<<<<<< HEAD
         private IEventRepository events;
+=======
+        private ICalendarEventRepository calendarEvents;
+        private IInterviewEventRepository interviewEvents;
+        private IGoogleAccessTokenRepository googleAccessTokens;
+>>>>>>> dev
 
         public UnitOfWork(AppDbContext context)
         {
@@ -215,6 +222,18 @@ namespace DataAccessLayer.Service
                     languages = new LanguageRepository(context);
                 }
                 return languages;
+            }
+        }
+
+        public ILocationRepository Locations
+        {
+            get
+            {
+                if (locations == null)
+                {
+                    locations = new LocationRepository(context);
+                }
+                return locations;
             }
         }
 
@@ -456,6 +475,18 @@ namespace DataAccessLayer.Service
                     events = new EventRepository(context);
                 }
                 return events;
+            }
+        }
+
+        public IGoogleAccessTokenRepository GoogleAccessTokens
+        {
+            get
+            {
+                if (googleAccessTokens == null)
+                {
+                    googleAccessTokens = new GoogleAccessTokenRepository(context);
+                }
+                return googleAccessTokens;
             }
         }
 

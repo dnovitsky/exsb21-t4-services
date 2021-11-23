@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DbMigrations.EntityModels
 {
     public class CandidateLanguageEntityModel
-    {
+    {        
         [Key]
         public Guid Id { get; set; }
         [Required]

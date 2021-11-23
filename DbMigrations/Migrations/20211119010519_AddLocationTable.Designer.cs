@@ -4,14 +4,16 @@ using DbMigrations.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DbMigrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211119010519_AddLocationTable")]
+    partial class AddLocationTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -290,45 +292,6 @@ namespace DbMigrations.Migrations
                     b.ToTable("CandidateTechSkills");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.EventEntityModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CandidateSandboxId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("GoogleCalendarEventId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("InterviewerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Summary")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TimeZone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CandidateSandboxId");
-
-                    b.HasIndex("InterviewerId");
-
-                    b.ToTable("Events");
-                });
-
             modelBuilder.Entity("DbMigrations.EntityModels.FeedbackEntityModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -411,37 +374,6 @@ namespace DbMigrations.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FunctionalRoles");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.GoogleAccessTokenEntityModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Access_token")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("Created_in")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Expires_in")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Refresh_token")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Token_type")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("GoogleAccessTokens");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.InterviewEventEntityModel", b =>
@@ -1052,23 +984,6 @@ namespace DbMigrations.Migrations
                     b.Navigation("Skill");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.EventEntityModel", b =>
-                {
-                    b.HasOne("DbMigrations.EntityModels.CandidateSandboxEntityModel", "CandidateSandbox")
-                        .WithMany()
-                        .HasForeignKey("CandidateSandboxId");
-
-                    b.HasOne("DbMigrations.EntityModels.UserEntityModel", "User")
-                        .WithMany()
-                        .HasForeignKey("InterviewerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CandidateSandbox");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("DbMigrations.EntityModels.FeedbackEntityModel", b =>
                 {
                     b.HasOne("DbMigrations.EntityModels.CandidateProccesEntityModel", "CandidateProcces")
@@ -1092,17 +1007,6 @@ namespace DbMigrations.Migrations
                     b.Navigation("CandidateProcces");
 
                     b.Navigation("Rating");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.GoogleAccessTokenEntityModel", b =>
-                {
-                    b.HasOne("DbMigrations.EntityModels.UserEntityModel", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("User");
                 });
