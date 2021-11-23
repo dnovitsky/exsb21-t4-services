@@ -46,7 +46,9 @@
     <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
     <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj" />
     <ProjectReference Include="..\SAPexAuthService\SAPexAuthService.csproj" />
-    <ProjectReference Include="..\SAPexSMTPMailService\SAPexSMTPMailService.csproj" />
+    <ProjectReference Include="..\SAPexSMTPMailService\SAPexSMTPMailService.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Mappers\Base\" />
