@@ -25,6 +25,8 @@ namespace SAPex.Controllers
         private readonly ILanguageService _languageService;
         private readonly ISandboxLanguageService _sandboxLanguageService;
         private readonly ISandboxStackTechnologyService _sandboxStackTechnologyService;
+        private readonly IUserService _userService;
+        private readonly IUserSandboxService _userSandboxService;
         private readonly SandboxMapper _mapper;
         private readonly SandboxLanguageMapper _slmapper;
         private readonly SandboxStackTechnologyMapper _sstmapper;
@@ -33,13 +35,16 @@ namespace SAPex.Controllers
 
         public SandboxesController(ISandboxStackTechnologyService sandboxStackTechnologyService,
             ISandboxLanguageService sandboxLanguagesService, ISandboxService sandboxService,
-            IStackTechnologyService stackTechnologyService, ILanguageService languageService)
+            IStackTechnologyService stackTechnologyService, ILanguageService languageService,
+            IUserService userService, IUserSandboxService userSandboxService)
         {
             _sandboxStackTechnologyService = sandboxStackTechnologyService;
             _sandboxLanguageService = sandboxLanguagesService;
             _sandboxService = sandboxService;
             _stackTechnologyService = stackTechnologyService;
             _languageService = languageService;
+            _userService = userService;
+            _userSandboxService = userSandboxService;
             _mapper = new SandboxMapper();
             _slmapper = new SandboxLanguageMapper();
             _sstmapper = new SandboxStackTechnologyMapper();
@@ -50,13 +55,23 @@ namespace SAPex.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            SandboxDtoModel sandboxDtoModel = await _sandboxService.FindSandboxByIdAsync(id); // on what level goes null check? it should go directly to db?
+            SandboxDtoModel sandboxDtoModel = await _sandboxService.FindSandboxByIdAsync(id);
+
+            if (sandboxDtoModel == null)
+            {
+                return NotFound();
+            }
+
             IEnumerable<StackTechnologyDtoModel> stackTechnologiesDtoModel = await _stackTechnologyService.GetStackTechnologiesBySandboxIdAsync(id);
             IEnumerable<LanguageDtoModel> languagesDtoModel = await _languageService.GetLanguagesBySandboxIdAsync(id);
+            IEnumerable<UserDtoModel> mentorDtoModels = await _userService.GetUsersBySandboxIdConditionFuncRole(s => s.FunctionalRole.Name == "Mentor", id);
+            IEnumerable<UserDtoModel> recruiterDtoModels = await _userService.GetUsersBySandboxIdConditionFuncRole(s => s.FunctionalRole.Name == "Recruiter", id);
+            IEnumerable<UserDtoModel> interwieverDtoModels = await _userService.GetUsersBySandboxIdConditionFuncRole(s => s.FunctionalRole.Name == "Interviewer", id);
 
-            SandboxViewModel viewModel = _mapper.MapSbStackLgFromDtoToView(sandboxDtoModel, languagesDtoModel, stackTechnologiesDtoModel);
+            SandboxViewModel viewModel = _mapper.MapFromDtoToView(sandboxDtoModel, languagesDtoModel, stackTechnologiesDtoModel,
+                mentorDtoModels, recruiterDtoModels, interwieverDtoModels);
 
-            return await Task.FromResult(Ok(viewModel)); // convert to json?
+            return await Task.FromResult(Ok(viewModel));
         }
 
         [HttpGet("all")]
@@ -70,8 +85,12 @@ namespace SAPex.Controllers
             {
                 IEnumerable<StackTechnologyDtoModel> stackTechnologyDtoModels = await _stackTechnologyService.GetStackTechnologiesBySandboxIdAsync(item.Id);
                 IEnumerable<LanguageDtoModel> languageDtoModels = await _languageService.GetLanguagesBySandboxIdAsync(item.Id);
+                IEnumerable<UserDtoModel> mentorDtoModels = await _userService.GetUsersBySandboxIdConditionFuncRole(s => s.FunctionalRole.Name == "Mentor", item.Id);
+                IEnumerable<UserDtoModel> recruiterDtoModels = await _userService.GetUsersBySandboxIdConditionFuncRole(s => s.FunctionalRole.Name == "Recruiter", item.Id);
+                IEnumerable<UserDtoModel> interwieverDtoModels = await _userService.GetUsersBySandboxIdConditionFuncRole(s => s.FunctionalRole.Name == "Interviewer", item.Id);
 
-                viewModels.Add(_mapper.MapSbStackLgFromDtoToView(item, languageDtoModels, stackTechnologyDtoModels));
+                viewModels.Add(_mapper.MapFromDtoToView(item, languageDtoModels, stackTechnologyDtoModels,
+                    mentorDtoModels, recruiterDtoModels, interwieverDtoModels));
             }
 
             return await Task.FromResult(Ok(viewModels));
@@ -88,10 +107,17 @@ namespace SAPex.Controllers
 
             foreach (var item in dtoPageListModels.PageList)
             {
-                IEnumerable<StackTechnologyDtoModel> stackTechnologyDtoModels = await _stackTechnologyService.GetStackTechnologiesBySandboxIdAsync(item.Id);
-                IEnumerable<LanguageDtoModel> languageDtoModels = await _languageService.GetLanguagesBySandboxIdAsync(item.Id);
+                if (item != null)
+                {
+                    IEnumerable<StackTechnologyDtoModel> stackTechnologyDtoModels = await _stackTechnologyService.GetStackTechnologiesBySandboxIdAsync(item.Id);
+                    IEnumerable<LanguageDtoModel> languageDtoModels = await _languageService.GetLanguagesBySandboxIdAsync(item.Id);
+                    IEnumerable<UserDtoModel> mentorDtoModels = await _userService.GetUsersBySandboxIdConditionFuncRole(s => s.FunctionalRole.Name == "Mentor", item.Id);
+                    IEnumerable<UserDtoModel> recruiterDtoModels = await _userService.GetUsersBySandboxIdConditionFuncRole(s => s.FunctionalRole.Name == "Recruiter", item.Id);
+                    IEnumerable<UserDtoModel> interwieverDtoModels = await _userService.GetUsersBySandboxIdConditionFuncRole(s => s.FunctionalRole.Name == "Interviewer", item.Id);
 
-                viewModels.Add(_mapper.MapSbStackLgFromDtoToView(item, languageDtoModels, stackTechnologyDtoModels));
+                    viewModels.Add(_mapper.MapFromDtoToView(item, languageDtoModels, stackTechnologyDtoModels,
+                    mentorDtoModels, recruiterDtoModels, interwieverDtoModels));
+                }
             }
 
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(dtoPageListModels.TotalPages));
@@ -99,29 +125,37 @@ namespace SAPex.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(
-            [FromBody] SandboxFieldsViewModel sandboxFields,
-            [FromQuery] IEnumerable<Guid> languageIds,
-            [FromQuery] IEnumerable<Guid> stackTechnologyIds)
+        public async Task<IActionResult> Create(
+            [FromBody] SandboxPostViewModel sandboxViewModel)
         {
-            Guid sandboxId = await _sandboxService.AddSandboxAsync(_mapper.MapSbFromViewToDto(sandboxFields));
+            Guid sandboxId = await _sandboxService.AddSandboxAsync(_mapper.MapSbFromViewToDto(sandboxViewModel));
 
-            await _sandboxLanguageService.AddSandboxLanguagesListByIdsAsync(sandboxId, languageIds);
-            await _sandboxStackTechnologyService.AddSandboxStackTechnologyListByIdsAsync(sandboxId, stackTechnologyIds);
+            await _sandboxLanguageService.AddSandboxLanguagesListByIdsAsync(sandboxId, sandboxViewModel.LanguageIds);
+            await _sandboxStackTechnologyService.AddSandboxStackTechnologyListByIdsAsync(sandboxId, sandboxViewModel.StackTechnologyIds);
+            await _userSandboxService.AddUserSandboxListByIdsAsync(sandboxId, sandboxViewModel.MentorIds);
+            await _userSandboxService.AddUserSandboxListByIdsAsync(sandboxId, sandboxViewModel.InterviewersIds);
+            await _userSandboxService.AddUserSandboxListByIdsAsync(sandboxId, sandboxViewModel.RecruiterIds);
+
+            return await Task.FromResult(Ok(sandboxId));
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] SandboxPutViewModel sandboxViewModel)
+        {
+            sandboxViewModel.Id = id;
+
+            await _sandboxLanguageService.UpdateSandboxLanguagesListByIdsAsync(id, sandboxViewModel.LanguageIds);
+            await _sandboxStackTechnologyService.UpdateSandboxStackTechnologiesListByIdsAsync(id, sandboxViewModel.StackTechnologyIds);
+
+            await _userSandboxService.DeleteUserSandboxListByIdsAsync(id);
+
+            await _userSandboxService.AddUserSandboxListByIdsAsync(id, sandboxViewModel.MentorIds);
+            await _userSandboxService.AddUserSandboxListByIdsAsync(id, sandboxViewModel.InterviewersIds);
+            await _userSandboxService.AddUserSandboxListByIdsAsync(id, sandboxViewModel.RecruiterIds);
+
+            _sandboxService.UpdateSandbox(_mapper.MapSbFromViewToDto(sandboxViewModel));
 
             return await Task.FromResult(Ok());
         }
-
-        // [HttpPut]
-        // public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] SandboxViewModel requestData) // ? id
-        // {
-        //    ValidationResult validationResult = new SandboxValidator().Validate(requestData); // check if already exists update
-        //    if (!validationResult.IsValid)
-        //    {
-        //        return await Task.FromResult(BadRequest());
-        //    }
-        //    _service.UpdateSandbox(_mapper.MapSbFromViewToDto(requestData)); // where goes check on exist
-        //    return await Task.FromResult(Ok());
-        // }
     }
 }

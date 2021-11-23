@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using BusinessLogicLayer.DtoModels;
 using SAPex.Models;
 
@@ -18,6 +19,18 @@ namespace SAPex.Mappers
 
             MentorViewModel mentor = mapper.Map<UserDtoModel, MentorViewModel>(userDto);
             return mentor;
+        }
+
+        public IEnumerable<MentorViewModel> MapMentorListFromDtoToView(IEnumerable<UserDtoModel> userDtos)
+        {
+            IList<MentorViewModel> mentorViewModels = new List<MentorViewModel>();
+
+            foreach (var dto in userDtos)
+            {
+                mentorViewModels.Add(MapMentorFromDtoToView(dto));
+            }
+
+            return mentorViewModels;
         }
     }
 }

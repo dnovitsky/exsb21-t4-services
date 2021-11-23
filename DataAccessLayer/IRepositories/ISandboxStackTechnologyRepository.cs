@@ -18,5 +18,7 @@ namespace DataAccessLayer.IRepositories
 
         void Update(SandboxStackTechnologyEntityModel item);
         void Delete(Guid id);
+
+        void DeleteRange(IEnumerable<SandboxStackTechnologyEntityModel> items);
     }
 }

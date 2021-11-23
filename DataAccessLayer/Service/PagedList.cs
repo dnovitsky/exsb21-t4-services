@@ -9,6 +9,12 @@ namespace DataAccessLayer.Service
     public class PagedList<T>
         where T : class
     {
+        public PagedList()
+        {
+            CurrentPage = 0;
+            TotalPages = 0;
+            this.PageList = new List<T>();
+        }
         public IEnumerable<T> PageList { get; set; }
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }

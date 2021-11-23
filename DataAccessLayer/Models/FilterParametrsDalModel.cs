@@ -4,22 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DbMigrations.EntityModels
+namespace DataAccessLayer.Models
 {
-    public class FilterParametrsEntityModel
+    public class FilterParametrsDalModel
     {
-        public FilterParametrsEntityModel()
+        public FilterParametrsDalModel()
         {
             FirstSearchingTextField = string.Empty;
             FirstSearchingTextString = string.Empty;
             SecondSearchingTextField = string.Empty;
             SecondSearchingTextString = string.Empty;
-            SearchingDateField = string.Empty;
+            SearchingDateField = "no";// string.Empty;
             SearchingDateString = string.Empty;
             SearchingStatus = SearchStatus.None;
         }
 
-        public FilterParametrsEntityModel(string firstField, string firstString, string secondField,
+        public FilterParametrsDalModel(string firstField, string firstString, string secondField,
             string secondString, string dateField, string dateString, SearchStatus searchStatus)
         {
             FirstSearchingTextField = firstField;
@@ -57,3 +57,4 @@ namespace DbMigrations.EntityModels
         Archive,
     }
 }
+
