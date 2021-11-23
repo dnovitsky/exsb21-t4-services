@@ -75,6 +75,48 @@ namespace BusinessLogicLayer.Helpers
 
                 Guid UserFunctionalRoleId1 = Guid.NewGuid();
 
+                var locationId1 = Guid.NewGuid();
+                var locationId2 = Guid.NewGuid();
+                var locationId3 = Guid.NewGuid();
+                var locationId4 = Guid.NewGuid();
+                var locationId5 = Guid.NewGuid();
+                var locationId6 = Guid.NewGuid();
+
+                if (!db.Locations.Any())
+                {
+                    db.Locations.Add(new LocationEntityModel
+                    {
+                        Id = locationId1,
+                        Name = "Minsk"
+                    });
+                    db.Locations.Add(new LocationEntityModel
+                    {
+                        Id = locationId2,
+                        Name = "Gomel"
+                    });
+                    db.Locations.Add(new LocationEntityModel
+                    {
+                        Id = locationId3,
+                        Name = "Brest"
+                    });
+                    db.Locations.Add(new LocationEntityModel
+                    {
+                        Id = locationId4,
+                        Name = "Moscow"
+                    });
+                    db.Locations.Add(new LocationEntityModel
+                    {
+                        Id = locationId5,
+                        Name = "Warsaw"
+                    });
+                    db.Locations.Add(new LocationEntityModel
+                    {
+                        Id = locationId6,
+                        Name = "Kiev"
+                    });
+                    db.SaveChanges();
+                }
+
                 if (!db.Sandboxes.Any())
                 {
                     db.Sandboxes.Add(new SandboxEntityModel
@@ -324,7 +366,7 @@ namespace BusinessLogicLayer.Helpers
                         Surname = "Connor",
                         Email = "JohnConnor@gmail.com",
                         Password = "123456",
-                        Location = "Gomel",
+                        LocationId = locationId1,
                         Phone = "+998998756090",
                         Skype = "Skype:username"
                     });
@@ -336,7 +378,7 @@ namespace BusinessLogicLayer.Helpers
                         Surname = "Dallas",
                         Email = "Korben@gmail.com",
                         Password = "123456",
-                        Location = "Mogilev",
+                        LocationId = locationId2,
                         Phone = "+998998756090",
                         Skype = "Skype:username"
                     });
@@ -348,7 +390,7 @@ namespace BusinessLogicLayer.Helpers
                         Surname = "Gump",
                         Email = "Forrest@gmail.com",
                         Password = "123456",
-                        Location = "Vitebsk",
+                        LocationId = locationId3,
                         Phone = "+998998756090",
                         Skype = "Skype:username"
                     });
@@ -360,7 +402,7 @@ namespace BusinessLogicLayer.Helpers
                         Surname = "Lebowski",
                         Email = "Jeffrey@gmail.com",
                         Password = "123456",
-                        Location = "Minsk",
+                        LocationId = locationId4,
                         Phone = "+998998756090",
                         Skype = "Skype:username"
                     });
@@ -372,7 +414,7 @@ namespace BusinessLogicLayer.Helpers
                         Surname = "Ripley",
                         Email = "Elen@gmail.com",
                         Password = "123456",
-                        Location = "Mogilev",
+                        LocationId = locationId5,
                         Phone = "+998998756090",
                         Skype = "Skype:username"
                     });
@@ -384,7 +426,7 @@ namespace BusinessLogicLayer.Helpers
                         Surname = "Mclaughlin",
                         Email = "JohnMc@gmail.com",
                         Password = "123456",
-                        Location = "Ukraine",
+                        LocationId = locationId6,
                         Phone = "+998998756090",
                         Skype = "Skype:username"
                     });
@@ -396,7 +438,7 @@ namespace BusinessLogicLayer.Helpers
                         Surname = "Durden",
                         Email = "Tyler@gmail.com",
                         Password = "123456",
-                        Location = "Russia",
+                        LocationId = locationId1,
                         Phone = "+998998756090",
                         Skype = "Skype:username"
                     });
@@ -408,7 +450,7 @@ namespace BusinessLogicLayer.Helpers
                         Surname = "Potter",
                         Email = "Harry@gmail.com",
                         Password = "123456",
-                        Location = "Borisov",
+                        LocationId = locationId2,
                         Phone = "+998998756090",
                         Skype = "Skype:username"
                     });
@@ -420,7 +462,7 @@ namespace BusinessLogicLayer.Helpers
                         Surname = "Bond",
                         Email = "James@gmail.com",
                         Password = "123456",
-                        Location = "Ukraine",
+                        LocationId = locationId3,
                         Phone = "+998998756090",
                         Skype = "Skype:username"
                     });
@@ -845,48 +887,6 @@ namespace BusinessLogicLayer.Helpers
                 var candidateSandboxId1 = Guid.NewGuid();
                 var candidateSandboxId2 = Guid.NewGuid();
                 var candidateSandboxId3 = Guid.NewGuid();
-
-                var locationId1 = Guid.NewGuid();
-                var locationId2 = Guid.NewGuid();
-                var locationId3 = Guid.NewGuid();
-                var locationId4 = Guid.NewGuid();
-                var locationId5 = Guid.NewGuid();
-                var locationId6 = Guid.NewGuid();
-
-                if (!db.Locations.Any())
-                {
-                    db.Locations.Add(new LocationEntityModel
-                    {
-                        Id = locationId1,
-                        Name = "Minsk"
-                    });
-                    db.Locations.Add(new LocationEntityModel
-                    {
-                        Id = locationId2,
-                        Name = "Gomel"
-                    });
-                    db.Locations.Add(new LocationEntityModel
-                    {
-                        Id = locationId3,
-                        Name = "Brest"
-                    });
-                    db.Locations.Add(new LocationEntityModel
-                    {
-                        Id = locationId4,
-                        Name = "Moscow"
-                    });
-                    db.Locations.Add(new LocationEntityModel
-                    {
-                        Id = locationId5,
-                        Name = "Warsaw"
-                    });
-                    db.Locations.Add(new LocationEntityModel
-                    {
-                        Id = locationId6,
-                        Name = "Kiev"
-                    });
-                    db.SaveChanges();
-                }
 
                 if (!db.Candidates.Any())
                 {

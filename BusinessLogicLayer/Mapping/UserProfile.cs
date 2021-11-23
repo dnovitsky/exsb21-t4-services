@@ -27,7 +27,7 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.Name, y => y.MapFrom(x => x.Name))
                     .ForMember(x => x.Surname, y => y.MapFrom(x => x.Surname))
                     .ForMember(x => x.Email, y => y.MapFrom(x => x.Email))
-                    .ForMember(x => x.Location, y => y.MapFrom(x => x.Location))
+                    .ForMember(x => x.Location, y => y.MapFrom(x => x.Location.Name))
                     .ForMember(x => x.Roles, y => y.MapFrom(x => (from userRole in x.UserRoles
                                                                   select userRole.FunctionalRole.Name).ToList())));
 
