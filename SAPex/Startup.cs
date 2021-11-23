@@ -21,6 +21,9 @@ using SAPexAuthService.Models;
 using SAPexAuthService.Models.Google;
 using SAPexAuthService.Services;
 using SAPexAuthService.Services.Google;
+using SAPexSMTPMailService.Interfaces;
+using SAPexSMTPMailService.Models;
+using SAPexSMTPMailService.Services;
 
 namespace SAPex
 {
@@ -71,6 +74,9 @@ namespace SAPex
             services.AddScoped<JwtService, JwtService>();
             services.AddScoped<EventGoogleService, EventGoogleService>();
 
+            services.Configure<MailSettingsModel>(Configuration.GetSection("MailSettings"));
+            services.AddScoped<ISendMailService, SendMailService>();
+
             services.AddSwaggerGen(c =>
             {
                 var jwtSecurityScheme = new OpenApiSecurityScheme
@@ -110,7 +116,11 @@ namespace SAPex
             services.AddScoped<IStackTechnologyService, StackTechnologyService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFeedbackService, FeedbackService>();
+<<<<<<< HEAD
             services.AddScoped<IEventService, EventService>();
+=======
+            services.AddScoped<IUserSandboxService, UserSandboxService>();
+>>>>>>> dev
             services.AddScoped<ILocationService, LocationService>();
         }
 
@@ -145,6 +155,7 @@ namespace SAPex
                 endpoints.MapControllers();
             });
 
+            dbContext.Database.EnsureDeleted();
             dbContext.Database.Migrate();
 
             List<IApplicationHelper> helpers = new ()

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using BusinessLogicLayer.DtoModels;
@@ -18,7 +19,7 @@ namespace SAPex.Mappers
                     .ForMember(x => x.StartDate, y => y.MapFrom(x => x.StartDate))
                     .ForMember(x => x.EndDate, y => y.MapFrom(x => x.EndDate))
                     .ForMember(x => x.StartRegistration, y => y.MapFrom(x => x.StartRegistration))
-                    .ForMember(x => x.Status, y => y.MapFrom(x => x.Status))
+                    .ForMember(x => x.Status, y => y.MapFrom(x => x.Status.ToString()))
                     .ForMember(x => x.EndRegistration, y => y.MapFrom(x => x.EndRegistration)));
             var mapper = new Mapper(config);
 
@@ -26,9 +27,9 @@ namespace SAPex.Mappers
             return sandbox;
         }
 
-        public SandboxDtoModel MapSbFromViewToDto(SandboxFieldsViewModel sandboxView)
+        public SandboxDtoModel MapSbFromViewToDto(SandboxPostViewModel sandboxView)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<SandboxFieldsViewModel, SandboxDtoModel>()
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<SandboxPostViewModel, SandboxDtoModel>()
                     .ForMember(x => x.Name, y => y.MapFrom(x => x.Name))
                     .ForMember(x => x.Description, y => y.MapFrom(x => x.Description))
                     .ForMember(x => x.MaxCandidates, y => y.MapFrom(x => x.MaxCandidates))
@@ -36,11 +37,30 @@ namespace SAPex.Mappers
                     .ForMember(x => x.StartDate, y => y.MapFrom(x => x.StartDate))
                     .ForMember(x => x.EndDate, y => y.MapFrom(x => x.EndDate))
                     .ForMember(x => x.StartRegistration, y => y.MapFrom(x => x.StartRegistration))
-                    .ForMember(x => x.Status, y => y.MapFrom(x => x.Status))
+                    .ForMember(x => x.Status, y => y.MapFrom(x => (StatusName)Enum.Parse(typeof(StatusName), x.Status)))
                     .ForMember(x => x.EndRegistration, y => y.MapFrom(x => x.EndRegistration)));
             var mapper = new Mapper(config);
 
-            SandboxDtoModel sandbox = mapper.Map<SandboxFieldsViewModel, SandboxDtoModel>(sandboxView);
+            SandboxDtoModel sandbox = mapper.Map<SandboxPostViewModel, SandboxDtoModel>(sandboxView);
+            return sandbox;
+        }
+
+        public SandboxDtoModel MapSbFromViewToDto(SandboxPutViewModel sandboxView)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<SandboxPutViewModel, SandboxDtoModel>()
+                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
+                     .ForMember(x => x.Name, y => y.MapFrom(x => x.Name))
+                     .ForMember(x => x.Description, y => y.MapFrom(x => x.Description))
+                     .ForMember(x => x.MaxCandidates, y => y.MapFrom(x => x.MaxCandidates))
+                     .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate))
+                     .ForMember(x => x.StartDate, y => y.MapFrom(x => x.StartDate))
+                     .ForMember(x => x.EndDate, y => y.MapFrom(x => x.EndDate))
+                     .ForMember(x => x.StartRegistration, y => y.MapFrom(x => x.StartRegistration))
+                     .ForMember(x => x.Status, y => y.MapFrom(x => (StatusName)Enum.Parse(typeof(StatusName), x.Status)))
+                     .ForMember(x => x.EndRegistration, y => y.MapFrom(x => x.EndRegistration)));
+            var mapper = new Mapper(config);
+
+            SandboxDtoModel sandbox = mapper.Map<SandboxPutViewModel, SandboxDtoModel>(sandboxView);
             return sandbox;
         }
 
@@ -54,7 +74,7 @@ namespace SAPex.Mappers
                    .ForMember(x => x.StartDate, y => y.MapFrom(x => x.StartDate))
                    .ForMember(x => x.EndDate, y => y.MapFrom(x => x.EndDate))
                    .ForMember(x => x.StartRegistration, y => y.MapFrom(x => x.StartRegistration))
-                   .ForMember(x => x.Status, y => y.MapFrom(x => x.Status))
+                   .ForMember(x => x.Status, y => y.MapFrom(x => x.Status.ToString()))
                    .ForMember(x => x.EndRegistration, y => y.MapFrom(x => x.EndRegistration)));
             var mapper = new Mapper(config);
 
@@ -77,15 +97,21 @@ namespace SAPex.Mappers
             return sandboxViewList;
         }
 
-        public SandboxViewModel MapSbStackLgFromDtoToView(
+        public SandboxViewModel MapFromDtoToView(
             SandboxDtoModel sandboxDto,
             IEnumerable<LanguageDtoModel> languagesDto,
-            IEnumerable<StackTechnologyDtoModel> stackTechnologiesDto)
+            IEnumerable<StackTechnologyDtoModel> stackTechnologiesDto,
+            IEnumerable<UserDtoModel> mentorDtoModels,
+            IEnumerable<UserDtoModel> recruiterDtoModels,
+            IEnumerable<UserDtoModel> interwieverDtoModels)
         {
             SandboxViewModel sandboxView = MapSbFromDtoToView(sandboxDto);
 
             sandboxView.Languages = new LanguageMapper().MapListLanguageFromDtoToView(languagesDto);
             sandboxView.StackTechnologies = new StackTechnologyMapper().MapListStackTechnologyFromDtoToView(stackTechnologiesDto);
+            sandboxView.Mentors = new MentorMapper().MapMentorListFromDtoToView(mentorDtoModels);
+            sandboxView.Recruiters = new RecruiterMapper().MapRecruiterListFromDtoToView(recruiterDtoModels);
+            sandboxView.Interviewers = new InterviewerMapper().MapInterviewerListFromDtoToView(interwieverDtoModels);
 
             return sandboxView;
         }

@@ -56,6 +56,27 @@ namespace BusinessLogicLayer.Services
             return profile.mapListToDto(userEM);
         }
 
-       
+        public async Task<IEnumerable<UserDtoModel>> GetUsersBySandboxIdConditionFuncRole(Expression<Func<UserFunctionalRoleEntityModel, bool>> expression, Guid sandboxId)
+        {
+
+            IEnumerable<UserFunctionalRoleEntityModel> userFunctionalRoleListByCondition = await unitOfWork.UserFunctionalRoles.FindByConditionAsync(expression);
+            IEnumerable<UserSandBoxEntityModel> userSandboxListBySandboxId = await unitOfWork.UserSandBoxes.FindByConditionAsync(x => x.SandBoxId == sandboxId);
+
+            IList<UserEntityModel> usersByConditionBySandboxId = new List<UserEntityModel>();
+
+            foreach ( var item in userSandboxListBySandboxId)
+            {
+                UserFunctionalRoleEntityModel UserFunctionalRole = userFunctionalRoleListByCondition.SingleOrDefault(x => x.UserId == item.UserId);
+                if (UserFunctionalRole != null)
+                {
+                    UserEntityModel userEntity = await unitOfWork.Users.FindByIdAsync(UserFunctionalRole.UserId);
+                    usersByConditionBySandboxId.Add(userEntity);
+                }
+            }
+
+            return profile.mapListToDto(usersByConditionBySandboxId);
+        }
+
+
     }
 }

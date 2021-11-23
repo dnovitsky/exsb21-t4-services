@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using BusinessLogicLayer.DtoModels;
 using SAPex.Models;
 
@@ -18,6 +19,18 @@ namespace SAPex.Mappers
 
             InterviewerViewModel interviewer = mapper.Map<UserDtoModel, InterviewerViewModel>(userDto);
             return interviewer;
+        }
+
+        public IEnumerable<InterviewerViewModel> MapInterviewerListFromDtoToView(IEnumerable<UserDtoModel> userDtos)
+        {
+            IList<InterviewerViewModel> interviewerViewModels = new List<InterviewerViewModel>();
+
+            foreach (var dto in userDtos)
+            {
+                interviewerViewModels.Add(MapInterviewerFromDtoToView(dto));
+            }
+
+            return interviewerViewModels;
         }
     }
 }
