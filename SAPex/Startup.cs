@@ -96,6 +96,7 @@ namespace SAPex
             });
 
             services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
+            services.AddScoped<IAwsS3Service, AwsS3Service>();
             services.AddScoped<ICandidateService, CandidateService>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<ILanguageLevelService, LanguageLevelService>();

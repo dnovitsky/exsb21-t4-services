@@ -25,11 +25,13 @@ namespace SAPex.Controllers
     {
         private readonly string _rootFilesPath = Directory.GetCurrentDirectory() + "/files/";
         private readonly IFileService _fileService;
+        private readonly IAwsS3Service _awsS3Service;
         private readonly AwsSettingsModel _awsconfig;
         private readonly RegionEndpoint _regconfig = RegionEndpoint.EUNorth1;
 
-        public FilesController(IFileService service, IOptions<AwsSettingsModel> awsconfig)
+        public FilesController(IFileService service, IAwsS3Service awss3service, IOptions<AwsSettingsModel> awsconfig)
         {
+            _awsS3Service = awss3service;
             _fileService = service;
             _awsconfig = awsconfig.Value;
             if (!Directory.Exists(_rootFilesPath))
@@ -45,25 +47,16 @@ namespace SAPex.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> DownloadFileAsync([FromRoute] Guid id)
+        public async Task<IActionResult> DownloadFileAsync([FromRoute] Guid id)
         {
             try
             {
                 FileDtoModel fileDtoModel = await _fileService.FindFileByIdAsync(id);
-                var credentials = new BasicAWSCredentials(_awsconfig.AwsAccessKey, _awsconfig.AwsSecretKey);
-                var config = new AmazonS3Config();
-                config.RegionEndpoint = _regconfig;
-                using var client = new AmazonS3Client(credentials, config);
-                var fileTransferUtility = new TransferUtility(client);
-                var objectResponse = await fileTransferUtility.S3Client.GetObjectAsync(new GetObjectRequest()
-                {
-                    BucketName = _awsconfig.AwsBucketName,
-                    Key = fileDtoModel.FileName,
-                });
 
+                var objectResponse = await _awsS3Service.GetAwsFileAsync(_awsconfig, fileDtoModel);
                 if (objectResponse.ResponseStream == null)
                 {
-                    return NotFound();
+                    return await Task.FromResult(NotFound());
                 }
 
                 return File(objectResponse.ResponseStream, objectResponse.Headers.ContentType, fileDtoModel.FileName);
@@ -73,54 +66,42 @@ namespace SAPex.Controllers
                 if (amazonS3Exception.ErrorCode != null
                     && (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId") || amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
                 {
-                    throw new Exception("Check the provided AWS Credentials.");
+                    return await Task.FromResult(Forbid());
                 }
                 else
                 {
-                    throw new Exception("Error occurred: " + amazonS3Exception.Message);
+                    return await Task.FromResult(BadRequest());
                 }
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(BadRequest());
             }
         }
 
         [HttpPost]
         public async Task<IActionResult> UploadFileAsync(/* [FromHeader] String documentType, TODO review with FE */ [FromForm] IFormFile file)
         {
-            try
+            var fileString = Path.GetFileNameWithoutExtension(file.FileName);
+            var fileDate = DateTime.Now.ToFileTimeUtc();
+            var fileExt = Path.GetExtension(file.FileName);
+            var fileName = $"{fileString}{"_"}{fileDate}{fileExt}";
+
+            bool awsRes = await _awsS3Service.AddFileToAwsAsync(_awsconfig, file, fileName);
+
+            FileDtoModel fileDtoModel = new ();
+            fileDtoModel.Id = new Guid();
+            fileDtoModel.FileName = fileName;
+            fileDtoModel.CreateDate = DateTime.UtcNow;
+
+            bool fileDbRes = await _fileService.AddFileAsync(fileDtoModel);
+            if (fileDbRes && awsRes)
             {
-                var credentials = new BasicAWSCredentials(_awsconfig.AwsAccessKey, _awsconfig.AwsSecretKey);
-                var config = new AmazonS3Config();
-                config.RegionEndpoint = _regconfig;
-                using var client = new AmazonS3Client(credentials, config);
-                await using var newMemoryStream = new MemoryStream();
-                await file.CopyToAsync(newMemoryStream);
-                var fileName = $"{Path.GetFileNameWithoutExtension(file.FileName)}{"_"}{DateTime.Now.ToFileTimeUtc()}{Path.GetExtension(file.FileName)}";
-                var uploadRequest = new TransferUtilityUploadRequest
-                {
-                    InputStream = newMemoryStream,
-                    Key = fileName,
-                    BucketName = _awsconfig.AwsBucketName,
-                    CannedACL = S3CannedACL.PublicRead,
-                };
-                var fileTransferUtility = new TransferUtility(client);
-                await fileTransferUtility.UploadAsync(uploadRequest);
-                FileDtoModel fileDtoModel = new ();
-                fileDtoModel.Id = new Guid();
-                fileDtoModel.FileName = fileName;
-                fileDtoModel.CreateDate = DateTime.UtcNow;
-                await _fileService.AddFileAsync(fileDtoModel);
                 return await Task.FromResult(Ok());
             }
-            catch (AmazonS3Exception amazonS3Exception)
+            else
             {
-                if (amazonS3Exception.ErrorCode != null
-                    && (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId") || amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
-                {
-                    throw new Exception("Check the provided AWS Credentials.");
-                }
-                else
-                {
-                    throw new Exception("Error occurred: " + amazonS3Exception.Message);
-                }
+                return await Task.FromResult(BadRequest());
             }
         }
 
@@ -132,31 +113,21 @@ namespace SAPex.Controllers
                 FileDtoModel fileDtoModel = await _fileService.FindFileByIdAsync(id);
                 _fileService.DeleteFileById(id);
 
-                var credentials = new BasicAWSCredentials(_awsconfig.AwsAccessKey, _awsconfig.AwsSecretKey);
-                var config = new AmazonS3Config();
-                config.RegionEndpoint = _regconfig;
-                using var client = new AmazonS3Client(credentials, config);
-                var fileTransferUtility = new TransferUtility(client);
-                await fileTransferUtility.S3Client.DeleteObjectAsync(new DeleteObjectRequest()
+                bool awsres = await _awsS3Service.DeleteFileFromAwsAsync(_awsconfig, fileDtoModel.FileName);
+
+                if (awsres)
                 {
-                    BucketName = _awsconfig.AwsBucketName,
-                    Key = fileDtoModel.FileName,
-                });
-            }
-            catch (AmazonS3Exception amazonS3Exception)
-            {
-                if (amazonS3Exception.ErrorCode != null
-                    && (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId") || amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
-                {
-                    throw new Exception("Check the provided AWS Credentials.");
+                    return await Task.FromResult(Ok());
                 }
                 else
                 {
-                    throw new Exception("Error occurred: " + amazonS3Exception.Message);
+                    return await Task.FromResult(BadRequest());
                 }
             }
-
-            return await Task.FromResult(Ok());
+            catch (Exception ex)
+            {
+                return await Task.FromResult(BadRequest());
+            }
         }
     }
 }
