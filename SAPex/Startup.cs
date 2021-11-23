@@ -144,6 +144,7 @@ namespace SAPex
                 endpoints.MapControllers();
             });
 
+            dbContext.Database.EnsureDeleted();
             dbContext.Database.Migrate();
 
             List<IApplicationHelper> helpers = new ()
