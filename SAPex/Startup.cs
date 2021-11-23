@@ -111,6 +111,7 @@ namespace SAPex
             services.AddScoped<ICalendarEventService, CalendarEventService>();
             services.AddScoped<IInterviewEventService, InterviewEventService>();
             services.AddScoped<IFeedbackService, FeedbackService>();
+            services.AddScoped<IUserSandboxService, UserSandboxService>();
             services.AddScoped<ILocationService, LocationService>();
         }
 
@@ -145,6 +146,7 @@ namespace SAPex
                 endpoints.MapControllers();
             });
 
+            dbContext.Database.EnsureDeleted();
             dbContext.Database.Migrate();
 
             List<IApplicationHelper> helpers = new ()

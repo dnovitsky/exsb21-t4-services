@@ -25,6 +25,6 @@ namespace SAPex.Models
 
         public DateTime EndRegistration { get; set; }
 
-        public StatusName Status { get; set; }
+        public string Status { get; set; }
     }
 }

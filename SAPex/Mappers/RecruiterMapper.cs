@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using BusinessLogicLayer.DtoModels;
 using SAPex.Models;
 
@@ -18,6 +19,18 @@ namespace SAPex.Mappers
 
             RecruiterViewModel recruiter = mapper.Map<UserDtoModel, RecruiterViewModel>(userDto);
             return recruiter;
+        }
+
+        public IEnumerable<RecruiterViewModel> MapRecruiterListFromDtoToView(IEnumerable<UserDtoModel> userDtos)
+        {
+            IList<RecruiterViewModel> recruiterViewModels = new List<RecruiterViewModel>();
+
+            foreach (var dto in userDtos)
+            {
+                recruiterViewModels.Add(MapRecruiterFromDtoToView(dto));
+            }
+
+            return recruiterViewModels;
         }
     }
 }

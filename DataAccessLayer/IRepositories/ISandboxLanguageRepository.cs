@@ -15,5 +15,6 @@ namespace DataAccessLayer.IRepositories
         Task<SandboxLanguageEntityModel> CreateAsync(SandboxLanguageEntityModel item);
         void Update(SandboxLanguageEntityModel item);
         void Delete(Guid id);
+        void DeleteRange(IEnumerable<SandboxLanguageEntityModel> items);
     }
 }
