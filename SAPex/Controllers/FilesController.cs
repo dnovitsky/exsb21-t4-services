@@ -6,7 +6,7 @@ using Amazon;
 using Amazon.S3;
 using BusinessLogicLayer.DtoModels;
 using BusinessLogicLayer.Interfaces;
-using DataAccessLayer.Models;
+using BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;

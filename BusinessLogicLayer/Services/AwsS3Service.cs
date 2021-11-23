@@ -5,7 +5,7 @@ using Amazon.S3.Model;
 using Amazon.S3.Transfer;
 using BusinessLogicLayer.DtoModels;
 using BusinessLogicLayer.Interfaces;
-using DataAccessLayer.Models;
+using BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;

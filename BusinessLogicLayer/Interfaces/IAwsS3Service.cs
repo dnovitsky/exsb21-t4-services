@@ -2,7 +2,7 @@
 using BusinessLogicLayer.DtoModels;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
-using DataAccessLayer.Models;
+using BusinessLogicLayer.Models;
 
 namespace BusinessLogicLayer.Interfaces
 {
