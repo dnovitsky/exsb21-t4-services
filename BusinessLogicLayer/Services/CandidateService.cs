@@ -18,14 +18,14 @@ namespace BusinessLogicLayer.Services
         protected readonly LocationProfile locationProfile = new LocationProfile();
         private readonly IUnitOfWork unitOfWork;
         private readonly InputParametrsProfile inputParametrsProfile;
-        private readonly FilterParametrsProfile filterParametrsProfile;
+        private readonly CandidateFilterParametrsMapper candidateFilterParametrsProfile;
 
         public CandidateService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
             this.profile = new CandidateProfile(unitOfWork);
             inputParametrsProfile = new InputParametrsProfile();
-            filterParametrsProfile = new FilterParametrsProfile();
+            candidateFilterParametrsProfile = new CandidateFilterParametrsMapper();
         }
         public async Task<CandidateDtoModel> AddCandidateAsync(CreateCandidateDtoModel candidateDto)
         {
@@ -112,11 +112,11 @@ namespace BusinessLogicLayer.Services
             return profile.MapCandidateEMListToCandidateDtoList(candidateEM);
         }
 
-        public async Task<PagedList<CandidateDtoModel>> GetPagedSandboxesAsync(InputParametrsDtoModel parametrs, FilterParametrsDtoModel filterParametrs)
+        public async Task<PagedList<CandidateDtoModel>> GetPagedCandidatesAsync(InputParametrsDtoModel parametrs, CandidateFilterParametrsDtoModel candidateFilterParametrs)
         {
             PagedList<CandidateEntityModel> candidateList = await unitOfWork.Candidates.GetPagedAsync(
                 inputParametrsProfile.MapFromDtoToEntity(parametrs),
-                filterParametrsProfile.MapFromDtoToEntity(filterParametrs));
+                candidateFilterParametrsProfile.MapFromDtoToEntity(candidateFilterParametrs));
             PagedList<CandidateDtoModel> sandboxDtoList = new PagedList<CandidateDtoModel>
             {
                 PageList = profile.MapCandidateEMListToCandidateDtoList(candidateList.PageList),

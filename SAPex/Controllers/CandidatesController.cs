@@ -22,13 +22,13 @@ namespace SAPex.Controllers
         protected readonly CandidateMapper profile = new CandidateMapper();
         private readonly ICandidateService _service;
         private readonly InputParametrsMapper _inputParamersMapper;
-        private readonly FilterParametrsMapper _filterParametrsMapper;
+        private readonly CandidateFilterParametrsMapper _candidateFilterParametrsMapper;
 
         public CandidatesController(ICandidateService service)
         {
             _service = service;
             _inputParamersMapper = new InputParametrsMapper();
-            _filterParametrsMapper = new FilterParametrsMapper();
+            _candidateFilterParametrsMapper = new CandidateFilterParametrsMapper();
         }
 
         [HttpGet("all")]
@@ -75,11 +75,11 @@ namespace SAPex.Controllers
         }
 
         [HttpGet("filter")]
-        public async Task<IActionResult> GetFilter([FromQuery] InputParametrsViewModel sandboxParametrs, [FromQuery] FilterParametrsViewModel filterParametrs)
+        public async Task<IActionResult> GetFilter([FromQuery] InputParametrsViewModel inputParametrs, [FromQuery] CandidateFilterParametrsViewModel candidateFilterParametrs)
         {
-            PagedList<CandidateDtoModel> dtoPageListModels = await _service.GetPagedSandboxesAsync(
-                _inputParamersMapper.MapFromViewToDto(sandboxParametrs),
-                _filterParametrsMapper.MapFromViewToDto(filterParametrs));
+            PagedList<CandidateDtoModel> dtoPageListModels = await _service.GetPagedCandidatesAsync(
+                _inputParamersMapper.MapFromViewToDto(inputParametrs),
+                _candidateFilterParametrsMapper.MapFromViewToDto(candidateFilterParametrs));
 
             IList<CandidateViewModel> viewModels = new List<CandidateViewModel>();
 
