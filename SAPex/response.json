@@ -1,0 +1,41 @@
+{
+ "kind": "calendar#event",
+ "etag": "\"3275412537234000\"",
+ "id": "us3cf64e3gfck0oifmk6rb58c4",
+ "status": "confirmed",
+ "htmlLink": "https://www.google.com/calendar/event?eid=dXMzY2Y2NGUzZ2ZjazBvaWZtazZyYjU4YzQgZGV2ZWxvcGVyLm5vb3IuY3VsbGVuQG0",
+ "created": "2021-11-23T22:24:28.000Z",
+ "updated": "2021-11-23T22:24:28.617Z",
+ "summary": "Hello World",
+ "description": "Some Events",
+ "creator": {
+  "email": "developer.noor.cullen@gmail.com",
+  "self": true
+ },
+ "organizer": {
+  "email": "developer.noor.cullen@gmail.com",
+  "self": true
+ },
+ "start": {
+  "dateTime": "2021-11-26T00:00:00+03:00",
+  "timeZone": "UTC"
+ },
+ "end": {
+  "dateTime": "2021-11-26T00:15:00+03:00",
+  "timeZone": "UTC"
+ },
+ "iCalUID": "us3cf64e3gfck0oifmk6rb58c4@google.com",
+ "sequence": 0,
+ "attendees": [
+  {
+   "email": "developer.noor.cullen@gmail.com",
+   "organizer": true,
+   "self": true,
+   "responseStatus": "needsAction"
+  }
+ ],
+ "reminders": {
+  "useDefault": true
+ },
+ "eventType": "default"
+}

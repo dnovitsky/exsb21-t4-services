@@ -52,12 +52,9 @@ namespace DbMigrations.Data
         public DbSet<UserTechSkillEntityModel> UserTechSkills { get; set; }
         public DbSet<CalendarEventEntityModel> CalendarEvents { get; set; }
         public DbSet<InterviewEventEntityModel> InterviewEvents { get; set; }
-<<<<<<< HEAD
         public DbSet<EventEntityModel> Events { get; set; }
-
-=======
         public DbSet<GoogleAccessTokenEntityModel> GoogleAccessTokens { get; set; }
->>>>>>> dev
+        public DbSet<EventMemberEntityModel> EventMembers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -4,7 +4,7 @@ namespace SAPex.Models.EventModels
 {
     public class CreateEventViewModel
     {
-        public Guid InterviewerId { get; set; }
+        public Guid OwnerId { get; set; }
 
         public string Summary { get; set; }
 

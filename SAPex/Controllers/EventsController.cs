@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLogicLayer.DtoModels;
 using BusinessLogicLayer.Interfaces;
+using DbMigrations.EntityModels.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using SAPex.Models.EventModels;
 
@@ -23,7 +24,7 @@ namespace SAPex.Controllers
         }
 
         [HttpGet("{start}/{end}/{type}")]
-        public async Task<IEnumerable<InterviewEventViewModel>> GetAsync([FromRoute] DateTime start, [FromRoute] DateTime end, [FromRoute] EventType type = EventType.ALL)
+        public async Task<IEnumerable<InterviewEventViewModel>> GetAsync([FromRoute] DateTime start, [FromRoute] DateTime end, [FromRoute] EventType type = EventType.FREE)
         {
             var events = await _eventService.GetAllAsync(start, end, type);
             return _mapper.Map<IEnumerable<InterviewEventViewModel>>(events);

@@ -7,6 +7,7 @@ using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Services;
 using DataAccessLayer.Service;
 using DbMigrations.Data;
+using GoogleCalendarLayer.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -68,6 +69,7 @@ namespace SAPex
             services.AddScoped<AuthUserRefreshTokenService, AuthUserRefreshTokenService>();
             services.AddScoped<GoogleOAuthService, GoogleOAuthService>();
             services.AddScoped<JwtService, JwtService>();
+            services.AddScoped<EventGoogleService, EventGoogleService>();
 
             services.AddSwaggerGen(c =>
             {
@@ -108,11 +110,8 @@ namespace SAPex
             services.AddScoped<IStackTechnologyService, StackTechnologyService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFeedbackService, FeedbackService>();
-<<<<<<< HEAD
             services.AddScoped<IEventService, EventService>();
-=======
             services.AddScoped<ILocationService, LocationService>();
->>>>>>> dev
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

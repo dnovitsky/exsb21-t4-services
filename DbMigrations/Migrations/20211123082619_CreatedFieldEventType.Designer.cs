@@ -4,14 +4,16 @@ using DbMigrations.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DbMigrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211123082619_CreatedFieldEventType")]
+    partial class CreatedFieldEventType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -307,7 +309,7 @@ namespace DbMigrations.Migrations
                     b.Property<string>("GoogleCalendarEventId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("OwnerId")
+                    b.Property<Guid>("InterviewerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("StartTime")
@@ -326,41 +328,9 @@ namespace DbMigrations.Migrations
 
                     b.HasIndex("CandidateSandboxId");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("InterviewerId");
 
                     b.ToTable("Events");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.EventMemberEntityModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("EventId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("MemberEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("MemberId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("MemberRole")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ResponseStatus")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("EventMemberEntityModel");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.FeedbackEntityModel", b =>
@@ -1094,24 +1064,13 @@ namespace DbMigrations.Migrations
 
                     b.HasOne("DbMigrations.EntityModels.UserEntityModel", "User")
                         .WithMany()
-                        .HasForeignKey("OwnerId")
+                        .HasForeignKey("InterviewerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("CandidateSandbox");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.EventMemberEntityModel", b =>
-                {
-                    b.HasOne("DbMigrations.EntityModels.EventEntityModel", "Event")
-                        .WithMany("EventMembers")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Event");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.FeedbackEntityModel", b =>
@@ -1409,11 +1368,6 @@ namespace DbMigrations.Migrations
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateSandboxEntityModel", b =>
                 {
                     b.Navigation("CandidateProcesses");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.EventEntityModel", b =>
-                {
-                    b.Navigation("EventMembers");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.FormEntityModel", b =>

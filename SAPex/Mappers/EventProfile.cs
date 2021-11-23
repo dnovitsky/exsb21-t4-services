@@ -14,7 +14,9 @@ namespace SAPex.Mappers
             CreateMap<EventDtoModel, EventEntityModel>();
 
             CreateMap<EventDtoModel, EventViewModel>();
-            CreateMap<EventViewModel, EventDtoModel>();
+            CreateMap<EventViewModel, EventDtoModel>()
+                 .ForMember(x => x.StartTime, y => y.MapFrom(x => x.StartTime.ToUniversalTime()))
+                 .ForMember(x => x.EndTime, y => y.MapFrom(x => x.EndTime.ToUniversalTime()));
 
             CreateMap<InterviewEventViewModel, EventDtoModel>();
             CreateMap<EventDtoModel, InterviewEventViewModel>();
