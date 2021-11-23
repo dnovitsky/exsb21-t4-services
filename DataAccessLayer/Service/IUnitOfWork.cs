@@ -21,6 +21,7 @@ namespace DataAccessLayer.Service
         IFunctionalRoleRepository FunctionalRoles { get; }
         ILanguageLevelRepository LanguageLevels { get; }
         ILanguageRepository Languages { get; }
+        ILocationRepository Locations { get; }
         IRatingRepository Ratings { get; }
         ISandboxRepository Sandboxes { get; }
         ISandboxLanguageRepository SandboxLanguages { get; }
@@ -39,6 +40,7 @@ namespace DataAccessLayer.Service
         IUserRefreshTokenRepository UserRefreshTokens { get; }
         ICalendarEventRepository CalendarEvents { get; }
         IInterviewEventRepository InterviewEvents { get; }
+        IGoogleAccessTokenRepository GoogleAccessTokens { get; }
 
         Task SaveAsync();
     }

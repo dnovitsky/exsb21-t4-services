@@ -16,12 +16,6 @@ namespace BusinessLogicLayer.DtoModels
 
         public Guid EnglishLevelId { get; set; }
 
-        // Default Language Id
-        public Guid EnglishLanguageId { get; set; }
-
-        // Default Process Status Id
-        public Guid DefaultProcessStatusId { get; set; }
-
         public Guid SandboxPreferredLanguageId { get; set; }
 
         public Guid PrimaryTechnologyId { get; set; }

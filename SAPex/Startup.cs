@@ -16,9 +16,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using SAPex.Models;
 using SAPexAuthService.Models;
+using SAPexAuthService.Models.Google;
 using SAPexAuthService.Services;
+using SAPexAuthService.Services.Google;
 
 namespace SAPex
 {
@@ -61,9 +62,10 @@ namespace SAPex
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.Configure<AppSettingsModel>(Configuration.GetSection("AppSettings"));
-            services.Configure<AwsSettingsModel>(Configuration.GetSection("AwsSettings"));
+            services.Configure<GoogleSettingsModel>(Configuration.GetSection("GoogleSettings"));
             services.AddScoped<AuthUserService, AuthUserService>();
             services.AddScoped<AuthUserRefreshTokenService, AuthUserRefreshTokenService>();
+            services.AddScoped<GoogleOAuthService, GoogleOAuthService>();
             services.AddScoped<JwtService, JwtService>();
 
             services.AddSwaggerGen(c =>
@@ -107,6 +109,7 @@ namespace SAPex
             services.AddScoped<ICalendarEventService, CalendarEventService>();
             services.AddScoped<IInterviewEventService, InterviewEventService>();
             services.AddScoped<IFeedbackService, FeedbackService>();
+            services.AddScoped<ILocationService, LocationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
