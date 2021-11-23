@@ -20,5 +20,6 @@ namespace DataAccessLayer.IRepositories
 
         void Update(T item);
         void Delete(Guid id);//SoftDelete??
+        void DeleteRange(IEnumerable<T> items);
     }
 }

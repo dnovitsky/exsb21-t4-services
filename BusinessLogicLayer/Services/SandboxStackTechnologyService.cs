@@ -58,5 +58,25 @@ namespace BusinessLogicLayer.Services
                 return false;
             }
         }
+
+        public async Task<bool> UpdateSandboxStackTechnologiesListByIdsAsync(Guid sandboxId, IEnumerable<Guid> stackTechnologyIds)
+        {
+            try
+            {
+
+                IEnumerable<SandboxStackTechnologyEntityModel> listToDelete = await unitOfWork.SandboxStackTechnologies.FindByConditionAsync(x => x.SandboxId == sandboxId);
+
+                unitOfWork.SandboxStackTechnologies.DeleteRange(listToDelete);
+
+                await AddSandboxStackTechnologyListByIdsAsync(sandboxId, stackTechnologyIds);
+                await unitOfWork.SaveAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

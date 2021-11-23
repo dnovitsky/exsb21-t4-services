@@ -43,5 +43,7 @@ namespace DataAccessLayer.Service
         IGoogleAccessTokenRepository GoogleAccessTokens { get; }
 
         Task SaveAsync();
+
+        public void Save();
     }
 }
