@@ -4,14 +4,16 @@ using DbMigrations.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DbMigrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211121173253_AddFileAwsMigration")]
+    partial class AddFileAwsMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,10 +112,12 @@ namespace DbMigrations.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("LocationId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -135,8 +139,6 @@ namespace DbMigrations.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LocationId");
 
                     b.ToTable("Candidates");
                 });
@@ -295,20 +297,14 @@ namespace DbMigrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("AdminGrade")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("CandidateProccesId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("InterviewerGrade")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MentoreGrade")
-                        .HasColumnType("int");
+                    b.Property<Guid>("RatingId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -320,6 +316,8 @@ namespace DbMigrations.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CandidateProccesId");
+
+                    b.HasIndex("RatingId");
 
                     b.HasIndex("UserId");
 
@@ -372,37 +370,6 @@ namespace DbMigrations.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FunctionalRoles");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.GoogleAccessTokenEntityModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Access_token")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("Created_in")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Expires_in")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Refresh_token")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Token_type")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("GoogleAccessTokens");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.InterviewEventEntityModel", b =>
@@ -465,19 +432,23 @@ namespace DbMigrations.Migrations
                     b.ToTable("LanguageLevels");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.LocationEntityModel", b =>
+            modelBuilder.Entity("DbMigrations.EntityModels.RatingEntityModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Mark")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("SkillId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Locations");
+                    b.HasIndex("SkillId");
+
+                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.SandboxEntityModel", b =>
@@ -637,8 +608,9 @@ namespace DbMigrations.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("LocationId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -661,8 +633,6 @@ namespace DbMigrations.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LocationId");
 
                     b.ToTable("Users");
                 });
@@ -753,6 +723,9 @@ namespace DbMigrations.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FunctionalRole")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("SandBoxId")
                         .HasColumnType("uniqueidentifier");
@@ -868,15 +841,6 @@ namespace DbMigrations.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.CandidateEntityModel", b =>
-                {
-                    b.HasOne("DbMigrations.EntityModels.LocationEntityModel", "Location")
-                        .WithMany("Candidates")
-                        .HasForeignKey("LocationId");
-
-                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateLanguageEntityModel", b =>
@@ -999,6 +963,12 @@ namespace DbMigrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DbMigrations.EntityModels.RatingEntityModel", "Rating")
+                        .WithMany("Feedbacks")
+                        .HasForeignKey("RatingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DbMigrations.EntityModels.UserEntityModel", "User")
                         .WithMany("Feedbacks")
                         .HasForeignKey("UserId")
@@ -1007,16 +977,7 @@ namespace DbMigrations.Migrations
 
                     b.Navigation("CandidateProcces");
 
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.GoogleAccessTokenEntityModel", b =>
-                {
-                    b.HasOne("DbMigrations.EntityModels.UserEntityModel", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Rating");
 
                     b.Navigation("User");
                 });
@@ -1038,6 +999,17 @@ namespace DbMigrations.Migrations
                     b.Navigation("CalendarEvent");
 
                     b.Navigation("CandidateSandbox");
+                });
+
+            modelBuilder.Entity("DbMigrations.EntityModels.RatingEntityModel", b =>
+                {
+                    b.HasOne("DbMigrations.EntityModels.SkillEntityModel", "Skill")
+                        .WithMany("Ratings")
+                        .HasForeignKey("SkillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Skill");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.SandboxLanguageEntityModel", b =>
@@ -1087,15 +1059,6 @@ namespace DbMigrations.Migrations
                         .IsRequired();
 
                     b.Navigation("Sandbox");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.UserEntityModel", b =>
-                {
-                    b.HasOne("DbMigrations.EntityModels.LocationEntityModel", "Location")
-                        .WithMany("Users")
-                        .HasForeignKey("LocationId");
-
-                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.UserFunctionalRoleEntityModel", b =>
@@ -1297,11 +1260,9 @@ namespace DbMigrations.Migrations
                     b.Navigation("UserLanguages");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.LocationEntityModel", b =>
+            modelBuilder.Entity("DbMigrations.EntityModels.RatingEntityModel", b =>
                 {
-                    b.Navigation("Candidates");
-
-                    b.Navigation("Users");
+                    b.Navigation("Feedbacks");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.SandboxEntityModel", b =>
@@ -1320,6 +1281,8 @@ namespace DbMigrations.Migrations
             modelBuilder.Entity("DbMigrations.EntityModels.SkillEntityModel", b =>
                 {
                     b.Navigation("CandidateTechSkills");
+
+                    b.Navigation("Ratings");
 
                     b.Navigation("UserTechSkills");
                 });
