@@ -11,6 +11,7 @@ using DbMigrations.EntityModels;
 using DbMigrations.EntityModels.DataTypes;
 using GoogleCalendarLayer.Models;
 using GoogleCalendarLayer.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessLogicLayer.Services
 {
@@ -53,7 +54,8 @@ namespace BusinessLogicLayer.Services
 
         public async Task<EventDtoModel> CreateAsync(EventDtoModel value)
         {
-            if (await HasAnyBlockedFreeTimeAsync(value) || (await HasAnyUserAsync(value.OwnerId)) != null)
+            var user = await GetUserAsync(value.OwnerId);
+            if (await HasAnyBlockedFreeTimeAsync(value) || user == null)
             {
                 return null;
             }
@@ -67,71 +69,104 @@ namespace BusinessLogicLayer.Services
 
         public async Task<EventDtoModel> CreateInterviewAsync(EventDtoModel value)
         {
-            if (await HasAnyBlockedInterviewTimeAsync(value) || (await HasAnyUserAsync(value.OwnerId)) == null )//|| !await HasAnyCandidateSandboxAsync(value))
+            var owner = await GetUserAsync(value.OwnerId);
+            var candidateSandbox = await GetCandidateSandboxAsync(value.CandidateSandboxId);
+
+            if (await HasAnyBlockedInterviewTimeAsync(value) || owner == null  || candidateSandbox == null)
             {
                 return null;
             }
-            var members = new List<UserEntityModel>();
-            foreach(var member in value.Members)
+            var candidate = candidateSandbox.Candidate;
+            var googleToken = (await _unitOfWork.GoogleAccessTokens.FindByConditionAsync(x => x.UserId == owner.Id)).FirstOrDefault();
+            var members = new List<EventMemberEntityModel>();
+            var attendees = new List<AttendeeGoogleModel>
             {
-                var user = await HasAnyUserAsync(member);
-                if (user == null)
+                new AttendeeGoogleModel
                 {
-                    return null;
+                    DisplayName = $"{owner.Name} {owner.Surname}",
+                    Email = owner.Email,
+                    Organizer = true,
+                    Self = true
+                },
+                new AttendeeGoogleModel
+                {
+                    DisplayName = $"{candidate.Name} {candidate.Surname}",
+                    Email = candidate.Email,
+                    Organizer = false,
+                    Self = false
                 }
-                members.Add(user);
-            }
-            var eventEntity = _mapper.Map<EventEntityModel>(value);
-
-            eventEntity = await _unitOfWork.Events.CreateAsync(eventEntity);
-
-
-            var start = new DateTimeGoogleModel
-            {
-                DateTime = value.StartTime.ToString(),
-                TimeZone = "UTC"
             };
-            var end = new DateTimeGoogleModel
+            foreach (var member in value.Members)
             {
-                DateTime = value.EndTime.ToString(),
-                TimeZone = "UTC"
-            };
-            var attendees = new List<AttendeeGoogleModel>();
-            foreach (var member in members)
-            {
-                var attendee = new AttendeeGoogleModel();
-                var eventMember = new EventMemberEntityModel
+                var eventMember = new EventMemberEntityModel();
+                var user = (await _unitOfWork.Users.FindByConditionAsync(x => x.Email == member.Email)).FirstOrDefault();
+                if (user is not null)
                 {
-                    Name = $"{member.Name} {member.Surname}",
-                    EventId = eventEntity.Id,
-                    MemberId = member.Id,
-                    MemberEmail = member.Email,
+                    eventMember.MemberEmail = user.Email;
+                    eventMember.Name = $"{user.Name} {user.Surname}";
+                    eventMember.MemberRole = user.UserRoles.FirstOrDefault().FunctionalRole.Name;
+                }
+                else
+                {
+                    var other = (await _unitOfWork.Candidates.FindByConditionAsync(x => x.Email == member.Email)).FirstOrDefault();
+                    if (other is not null)
+                    {
+                        eventMember.MemberEmail = other.Email;
+                        eventMember.Name = $"{other.Name} {other.Surname}";
+                        eventMember.MemberRole = "Candidate";
+                    }
+                    else
+                    {
+                        eventMember.MemberEmail = member.Email;
+                        eventMember.Name = member.Name;
+                        eventMember.MemberRole = "Other";
+                    }
+                   
+                }
+                var attendee = new AttendeeGoogleModel
+                {
+                    DisplayName = eventMember.Name,
+                    Email = eventMember.MemberEmail,
+                    Organizer = false,
+                    Self = false
                 };
-                attendee.DisplayName = eventMember.Name;
-                attendee.Email = eventMember.MemberEmail;
-                attendee.Organizer = false;
-                attendee.Self = false;
                 attendees.Add(attendee);
-                await _unitOfWork.EventMembers.CreateAsync(eventMember);
+                members.Add(eventMember);
             }
-            var owner = await _unitOfWork.Users.FindByIdAsync(value.OwnerId);
-            attendees.Add(new AttendeeGoogleModel
-            {
-                DisplayName = $"{owner.Name} {owner.Surname}",
-                Email=owner.Email,
-                Organizer=true,
-                Self=true
-            }) ;
+           
             var eventGoogle = new EventGoogleModel()
             {
-                Summary = value.Summary,
+                Summary = $"#SAPExProject#Event: {value.Summary}",
                 Description = value.Description,
-                Start=start,
-                End=end,
-                Attendees=attendees
+                Start = new DateTimeGoogleModel
+                {
+                    DateTime = value.StartTime.ToString(),
+                    TimeZone = "UTC"
+                },
+                End = new DateTimeGoogleModel
+                {
+                    DateTime = value.EndTime.ToString(),
+                    TimeZone = "UTC"
+                },
+                Attendees = attendees
             };
-            var tokens=(await _unitOfWork.GoogleAccessTokens.FindByConditionAsync(x=> x.UserId==owner.Id)).FirstOrDefault();
-            eventGoogle =_googleService.Add(tokens,eventGoogle);
+
+            var eventEntity = _mapper.Map<EventEntityModel>(value);
+            if (googleToken is not null)
+            {
+                eventGoogle = _googleService.Create(googleToken, eventGoogle);
+                eventEntity.GoogleCalendarEventId = eventGoogle.Id;
+            }
+
+            
+            eventEntity.Type = EventType.INTERVIEW;
+            eventEntity = await _unitOfWork.Events.CreateAsync(eventEntity);
+            members.ForEach(async x =>
+            {
+                x.EventId = eventEntity.Id;
+                _ = await _unitOfWork.EventMembers.CreateAsync(x);
+            });
+
             await _unitOfWork.SaveAsync();
             return _mapper.Map<EventDtoModel>(eventEntity);
         }
@@ -141,16 +176,16 @@ namespace BusinessLogicLayer.Services
             throw new NotImplementedException();
         }
 
-        private async Task<UserEntityModel> HasAnyUserAsync(Guid userId)
+        private async Task<UserEntityModel> GetUserAsync(Guid userId)
         {
-            var user = await _unitOfWork.Users.FindByIdAsync(userId);
-            return user;
+            var users = await _unitOfWork.Users.FindByConditionAsync(x=>x.Id == userId);
+            return users.FirstOrDefault();
         }
 
-        private async Task<bool> HasAnyCandidateSandboxAsync(EventDtoModel value)
+        private async Task<CandidateSandboxEntityModel> GetCandidateSandboxAsync(Guid candidateSandboxId)
         {
-            var users = await _unitOfWork.CandidateSandboxes.FindByConditionAsync(x => x.Id == value.CandidateSandboxId);
-            return users.Any();
+            var candidateSandboxes = await _unitOfWork.CandidateSandboxes.FindByConditionAsync(x => x.Id == candidateSandboxId);
+            return candidateSandboxes.FirstOrDefault();
         }
 
         private async Task<bool> HasAnyBlockedFreeTimeAsync(EventDtoModel value)
@@ -184,6 +219,62 @@ namespace BusinessLogicLayer.Services
                     value.EndTime >= x.EndTime
                 ));
             return results.Any();
+        }
+
+        public async Task<bool> DeleteEventAsync(Guid userId, Guid eventId)
+        {
+            var eventEntities = await _unitOfWork.Events.FindByConditionAsync(x =>
+                x.OwnerId == userId &&
+                x.Id==eventId &&
+                x.Type== EventType.INTERVIEW);
+            var eventEntity = eventEntities.FirstOrDefault();
+            if (eventEntity != null)
+            {
+                var googleToken = (await _unitOfWork.GoogleAccessTokens.FindByConditionAsync(x => x.UserId == userId)).FirstOrDefault();
+                if (googleToken != null)
+                {
+                    _googleService.Delete(googleToken, eventEntity.GoogleCalendarEventId);
+                }
+
+                _unitOfWork.Events.Delete(eventEntity.Id);
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> GetAllGoogleEventsAsync(Guid userId)
+        {
+            var googleToken = (await _unitOfWork.GoogleAccessTokens.FindByConditionAsync(x => x.UserId == userId)).FirstOrDefault();
+            if (googleToken != null)
+            {
+                var googleEvents = _googleService.GetAll(googleToken);
+                if (googleEvents != null)
+                {
+                    foreach (var googleEvent in googleEvents)
+                    {
+                        var events = await _unitOfWork.Events.FindByConditionAsync(x=>x.GoogleCalendarEventId==googleEvent.Id);
+                        if (events.Any())
+                        {
+                            continue;
+                        }
+                        var eventEntity = new EventEntityModel
+                        {
+                            GoogleCalendarEventId = googleEvent.Id,
+                            OwnerId = userId,
+                            Summary=googleEvent.Summary,
+                            Description=googleEvent.Description,
+                            StartTime = DateTime.Parse(googleEvent.Start.DateTime).ToUniversalTime(),
+                            EndTime = DateTime.Parse(googleEvent.End.DateTime).ToUniversalTime(),
+                            Type = EventType.GOOGLE,
+                            CandidateSandboxId=null,
+                        };
+                        eventEntity = await _unitOfWork.Events.CreateAsync(eventEntity);
+                    }
+                    await _unitOfWork.SaveAsync();
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

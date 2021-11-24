@@ -49,11 +49,8 @@
     <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
     <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj" />
     <ProjectReference Include="..\SAPexAuthService\SAPexAuthService.csproj" />
-<<<<<<< HEAD
-    <ProjectReference Include="..\GoogleCalendarLayer\GoogleCalendarLayer.csproj">
-=======
+    <ProjectReference Include="..\GoogleCalendarLayer\GoogleCalendarLayer.csproj" />
     <ProjectReference Include="..\SAPexSMTPMailService\SAPexSMTPMailService.csproj">
->>>>>>> dev
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>

@@ -7,6 +7,6 @@ namespace SAPex.Models.EventModels
     {
         public Guid CandidateSandboxId { get; set; }
 
-        public IEnumerable<Guid> Members { get; set; }
+        public IEnumerable<InterviewMemberViewModel> Members { get; set; }
     }
 }

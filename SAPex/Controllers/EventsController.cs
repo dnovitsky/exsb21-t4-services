@@ -54,5 +54,29 @@ namespace SAPex.Controllers
             eventDto = await _eventService.CreateInterviewAsync(eventDto);
             return _mapper.Map<InterviewEventViewModel>(eventDto);
         }
+
+        [HttpDelete("interview-time/{userId}/{eventId}")]
+        public async Task<ActionResult> DeleteAsync(Guid userId, Guid eventId)
+        {
+            var result = await _eventService.DeleteEventAsync(userId, eventId);
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet("google/{userId}")]
+        public async Task<ActionResult> GetAsync(Guid userId)
+        {
+            var result = await _eventService.GetAllGoogleEventsAsync(userId);
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
     }
 }

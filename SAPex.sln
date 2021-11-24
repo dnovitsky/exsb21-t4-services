@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.810.11
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAPex", "SAPex\SAPex.csproj", "{37AFC335-5921-4000-BD67-D5B71C2AE9BA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbMigrations", "DbMigrations\DbMigrations.csproj", "{94EFB338-BD08-4A80-BB34-57C4D0BB48FB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{369F0B48-ADFE-435A-A855-328BAC8006C0}"
@@ -18,13 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAPexAuthService", "SAPexAuthService\SAPexAuthService.csproj", "{AA9B804C-A4AA-4F28-BE70-25F28F029FDE}"
 EndProject
-<<<<<<< HEAD
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleCalendarLayer", "GoogleCalendarLayer\GoogleCalendarLayer.csproj", "{95691725-1167-4E44-BE65-6835DFF223FF}"
-=======
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAPexSMTPMailService", "SAPexSMTPMailService\SAPexSMTPMailService.csproj", "{6A1B13E0-1759-4C77-83AB-03D75A1E6908}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAPexSMTPMailService", "SAPexSMTPMailService\SAPexSMTPMailService.csproj", "{2ADF2055-56C6-44E6-9C34-12CA87B54528}"
->>>>>>> dev
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleCalendarLayer", "GoogleCalendarLayer\GoogleCalendarLayer.csproj", "{2576ED4E-0132-4DA6-B9BB-F776C2E08466}"
+EndProject
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "SAPex", "SAPex\SAPex.csproj", "{25AD98BE-8249-461E-A6DE-4992F48BC183}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,10 +28,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{37AFC335-5921-4000-BD67-D5B71C2AE9BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{37AFC335-5921-4000-BD67-D5B71C2AE9BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{37AFC335-5921-4000-BD67-D5B71C2AE9BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{37AFC335-5921-4000-BD67-D5B71C2AE9BA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{94EFB338-BD08-4A80-BB34-57C4D0BB48FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{94EFB338-BD08-4A80-BB34-57C4D0BB48FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94EFB338-BD08-4A80-BB34-57C4D0BB48FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -52,12 +44,10 @@ Global
 		{AA9B804C-A4AA-4F28-BE70-25F28F029FDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA9B804C-A4AA-4F28-BE70-25F28F029FDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA9B804C-A4AA-4F28-BE70-25F28F029FDE}.Release|Any CPU.Build.0 = Release|Any CPU
-<<<<<<< HEAD
 		{95691725-1167-4E44-BE65-6835DFF223FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{95691725-1167-4E44-BE65-6835DFF223FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95691725-1167-4E44-BE65-6835DFF223FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95691725-1167-4E44-BE65-6835DFF223FF}.Release|Any CPU.Build.0 = Release|Any CPU
-=======
 		{6A1B13E0-1759-4C77-83AB-03D75A1E6908}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6A1B13E0-1759-4C77-83AB-03D75A1E6908}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A1B13E0-1759-4C77-83AB-03D75A1E6908}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -66,7 +56,14 @@ Global
 		{2ADF2055-56C6-44E6-9C34-12CA87B54528}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2ADF2055-56C6-44E6-9C34-12CA87B54528}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2ADF2055-56C6-44E6-9C34-12CA87B54528}.Release|Any CPU.Build.0 = Release|Any CPU
->>>>>>> dev
+		{2576ED4E-0132-4DA6-B9BB-F776C2E08466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2576ED4E-0132-4DA6-B9BB-F776C2E08466}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2576ED4E-0132-4DA6-B9BB-F776C2E08466}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2576ED4E-0132-4DA6-B9BB-F776C2E08466}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25AD98BE-8249-461E-A6DE-4992F48BC183}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25AD98BE-8249-461E-A6DE-4992F48BC183}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25AD98BE-8249-461E-A6DE-4992F48BC183}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25AD98BE-8249-461E-A6DE-4992F48BC183}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

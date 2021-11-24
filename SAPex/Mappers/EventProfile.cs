@@ -23,6 +23,7 @@ namespace SAPex.Mappers
 
             CreateMap<CreateEventViewModel, EventDtoModel>();
             CreateMap<CreateInterviewEventViewModel, EventDtoModel>();
+            CreateMap<InterviewMemberViewModel, InterviewMemberDtoModel>();
         }
     }
 }

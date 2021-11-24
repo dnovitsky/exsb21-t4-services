@@ -19,7 +19,7 @@ namespace BusinessLogicLayer.DtoModels
 
         public DateTime EndTime { get; set; }
 
-        public IEnumerable<Guid> Members{ get; set;}
+        public IEnumerable<InterviewMemberDtoModel> Members{ get; set;}
     }
 
     

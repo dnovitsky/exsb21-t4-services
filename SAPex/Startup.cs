@@ -116,11 +116,8 @@ namespace SAPex
             services.AddScoped<IStackTechnologyService, StackTechnologyService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFeedbackService, FeedbackService>();
-<<<<<<< HEAD
             services.AddScoped<IEventService, EventService>();
-=======
             services.AddScoped<IUserSandboxService, UserSandboxService>();
->>>>>>> dev
             services.AddScoped<ILocationService, LocationService>();
         }
 
