@@ -20,6 +20,9 @@ using SAPexAuthService.Models;
 using SAPexAuthService.Models.Google;
 using SAPexAuthService.Services;
 using SAPexAuthService.Services.Google;
+using SAPexSMTPMailService.Interfaces;
+using SAPexSMTPMailService.Models;
+using SAPexSMTPMailService.Services;
 
 namespace SAPex
 {
@@ -67,6 +70,9 @@ namespace SAPex
             services.AddScoped<AuthUserRefreshTokenService, AuthUserRefreshTokenService>();
             services.AddScoped<GoogleOAuthService, GoogleOAuthService>();
             services.AddScoped<JwtService, JwtService>();
+
+            services.Configure<MailSettingsModel>(Configuration.GetSection("MailSettings"));
+            services.AddScoped<ISendMailService, SendMailService>();
 
             services.AddSwaggerGen(c =>
             {
