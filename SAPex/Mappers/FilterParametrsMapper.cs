@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using BusinessLogicLayer.DtoModels;
 using SAPex.Models;
 
@@ -14,7 +15,7 @@ namespace SAPex.Mappers
                     .ForMember(x => x.SecondSearchingTextField, y => y.MapFrom(x => x.SecondSearchingTextField))
                     .ForMember(x => x.SecondSearchingTextString, y => y.MapFrom(x => x.SecondSearchingTextString))
                     .ForMember(x => x.SearchingDateField, y => y.MapFrom(x => x.SearchingDateField))
-                    .ForMember(x => x.SearchingStatus, y => y.MapFrom(x => x.SearchingStatus))
+                    .ForMember(x => x.SearchingStatus, y => y.MapFrom(x => (SearchStatus)Enum.Parse(typeof(SearchStatus), x.SearchingStatus)))
                     .ForMember(x => x.SearchingDateString, y => y.MapFrom(x => x.SearchingDateString)));
 
             var mapper = new Mapper(config);

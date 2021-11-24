@@ -4,6 +4,7 @@ using System.Text;
 using AutoMapper;
 using BusinessLogicLayer.Helpers;
 using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.Models;
 using BusinessLogicLayer.Services;
 using DataAccessLayer.Service;
 using DbMigrations.Data;
@@ -20,6 +21,9 @@ using SAPexAuthService.Models;
 using SAPexAuthService.Models.Google;
 using SAPexAuthService.Services;
 using SAPexAuthService.Services.Google;
+using SAPexSMTPMailService.Interfaces;
+using SAPexSMTPMailService.Models;
+using SAPexSMTPMailService.Services;
 
 namespace SAPex
 {
@@ -63,11 +67,15 @@ namespace SAPex
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.Configure<AppSettingsModel>(Configuration.GetSection("AppSettings"));
+            services.Configure<AwsSettingsModel>(Configuration.GetSection("AwsSettings"));
             services.Configure<GoogleSettingsModel>(Configuration.GetSection("GoogleSettings"));
             services.AddScoped<AuthUserService, AuthUserService>();
             services.AddScoped<AuthUserRefreshTokenService, AuthUserRefreshTokenService>();
             services.AddScoped<GoogleOAuthService, GoogleOAuthService>();
             services.AddScoped<JwtService, JwtService>();
+
+            services.Configure<MailSettingsModel>(Configuration.GetSection("MailSettings"));
+            services.AddScoped<ISendMailService, SendMailService>();
 
             services.AddSwaggerGen(c =>
             {
@@ -97,6 +105,7 @@ namespace SAPex
             });
 
             services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
+            services.AddScoped<IAwsS3Service, AwsS3Service>();
             services.AddScoped<ICandidateService, CandidateService>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<ILanguageLevelService, LanguageLevelService>();
@@ -110,6 +119,7 @@ namespace SAPex
             services.AddScoped<ICalendarEventService, CalendarEventService>();
             services.AddScoped<IInterviewEventService, InterviewEventService>();
             services.AddScoped<IFeedbackService, FeedbackService>();
+            services.AddScoped<IUserSandboxService, UserSandboxService>();
             services.AddScoped<ILocationService, LocationService>();
         }
 
@@ -144,6 +154,7 @@ namespace SAPex
                 endpoints.MapControllers();
             });
 
+            dbContext.Database.EnsureDeleted();
             dbContext.Database.Migrate();
 
             List<IApplicationHelper> helpers = new ()

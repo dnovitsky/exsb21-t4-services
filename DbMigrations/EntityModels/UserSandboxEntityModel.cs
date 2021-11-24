@@ -22,8 +22,6 @@ namespace DbMigrations.EntityModels
         public Guid UserId { get; set; }
         public virtual UserEntityModel User { get; set; }
 
-        public string FunctionalRole { get; set; }
-
         public virtual IList<UserTeamEntityModel> UserTeams { get; set; }
     }
 }
