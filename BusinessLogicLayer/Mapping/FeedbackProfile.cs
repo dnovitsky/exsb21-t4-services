@@ -12,9 +12,7 @@ namespace BusinessLogicLayer.Mapping
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<FeedbackDtoModel, FeedbackEntityModel>()
                     .ForMember(x => x.UserId, y => y.MapFrom(x => x.UserId))
-                    .ForMember(x => x.MentoreGrade, y => y.MapFrom(x => x.MentoreGrade))
-                    .ForMember(x => x.InterviewerGrade, y => y.MapFrom(x => x.InterviewerGrade))
-                    .ForMember(x => x.AdminGrade, y => y.MapFrom(x => x.AdminGrade))
+                    .ForMember(x => x.Grade, y => y.MapFrom(x => x.Grade))
                     .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate))
                     .ForMember(x => x.UserReview, y => y.MapFrom(x => x.UserReview))
                     .ForMember(x => x.CandidateProccesId, y => y.MapFrom(x => x.CandidateProccesId)));
@@ -27,9 +25,7 @@ namespace BusinessLogicLayer.Mapping
             var config = new MapperConfiguration(cfg => cfg.CreateMap<FeedbackEntityModel, FeedbackDtoModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.UserId, y => y.MapFrom(x => x.UserId))
-                    .ForMember(x => x.MentoreGrade, y => y.MapFrom(x => x.MentoreGrade))
-                    .ForMember(x => x.InterviewerGrade, y => y.MapFrom(x => x.InterviewerGrade))
-                    .ForMember(x => x.AdminGrade, y => y.MapFrom(x => x.AdminGrade))
+                    .ForMember(x => x.Grade, y => y.MapFrom(x => x.Grade))
                     .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate))
                     .ForMember(x => x.UserReview, y => y.MapFrom(x => x.UserReview))
                     .ForMember(x => x.CandidateProccesId, y => y.MapFrom(x => x.CandidateProccesId)));

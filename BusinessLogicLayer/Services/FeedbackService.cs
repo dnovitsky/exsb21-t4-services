@@ -42,14 +42,14 @@ namespace BusinessLogicLayer.Services
             try
             {
                 FeedbackEntityModel feedbackEM = profile.mapToEM(feedbackDto);
-                feedbackEM.User = await unitOfWork.Users.FindByIdAsync(feedbackEM.UserId);
-                feedbackEM.CandidateProcces = await unitOfWork.CandidateProcceses.FindByIdAsync(feedbackEM.CandidateProccesId);
-                unitOfWork.Feedbacks.Update(feedbackEM);
+                unitOfWork.Feedbacks.Delete(feedbackEM.Id);
+                await unitOfWork.Feedbacks.CreateAsync(feedbackEM);
                 await unitOfWork.SaveAsync();
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return false;
             }
         }

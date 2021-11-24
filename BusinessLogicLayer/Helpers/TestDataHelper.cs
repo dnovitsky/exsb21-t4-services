@@ -1087,7 +1087,7 @@ namespace BusinessLogicLayer.Helpers
                     {
                         Id = Guid.NewGuid(),
                         UserId = db.Users.Where(u=>u.Email== "mentor@gmail.com").FirstOrDefault().Id,
-                        MentoreGrade = 7,
+                        Grade = 7,
                         CreateDate = DateTime.Now,
                         UserReview = "Good knowledge",
                         CandidateProccesId = candidateProcessId1
@@ -1096,7 +1096,7 @@ namespace BusinessLogicLayer.Helpers
                     {
                         Id = Guid.NewGuid(),
                         UserId = db.Users.Where(u => u.Email == "interviewer@gmail.com").FirstOrDefault().Id,
-                        InterviewerGrade =3,
+                        Grade =3,
                         CreateDate = DateTime.Now,
                         UserReview = "Sufficient level",
                         CandidateProccesId = candidateProcessId1
@@ -1105,7 +1105,7 @@ namespace BusinessLogicLayer.Helpers
                     {
                         Id = Guid.NewGuid(),
                         UserId = db.Users.Where(u => u.Email == "recruiter@gmail.com").FirstOrDefault().Id,
-                        AdminGrade = 50,
+                        Grade = 50,
                         CreateDate = DateTime.Now,
                         UserReview = "Next step",
                         CandidateProccesId = candidateProcessId1

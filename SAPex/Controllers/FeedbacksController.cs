@@ -45,13 +45,15 @@ namespace SAPex.Controllers
             //    return await Task.FromResult(BadRequest());
             // }
 
+            feedbackVM.CreateDate = DateTime.Now;
+
             FeedbackDtoModel feedbackDto = _mapper.ViewToDto(feedbackVM);
             Guid feedbackId = await _feedbackService.CreateFeedbackAsync(feedbackDto);
             return await Task.FromResult(Ok(feedbackId));
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, string userReview)
+        public async Task<IActionResult> Put(Guid id, string userReview, int grade)
         {
             FeedbackDtoModel feedbackDtoCheck = await _feedbackService.GetFeedbackByIdAsync(id);
 
@@ -70,9 +72,7 @@ namespace SAPex.Controllers
             {
                 Id = id,
                 UserId = feedbackDtoCheck.UserId,
-                MentoreGrade = feedbackDtoCheck.MentoreGrade,
-                InterviewerGrade = feedbackDtoCheck.InterviewerGrade,
-                AdminGrade = feedbackDtoCheck.AdminGrade,
+                Grade = grade,
                 CreateDate = DateTime.Now,
                 UserReview = userReview,
                 CandidateProccesId = feedbackDtoCheck.CandidateProccesId,
