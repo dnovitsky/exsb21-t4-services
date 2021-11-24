@@ -4,6 +4,7 @@ using System.Text;
 using AutoMapper;
 using BusinessLogicLayer.Helpers;
 using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.Models;
 using BusinessLogicLayer.Services;
 using DataAccessLayer.Service;
 using DbMigrations.Data;
@@ -67,6 +68,7 @@ namespace SAPex
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.Configure<AppSettingsModel>(Configuration.GetSection("AppSettings"));
+            services.Configure<AwsSettingsModel>(Configuration.GetSection("AwsSettings"));
             services.Configure<GoogleSettingsModel>(Configuration.GetSection("GoogleSettings"));
             services.AddScoped<AuthUserService, AuthUserService>();
             services.AddScoped<AuthUserRefreshTokenService, AuthUserRefreshTokenService>();
@@ -105,6 +107,7 @@ namespace SAPex
             });
 
             services.AddScoped<IAvailabilityTypeService, AvailabilityTypeService>();
+            services.AddScoped<IAwsS3Service, AwsS3Service>();
             services.AddScoped<ICandidateService, CandidateService>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<ILanguageLevelService, LanguageLevelService>();

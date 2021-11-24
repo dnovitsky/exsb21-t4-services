@@ -15,7 +15,6 @@ namespace BusinessLogicLayer.Mapping
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<FileDtoModel, FileEntityModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
-                    .ForMember(x => x.AwsS3Id, y => y.MapFrom(x => x.AwsS3Id))
                     .ForMember(x => x.FileName, y => y.MapFrom(x => x.FileName))
                     .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate)));
             var mapper = new Mapper(config);
@@ -28,7 +27,6 @@ namespace BusinessLogicLayer.Mapping
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<FileEntityModel, FileDtoModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
-                    .ForMember(x => x.AwsS3Id, y => y.MapFrom(x => x.AwsS3Id))
                     .ForMember(x => x.FileName, y => y.MapFrom(x => x.FileName))
                     .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate)));
             var mapper = new Mapper(config);
@@ -41,7 +39,6 @@ namespace BusinessLogicLayer.Mapping
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<FileEntityModel, FileDtoModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
-                    .ForMember(x => x.AwsS3Id, y => y.MapFrom(x => x.AwsS3Id))
                     .ForMember(x => x.FileName, y => y.MapFrom(x => x.FileName))
                     .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate)));
             var mapper = new Mapper(config);

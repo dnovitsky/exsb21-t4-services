@@ -53,7 +53,6 @@ Global
 		{6A1B13E0-1759-4C77-83AB-03D75A1E6908}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A1B13E0-1759-4C77-83AB-03D75A1E6908}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2ADF2055-56C6-44E6-9C34-12CA87B54528}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2ADF2055-56C6-44E6-9C34-12CA87B54528}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2ADF2055-56C6-44E6-9C34-12CA87B54528}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2ADF2055-56C6-44E6-9C34-12CA87B54528}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2576ED4E-0132-4DA6-B9BB-F776C2E08466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -70,5 +69,12 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8F752A41-2DDA-4E90-AA57-D3FCC85D72EB}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
+		$0.StandardHeader = $2
+		$0.VersionControlPolicy = $3
 	EndGlobalSection
 EndGlobal
