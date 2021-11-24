@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLogicLayer.DtoModels;
 using BusinessLogicLayer.Interfaces;
-using DbMigrations.EntityModels.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using SAPex.Models.EventModels;
 
@@ -23,10 +22,36 @@ namespace SAPex.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{start}/{end}/{type}")]
-        public async Task<IEnumerable<InterviewEventViewModel>> GetAsync([FromRoute] DateTime start, [FromRoute] DateTime end, [FromRoute] EventType type = EventType.FREE)
+        [HttpGet]
+        public async Task<IEnumerable<InterviewEventViewModel>> GetAsync()
         {
-            var events = await _eventService.GetAllAsync(start, end, type);
+            var events = await _eventService.GetAllAsync();
+            return _mapper.Map<IEnumerable<InterviewEventViewModel>>(events);
+        }
+
+        [HttpGet("{eventId}")]
+        public async Task<ActionResult<InterviewEventViewModel>> GetAsync(Guid eventId)
+        {
+            var event_ = await _eventService.GetEventByIdAsync(eventId);
+            if (event_ != null)
+            {
+                return Ok(_mapper.Map<InterviewEventViewModel>(event_));
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet("/user/{userId}")]
+        public async Task<IEnumerable<InterviewEventViewModel>> GetUserEventsAsync(Guid userId)
+        {
+            var events = await _eventService.GetAllByUserIdAsync(userId);
+            return _mapper.Map<IEnumerable<InterviewEventViewModel>>(events);
+        }
+
+        [HttpGet("{start}/{end}")]
+        public async Task<IEnumerable<InterviewEventViewModel>> GetAsync([FromRoute] DateTime start, [FromRoute] DateTime end)
+        {
+            var events = await _eventService.GetAllByRangeAsync(start, end);
             return _mapper.Map<IEnumerable<InterviewEventViewModel>>(events);
         }
 
@@ -36,10 +61,10 @@ namespace SAPex.Controllers
         public async Task<ActionResult<EventViewModel>> PostAsync([FromBody] CreateEventViewModel eventView)
         {
             EventDtoModel eventDto = _mapper.Map<EventDtoModel>(eventView);
-            eventDto = await _eventService.CreateAsync(eventDto);
+            eventDto = await _eventService.CreateFreeEventAsync(eventDto);
             if (eventDto != null)
             {
-                return _mapper.Map<EventViewModel>(eventDto);
+                return Ok(_mapper.Map<EventViewModel>(eventDto));
             }
 
             return BadRequest();
@@ -51,8 +76,13 @@ namespace SAPex.Controllers
         public async Task<ActionResult<InterviewEventViewModel>> PostAsync([FromBody] CreateInterviewEventViewModel eventView)
         {
             EventDtoModel eventDto = _mapper.Map<EventDtoModel>(eventView);
-            eventDto = await _eventService.CreateInterviewAsync(eventDto);
-            return _mapper.Map<InterviewEventViewModel>(eventDto);
+            eventDto = await _eventService.CreateEventAsync(eventDto);
+            if (eventDto != null)
+            {
+                return Ok(_mapper.Map<InterviewEventViewModel>(eventDto));
+            }
+
+            return BadRequest();
         }
 
         [HttpDelete("interview-time/{userId}/{eventId}")]
@@ -68,7 +98,7 @@ namespace SAPex.Controllers
         }
 
         [HttpGet("google/{userId}")]
-        public async Task<ActionResult> GetAsync(Guid userId)
+        public async Task<ActionResult> GetSyncGoogleCalendarAsync(Guid userId)
         {
             var result = await _eventService.GetAllGoogleEventsAsync(userId);
             if (result)

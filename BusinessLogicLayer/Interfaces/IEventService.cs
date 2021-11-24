@@ -2,17 +2,25 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BusinessLogicLayer.DtoModels;
-using BusinessLogicLayer.Interfaces.Base;
-using DbMigrations.EntityModels.DataTypes;
-using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessLogicLayer.Interfaces
 {
-    public interface IEventService : IService<EventDtoModel>
+    public interface IEventService
     {
-        Task<EventDtoModel> CreateInterviewAsync(EventDtoModel eventDto);
-        Task<IEnumerable<EventDtoModel>> GetAllAsync(DateTime start, DateTime end, EventType type = EventType.FREE);
+        Task<IEnumerable<EventDtoModel>> GetAllAsync();
+        Task<EventDtoModel> GetEventByIdAsync(Guid id);
+        Task<IEnumerable<EventDtoModel>> GetAllByRangeAsync(DateTime start, DateTime end);
+
+        Task<IEnumerable<EventDtoModel>> GetAllByUserIdAsync(Guid userId);
+
+        Task<EventDtoModel> CreateFreeEventAsync(EventDtoModel eventDto);
+        Task<EventDtoModel> CreateEventAsync(EventDtoModel eventDto);
+
+        Task<EventDtoModel> UpdateEventAsync(EventDtoModel eventDto);
+
         Task<bool> DeleteEventAsync(Guid userId, Guid eventId);
+
         Task<bool> GetAllGoogleEventsAsync(Guid userId);
+        
     }
 }

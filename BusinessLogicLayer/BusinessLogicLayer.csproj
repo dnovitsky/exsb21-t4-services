@@ -20,11 +20,9 @@
     <None Remove="Helpers\" />
     <None Remove="Mapping\BaseMappings\" />
     <None Remove="BCrypt.Net-Next" />
-    <None Remove="Interfaces\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />
     <Folder Include="Mapping\BaseMappings\" />
-    <Folder Include="Interfaces\Base\" />
   </ItemGroup>
 </Project>

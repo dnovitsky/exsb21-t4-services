@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DbMigrations.EntityModels.DataTypes;
 
 namespace BusinessLogicLayer.DtoModels
 {
@@ -14,6 +15,8 @@ namespace BusinessLogicLayer.DtoModels
         public string Summary { get; set; }
 
         public string Description { get; set; }
+
+        public EventType Type { get; set; }
 
         public DateTime StartTime { get; set; }
 

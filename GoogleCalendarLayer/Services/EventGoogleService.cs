@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using DbMigrations.EntityModels;
 using GoogleCalendarLayer.Models;
 using Microsoft.Extensions.Options;
@@ -22,6 +23,27 @@ namespace GoogleCalendarLayer.Services
             _googleSettings= googleSettings.Value;
         }
 
+        public async Task<List<EventGoogleModel>> GetAllAsync(GoogleAccessTokenEntityModel token)
+        {
+            RestRequest request = GetRequest(token);
+            restClient.BaseUrl = new Uri(_googleSettings.google_calendar_events_uri);
+            var response=await restClient.ExecuteGetAsync(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                JObject events = JObject.Parse(response.Content);
+                var allEvents = events["items"].ToObject<List<EventGoogleModel>>();
+                return allEvents;
+            }
+            return null;
+        }
+
+        public async Task<bool> DeleteAsync(GoogleAccessTokenEntityModel token, string id)
+        {
+            RestRequest request = GetRequest(token);
+            restClient.BaseUrl = new Uri($"{_googleSettings.google_calendar_events_uri}/{id}");
+            var response = await restClient.ExecuteAsync(request, Method.DELETE);
+            return response.StatusCode == System.Net.HttpStatusCode.NoContent;
+        }
 
         public EventGoogleModel Create(GoogleAccessTokenEntityModel token, EventGoogleModel item)
         {
@@ -39,7 +61,7 @@ namespace GoogleCalendarLayer.Services
 
             restClient.BaseUrl = new Uri($"{_googleSettings.google_calendar_events_uri}?sendUpdates=all");
             var response = restClient.Post(request);
-            System.IO.File.WriteAllText("response.json", response.Content);
+            // System.IO.File.WriteAllText("response.json", response.Content);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 JObject googleEvent = JObject.Parse(response.Content);
@@ -48,28 +70,9 @@ namespace GoogleCalendarLayer.Services
             return null;
         }
         
-        public bool Delete(GoogleAccessTokenEntityModel token, string id)
-        {
-            RestRequest request = GetRequest(token);
-            restClient.BaseUrl = new Uri($"{_googleSettings.google_calendar_events_uri}/{id}");
-            var response = restClient.Delete(request);
-            return response.StatusCode == System.Net.HttpStatusCode.NoContent;
-        }
         
 
-        public List<EventGoogleModel> GetAll(GoogleAccessTokenEntityModel token)
-        {
-            RestRequest request = GetRequest(token);
-            restClient.BaseUrl = new Uri(_googleSettings.google_calendar_events_uri);
-            var response = restClient.Get(request);
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                JObject events = JObject.Parse(response.Content);
-                var allEvents = events["items"].ToObject<List<EventGoogleModel>>();
-                return allEvents;
-            }
-            return null;
-        }
+        
         /*
         public GoogleCalendarEvent Get(string email, string id)
         {
