@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
+using Amazon;
+using Amazon.S3;
 using BusinessLogicLayer.DtoModels;
 using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.Options;
 
 namespace SAPex.Controllers
 {
@@ -17,10 +19,15 @@ namespace SAPex.Controllers
     {
         private readonly string _rootFilesPath = Directory.GetCurrentDirectory() + "/files/";
         private readonly IFileService _fileService;
+        private readonly IAwsS3Service _awsS3Service;
+        private readonly AwsSettingsModel _awsconfig;
+        private readonly RegionEndpoint _regconfig = RegionEndpoint.EUNorth1;
 
-        public FilesController(IFileService service)
+        public FilesController(IFileService service, IAwsS3Service awss3service, IOptions<AwsSettingsModel> awsconfig)
         {
+            _awsS3Service = awss3service;
             _fileService = service;
+            _awsconfig = awsconfig.Value;
             if (!Directory.Exists(_rootFilesPath))
             {
                 Directory.CreateDirectory(_rootFilesPath);
@@ -34,58 +41,84 @@ namespace SAPex.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> DownloadFileAsync([FromRoute] Guid id)
+        public async Task<IActionResult> DownloadFileAsync([FromRoute] Guid id)
         {
-            var provider = new FileExtensionContentTypeProvider();
-
-            FileDtoModel fileDtoModel = await _fileService.FindFileByIdAsync(id);
-            if (fileDtoModel == null)
+            try
             {
-                return await Task.FromResult(NotFound());
-            }
+                FileDtoModel fileDtoModel = await _fileService.FindFileByIdAsync(id);
 
-            string existingFile = Directory.EnumerateFiles(_rootFilesPath, fileDtoModel.FileName).FirstOrDefault();
-            if (!provider.TryGetContentType(existingFile, out var contentType))
+                var objectResponse = await _awsS3Service.GetAwsFileAsync(_awsconfig, fileDtoModel);
+                if (objectResponse.ResponseStream == null)
+                {
+                    return await Task.FromResult(NotFound());
+                }
+
+                return File(objectResponse.ResponseStream, objectResponse.Headers.ContentType, fileDtoModel.FileName);
+            }
+            catch (AmazonS3Exception amazonS3Exception)
             {
-                contentType = "application/octet-stream";
+                if (amazonS3Exception.ErrorCode != null
+                    && (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId") || amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
+                {
+                    return await Task.FromResult(Forbid());
+                }
+                else
+                {
+                    return await Task.FromResult(BadRequest());
+                }
             }
-
-            var bytes = await System.IO.File.ReadAllBytesAsync(existingFile);
-            return File(bytes, contentType, Path.GetFileName(existingFile));
+            catch (Exception ex)
+            {
+                return await Task.FromResult(BadRequest());
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> UploadFileAsync(/* [FromHeader] String documentType, TODO review with FE */ [FromForm] IFormFile file)
         {
-            string filepath = _rootFilesPath + file.FileName;
+            var fileString = Path.GetFileNameWithoutExtension(file.FileName);
+            var fileDate = DateTime.Now.ToFileTimeUtc();
+            var fileExt = Path.GetExtension(file.FileName);
+            var fileName = $"{fileString}{"_"}{fileDate}{fileExt}";
+
+            bool awsRes = await _awsS3Service.AddFileToAwsAsync(_awsconfig, file, fileName);
+
             FileDtoModel fileDtoModel = new ();
             fileDtoModel.Id = new Guid();
-            fileDtoModel.FileName = file.FileName;
-            fileDtoModel.AwsS3Id = 1; // don't have this yet
+            fileDtoModel.FileName = fileName;
             fileDtoModel.CreateDate = DateTime.UtcNow;
-            Stream stream = file.OpenReadStream();
-            await _fileService.AddFileAsync(fileDtoModel);
-            using (FileStream outputFileStream = new FileStream(filepath, FileMode.Create))
+
+            bool fileDbRes = await _fileService.AddFileAsync(fileDtoModel);
+            if (fileDbRes && awsRes)
             {
-                DirectoryInfo info = new DirectoryInfo(file.ContentDisposition);
-                stream.CopyTo(outputFileStream);
                 return await Task.FromResult(Ok());
+            }
+            else
+            {
+                return await Task.FromResult(BadRequest());
             }
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteFileAsync([FromRoute] Guid id)
         {
-            FileDtoModel fileDtoModel = await _fileService.FindFileByIdAsync(id);
-            string filepath = _rootFilesPath + fileDtoModel.FileName;
-            FileInfo file = new FileInfo(filepath);
-            if (file.Exists)
+            try
             {
-                file.Delete();
+                FileDtoModel fileDtoModel = await _fileService.FindFileByIdAsync(id);
                 _fileService.DeleteFileById(id);
-                return await Task.FromResult(Ok());
+
+                bool awsres = await _awsS3Service.DeleteFileFromAwsAsync(_awsconfig, fileDtoModel.FileName);
+
+                if (awsres)
+                {
+                    return await Task.FromResult(Ok());
+                }
+                else
+                {
+                    return await Task.FromResult(BadRequest());
+                }
             }
-            else
+            catch (Exception ex)
             {
                 return await Task.FromResult(BadRequest());
             }
