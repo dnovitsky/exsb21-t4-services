@@ -6,17 +6,17 @@ namespace BusinessLogicLayer.Mapping
 {
     public class CandidateFilterParametrsMapper : Profile
     {
-        public CandidateFilterParametrsEntityModel MapFromDtoToEntity(CandidateFilterParametrsDtoModel candidateFilterParametrsDto)
+        public CandidateFilterParametrsDalModel MapFromDtoToEntity(CandidateFilterParametrsDtoModel candidateFilterParametrsDto)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateFilterParametrsDtoModel, CandidateFilterParametrsEntityModel>()
-                    .ForMember(x => x.LocationId, y => y.MapFrom(x => x.LocationId))
-                    .ForMember(x => x.MentorId, y => y.MapFrom(x => x.MentorId))
-                    .ForMember(x => x.SandboxId, y => y.MapFrom(x => x.SandboxId))
-                    .ForMember(x => x.SearchingStatus, y => y.MapFrom(x => x.SearchingStatus)));
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateFilterParametrsDtoModel, CandidateFilterParametrsDalModel>()
+                    .ForMember(x => x.Locations, y => y.MapFrom(x => x.Locations))
+                    .ForMember(x => x.Mentors, y => y.MapFrom(x => x.Mentors))
+                    .ForMember(x => x.Sandboxes, y => y.MapFrom(x => x.Sandboxes))
+                    .ForMember(x => x.Statuses, y => y.MapFrom(x => x.Statuses)));
 
             var mapper = new Mapper(config);
 
-            CandidateFilterParametrsEntityModel candidateFilterParametrsEM = mapper.Map<CandidateFilterParametrsDtoModel, CandidateFilterParametrsEntityModel>(candidateFilterParametrsDto);
+            CandidateFilterParametrsDalModel candidateFilterParametrsEM = mapper.Map<CandidateFilterParametrsDtoModel, CandidateFilterParametrsDalModel>(candidateFilterParametrsDto);
             return candidateFilterParametrsEM;
         }
     }

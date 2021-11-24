@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogicLayer.DtoModels
+namespace DbMigrations.EntityModels
 {
-    public class CandidateFilterParametrsDtoModel
+    public class CandidateFilterParametrsDalModel
     {
         public List<Guid>? Locations { get; set; } = null;
 

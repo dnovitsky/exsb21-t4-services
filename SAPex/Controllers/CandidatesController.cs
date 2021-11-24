@@ -85,12 +85,6 @@ namespace SAPex.Controllers
 
             foreach (var item in dtoPageListModels.PageList)
             {
-                /*
-                IEnumerable<StackTechnologyDtoModel> stackTechnologyDtoModels = await _stackTechnologyService.GetStackTechnologiesBySandboxIdAsync(item.Id);
-                IEnumerable<LanguageDtoModel> languageDtoModels = await _languageService.GetLanguagesBySandboxIdAsync(item.Id);
-
-                viewModels.Add(_mapper.MapSbStackLgFromDtoToView(item, languageDtoModels, stackTechnologyDtoModels));
-                */
                 viewModels.Add(profile.MapCandidateDtoToVM(item));
             }
 

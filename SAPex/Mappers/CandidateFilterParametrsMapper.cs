@@ -9,10 +9,10 @@ namespace SAPex.Mappers
         public CandidateFilterParametrsDtoModel MapFromViewToDto(CandidateFilterParametrsViewModel candidateFilterParametrsView)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateFilterParametrsViewModel, CandidateFilterParametrsDtoModel>()
-                    .ForMember(x => x.LocationId, y => y.MapFrom(x => x.LocationId))
-                    .ForMember(x => x.MentorId, y => y.MapFrom(x => x.MentorId))
-                    .ForMember(x => x.SandboxId, y => y.MapFrom(x => x.SandboxId))
-                    .ForMember(x => x.SearchingStatus, y => y.MapFrom(x => x.SearchingStatus)));
+                    .ForMember(x => x.Locations, y => y.MapFrom(x => x.Locations))
+                    .ForMember(x => x.Mentors, y => y.MapFrom(x => x.Mentors))
+                    .ForMember(x => x.Sandboxes, y => y.MapFrom(x => x.Sandboxes))
+                    .ForMember(x => x.Statuses, y => y.MapFrom(x => x.Statuses)));
 
             var mapper = new Mapper(config);
 

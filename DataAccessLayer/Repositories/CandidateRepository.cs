@@ -7,6 +7,7 @@ using DbMigrations.EntityModels;
 using DbMigrations.Data;
 using DataAccessLayer.IRepositories;
 using DataAccessLayer.Service;
+using DataAccessLayer.Models;
 
 namespace DataAccessLayer.Repositories
 {
@@ -20,7 +21,7 @@ namespace DataAccessLayer.Repositories
             db = context;
         }
 
-        public async Task<PagedList<CandidateEntityModel>> GetPagedAsync(InputParametrsEntityModel parametrs, CandidateFilterParametrsEntityModel candidateFilterParametrs)
+        public async Task<PagedList<CandidateEntityModel>> GetPagedAsync(InputParametrsDalModel parametrs, CandidateFilterParametrsDalModel candidateFilterParametrs)
         {
             int pageNumber = parametrs.PageNumber;
             int pageSize = parametrs.PageSize;
@@ -31,18 +32,18 @@ namespace DataAccessLayer.Repositories
 
             PagedList<CandidateEntityModel> pagedList = new PagedList<CandidateEntityModel>();
 
-            var LocationId = candidateFilterParametrs.LocationId;
-            var SandboxId = candidateFilterParametrs.SandboxId;
-            var SearchStatus = candidateFilterParametrs.SearchingStatus;
-            var MentorId = candidateFilterParametrs.MentorId;
+            var locations = candidateFilterParametrs.Locations;
+            var sandboxes = candidateFilterParametrs.Sandboxes;
+            var statuses = candidateFilterParametrs.Statuses;
+            var mentors = candidateFilterParametrs.Mentors;
 
             pagedList.PageList = await Task.Run(() => db.Candidates.Where(candidate => 
-                (LocationId == null || candidate.CandidateSandboxes.Where(s => s.Candidate.Location.Id == LocationId).Any())
-                && (SandboxId == null || candidate.CandidateSandboxes.Where(s => s.Sandbox.Id == SandboxId).Any()) 
-                && (SearchStatus == SearchStatus.None || candidate.CandidateSandboxes.Where(s => s.CandidateProcesses.Where(x => x.Status.Name.Contains(SearchStatus.ToString())).Any()).Any())
-                && (MentorId == null || candidate.CandidateSandboxes.Where(
+                (locations == null || !locations.Any() || candidate.CandidateSandboxes.Where(s => locations.Contains(s.Candidate.Location.Id)).Any())
+                && (sandboxes == null || !sandboxes.Any() || candidate.CandidateSandboxes.Where(s => sandboxes.Contains(s.Sandbox.Id)).Any()) 
+                && (statuses == null || !statuses.Any() || candidate.CandidateSandboxes.Where(s => s.CandidateProcesses.Where(x => statuses.Contains(x.Status.Id)).Any()).Any())
+                && (mentors == null || !mentors.Any() || candidate.CandidateSandboxes.Where(
                     s => s.Sandbox.Teams.Where(
-                        x => x.UserTeams.Where(u => u.UserSandBox.UserId == MentorId).Any()
+                        x => x.UserTeams.Where(u => mentors.Contains(u.UserSandBox.UserId)).Any()
                     ).Any()
                   ).Any()
                 )
@@ -50,7 +51,30 @@ namespace DataAccessLayer.Repositories
 
             if(parametrs.SortField != "")
             {
-                pagedList.PageList = SortingType == 0 ?  pagedList.PageList.OrderBy(s => s.Name).ToList() : pagedList.PageList.OrderByDescending(s => s.Name).ToList();
+                pagedList.PageList = parametrs.SortField.ToLower() switch
+                {
+                    "name" => (SortingType == 0 ?
+                    pagedList.PageList.OrderBy(s => s.Name).AsEnumerable() :
+                    pagedList.PageList.OrderByDescending(s => s.Name).AsEnumerable()),
+
+                    "surname" => (SortingType == 0 ?
+                    pagedList.PageList.OrderBy(s => s.Surname).AsEnumerable() :
+                    pagedList.PageList.OrderByDescending(s => s.Surname).AsEnumerable()),
+
+                    "email" => (SortingType == 0 ?
+                    pagedList.PageList.OrderBy(s => s.Email).AsEnumerable() :
+                    pagedList.PageList.OrderByDescending(s => s.Email).AsEnumerable()),
+
+                    "status" => (SortingType == 0 ?
+                    pagedList.PageList.OrderBy(s => s.CandidateSandboxes.OrderBy(x => x.CandidateProcesses.OrderBy(z => z.Status.Name))).AsEnumerable() :
+                    pagedList.PageList.OrderByDescending(s => s.CandidateSandboxes.OrderByDescending(x => x.CandidateProcesses.OrderByDescending(z => z.Status.Name))).AsEnumerable()),
+
+                    "sandbox" => (SortingType == 0 ?
+                    pagedList.PageList.OrderBy(s => s.CandidateSandboxes.OrderBy(x => x.Sandbox.Name)).AsEnumerable() :
+                    pagedList.PageList.OrderByDescending(s => s.CandidateSandboxes.OrderByDescending(x => x.Sandbox.Name)).AsEnumerable()),
+
+                    _ => pagedList.PageList.OrderBy(s => s.Name).AsEnumerable(),
+                };
             }
 
             pagedList.PageList = pagedList.PageList.Skip((pageNumber - 1) * pageSize).Take(pageSize);
