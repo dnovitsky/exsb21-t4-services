@@ -54,5 +54,25 @@ namespace SAPex.Mappers
 
             return stackTechnologyViewList;
         }
+
+        public string MapListStackTechnologyFromDtoToString(IEnumerable<StackTechnologyDtoModel> stackTechnologiesDto)
+        {
+            string stackTechnologiesString = string.Empty;
+
+            foreach (var stackTechnology in stackTechnologiesDto)
+            {
+                if (stackTechnology != null)
+                {
+                   stackTechnologiesString += stackTechnology.Name + ", ";
+                }
+            }
+
+            if (stackTechnologiesString != string.Empty)
+            {
+                stackTechnologiesString = stackTechnologiesString.Remove(stackTechnologiesString.LastIndexOf(','));
+            }
+
+            return stackTechnologiesString;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogicLayer.DtoModels;
@@ -10,6 +11,7 @@ using DbMigrations.Data;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using OfficeOpenXml;
 using SAPex.Mappers;
 using SAPex.Models;
 using SAPex.Models.Validators;
@@ -94,6 +96,43 @@ namespace SAPex.Controllers
             }
 
             return await Task.FromResult(Ok(viewModels));
+        }
+
+        [HttpGet("exportAsExcel")]
+        public async Task<IActionResult> GetExcel([FromQuery] InputParametrsViewModel sandboxParametrs, [FromQuery] FilterParametrsViewModel filterParametrs)
+        {
+            sandboxParametrs.PageNumber = 1;
+            sandboxParametrs.PageSize = int.MaxValue;
+
+            PagedList<SandboxDtoModel> dtoPageListModels = await _sandboxService.GetPagedSandboxesAsync(
+                _inputParamersMapper.MapFromViewToDto(sandboxParametrs),
+                _filterParametrsMapper.MapFromViewToDto(filterParametrs));
+
+            IList<SandboxExcelViewModel> viewModels = new List<SandboxExcelViewModel>();
+
+            foreach (var item in dtoPageListModels.PageList)
+            {
+                if (item != null)
+                {
+                    IEnumerable<StackTechnologyDtoModel> stackTechnologyDtoModels = await _stackTechnologyService.GetStackTechnologiesBySandboxIdAsync(item.Id);
+                    IEnumerable<LanguageDtoModel> languageDtoModels = await _languageService.GetLanguagesBySandboxIdAsync(item.Id);
+                    IEnumerable<UserDtoModel> mentorDtoModels = await _userService.GetUsersBySandboxIdConditionFuncRole(s => s.FunctionalRole.Name == "Mentor", item.Id);
+                    IEnumerable<UserDtoModel> recruiterDtoModels = await _userService.GetUsersBySandboxIdConditionFuncRole(s => s.FunctionalRole.Name == "Recruiter", item.Id);
+                    IEnumerable<UserDtoModel> interwieverDtoModels = await _userService.GetUsersBySandboxIdConditionFuncRole(s => s.FunctionalRole.Name == "Interviewer", item.Id);
+
+                    viewModels.Add(_mapper.MapFromDtoToExcelView(item, languageDtoModels, stackTechnologyDtoModels,
+                     mentorDtoModels, recruiterDtoModels, interwieverDtoModels));
+                }
+            }
+
+            string contentType = "application/octet-stream";
+            string fileName = "Sandboxes.xlsx";
+
+            MemoryStream memoryStream = new MemoryStream();
+
+            memoryStream = _mapper.MapListFromViewToExcel(viewModels);
+
+            return File(memoryStream, contentType, fileName);
         }
 
         [HttpGet("filter")]
