@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GoogleCalendarLayer.Models
+namespace SAPexGoogleSupportService.Models.Calendar
 {
     public class EventGoogleModel
     {

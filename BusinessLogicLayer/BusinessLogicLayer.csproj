@@ -14,7 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
     <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
-    <ProjectReference Include="..\GoogleCalendarLayer\GoogleCalendarLayer.csproj" />
+    <ProjectReference Include="..\SAPexGoogleSupportService\SAPexGoogleSupportService.csproj" />
   </ItemGroup>
 
   <ItemGroup>

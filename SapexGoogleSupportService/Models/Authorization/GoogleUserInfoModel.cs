@@ -1,5 +1,5 @@
 ﻿using System;
-namespace SAPexAuthService.Models.Google
+namespace SAPexGoogleSupportService.Models.Authorization
 {
     public class GoogleUserInfoModel
     {

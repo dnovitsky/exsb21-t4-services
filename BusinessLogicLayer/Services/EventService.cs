@@ -9,8 +9,8 @@ using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.Service;
 using DbMigrations.EntityModels;
 using DbMigrations.EntityModels.DataTypes;
-using GoogleCalendarLayer.Models;
-using GoogleCalendarLayer.Services;
+using SAPexGoogleSupportService.Models.Calendar;
+using SAPexGoogleSupportService.Services.Calendar;
 
 namespace BusinessLogicLayer.Services
 {

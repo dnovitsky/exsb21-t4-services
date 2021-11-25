@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DbMigrations.EntityModels;
-using GoogleCalendarLayer.Models;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using RestSharp;
-using SAPexAuthService.Models.Google;
+using SAPexGoogleSupportService.Models.Authorization;
+using SAPexGoogleSupportService.Models.Calendar;
 
-namespace GoogleCalendarLayer.Services
+namespace SAPexGoogleSupportService.Services.Calendar
 {
     public class EventGoogleService 
     {

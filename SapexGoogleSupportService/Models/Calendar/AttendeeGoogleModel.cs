@@ -1,5 +1,5 @@
 ﻿using System;
-namespace GoogleCalendarLayer.Models
+namespace SAPexGoogleSupportService.Models.Calendar
 {
     public class AttendeeGoogleModel
     {
