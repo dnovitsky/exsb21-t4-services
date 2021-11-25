@@ -16,15 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAPexAuthService", "SAPexAuthService\SAPexAuthService.csproj", "{AA9B804C-A4AA-4F28-BE70-25F28F029FDE}"
 EndProject
-<<<<<<< HEAD
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAPexSMTPMailService", "SAPexSMTPMailService\SAPexSMTPMailService.csproj", "{6A1B13E0-1759-4C77-83AB-03D75A1E6908}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAPex", "SAPex\SAPex.csproj", "{25AD98BE-8249-461E-A6DE-4992F48BC183}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAPexGoogleSupportService", "SAPexGoogleSupportService\SAPexGoogleSupportService.csproj", "{1D6DE989-830E-4B1E-B6E5-E581FEB3B949}"
-=======
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAPexSMTPMailService", "SAPexSMTPMailService\SAPexSMTPMailService.csproj", "{616A777B-E511-420D-BFC0-D9A0F5B68AB0}"
->>>>>>> dev
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,7 +52,6 @@ Global
 		{6A1B13E0-1759-4C77-83AB-03D75A1E6908}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A1B13E0-1759-4C77-83AB-03D75A1E6908}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A1B13E0-1759-4C77-83AB-03D75A1E6908}.Release|Any CPU.Build.0 = Release|Any CPU
-<<<<<<< HEAD
 		{2ADF2055-56C6-44E6-9C34-12CA87B54528}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2ADF2055-56C6-44E6-9C34-12CA87B54528}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2ADF2055-56C6-44E6-9C34-12CA87B54528}.Release|Any CPU.Build.0 = Release|Any CPU
@@ -68,12 +63,10 @@ Global
 		{1D6DE989-830E-4B1E-B6E5-E581FEB3B949}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D6DE989-830E-4B1E-B6E5-E581FEB3B949}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D6DE989-830E-4B1E-B6E5-E581FEB3B949}.Release|Any CPU.Build.0 = Release|Any CPU
-=======
 		{616A777B-E511-420D-BFC0-D9A0F5B68AB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{616A777B-E511-420D-BFC0-D9A0F5B68AB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{616A777B-E511-420D-BFC0-D9A0F5B68AB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{616A777B-E511-420D-BFC0-D9A0F5B68AB0}.Release|Any CPU.Build.0 = Release|Any CPU
->>>>>>> dev
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
