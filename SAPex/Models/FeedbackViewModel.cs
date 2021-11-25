@@ -11,7 +11,7 @@ namespace SAPex.Models
 
         public Guid UserId { get; set; }
 
-        public Guid RatingId { get; set; }
+        public int? Grade { get; set; }
 
         public DateTime CreateDate { get; set; }
 

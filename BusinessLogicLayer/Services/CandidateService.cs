@@ -17,11 +17,15 @@ namespace BusinessLogicLayer.Services
         protected readonly CandidateProfile profile;
         protected readonly LocationProfile locationProfile = new LocationProfile();
         private readonly IUnitOfWork unitOfWork;
+        private readonly InputParametrsProfile inputParametrsProfile;
+        private readonly CandidateFilterParametrsMapper candidateFilterParametrsProfile;
 
         public CandidateService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
             this.profile = new CandidateProfile(unitOfWork);
+            inputParametrsProfile = new InputParametrsProfile();
+            candidateFilterParametrsProfile = new CandidateFilterParametrsMapper();
         }
         public async Task<CandidateDtoModel> AddCandidateAsync(CreateCandidateDtoModel candidateDto)
         {
@@ -91,7 +95,7 @@ namespace BusinessLogicLayer.Services
 
         public async Task<CandidateDtoModel> FindCandidateByIdAsync(Guid id)
         {
-            CandidateEntityModel candidateEM = await unitOfWork.Candidates.FindByIdAsync(id);
+            CandidateEntityModel candidateEM = await unitOfWork.Candidates.FindByIdAsync(id); 
             CandidateDtoModel candidateDto = profile.MapCandidateEMToCandidateDto(candidateEM);
             return candidateDto;
         }
@@ -106,6 +110,21 @@ namespace BusinessLogicLayer.Services
         {
             IEnumerable<CandidateEntityModel> candidateEM = await unitOfWork.Candidates.GetAllAsync();
             return profile.MapCandidateEMListToCandidateDtoList(candidateEM);
+        }
+
+        public async Task<PagedList<CandidateDtoModel>> GetPagedCandidatesAsync(InputParametrsDtoModel parametrs, CandidateFilterParametrsDtoModel candidateFilterParametrs)
+        {
+            PagedList<CandidateEntityModel> candidateList = await unitOfWork.Candidates.GetPagedAsync(
+                inputParametrsProfile.MapFromDtoToEntity(parametrs),
+                candidateFilterParametrsProfile.MapFromDtoToEntity(candidateFilterParametrs));
+            PagedList<CandidateDtoModel> sandboxDtoList = new PagedList<CandidateDtoModel>
+            {
+                PageList = profile.MapCandidateEMListToCandidateDtoList(candidateList.PageList),
+                TotalPages = candidateList.TotalPages,
+                CurrentPage = candidateList.CurrentPage
+            };
+
+            return sandboxDtoList;
         }
 
         public void UpdateCandidate(CandidateDtoModel candidateDto)
