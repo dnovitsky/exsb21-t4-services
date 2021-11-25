@@ -3,11 +3,10 @@ using DataAccessLayer.Service;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using RestSharp;
-using SAPexAuthService.Models.Google;
 using DbMigrations.EntityModels;
 using System.Threading.Tasks;
 using System.Linq;
-using SAPexAuthService.Models;
+using SAPexGoogleSupportService.Models.Authorization;
 
 namespace SAPexAuthService.Services.Google
 {
@@ -15,23 +14,21 @@ namespace SAPexAuthService.Services.Google
     {
         
         private readonly IUnitOfWork _unitOfWork;
-        private readonly JwtService _jwtService;
         private readonly RestClient restClient = new();
         private readonly GoogleSettingsModel _googleSettings;
 
-        public GoogleOAuthService(IUnitOfWork unitOfWork, JwtService jwtService, IOptions<GoogleSettingsModel> googleSettings)
+        public GoogleOAuthService(IUnitOfWork unitOfWork, IOptions<GoogleSettingsModel> googleSettings)
         {
             _unitOfWork = unitOfWork;
-            _jwtService = jwtService;
             _googleSettings = googleSettings.Value;
         }
 
-        public string GetRedirectUrl(string email) {
-            var scope = string.Format("{0}+{1}+{2}+{3}+{4}+{5}", GoogleScope.CALENDAR, GoogleScope.CALENDAR_READ_ONLY, GoogleScope.EVENTS, GoogleScope.EVENTS_READ_ONLY,GoogleScope.EMAIL,GoogleScope.USER_INFO);
-            return  $"{_googleSettings.auth_uri}?scope={scope}&access_type=offline&include_granted_scopes=true&response_type=code&state={email}&redirect_uri={_googleSettings.redirect_uris}&client_id={_googleSettings.client_id}";
+        public string GetRedirectUrl(string state)
+        {
+            return  $"{_googleSettings.auth_uri}?scope={GoogleScope.ALL}&access_type=offline&include_granted_scopes=true&response_type=code&state={state}&redirect_uri={_googleSettings.redirect_uris}&client_id={_googleSettings.client_id}";
         }
        
-        public async Task<TokenCredentialsModel> AddAsync(string code)
+        public async Task<UserEntityModel> AddAsync(string code,string state)
         {   
             RestRequest request = GetRequest();
             request.AddQueryParameter("code", code);
@@ -73,7 +70,7 @@ namespace SAPexAuthService.Services.Google
                     }
                     
                     await _unitOfWork.SaveAsync();
-                    return await _jwtService.GenerateTokenByUserAsync(user);
+                    return user;
                 }
                 
                 
