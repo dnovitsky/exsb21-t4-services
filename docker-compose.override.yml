@@ -10,7 +10,7 @@ services:
        MSSQL_PID : "Developer"
        MSSQL_USER : "SA"
        MSSQL_SA_PASSWORD : "MyPass@word"
-       ACCEPT_EULA: "Y"  
+       ACCEPT_EULA: "Y"
  sapex:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -20,7 +20,7 @@ services:
       - "9090:80"
     volumes:
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-    depends_on: 
+    depends_on:
       - db
 
   
