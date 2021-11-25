@@ -10,6 +10,7 @@ WORKDIR /src
 COPY ["DbMigrations/DbMigrations.csproj", "DbMigrations/"]
 COPY ["DataAccessLayer/DataAccessLayer.csproj", "DataAccessLayer/"]
 COPY ["BusinessLogicLayer/BusinessLogicLayer.csproj", "BusinessLogicLayer/"]
+COPY ["SAPexGoogleSupportService/SAPexGoogleSupportService.csproj", "SAPexGoogleSupportService/"]
 COPY ["SAPexAuthService/SAPexAuthService.csproj", "SAPexAuthService/"]
 COPY ["SAPexSMTPMailService/SAPexSMTPMailService.csproj", "SAPexSMTPMailService/"]
 COPY ["SAPex/SAPex.csproj", "SAPex/"]
