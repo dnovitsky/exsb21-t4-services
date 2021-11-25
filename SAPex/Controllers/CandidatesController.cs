@@ -5,9 +5,12 @@ using System.Threading.Tasks;
 using BusinessLogicLayer.DtoModels;
 using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Services;
+using DataAccessLayer.Service;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SAPex.Controllers.Mapping;
+using SAPex.Mappers;
 using SAPex.Models;
 
 namespace SAPex.Controllers
@@ -18,10 +21,14 @@ namespace SAPex.Controllers
     {
         protected readonly CandidateMapper profile = new CandidateMapper();
         private readonly ICandidateService _service;
+        private readonly InputParametrsMapper _inputParamersMapper;
+        private readonly CandidateFilterParametrsMapper _candidateFilterParametrsMapper;
 
         public CandidatesController(ICandidateService service)
         {
             _service = service;
+            _inputParamersMapper = new InputParametrsMapper();
+            _candidateFilterParametrsMapper = new CandidateFilterParametrsMapper();
         }
 
         [HttpGet("all")]
@@ -65,6 +72,24 @@ namespace SAPex.Controllers
             }
 
             return await Task.FromResult(Conflict());
+        }
+
+        [HttpGet("filter")]
+        public async Task<IActionResult> GetFilter([FromQuery] InputParametrsViewModel inputParametrs, [FromQuery] CandidateFilterParametrsViewModel candidateFilterParametrs)
+        {
+            PagedList<CandidateDtoModel> dtoPageListModels = await _service.GetPagedCandidatesAsync(
+                _inputParamersMapper.MapFromViewToDto(inputParametrs),
+                _candidateFilterParametrsMapper.MapFromViewToDto(candidateFilterParametrs));
+
+            IList<CandidateViewModel> viewModels = new List<CandidateViewModel>();
+
+            foreach (var item in dtoPageListModels.PageList)
+            {
+                viewModels.Add(profile.MapCandidateDtoToVM(item));
+            }
+
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(dtoPageListModels.TotalPages));
+            return await Task.FromResult(Ok(viewModels));
         }
 
         [HttpPut("{id}")]
