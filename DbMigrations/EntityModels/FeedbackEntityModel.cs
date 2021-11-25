@@ -18,8 +18,7 @@ namespace DbMigrations.EntityModels
         public virtual UserEntityModel User { get; set; }
 
         [Required]
-        public Guid RatingId { get; set; }
-        public virtual RatingEntityModel Rating { get; set; }
+        public int? Grade { get; set; }
 
         [Required]
         public DateTime CreateDate { get; set; }

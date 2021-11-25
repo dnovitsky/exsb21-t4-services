@@ -30,7 +30,6 @@ namespace DbMigrations.Data
 
         public DbSet<LocationEntityModel> Locations { get; set; }
         public DbSet<LanguageLevelEntityModel> LanguageLevels { get; set; }
-        public DbSet<RatingEntityModel> Ratings { get; set; }
 
 
         public DbSet<SandboxEntityModel> Sandboxes { get; set; }
