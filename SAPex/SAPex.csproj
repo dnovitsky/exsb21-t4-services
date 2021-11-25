@@ -44,15 +44,23 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
-    <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
-    <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj" />
-    <ProjectReference Include="..\SAPexAuthService\SAPexAuthService.csproj" />
+    <Folder Include="Mappers\Base\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\SAPexSMTPMailService\SAPexSMTPMailService.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mappers\Base\" />
+    <ProjectReference Include="..\SAPexAuthService\SAPexAuthService.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\DbMigrations\DbMigrations.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>
