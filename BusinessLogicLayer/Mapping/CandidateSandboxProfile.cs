@@ -28,6 +28,7 @@ namespace BusinessLogicLayer.Mapping
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateSandboxEntityModel, CandidateSandboxDtoModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.Sandbox, y => y.MapFrom(x => sandboxProfile.mapToDto(x.Sandbox)))
+                    .ForMember(x => x.CurrentJob, y => y.MapFrom(x => x.CurrentJob))
                     .ForMember(x => x.CandidateProjectRole, y => y.MapFrom(x => candidateProjectRoleProfile.mapToDto(x.CandidateProjectRole)))
                     .ForMember(x => x.CandidateProcesses, y => y.MapFrom(x => candidateProcessProfile.mapListToDto(x.CandidateProcesses))));
 

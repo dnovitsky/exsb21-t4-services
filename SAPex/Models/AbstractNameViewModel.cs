@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SAPex.Models
 {
@@ -12,6 +13,12 @@ namespace SAPex.Models
 
         public AbstractNameViewModel(string name)
             : base()
+        {
+            Name = name;
+        }
+
+        public AbstractNameViewModel(Guid id, string name)
+            : base(id)
         {
             Name = name;
         }

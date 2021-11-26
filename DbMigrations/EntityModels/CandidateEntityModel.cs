@@ -1,23 +1,18 @@
-﻿using System;
+﻿using DbMigrations.EntityModels.BaseModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DbMigrations.EntityModels
 {
-    public class CandidateEntityModel
+    public class CandidateEntityModel: NameEntityModel
     {
-        public CandidateEntityModel()
+        public CandidateEntityModel() : base()
         {
             CandidateLanguages = new List<CandidateLanguageEntityModel>();
             CandidateTechSkills = new List<CandidateTechSkillEntityModel>();
             CandidateSandboxes = new List<CandidateSandboxEntityModel>();
         }
-
-        [Key]
-        public Guid Id { get; set; }
-        
-        [Required]
-        public string Name { get; set; }
         
         [Required]
         public string Surname { get; set; }

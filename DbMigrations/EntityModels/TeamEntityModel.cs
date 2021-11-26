@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DbMigrations.EntityModels.BaseModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,16 +8,12 @@ using System.Threading.Tasks;
 
 namespace DbMigrations.EntityModels
 {
-    public class TeamEntityModel
+    public class TeamEntityModel : NameEntityModel
     {
-        public TeamEntityModel()
+        public TeamEntityModel() : base()
         {
             UserTeams = new List<UserTeamEntityModel>();
         }
-        [Key]
-        public Guid Id { get; set; }
-        [Required]
-        public string Name { get; set; }
 
         [Required]
         public Guid SandboxId { get; set; }

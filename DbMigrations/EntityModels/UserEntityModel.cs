@@ -1,12 +1,13 @@
-﻿using System;
+﻿using DbMigrations.EntityModels.BaseModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DbMigrations.EntityModels
 {
-    public class UserEntityModel
+    public class UserEntityModel : NameEntityModel
     {
-        public UserEntityModel()
+        public UserEntityModel() : base()
         {
             UserSanboxes = new List<UserSandBoxEntityModel>();
             UserTechSkills = new List<UserTechSkillEntityModel>();
@@ -15,10 +16,7 @@ namespace DbMigrations.EntityModels
             Feedbacks = new List<FeedbackEntityModel>();
             UserStackTechnologies = new List<UserStackTechnologyEntityModel>();
         }
-        [Key]
-        public Guid Id { get; set; }
-        [Required]
-        public string Name { get; set; }
+
         [Required]
         public string Surname { get; set; }
 

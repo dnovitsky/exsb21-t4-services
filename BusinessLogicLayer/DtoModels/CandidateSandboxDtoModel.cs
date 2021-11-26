@@ -10,6 +10,8 @@ namespace BusinessLogicLayer.DtoModels
     {
         public Guid Id { get; set; }
 
+        public string CurrentJob { get; set; }
+
         public SandboxDtoModel Sandbox { get; set; }
 
         public IEnumerable<CandidateProcessDtoModel> CandidateProcesses { get; set; }
