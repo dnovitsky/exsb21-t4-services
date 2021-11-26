@@ -98,7 +98,7 @@ namespace SAPex.Controllers
             return await Task.FromResult(Ok(viewModels));
         }
 
-        [HttpGet("exportAsExcel")]
+        [HttpGet("export")]
         public async Task<IActionResult> GetExcel([FromQuery] InputParametrsViewModel sandboxParametrs, [FromQuery] FilterParametrsViewModel filterParametrs)
         {
             sandboxParametrs.PageNumber = 1;
