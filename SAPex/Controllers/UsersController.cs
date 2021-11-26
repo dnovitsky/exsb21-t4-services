@@ -1,9 +1,16 @@
-﻿using System;
+using System;
+<<<<<<< HEAD
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+=======
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using BusinessLogicLayer.DtoModels;
+>>>>>>> dev
 using BusinessLogicLayer.Interfaces;
 using DbMigrations.EntityModels.DataTypes;
 using Microsoft.AspNetCore.Authorization;
@@ -43,6 +50,7 @@ namespace SAPex.Controllers
             return NotFound();
         }
 
+<<<<<<< HEAD
         [HttpGet("{id}/events")]
         public async Task<IEnumerable<InterviewEventViewModel>> GetEventsByUserIdAsync(Guid id)
         {
@@ -55,6 +63,19 @@ namespace SAPex.Controllers
         {
             var events = await _eventService.GetAllUserFilterAsync(id, start, end, type);
             return _autoMapper.Map<IEnumerable<InterviewEventViewModel>>(events);
+=======
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserById(Guid id)
+        {
+            UserDtoModel user = await _userService.FindByIdAsync(id);
+
+            if (user != null)
+            {
+                return await Task.FromResult(Ok(_mapper.MapUserFromDtoToView(user)));
+            }
+
+            return await Task.FromResult(NotFound());
+>>>>>>> dev
         }
     }
 }

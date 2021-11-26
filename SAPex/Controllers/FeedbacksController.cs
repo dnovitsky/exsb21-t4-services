@@ -17,14 +17,16 @@ namespace SAPex.Controllers
     public class FeedbacksController : ControllerBase
     {
         private readonly IFeedbackService _feedbackService;
+        private readonly IUserService _userService;
         private readonly FeedbackMapper _mapper = new FeedbackMapper();
 
-        public FeedbacksController(IFeedbackService service)
+        public FeedbacksController(IFeedbackService service, IUserService userService)
         {
             _feedbackService = service;
+            _userService = userService;
         }
 
-        [HttpGet("{feedbackId}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetFeedbackById(Guid feedbackId)
         {
             FeedbackViewModel feedbackVM = _mapper.DtoToView(await _feedbackService.GetFeedbackByIdAsync(feedbackId));
@@ -39,13 +41,10 @@ namespace SAPex.Controllers
                 return await Task.FromResult(BadRequest());
             }
 
-            // ValidationResult validationResult = new FeedbackValidator().Validate(feedbackVM);
-            // if (!validationResult.IsValid)
-            // {
-            //    return await Task.FromResult(BadRequest());
-            // }
+            UserDtoModel user = await _userService.FindByIdConditionAsync(u => u.Id == feedbackVM.UserId);
 
-            feedbackVM.CreateDate = DateTime.Now;
+            feedbackVM.CreateDate = DateTime.UtcNow;
+            feedbackVM.Author = $"{user.Name} {user.Surname}";
 
             FeedbackDtoModel feedbackDto = _mapper.ViewToDto(feedbackVM);
             Guid feedbackId = await _feedbackService.CreateFeedbackAsync(feedbackDto);
@@ -62,18 +61,15 @@ namespace SAPex.Controllers
                 return await Task.FromResult(NotFound());
             }
 
-            // ValidationResult validationResult = new FeedbackValidator().Validate(feedbackVM);
-            // if (!validationResult.IsValid)
-            // {
-            //    return await Task.FromResult(BadRequest());
-            // }
+            UserDtoModel user = await _userService.FindByIdConditionAsync(u => u.Id == feedbackDtoCheck.UserId);
 
             FeedbackViewModel newFeedbackVM = new FeedbackViewModel
             {
                 Id = id,
                 UserId = feedbackDtoCheck.UserId,
+                Author = $"{user.Name} {user.Surname}",
                 Grade = grade,
-                CreateDate = DateTime.Now,
+                CreateDate = DateTime.UtcNow,
                 UserReview = userReview,
                 CandidateProccesId = feedbackDtoCheck.CandidateProccesId,
             };
