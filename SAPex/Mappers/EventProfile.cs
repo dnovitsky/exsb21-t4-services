@@ -3,6 +3,7 @@ using AutoMapper;
 using BusinessLogicLayer.DtoModels;
 using DbMigrations.EntityModels;
 using SAPex.Models.EventModels;
+using SAPexGoogleSupportService.Models.Calendar;
 
 namespace SAPex.Mappers
 {
@@ -23,7 +24,9 @@ namespace SAPex.Mappers
 
             CreateMap<CreateEventViewModel, EventDtoModel>();
             CreateMap<CreateInterviewEventViewModel, EventDtoModel>();
+
             CreateMap<InterviewMemberViewModel, InterviewMemberDtoModel>();
+            CreateMap<InterviewMemberDtoModel, InterviewMemberViewModel>();
         }
     }
 }

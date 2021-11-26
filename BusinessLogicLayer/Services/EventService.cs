@@ -39,9 +39,15 @@ namespace BusinessLogicLayer.Services
             return _mapper.Map<EventDtoModel>(eventEntity);
         }
 
-        public async Task<IEnumerable<EventDtoModel>> GetAllByRangeAsync(DateTime start, DateTime end)
+        public async Task<IEnumerable<EventDtoModel>> GetAllFilterAsync(DateTime start, DateTime end, EventType type)
         {   
-            var eventEntities = await _unitOfWork.Events.FindByConditionAsync(x=>start.ToUniversalTime() <= x.StartTime && x.EndTime<=end.ToUniversalTime());
+            var eventEntities = await _unitOfWork.Events.FindByConditionAsync(x=>start.ToUniversalTime() <= x.StartTime && x.EndTime<=end.ToUniversalTime() && x.Type == type);
+            return _mapper.Map<IEnumerable<EventDtoModel>>(eventEntities);
+        }
+
+        public async Task<IEnumerable<EventDtoModel>> GetAllUserFilterAsync(Guid userId, DateTime start, DateTime end, EventType type)
+        {
+            var eventEntities = await _unitOfWork.Events.FindByConditionAsync(x =>x.OwnerId == userId && start.ToUniversalTime() <= x.StartTime && x.EndTime <= end.ToUniversalTime() && x.Type == type);
             return _mapper.Map<IEnumerable<EventDtoModel>>(eventEntities);
         }
 
@@ -52,7 +58,7 @@ namespace BusinessLogicLayer.Services
             {
                 return null;
             }
-            var events =await  _unitOfWork.Events.FindByConditionAsync(x=> x.OwnerId == userId);
+            var events = await _unitOfWork.Events.FindByConditionAsync(x => x.OwnerId == userId);
             var others = await _unitOfWork.EventMembers.FindByConditionAsync(x => x.MemberEmail == user.Email);
             foreach (var other in others)
             {
@@ -190,22 +196,27 @@ namespace BusinessLogicLayer.Services
             throw new NotImplementedException();
         }
 
-        public async Task<bool> DeleteEventAsync(Guid userId, Guid eventId)
+        public async Task<bool> DeleteEventAsync(string email, Guid eventId)
         {
-            var eventEntities = await _unitOfWork.Events.FindByConditionAsync(x =>
-                x.OwnerId == userId &&
-                x.Id==eventId &&
-                x.Type== EventType.INTERVIEW);
-            var eventEntity = eventEntities.FirstOrDefault();
-            if (eventEntity != null)
+            var user = (await _unitOfWork.Users.FindByConditionAsync(x => x.Email == email)).FirstOrDefault();
+            var _event = (await _unitOfWork.Events.FindByConditionAsync(x => x.OwnerId == user.Id && x.Id==eventId)).FirstOrDefault();
+            if (_event != null)
             {
-                var googleToken = (await _unitOfWork.GoogleAccessTokens.FindByConditionAsync(x => x.UserId == userId)).FirstOrDefault();
-                if (googleToken != null)
+                if (_event.Type == EventType.GOOGLE)
                 {
-                    await _googleService.DeleteAsync(googleToken, eventEntity.GoogleCalendarEventId);
+                    return false;
                 }
 
-                _unitOfWork.Events.Delete(eventEntity.Id);
+                if (_event.Type == EventType.INTERVIEW)
+                {
+                    var googleToken = (await _unitOfWork.GoogleAccessTokens.FindByConditionAsync(x => x.UserId == user.Id)).FirstOrDefault();
+                    if (googleToken != null)
+                    {
+                        await _googleService.DeleteAsync(googleToken, _event.GoogleCalendarEventId);
+                    }
+                }
+
+                _unitOfWork.Events.Delete(_event.Id);
                 await _unitOfWork.SaveAsync();
                 return true;
             }
@@ -290,8 +301,6 @@ namespace BusinessLogicLayer.Services
                     value.EndTime >= x.EndTime
                 ));
             return results.Any();
-        }
-
-        
+        } 
     }
 }
