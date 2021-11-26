@@ -36,5 +36,18 @@ namespace SAPex.Controllers
 
             return NotFound();
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserById(Guid id)
+        {
+            UserDtoModel user = await _userService.FindByIdAsync(id);
+
+            if (user != null)
+            {
+                return await Task.FromResult(Ok(_mapper.MapUserFromDtoToView(user)));
+            }
+
+            return await Task.FromResult(NotFound());
+        }
     }
 }
