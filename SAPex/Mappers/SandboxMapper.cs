@@ -168,9 +168,9 @@ namespace SAPex.Mappers
 
             using (var excelFile = new ExcelPackage(memoryStream))
             {
-                var sheet = excelFile.Workbook.Worksheets.Add("Sandboxes");
+                ExcelWorksheet sheet = excelFile.Workbook.Worksheets.Add("Sandboxes");
                 sheet.Cells.LoadFromDataTable(tableViewModels, true, OfficeOpenXml.Table.TableStyles.None);
-
+                sheet.Cells.AutoFitColumns();
                 excelFile.Save();
             }
 

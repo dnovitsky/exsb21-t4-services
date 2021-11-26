@@ -10,6 +10,7 @@ namespace BusinessLogicLayer.Mapping
         public FilterParametrsDalModel MapFromDtoToDal(FilterParametrsDtoModel filterParametrsDto)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<FilterParametrsDtoModel, FilterParametrsDalModel>()
+                    .ForMember(x => x.SearchingStringAll, y => y.MapFrom(x => x.SearchingStringAll))
                     .ForMember(x => x.FirstSearchingTextField, y => y.MapFrom(x => x.FirstSearchingTextField))
                     .ForMember(x => x.FirstSearchingTextString, y => y.MapFrom(x => x.FirstSearchingTextString))
                     .ForMember(x => x.SecondSearchingTextField, y => y.MapFrom(x => x.SecondSearchingTextField))

@@ -76,7 +76,7 @@ namespace SAPex.Controllers
             return await Task.FromResult(Ok(viewModel));
         }
 
-        [HttpGet("all")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             IEnumerable<SandboxDtoModel> dtoModels = await _sandboxService.GetAllSandboxesAsync();

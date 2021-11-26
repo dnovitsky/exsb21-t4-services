@@ -10,6 +10,7 @@ namespace BusinessLogicLayer.DtoModels
     {
         public FilterParametrsDtoModel()
         {
+            SearchingStringAll = string.Empty;
             FirstSearchingTextField = string.Empty;
             FirstSearchingTextString = string.Empty;
             SecondSearchingTextField = string.Empty;
@@ -20,8 +21,9 @@ namespace BusinessLogicLayer.DtoModels
         }
 
         public FilterParametrsDtoModel(string firstField, string firstString, string secondField,
-            string secondString, string dateField, string dateString, SearchStatus searchStatus)
+            string secondString, string dateField, string dateString, SearchStatus searchStatus, string searchingStringALL)
         {
+            SearchingStringAll = searchingStringALL;
             FirstSearchingTextField = firstField;
             FirstSearchingTextString = firstString;
             SecondSearchingTextField = secondField;
@@ -31,6 +33,7 @@ namespace BusinessLogicLayer.DtoModels
             SearchingStatus = searchStatus;
         }
 
+        public string SearchingStringAll { get; set; }
         public string FirstSearchingTextField { get; set; }
 
         public string FirstSearchingTextString { get; set; }
