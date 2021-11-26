@@ -37,10 +37,9 @@ namespace DataAccessLayer.Service
         IUserTeamRepository UserTeams { get; }
         IUserTechSkillRepository UserTechSkills { get; }
         IUserRefreshTokenRepository UserRefreshTokens { get; }
-        ICalendarEventRepository CalendarEvents { get; }
-        IInterviewEventRepository InterviewEvents { get; }
+        IEventRepository Events { get; }
         IGoogleAccessTokenRepository GoogleAccessTokens { get; }
-
+        IEventMemberRepository EventMembers { get; }
         Task SaveAsync();
 
         public void Save();

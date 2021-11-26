@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SAPexAuthService.Services;
 using SAPexAuthService.Services.Google;
 
 namespace SAPex.Controllers.Authorization
@@ -9,23 +10,23 @@ namespace SAPex.Controllers.Authorization
     [ApiController]
     public class GoogleAuthorizationController : ControllerBase
     {
-        private readonly GoogleOAuthService _googleOAuthService;
+        private readonly JwtService _authService;
 
-        public GoogleAuthorizationController(GoogleOAuthService googleOAuthService)
+        public GoogleAuthorizationController(JwtService authService)
         {
-            _googleOAuthService = googleOAuthService;
+           _authService = authService;
         }
 
         [HttpGet]
         public ActionResult OauthRedirect()
         {
-            return Redirect(_googleOAuthService.GetRedirectUrl("test"));
+            return Redirect(url: _authService.GetGoogleUrl("test"));
         }
 
         [HttpGet("callback")]
         public async Task<ActionResult> CallBackAsync(string code, string error, string state)
         {
-            var tokens = await _googleOAuthService.AddAsync(code);
+            var tokens = await _authService.GoogleAuthenticateAsync(code, state);
             if (string.IsNullOrWhiteSpace(error) && tokens != null)
             {
                 return Ok(tokens);
