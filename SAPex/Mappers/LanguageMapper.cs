@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using BusinessLogicLayer.DtoModels;
@@ -51,6 +52,26 @@ namespace SAPex.Mappers
             }
 
             return languageViewList;
+        }
+
+        public string MapListLanguageFromDtoToString(IEnumerable<LanguageDtoModel> languagesDto)
+        {
+            string languagesString = string.Empty;
+
+            foreach (var language in languagesDto)
+            {
+                if (language != null)
+                {
+                    languagesString += language.Name + ", ";
+                }
+            }
+
+            if (languagesString != string.Empty)
+            {
+                languagesString = languagesString.Remove(languagesString.LastIndexOf(','));
+            }
+
+            return languagesString;
         }
     }
 }
