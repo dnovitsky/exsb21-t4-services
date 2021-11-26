@@ -18,6 +18,8 @@ namespace DbMigrations.EntityModels
         public virtual UserEntityModel User { get; set; }
 
         [Required]
+        public string Author { get; set; }
+
         public int? Grade { get; set; }
 
         [Required]
