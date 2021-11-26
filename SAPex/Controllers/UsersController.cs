@@ -50,7 +50,7 @@ namespace SAPex.Controllers
 
             if (user != null)
             {
-                return await Task.FromResult(Ok(_autoMapper.Map<UserViewModel>(user));
+                return await Task.FromResult(Ok(_autoMapper.Map<UserViewModel>(user)));
             }
 
             return await Task.FromResult(NotFound());
