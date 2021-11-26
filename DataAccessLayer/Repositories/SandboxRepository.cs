@@ -79,6 +79,13 @@ namespace DataAccessLayer.Repositories
                 pagedList.PageList = pagedList.PageList.Where(s => s.Status == (StatusName)filterParametrs.SearchingStatus).ToList();
             }
 
+            pagedList.PageList = pagedList.PageList
+                .Where(s => s.Name.ToLower().Contains(filterParametrs.SearchingStringAll.ToLower()) ||
+                s.Description.ToLower().Contains(filterParametrs.SearchingStringAll.ToLower()) ||
+                s.StartDate.ToString().ToLower().Contains(filterParametrs.SearchingStringAll.ToLower()) ||
+                s.Status.ToString().ToLower().Contains(filterParametrs.SearchingStringAll.ToLower())).AsEnumerable();
+
+
             pagedList.PageList = parametrs.SortField.ToLower() switch
             {
                 Name => (SortingType == 0 ?

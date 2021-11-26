@@ -21,6 +21,19 @@ namespace BusinessLogicLayer.Services
             this.unitOfWork = unitOfWork;
         }
 
+        public async Task<UserDtoModel> FindByIdAsync(Guid id)
+        {
+            try
+            {
+                UserEntityModel user = await unitOfWork.Users.FindByIdAsync(id);
+                return profile.mapToDto(user);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public async Task<UserDtoModel> FindByIdConditionAsync(Expression<Func<UserFunctionalRoleEntityModel, bool>> expression)
         {
             try

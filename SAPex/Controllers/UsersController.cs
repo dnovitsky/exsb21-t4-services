@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BusinessLogicLayer.DtoModels;
 using BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +35,19 @@ namespace SAPex.Controllers
             }
 
             return NotFound();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserById(Guid id)
+        {
+            UserDtoModel user = await _userService.FindByIdAsync(id);
+
+            if (user != null)
+            {
+                return await Task.FromResult(Ok(_mapper.MapUserFromDtoToView(user)));
+            }
+
+            return await Task.FromResult(NotFound());
         }
     }
 }

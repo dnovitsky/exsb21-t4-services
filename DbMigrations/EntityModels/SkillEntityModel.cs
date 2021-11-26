@@ -13,12 +13,10 @@ namespace DbMigrations.EntityModels
         public SkillEntityModel() : base()
         {
             UserTechSkills = new List<UserTechSkillEntityModel>();
-            Ratings = new List<RatingEntityModel>();
             CandidateTechSkills = new List<CandidateTechSkillEntityModel>();
         }
 
         public virtual IList<UserTechSkillEntityModel> UserTechSkills { get; set; }
-        public virtual IList<RatingEntityModel> Ratings { get; set; }
         public virtual IList<CandidateTechSkillEntityModel> CandidateTechSkills { get; set; }
     }
 }

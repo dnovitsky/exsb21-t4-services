@@ -22,7 +22,6 @@ namespace DataAccessLayer.Service
         ILanguageLevelRepository LanguageLevels { get; }
         ILanguageRepository Languages { get; }
         ILocationRepository Locations { get; }
-        IRatingRepository Ratings { get; }
         ISandboxRepository Sandboxes { get; }
         ISandboxLanguageRepository SandboxLanguages { get; }
         ISandboxStackTechnologyRepository SandboxStackTechnologies { get; }
@@ -38,10 +37,9 @@ namespace DataAccessLayer.Service
         IUserTeamRepository UserTeams { get; }
         IUserTechSkillRepository UserTechSkills { get; }
         IUserRefreshTokenRepository UserRefreshTokens { get; }
-        ICalendarEventRepository CalendarEvents { get; }
-        IInterviewEventRepository InterviewEvents { get; }
+        IEventRepository Events { get; }
         IGoogleAccessTokenRepository GoogleAccessTokens { get; }
-
+        IEventMemberRepository EventMembers { get; }
         Task SaveAsync();
 
         public void Save();

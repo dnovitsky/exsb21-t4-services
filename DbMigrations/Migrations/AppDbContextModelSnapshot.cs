@@ -295,14 +295,18 @@ namespace DbMigrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("CandidateProccesId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("RatingId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("Grade")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -314,8 +318,6 @@ namespace DbMigrations.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CandidateProccesId");
-
-                    b.HasIndex("RatingId");
 
                     b.HasIndex("UserId");
 
@@ -474,25 +476,6 @@ namespace DbMigrations.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Locations");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.RatingEntityModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Mark")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("SkillId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SkillId");
-
-                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.SandboxEntityModel", b =>
@@ -1014,12 +997,6 @@ namespace DbMigrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DbMigrations.EntityModels.RatingEntityModel", "Rating")
-                        .WithMany("Feedbacks")
-                        .HasForeignKey("RatingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("DbMigrations.EntityModels.UserEntityModel", "User")
                         .WithMany("Feedbacks")
                         .HasForeignKey("UserId")
@@ -1027,8 +1004,6 @@ namespace DbMigrations.Migrations
                         .IsRequired();
 
                     b.Navigation("CandidateProcces");
-
-                    b.Navigation("Rating");
 
                     b.Navigation("User");
                 });
@@ -1061,17 +1036,6 @@ namespace DbMigrations.Migrations
                     b.Navigation("CalendarEvent");
 
                     b.Navigation("CandidateSandbox");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.RatingEntityModel", b =>
-                {
-                    b.HasOne("DbMigrations.EntityModels.SkillEntityModel", "Skill")
-                        .WithMany("Ratings")
-                        .HasForeignKey("SkillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Skill");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.SandboxLanguageEntityModel", b =>
@@ -1338,11 +1302,6 @@ namespace DbMigrations.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.RatingEntityModel", b =>
-                {
-                    b.Navigation("Feedbacks");
-                });
-
             modelBuilder.Entity("DbMigrations.EntityModels.SandboxEntityModel", b =>
                 {
                     b.Navigation("CandidateSandboxes");
@@ -1359,8 +1318,6 @@ namespace DbMigrations.Migrations
             modelBuilder.Entity("DbMigrations.EntityModels.SkillEntityModel", b =>
                 {
                     b.Navigation("CandidateTechSkills");
-
-                    b.Navigation("Ratings");
 
                     b.Navigation("UserTechSkills");
                 });

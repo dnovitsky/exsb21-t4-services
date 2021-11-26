@@ -17,8 +17,5 @@ namespace BusinessLogicLayer.DtoModels
         public IEnumerable<CandidateProcessDtoModel> CandidateProcesses { get; set; }
 
         public CandidateProjectRoleDtoModel? CandidateProjectRole { get; set; }
-
-        // TeamId
-        // public dynamic Team { get; set; }
     }
 }

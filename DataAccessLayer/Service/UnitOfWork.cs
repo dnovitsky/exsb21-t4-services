@@ -30,7 +30,6 @@ namespace DataAccessLayer.Service
         private ILanguageLevelRepository languageLevels;
         private ILanguageRepository languages;
         private ILocationRepository locations;
-        private IRatingRepository ratings;
         private ISandboxLanguageRepository sandboxLanguages;
         private ISandboxRepository sandboxes;
         private ISandboxStackTechnologyRepository sandboxStackTechnologies;
@@ -46,9 +45,9 @@ namespace DataAccessLayer.Service
         private IUserTeamRepository userTeams;
         private IUserTechSkillRepository userTechSkills;
         private IUserRefreshTokenRepository userRefreshTokens;
-        private ICalendarEventRepository calendarEvents;
-        private IInterviewEventRepository interviewEvents;
         private IGoogleAccessTokenRepository googleAccessTokens;
+        private IEventRepository events;
+        private IEventMemberRepository eventMembers;
 
         public UnitOfWork(AppDbContext context)
         {
@@ -232,19 +231,7 @@ namespace DataAccessLayer.Service
                 return locations;
             }
         }
-
-        public IRatingRepository Ratings
-        {
-            get
-            {
-                if (ratings == null)
-                {
-                    ratings = new RatingRepository(context);
-                }
-                return ratings;
-            }
-        }
-
+        
         public ISandboxLanguageRepository SandboxLanguages
         {
             get
@@ -462,26 +449,15 @@ namespace DataAccessLayer.Service
             }
         }
 
-        public ICalendarEventRepository CalendarEvents
+        public IEventRepository Events
         {
             get
             {
-                if (calendarEvents == null)
+                if (events == null)
                 {
-                    calendarEvents = new CalendarEventRepository(context);
+                    events = new EventRepository(context);
                 }
-                return calendarEvents;
-            }
-        }
-        public IInterviewEventRepository InterviewEvents
-        {
-            get
-            {
-                if (interviewEvents == null)
-                {
-                    interviewEvents = new InterviewEventRepository(context);
-                }
-                return interviewEvents;
+                return events;
             }
         }
 
@@ -494,6 +470,18 @@ namespace DataAccessLayer.Service
                     googleAccessTokens = new GoogleAccessTokenRepository(context);
                 }
                 return googleAccessTokens;
+            }
+        }
+
+        public IEventMemberRepository EventMembers
+        {
+            get
+            {
+                if (eventMembers == null)
+                {
+                    eventMembers = new EventMemberRepository(context);
+                }
+                return eventMembers;
             }
         }
 

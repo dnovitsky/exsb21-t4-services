@@ -1,4 +1,4 @@
-﻿using DbMigrations.EntityModels;
+using DbMigrations.EntityModels;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -30,7 +30,6 @@ namespace DbMigrations.Data
 
         public DbSet<LocationEntityModel> Locations { get; set; }
         public DbSet<LanguageLevelEntityModel> LanguageLevels { get; set; }
-        public DbSet<RatingEntityModel> Ratings { get; set; }
 
 
         public DbSet<SandboxEntityModel> Sandboxes { get; set; }
@@ -52,7 +51,9 @@ namespace DbMigrations.Data
         public DbSet<UserTechSkillEntityModel> UserTechSkills { get; set; }
         public DbSet<CalendarEventEntityModel> CalendarEvents { get; set; }
         public DbSet<InterviewEventEntityModel> InterviewEvents { get; set; }
+        public DbSet<EventEntityModel> Events { get; set; }
         public DbSet<GoogleAccessTokenEntityModel> GoogleAccessTokens { get; set; }
+        public DbSet<EventMemberEntityModel> EventMembers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
