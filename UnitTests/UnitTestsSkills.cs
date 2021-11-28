@@ -13,7 +13,7 @@ using System;
 using Xunit;
 using DataAccessLayer.IRepositories;
 
-namespace UnitTests
+namespace BusinessLogicLayer.Tests
 {
     public class UnitTestsSkills
     {

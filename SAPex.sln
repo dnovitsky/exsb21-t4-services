@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAPex", "SAPex\SAPex.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAPexGoogleSupportService", "SAPexGoogleSupportService\SAPexGoogleSupportService.csproj", "{1D6DE989-830E-4B1E-B6E5-E581FEB3B949}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{61BB91A3-A45F-4B58-A04B-FCC5A966952F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicLayer.Tests", "UnitTests\BusinessLogicLayer.Tests.csproj", "{61BB91A3-A45F-4B58-A04B-FCC5A966952F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
