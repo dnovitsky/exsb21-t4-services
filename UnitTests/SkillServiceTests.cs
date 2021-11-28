@@ -15,7 +15,7 @@ using DataAccessLayer.IRepositories;
 
 namespace BusinessLogicLayer.Tests
 {
-    public class UnitTestsSkills
+    public class SkillServiceTests
     {
         //Check GetAllSkillsAsync
         [Fact]
