@@ -7,12 +7,12 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-#COPY ["DbMigrations/DbMigrations.csproj", "DbMigrations/"]
-#COPY ["DataAccessLayer/DataAccessLayer.csproj", "DataAccessLayer/"]
-#COPY ["SAPexGoogleSupportService/SAPexGoogleSupportService.csproj", "SAPexGoogleSupportService/"]
-#COPY ["BusinessLogicLayer/BusinessLogicLayer.csproj", "BusinessLogicLayer/"]
-#COPY ["SAPexAuthService/SAPexAuthService.csproj", "SAPexAuthService/"]
-#COPY ["SAPexSMTPMailService/SAPexSMTPMailService.csproj", "SAPexSMTPMailService/"]
+COPY ["DbMigrations/DbMigrations.csproj", "DbMigrations/"]
+COPY ["DataAccessLayer/DataAccessLayer.csproj", "DataAccessLayer/"]
+COPY ["SAPexGoogleSupportService/SAPexGoogleSupportService.csproj", "SAPexGoogleSupportService/"]
+COPY ["BusinessLogicLayer/BusinessLogicLayer.csproj", "BusinessLogicLayer/"]
+COPY ["SAPexAuthService/SAPexAuthService.csproj", "SAPexAuthService/"]
+COPY ["SAPexSMTPMailService/SAPexSMTPMailService.csproj", "SAPexSMTPMailService/"]
 COPY ["SAPex/SAPex.csproj", "SAPex/"]
 
 RUN dotnet restore "SAPex/SAPex.csproj"
