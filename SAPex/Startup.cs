@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using AutoMapper;
 using BusinessLogicLayer.Helpers;
 using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Models;
@@ -19,8 +18,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SAPexAuthService.Models;
 using SAPexAuthService.Services;
-using SAPexAuthService.Services.Google;
 using SAPexGoogleSupportService.Models.Authorization;
+using SAPexGoogleSupportService.Services.Authorization;
 using SAPexGoogleSupportService.Services.Calendar;
 using SAPexSMTPMailService.Interfaces;
 using SAPexSMTPMailService.Models;

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SAPexAuthService.Services;
-using SAPexAuthService.Services.Google;
 
 namespace SAPex.Controllers.Authorization
 {
