@@ -67,6 +67,7 @@ namespace SAPex
             services.Configure<AppSettingsModel>(Configuration.GetSection("AppSettings"));
             services.Configure<AwsSettingsModel>(Configuration.GetSection("AwsSettings"));
 
+<<<<<<< HEAD
             // services.Configure<GoogleSettingsModel>(Configuration.GetSection("GoogleSettings"));
             services.AddScoped<AuthUserService, AuthUserService>();
             services.AddScoped<AuthUserRefreshTokenService, AuthUserRefreshTokenService>();
@@ -76,6 +77,15 @@ namespace SAPex
 
             // services.AddScoped<EventGoogleService, EventGoogleService>();
 
+=======
+            services.Configure<GoogleSettingsModel>(Configuration.GetSection("GoogleSettings"));
+            services.AddScoped<AuthUserService, AuthUserService>();
+            services.AddScoped<AuthUserRefreshTokenService, AuthUserRefreshTokenService>();
+
+            services.AddScoped<GoogleOAuthService, GoogleOAuthService>();
+            services.AddScoped<JwtService, JwtService>();
+            services.AddScoped<EventGoogleService, EventGoogleService>();
+>>>>>>> dev
             services.Configure<MailSettingsModel>(Configuration.GetSection("MailSettings"));
             services.AddScoped<ISendMailService, SendMailService>();
 
@@ -120,7 +130,11 @@ namespace SAPex
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFeedbackService, FeedbackService>();
 
+<<<<<<< HEAD
             // services.AddScoped<IEventService, EventService>();
+=======
+            services.AddScoped<IEventService, EventService>();
+>>>>>>> dev
             services.AddScoped<IUserSandboxService, UserSandboxService>();
             services.AddScoped<ILocationService, LocationService>();
         }

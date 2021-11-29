@@ -29,5 +29,6 @@
   <ItemGroup>
     <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
+    <ProjectReference Include="..\SAPexGoogleSupportService\SAPexGoogleSupportService.csproj" />
   </ItemGroup>
 </Project>

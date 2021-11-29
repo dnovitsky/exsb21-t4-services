@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -23,5 +23,6 @@
   <ItemGroup>
     <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
+    <ProjectReference Include="..\SAPexGoogleSupportService\SAPexGoogleSupportService.csproj" />
   </ItemGroup>
 </Project>
