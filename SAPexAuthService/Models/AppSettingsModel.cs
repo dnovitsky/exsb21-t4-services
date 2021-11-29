@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SAPexAuthService.Models
+﻿namespace SAPexAuthService.Models
 {
     public class AppSettingsModel
     {

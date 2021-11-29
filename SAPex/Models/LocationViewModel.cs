@@ -2,10 +2,7 @@
 
 namespace SAPex.Models
 {
-    public class LocationViewModel
+    public class LocationViewModel : AbstractNameViewModel
     {
-        public Guid Id { get; set; }
-
-        public string Name { get; set; }
     }
 }

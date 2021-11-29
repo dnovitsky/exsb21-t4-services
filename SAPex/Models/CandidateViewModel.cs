@@ -15,22 +15,20 @@ namespace SAPex.Models
 
         public string Email { get; set; }
 
-        public dynamic Location { get; set; }
+        public LocationViewModel Location { get; set; }
 
         public string Skype { get; set; }
 
         public string Phone { get; set; }
 
-        public string CurrentJob { get; set; }
-
         public string ProfessionaCertificates { get; set; }
 
         public string AdditionalSkills { get; set; }
 
-        public IList<dynamic> CandidateLanguages { get; set; }
+        public IList<CandidateLanguagesViewModel> CandidateLanguages { get; set; }
 
-        public IList<dynamic> CandidateTechSkills { get; set; }
+        public IList<CandidateTechSkillsViewModel> CandidateTechSkills { get; set; }
 
-        public IList<dynamic> CandidateSandboxes { get; set; }
+        public IList<CandidateSandboxeViewModel> CandidateSandboxes { get; set; }
     }
 }

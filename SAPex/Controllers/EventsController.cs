@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLogicLayer.DtoModels;
 using BusinessLogicLayer.Interfaces;
+using DbMigrations.EntityModels.DataTypes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SAPex.Models.EventModels;
 
@@ -23,16 +26,16 @@ namespace SAPex.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<InterviewEventViewModel>> GetAsync()
+        public async Task<IEnumerable<InterviewEventViewModel>> GetAllAsync()
         {
             var events = await _eventService.GetAllAsync();
             return _mapper.Map<IEnumerable<InterviewEventViewModel>>(events);
         }
 
-        [HttpGet("{eventId}")]
-        public async Task<ActionResult<InterviewEventViewModel>> GetAsync(Guid eventId)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<InterviewEventViewModel>> GetAsync(Guid id)
         {
-            var event_ = await _eventService.GetEventByIdAsync(eventId);
+            var event_ = await _eventService.GetEventByIdAsync(id);
             if (event_ != null)
             {
                 return Ok(_mapper.Map<InterviewEventViewModel>(event_));
@@ -41,17 +44,10 @@ namespace SAPex.Controllers
             return NotFound();
         }
 
-        [HttpGet("/user/{userId}")]
-        public async Task<IEnumerable<InterviewEventViewModel>> GetUserEventsAsync(Guid userId)
+        [HttpGet("filter")]
+        public async Task<IEnumerable<InterviewEventViewModel>> GetFilterAsync([FromQuery] DateTime start, [FromQuery] DateTime end, [FromQuery] EventType type)
         {
-            var events = await _eventService.GetAllByUserIdAsync(userId);
-            return _mapper.Map<IEnumerable<InterviewEventViewModel>>(events);
-        }
-
-        [HttpGet("{start}/{end}")]
-        public async Task<IEnumerable<InterviewEventViewModel>> GetAsync([FromRoute] DateTime start, [FromRoute] DateTime end)
-        {
-            var events = await _eventService.GetAllByRangeAsync(start, end);
+            var events = await _eventService.GetAllFilterAsync(start, end, type);
             return _mapper.Map<IEnumerable<InterviewEventViewModel>>(events);
         }
 
@@ -85,13 +81,18 @@ namespace SAPex.Controllers
             return BadRequest();
         }
 
-        [HttpDelete("interview-time/{userId}/{eventId}")]
-        public async Task<ActionResult> DeleteAsync(Guid userId, Guid eventId)
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<ActionResult> DeleteAsync(Guid id)
         {
-            var result = await _eventService.DeleteEventAsync(userId, eventId);
-            if (result)
+            if (HttpContext.User.Identity is ClaimsIdentity identity)
             {
-                return Ok();
+                var email = identity.FindFirst(ClaimTypes.Email).Value;
+                var result = await _eventService.DeleteEventAsync(email, id);
+                if (result)
+                {
+                    return Ok();
+                }
             }
 
             return BadRequest();
