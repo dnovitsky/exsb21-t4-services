@@ -12,22 +12,21 @@ using SAPexGoogleSupportService.Models.Calendar;
 
 namespace SAPexGoogleSupportService.Services.Calendar
 {
-    public class EventGoogleService 
+    public class EventGoogleService
     {
-  
         private readonly RestClient restClient = new();
         private readonly GoogleSettingsModel _googleSettings;
 
         public EventGoogleService(IOptions<GoogleSettingsModel> googleSettings)
         {
-            _googleSettings= googleSettings.Value;
+            _googleSettings = googleSettings.Value;
         }
 
         public async Task<List<EventGoogleModel>> GetAllAsync(GoogleAccessTokenEntityModel token)
         {
             RestRequest request = GetRequest(token);
             restClient.BaseUrl = new Uri(_googleSettings.google_calendar_events_uri);
-            var response=await restClient.ExecuteGetAsync(request);
+            var response = await restClient.ExecuteGetAsync(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 JObject events = JObject.Parse(response.Content);
@@ -69,10 +68,10 @@ namespace SAPexGoogleSupportService.Services.Calendar
             }
             return null;
         }
-        
-        
 
-        
+
+
+
         /*
         public GoogleCalendarEvent Get(string email, string id)
         {
@@ -84,28 +83,23 @@ namespace SAPexGoogleSupportService.Services.Calendar
                 JObject events = JObject.Parse(response.Content);
                 return events.ToObject<GoogleCalendarEvent>();
             }
-
             return null;
         }
         
         public bool Update(GoogleAccessTokenEntityModel tokens, EventGoogleModel item)
         {
             RestRequest request = GetRequest(tokens);
-
             item.Start.DateTime = DateTime.Parse(item.Start.DateTime).ToString("yyyy-MM-dd'T'HH:mm:ss.fffK");
             item.End.DateTime = DateTime.Parse(item.End.DateTime).ToString("yyyy-MM-dd'T'HH:mm:ss.fffK");
-
             var model = JsonConvert.SerializeObject(item, new JsonSerializerSettings
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             });
-
             request.AddParameter("application/json", model, ParameterType.RequestBody);
             restClient.BaseUrl = new System.Uri($"{_googleSettings.google_calendar_events_uri}/{item.Id}?sendUpdates=all");
             var response = restClient.Patch(request);
             System.IO.File.WriteAllText("response.json", response.Content);
             return response.StatusCode == System.Net.HttpStatusCode.OK;
-
         }
         */
         private RestRequest GetRequest(GoogleAccessTokenEntityModel tokens)
@@ -119,4 +113,3 @@ namespace SAPexGoogleSupportService.Services.Calendar
         }
     }
 }
-

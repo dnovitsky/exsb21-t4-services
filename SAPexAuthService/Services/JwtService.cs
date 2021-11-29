@@ -9,7 +9,8 @@ using DbMigrations.EntityModels;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SAPexAuthService.Models;
-using SAPexAuthService.Services.Google;
+using SAPexGoogleSupportService.Services.Authorization;
+// using SAPexGoogleSupportService.Services.Authorization;
 
 namespace SAPexAuthService.Services
 {
@@ -20,9 +21,8 @@ namespace SAPexAuthService.Services
         private readonly AppSettingsModel _appSettings;
         private readonly AuthUserRefreshTokenService _refreshTokenService;
 
-        
-
         private const string CONST_TITLE = "3fa85f64-5717-4562-b3fc-2c963f66afa6";
+
         public JwtService(AuthUserService userService, GoogleOAuthService googleService, AuthUserRefreshTokenService refreshTokenService, IOptions<AppSettingsModel> appSettings)
         {
             _userService = userService;
@@ -33,7 +33,7 @@ namespace SAPexAuthService.Services
 
         public async Task<TokenCredentialsModel> GoogleAuthenticateAsync(string code,string state)
         {
-            var user= await _googleService.AddAsync(code,state);
+            var user = await _googleService.AddAsync(code,state);
             if (user == null)
             {
                 return null;
