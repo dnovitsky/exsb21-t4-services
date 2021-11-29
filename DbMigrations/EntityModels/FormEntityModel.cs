@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DbMigrations.EntityModels.BaseModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,16 +8,12 @@ using System.Threading.Tasks;
 
 namespace DbMigrations.EntityModels
 {
-    public class FormEntityModel
+    public class FormEntityModel : NameEntityModel
     {
-        public FormEntityModel()
+        public FormEntityModel() : base()
         {
             AccessForms = new List<AccessFormEntityModel>();
         }
-        [Key]
-        public Guid Id { get; set; }
-        [Required]
-        public string Name { get; set; }
 
         public virtual IList<AccessFormEntityModel> AccessForms { get; set; }
 

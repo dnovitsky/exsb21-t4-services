@@ -7,6 +7,12 @@ namespace SAPex.Mappers
 {
     public class UserMapper : Profile
     {
+        public UserMapper()
+        {
+            CreateMap<UserDtoModel, UserViewModel>();
+            CreateMap<UserViewModel, UserDtoModel>();
+        }
+
         public UserViewModel MapUserFromDtoToView(UserDtoModel userDto)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<UserDtoModel, UserViewModel>()

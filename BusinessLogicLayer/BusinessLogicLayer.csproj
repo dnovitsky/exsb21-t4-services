@@ -12,12 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
-    <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
-    <ProjectReference Include="..\SAPexGoogleSupportService\SAPexGoogleSupportService.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Helpers\" />
     <None Remove="Mapping\BaseMappings\" />
     <None Remove="BCrypt.Net-Next" />
@@ -25,5 +19,10 @@
   <ItemGroup>
     <Folder Include="Helpers\" />
     <Folder Include="Mapping\BaseMappings\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
+    <ProjectReference Include="..\SAPexGoogleSupportService\SAPexGoogleSupportService.csproj" />
   </ItemGroup>
 </Project>

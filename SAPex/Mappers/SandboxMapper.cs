@@ -163,14 +163,18 @@ namespace SAPex.Mappers
         {
             MemoryStream memoryStream = new MemoryStream();
 
-            DataTable tableViewModels = (DataTable)JsonConvert.
-                    DeserializeObject(JsonConvert.SerializeObject(viewModels), typeof(DataTable));
-
             using (var excelFile = new ExcelPackage(memoryStream))
             {
                 ExcelWorksheet sheet = excelFile.Workbook.Worksheets.Add("Sandboxes");
-                sheet.Cells.LoadFromDataTable(tableViewModels, true, OfficeOpenXml.Table.TableStyles.None);
-                sheet.Cells.AutoFitColumns();
+
+                if (viewModels.Any())
+                {
+                    DataTable tableViewModels = (DataTable)JsonConvert.
+                    DeserializeObject(JsonConvert.SerializeObject(viewModels), typeof(DataTable));
+                    sheet.Cells.LoadFromDataTable(tableViewModels, true, OfficeOpenXml.Table.TableStyles.None);
+                    sheet.Cells.AutoFitColumns();
+                }
+
                 excelFile.Save();
             }
 

@@ -19,8 +19,6 @@ namespace BusinessLogicLayer.DtoModels
 
         public string Phone { get; set; }
 
-        public string CurrentJob { get; set; }
-
         public string ProfessionaCertificates { get; set; }
 
         public string AdditionalSkills { get; set; }

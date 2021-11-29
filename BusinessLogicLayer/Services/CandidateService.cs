@@ -31,6 +31,13 @@ namespace BusinessLogicLayer.Services
         {
             try
             {
+                var candidates = await unitOfWork.Candidates.FindByConditionAsync(x => x.Email == candidateDto.Email && x.Phone == candidateDto.PhoneNumber);
+                if (candidates.Any())
+                {
+                    return null;
+                }
+
+
                 var locations = await unitOfWork.Locations.FindByConditionAsync(x => x.Name == candidateDto.Location);
                 LocationEntityModel location = null;
 

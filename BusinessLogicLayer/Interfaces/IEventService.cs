@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BusinessLogicLayer.DtoModels;
+using DbMigrations.EntityModels.DataTypes;
 
 namespace BusinessLogicLayer.Interfaces
 {
@@ -9,8 +10,8 @@ namespace BusinessLogicLayer.Interfaces
     {
         Task<IEnumerable<EventDtoModel>> GetAllAsync();
         Task<EventDtoModel> GetEventByIdAsync(Guid id);
-        Task<IEnumerable<EventDtoModel>> GetAllByRangeAsync(DateTime start, DateTime end);
-
+        Task<IEnumerable<EventDtoModel>> GetAllFilterAsync(DateTime start, DateTime end, EventType type);
+        Task<IEnumerable<EventDtoModel>> GetAllUserFilterAsync(Guid userId, DateTime start, DateTime end, EventType type);
         Task<IEnumerable<EventDtoModel>> GetAllByUserIdAsync(Guid userId);
 
         Task<EventDtoModel> CreateFreeEventAsync(EventDtoModel eventDto);
@@ -18,9 +19,9 @@ namespace BusinessLogicLayer.Interfaces
 
         Task<EventDtoModel> UpdateEventAsync(EventDtoModel eventDto);
 
-        Task<bool> DeleteEventAsync(Guid userId, Guid eventId);
+        Task<bool> DeleteEventAsync(string email, Guid eventId);
 
         Task<bool> GetAllGoogleEventsAsync(Guid userId);
-        
+
     }
 }

@@ -1,10 +1,9 @@
 ﻿using System;
-
 namespace SAPexGoogleSupportService.Models.Authorization
 {
     public class GoogleSettingsModel
     {
-        public string key { get; set;}
+        public string key { get; set; }
         public string client_id { get; set; }
         public string client_secret { get; set; }
         public string project_id { get; set; }
