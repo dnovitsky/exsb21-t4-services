@@ -9,8 +9,6 @@ using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.Service;
 using DbMigrations.EntityModels;
 using DbMigrations.EntityModels.DataTypes;
-using SAPexGoogleSupportService.Models.Calendar;
-using SAPexGoogleSupportService.Services.Calendar;
 
 namespace BusinessLogicLayer.Services
 {
@@ -18,13 +16,14 @@ namespace BusinessLogicLayer.Services
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly EventGoogleService _googleService;
 
-        public EventService(IUnitOfWork unitOfWork, EventGoogleService googleService, IMapper mapper)
+        // private readonly EventGoogleService _googleService;
+
+        public EventService(IUnitOfWork unitOfWork, /* EventGoogleService googleService,*/ IMapper mapper)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
-            _googleService = googleService;   
+            // _googleService = googleService;   
         }
 
         public async Task<IEnumerable<EventDtoModel>> GetAllAsync()
@@ -89,23 +88,23 @@ namespace BusinessLogicLayer.Services
             var candidate = candidateSandbox.Candidate;
             var googleToken = (await _unitOfWork.GoogleAccessTokens.FindByConditionAsync(x => x.UserId == owner.Id)).FirstOrDefault();
             var members = new List<EventMemberEntityModel>();
-            var attendees = new List<AttendeeGoogleModel>
-            {
-                new AttendeeGoogleModel
-                {
-                    DisplayName = $"{owner.Name} {owner.Surname}",
-                    Email = owner.Email,
-                    Organizer = true,
-                    Self = true
-                },
-                new AttendeeGoogleModel
-                {
-                    DisplayName = $"{candidate.Name} {candidate.Surname}",
-                    Email = candidate.Email,
-                    Organizer = false,
-                    Self = false
-                }
-            };
+            //var attendees = new List<AttendeeGoogleModel>
+            //{
+            //    new AttendeeGoogleModel
+            //    {
+            //        DisplayName = $"{owner.Name} {owner.Surname}",
+            //        Email = owner.Email,
+            //        Organizer = true,
+            //        Self = true
+            //    },
+            //    new AttendeeGoogleModel
+            //    {
+            //        DisplayName = $"{candidate.Name} {candidate.Surname}",
+            //        Email = candidate.Email,
+            //        Organizer = false,
+            //        Self = false
+            //    }
+            //};
             foreach (var member in value.Members)
             {
                 var eventMember = new EventMemberEntityModel();
@@ -133,44 +132,44 @@ namespace BusinessLogicLayer.Services
                     }
                    
                 }
-                var attendee = new AttendeeGoogleModel
-                {
-                    DisplayName = eventMember.Name,
-                    Email = eventMember.MemberEmail,
-                    Organizer = false,
-                    Self = false
-                };
-                attendees.Add(attendee);
+                //var attendee = new AttendeeGoogleModel
+                //{
+                //    DisplayName = eventMember.Name,
+                //    Email = eventMember.MemberEmail,
+                //    Organizer = false,
+                //    Self = false
+                //};
+                //attendees.Add(attendee);
                 members.Add(eventMember);
             }
            
-            var eventGoogle = new EventGoogleModel()
-            {
-                Summary = value.Summary,
-                Description = value.Description,
-                Start = new DateTimeGoogleModel
-                {
-                    DateTime = value.StartTime.ToString(),
-                    TimeZone = "UTC"
-                },
-                End = new DateTimeGoogleModel
-                {
-                    DateTime = value.EndTime.ToString(),
-                    TimeZone = "UTC"
-                },
-                Attendees = attendees
-            };
+            //var eventGoogle = new EventGoogleModel()
+            //{
+            //    Summary = value.Summary,
+            //    Description = value.Description,
+            //    Start = new DateTimeGoogleModel
+            //    {
+            //        DateTime = value.StartTime.ToString(),
+            //        TimeZone = "UTC"
+            //    },
+            //    End = new DateTimeGoogleModel
+            //    {
+            //        DateTime = value.EndTime.ToString(),
+            //        TimeZone = "UTC"
+            //    },
+            //    Attendees = attendees
+            //};
 
             var eventEntity = _mapper.Map<EventEntityModel>(value);
-            if (googleToken is not null)
-            {
-                eventGoogle = _googleService.Create(googleToken, eventGoogle);
-                if (eventGoogle == null)
-                {
-                    return null;
-                }
-                eventEntity.GoogleCalendarEventId = eventGoogle.Id;
-            }
+            //if (googleToken is not null)
+            //{
+            //    eventGoogle = _googleService.Create(googleToken, eventGoogle);
+            //    if (eventGoogle == null)
+            //    {
+            //        return null;
+            //    }
+            //    eventEntity.GoogleCalendarEventId = eventGoogle.Id;
+            //}
 
             
             eventEntity.Type = EventType.INTERVIEW;
@@ -202,7 +201,7 @@ namespace BusinessLogicLayer.Services
                 var googleToken = (await _unitOfWork.GoogleAccessTokens.FindByConditionAsync(x => x.UserId == userId)).FirstOrDefault();
                 if (googleToken != null)
                 {
-                    await _googleService.DeleteAsync(googleToken, eventEntity.GoogleCalendarEventId);
+                    // await _googleService.DeleteAsync(googleToken, eventEntity.GoogleCalendarEventId);
                 }
 
                 _unitOfWork.Events.Delete(eventEntity.Id);
@@ -215,35 +214,35 @@ namespace BusinessLogicLayer.Services
         public async Task<bool> GetAllGoogleEventsAsync(Guid userId)
         {
             var googleToken = (await _unitOfWork.GoogleAccessTokens.FindByConditionAsync(x => x.UserId == userId)).FirstOrDefault();
-            if (googleToken != null)
-            {
-                var googleEvents = await _googleService.GetAllAsync(googleToken);
-                if (googleEvents != null)
-                {
-                    foreach (var googleEvent in googleEvents)
-                    {
-                        var events = await _unitOfWork.Events.FindByConditionAsync(x=>x.GoogleCalendarEventId==googleEvent.Id);
-                        if (events.Any()|| DateTime.Parse(googleEvent.Start.DateTime).ToUniversalTime() < DateTime.UtcNow)
-                        {
-                            continue;
-                        }
-                        var eventEntity = new EventEntityModel
-                        {
-                            GoogleCalendarEventId = googleEvent.Id,
-                            OwnerId = userId,
-                            Summary=googleEvent.Summary,
-                            Description=googleEvent.Description,
-                            StartTime = DateTime.Parse(googleEvent.Start.DateTime).ToUniversalTime(),
-                            EndTime = DateTime.Parse(googleEvent.End.DateTime).ToUniversalTime(),
-                            Type = EventType.GOOGLE,
-                            CandidateSandboxId=null,
-                        };
-                        eventEntity = await _unitOfWork.Events.CreateAsync(eventEntity);
-                    }
-                    await _unitOfWork.SaveAsync();
-                    return true;
-                }
-            }
+            //if (googleToken != null)
+            //{
+            //    var googleEvents = await _googleService.GetAllAsync(googleToken);
+            //    if (googleEvents != null)
+            //    {
+            //        foreach (var googleEvent in googleEvents)
+            //        {
+            //            var events = await _unitOfWork.Events.FindByConditionAsync(x=>x.GoogleCalendarEventId==googleEvent.Id);
+            //            if (events.Any()|| DateTime.Parse(googleEvent.Start.DateTime).ToUniversalTime() < DateTime.UtcNow)
+            //            {
+            //                continue;
+            //            }
+            //            var eventEntity = new EventEntityModel
+            //            {
+            //                GoogleCalendarEventId = googleEvent.Id,
+            //                OwnerId = userId,
+            //                Summary=googleEvent.Summary,
+            //                Description=googleEvent.Description,
+            //                StartTime = DateTime.Parse(googleEvent.Start.DateTime).ToUniversalTime(),
+            //                EndTime = DateTime.Parse(googleEvent.End.DateTime).ToUniversalTime(),
+            //                Type = EventType.GOOGLE,
+            //                CandidateSandboxId=null,
+            //            };
+            //            eventEntity = await _unitOfWork.Events.CreateAsync(eventEntity);
+            //        }
+            //        await _unitOfWork.SaveAsync();
+            //        return true;
+            //    }
+            //}
             return false;
         }
 
