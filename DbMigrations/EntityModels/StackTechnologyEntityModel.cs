@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DbMigrations.EntityModels.BaseModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,18 +8,14 @@ using System.Threading.Tasks;
 
 namespace DbMigrations.EntityModels
 {
-    public class StackTechnologyEntityModel
+    public class StackTechnologyEntityModel : NameEntityModel
     {
-        public StackTechnologyEntityModel()
+        public StackTechnologyEntityModel() : base()
         {
             CandidateSandboxes = new List<CandidateSandboxEntityModel>();
             SandboxStackTechnologies = new List<SandboxStackTechnologyEntityModel>();
             UserStackTechnologies = new List<UserStackTechnologyEntityModel>();
         }
-        [Key]
-        public Guid Id { get; set; }
-        [Required]
-        public string Name { get; set; }
 
         public virtual IList<CandidateSandboxEntityModel> CandidateSandboxes { get; set; }
         public virtual IList<SandboxStackTechnologyEntityModel> SandboxStackTechnologies { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DbMigrations.EntityModels.BaseModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,26 +8,19 @@ using System.Threading.Tasks;
 
 namespace DbMigrations.EntityModels
 {
-    public class LocationEntityModel
+    public class LocationEntityModel : NameEntityModel
     {
-        public LocationEntityModel()
+        public LocationEntityModel() : base()
         {
             Candidates = new List<CandidateEntityModel>();
             Users = new List<UserEntityModel>();
         }
 
-        public LocationEntityModel(string name)
+        public LocationEntityModel(string name) : base(name)
         {
             Candidates = new List<CandidateEntityModel>();
             Users = new List<UserEntityModel>();
-            Id = Guid.NewGuid();
-            Name = name;
         }
-
-        [Key]
-        public Guid Id { get; set; }
-        [Required]
-        public string Name { get; set; }
 
         public virtual IList<CandidateEntityModel> Candidates { get; set; }
         public virtual IList<UserEntityModel> Users { get; set; }

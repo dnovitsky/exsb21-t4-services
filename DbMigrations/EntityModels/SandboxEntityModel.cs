@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DbMigrations.EntityModels.BaseModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -9,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace DbMigrations.EntityModels
 {
-    public class SandboxEntityModel
+    public class SandboxEntityModel : NameEntityModel
     {
-        public SandboxEntityModel()
+        public SandboxEntityModel() : base()
         {
             UserSandboxes = new List<UserSandBoxEntityModel>();
             CandidateSandboxes = new List<CandidateSandboxEntityModel>();
@@ -19,10 +20,7 @@ namespace DbMigrations.EntityModels
             SandboxStackTechnologies = new List<SandboxStackTechnologyEntityModel>();
             SandboxLanguages = new List<SandboxLanguageEntityModel>();
         }
-        [Key]
-        public Guid Id { get; set; }
-        [Required]
-        public string Name { get; set; }
+
         [Required]
         public string Description { get; set; }
         [Required]
