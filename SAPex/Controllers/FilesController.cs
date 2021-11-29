@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Amazon;
 using Amazon.S3;
@@ -21,13 +22,15 @@ namespace SAPex.Controllers
         private readonly IFileService _fileService;
         private readonly IAwsS3Service _awsS3Service;
         private readonly AwsSettingsModel _awsconfig;
+        private readonly FileValidationSettingsModel _file_validation_config;
         private readonly RegionEndpoint _regconfig = RegionEndpoint.EUNorth1;
 
-        public FilesController(IFileService service, IAwsS3Service awss3service, IOptions<AwsSettingsModel> awsconfig)
+        public FilesController(IFileService service, IAwsS3Service awss3service, IOptions<AwsSettingsModel> awsconfig, IOptions<FileValidationSettingsModel> file_validation_config)
         {
             _awsS3Service = awss3service;
             _fileService = service;
             _awsconfig = awsconfig.Value;
+            _file_validation_config = file_validation_config.Value;
             if (!Directory.Exists(_rootFilesPath))
             {
                 Directory.CreateDirectory(_rootFilesPath);
@@ -80,22 +83,31 @@ namespace SAPex.Controllers
             var fileDate = DateTime.Now.ToFileTimeUtc();
             var fileExt = Path.GetExtension(file.FileName);
             var fileName = $"{fileString}{"_"}{fileDate}{fileExt}";
+            var fileExtValidation = _file_validation_config.File_Extension.Split(" ");
+            var fileMaxSize = _file_validation_config.Max_File_Size * 1024 * 1024;
 
-            bool awsRes = await _awsS3Service.AddFileToAwsAsync(_awsconfig, file, fileName);
-
-            FileDtoModel fileDtoModel = new ();
-            fileDtoModel.Id = new Guid();
-            fileDtoModel.FileName = fileName;
-            fileDtoModel.CreateDate = DateTime.UtcNow;
-
-            bool fileDbRes = await _fileService.AddFileAsync(fileDtoModel);
-            if (fileDbRes && awsRes)
+            if (fileExtValidation.Any(fileExt.Contains) && file.Length < fileMaxSize)
             {
-                return await Task.FromResult(Ok());
+                bool awsRes = await _awsS3Service.AddFileToAwsAsync(_awsconfig, file, fileName);
+
+                FileDtoModel fileDtoModel = new ();
+                fileDtoModel.Id = new Guid();
+                fileDtoModel.FileName = fileName;
+                fileDtoModel.CreateDate = DateTime.UtcNow;
+
+                bool fileDbRes = await _fileService.AddFileAsync(fileDtoModel);
+                if (fileDbRes && awsRes)
+                {
+                    return await Task.FromResult(Ok());
+                }
+                else
+                {
+                    return await Task.FromResult(BadRequest());
+                }
             }
             else
             {
-                return await Task.FromResult(BadRequest());
+                return await Task.FromResult(ValidationProblem());
             }
         }
 
