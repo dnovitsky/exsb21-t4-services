@@ -30,10 +30,18 @@ namespace BusinessLogicLayer.Services
             return newSkillDto;
         }
 
-        public async Task DeleteSkill(Guid id)
+        public async Task<bool> DeleteSkill(Guid id)
         {
-            unitOfWork.Skills.Delete(id);
-            await unitOfWork.SaveAsync();
+            try
+            {
+                unitOfWork.Skills.Delete(id);
+                await unitOfWork.SaveAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public async Task<SkillDtoModel> FindSkillByIdAsync(Guid id)
