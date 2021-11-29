@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using AutoMapper;
 using BusinessLogicLayer.Helpers;
 using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Models;
@@ -18,9 +17,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SAPexAuthService.Models;
-using SAPexAuthService.Models.Google;
 using SAPexAuthService.Services;
-using SAPexAuthService.Services.Google;
+using SAPexGoogleSupportService.Models.Authorization;
+using SAPexGoogleSupportService.Services.Authorization;
+using SAPexGoogleSupportService.Services.Calendar;
 using SAPexSMTPMailService.Interfaces;
 using SAPexSMTPMailService.Models;
 using SAPexSMTPMailService.Services;
@@ -39,6 +39,7 @@ namespace SAPex
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
             services.AddAuthentication(options =>
             {
@@ -72,6 +73,7 @@ namespace SAPex
             services.AddScoped<AuthUserRefreshTokenService, AuthUserRefreshTokenService>();
             services.AddScoped<GoogleOAuthService, GoogleOAuthService>();
             services.AddScoped<JwtService, JwtService>();
+            services.AddScoped<EventGoogleService, EventGoogleService>();
 
             services.Configure<MailSettingsModel>(Configuration.GetSection("MailSettings"));
             services.AddScoped<ISendMailService, SendMailService>();
@@ -115,9 +117,8 @@ namespace SAPex
             services.AddScoped<ISkillService, SkillService>();
             services.AddScoped<IStackTechnologyService, StackTechnologyService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<ICalendarEventService, CalendarEventService>();
-            services.AddScoped<IInterviewEventService, InterviewEventService>();
             services.AddScoped<IFeedbackService, FeedbackService>();
+            services.AddScoped<IEventService, EventService>();
             services.AddScoped<IUserSandboxService, UserSandboxService>();
             services.AddScoped<ILocationService, LocationService>();
         }

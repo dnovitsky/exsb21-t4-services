@@ -295,6 +295,10 @@ namespace DbMigrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("CandidateProccesId")
                         .HasColumnType("uniqueidentifier");
 
@@ -302,7 +306,6 @@ namespace DbMigrations.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("Grade")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<Guid>("UserId")

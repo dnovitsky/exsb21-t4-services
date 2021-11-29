@@ -1060,7 +1060,7 @@ namespace BusinessLogicLayer.Helpers
                         StatusId = statusGuid1,
                         CandidateSandboxId = candidateSandboxId1,
                         TestResult = "",
-                        CreateDate = DateTime.Now
+                        CreateDate = DateTime.UtcNow
                     });
                     db.CandidatesProcceses.Add(new CandidateProccesEntityModel
                     {
@@ -1068,7 +1068,7 @@ namespace BusinessLogicLayer.Helpers
                         StatusId = statusGuid2,
                         CandidateSandboxId = candidateSandboxId2,
                         TestResult = "",
-                        CreateDate = DateTime.Now
+                        CreateDate = DateTime.UtcNow
                     });
                     db.CandidatesProcceses.Add(new CandidateProccesEntityModel
                     {
@@ -1076,37 +1076,49 @@ namespace BusinessLogicLayer.Helpers
                         StatusId = statusGuid3,
                         CandidateSandboxId = candidateSandboxId3,
                         TestResult = "",
-                        CreateDate = DateTime.Now
+                        CreateDate = DateTime.UtcNow
                     });
                     db.SaveChanges();
                 }
 
                 if (!db.Feedbacks.Any())
                 {
+
+                    UserEntityModel user1 = db.Users.Where(u => u.Email == "mentor@gmail.com").FirstOrDefault();
+
                     db.Feedbacks.Add(new FeedbackEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        UserId = db.Users.Where(u=>u.Email== "mentor@gmail.com").FirstOrDefault().Id,
+                        UserId = user1.Id,
+                        Author = $"{user1.Name} {user1.Surname}",
                         Grade = 7,
-                        CreateDate = DateTime.Now,
+                        CreateDate = DateTime.UtcNow,
                         UserReview = "Good knowledge",
                         CandidateProccesId = candidateProcessId1
                     });
+
+                    UserEntityModel user2 = db.Users.Where(u => u.Email == "interviewer@gmail.com").FirstOrDefault();
+
                     db.Feedbacks.Add(new FeedbackEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        UserId = db.Users.Where(u => u.Email == "interviewer@gmail.com").FirstOrDefault().Id,
+                        UserId = user2.Id,
+                        Author = $"{user2.Name} {user2.Surname}",
                         Grade =3,
-                        CreateDate = DateTime.Now,
+                        CreateDate = DateTime.UtcNow,
                         UserReview = "Sufficient level",
                         CandidateProccesId = candidateProcessId1
                     });
+
+                    UserEntityModel user3 = db.Users.Where(u => u.Email == "recruiter@gmail.com").FirstOrDefault();
+
                     db.Feedbacks.Add(new FeedbackEntityModel
                     {
                         Id = Guid.NewGuid(),
-                        UserId = db.Users.Where(u => u.Email == "recruiter@gmail.com").FirstOrDefault().Id,
+                        UserId = user3.Id,
+                        Author = $"{user3.Name} {user3.Surname}",
                         Grade = 50,
-                        CreateDate = DateTime.Now,
+                        CreateDate = DateTime.UtcNow,
                         UserReview = "Next step",
                         CandidateProccesId = candidateProcessId1
                     });

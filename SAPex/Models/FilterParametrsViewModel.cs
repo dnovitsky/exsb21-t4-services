@@ -9,6 +9,7 @@ namespace SAPex.Models
     {
         public FilterParametrsViewModel()
         {
+            SearchingStringAll = string.Empty;
             FirstSearchingTextField = string.Empty;
             FirstSearchingTextString = string.Empty;
             SecondSearchingTextField = string.Empty;
@@ -19,7 +20,7 @@ namespace SAPex.Models
         }
 
         public FilterParametrsViewModel(string firstField, string firstString, string secondField,
-            string secondString, string dateField, string dateString, string searchStatus)
+            string secondString, string dateField, string dateString, string searchStatus, string searchingStringALL)
         {
             FirstSearchingTextField = firstField;
             FirstSearchingTextString = firstString;
@@ -28,7 +29,10 @@ namespace SAPex.Models
             SearchingDateField = dateField;
             SearchingDateString = dateString;
             SearchingStatus = searchStatus;
+            SearchingStringAll = searchingStringALL;
         }
+
+        public string SearchingStringAll { get; set; }
 
         public string FirstSearchingTextField { get; set; }
 

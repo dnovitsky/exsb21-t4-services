@@ -10,6 +10,7 @@ namespace SAPex.Mappers
         public FilterParametrsDtoModel MapFromViewToDto(FilterParametrsViewModel filterParametrsView)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<FilterParametrsViewModel, FilterParametrsDtoModel>()
+                    .ForMember(x => x.SearchingStringAll, y => y.MapFrom(x => x.SearchingStringAll))
                     .ForMember(x => x.FirstSearchingTextField, y => y.MapFrom(x => x.FirstSearchingTextField))
                     .ForMember(x => x.FirstSearchingTextString, y => y.MapFrom(x => x.FirstSearchingTextString))
                     .ForMember(x => x.SecondSearchingTextField, y => y.MapFrom(x => x.SecondSearchingTextField))

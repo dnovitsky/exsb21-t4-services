@@ -18,5 +18,9 @@
 
   <ItemGroup>
     <None Remove="Microsoft.EntityFrameworkCore.Proxies" />
+    <None Remove="EntityModels\DataTypes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EntityModels\DataTypes\" />
   </ItemGroup>
 </Project>
