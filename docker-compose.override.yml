@@ -19,7 +19,7 @@ services:
     ports:
       - "9090:80"
     volumes:
-      - ~/.aspnet/https:/https:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
     depends_on:
       - db
 
