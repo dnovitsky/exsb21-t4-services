@@ -18,9 +18,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SAPexAuthService.Models;
 using SAPexAuthService.Services;
-using SAPexGoogleSupportService.Models.Authorization;
-using SAPexGoogleSupportService.Services.Authorization;
-using SAPexGoogleSupportService.Services.Calendar;
 using SAPexSMTPMailService.Interfaces;
 using SAPexSMTPMailService.Models;
 using SAPexSMTPMailService.Services;
@@ -68,12 +65,15 @@ namespace SAPex
 
             services.Configure<AppSettingsModel>(Configuration.GetSection("AppSettings"));
             services.Configure<AwsSettingsModel>(Configuration.GetSection("AwsSettings"));
-            services.Configure<GoogleSettingsModel>(Configuration.GetSection("GoogleSettings"));
+
+            // services.Configure<GoogleSettingsModel>(Configuration.GetSection("GoogleSettings"));
             services.AddScoped<AuthUserService, AuthUserService>();
             services.AddScoped<AuthUserRefreshTokenService, AuthUserRefreshTokenService>();
-            services.AddScoped<GoogleOAuthService, GoogleOAuthService>();
+
+            // services.AddScoped<GoogleOAuthService, GoogleOAuthService>();
             services.AddScoped<JwtService, JwtService>();
-            services.AddScoped<EventGoogleService, EventGoogleService>();
+
+            // services.AddScoped<EventGoogleService, EventGoogleService>();
 
             services.Configure<MailSettingsModel>(Configuration.GetSection("MailSettings"));
             services.AddScoped<ISendMailService, SendMailService>();
@@ -118,7 +118,8 @@ namespace SAPex
             services.AddScoped<IStackTechnologyService, StackTechnologyService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFeedbackService, FeedbackService>();
-            services.AddScoped<IEventService, EventService>();
+
+            // services.AddScoped<IEventService, EventService>();
             services.AddScoped<IUserSandboxService, UserSandboxService>();
             services.AddScoped<ILocationService, LocationService>();
         }
