@@ -17,7 +17,6 @@
     <None Remove="BCrypt.Net-Next" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Helpers\" />
     <Folder Include="Mapping\BaseMappings\" />
   </ItemGroup>
   <ItemGroup>
