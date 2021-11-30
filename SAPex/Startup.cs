@@ -156,8 +156,9 @@ namespace SAPex
                 endpoints.MapControllers();
             });
 
-            dbContext.Database.EnsureDeleted();
             dbContext.Database.Migrate();
+
+            CleanHelper.CleanTablesData(Configuration.GetConnectionString("DefaultConnection"));
 
             List<IApplicationHelper> helpers = new ()
             {
