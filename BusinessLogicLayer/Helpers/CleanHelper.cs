@@ -17,6 +17,7 @@ namespace BusinessLogicLayer.Helpers
 
             using (AppDbContext db = new AppDbContext(options))
             {
+                // db.RemoveRange(db);
                 db.Locations.RemoveRange(db.Locations);
                 db.Sandboxes.RemoveRange(db.Sandboxes);
                 db.AvailabilityTypes.RemoveRange(db.AvailabilityTypes);
@@ -41,8 +42,6 @@ namespace BusinessLogicLayer.Helpers
                 db.CandidatesProcceses.RemoveRange(db.CandidatesProcceses);
 
                 db.Feedbacks.RemoveRange(db.Feedbacks);
-
-
 
                 db.SaveChanges();
             }
