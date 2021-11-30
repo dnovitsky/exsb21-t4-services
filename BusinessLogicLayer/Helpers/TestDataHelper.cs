@@ -741,6 +741,16 @@ namespace BusinessLogicLayer.Helpers
                         Id = Guid.NewGuid(),
                         Name = "Final interview"
                     });
+                    db.Statuses.Add(new StatusEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Enroll in the internship"
+                    });
+                    db.Statuses.Add(new StatusEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "Recruit"
+                    });
                     db.SaveChanges();
                 }
 
