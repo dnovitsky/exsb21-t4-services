@@ -41,7 +41,7 @@ namespace SAPex.Controllers
                 return await Task.FromResult(BadRequest());
             }
 
-            UserDtoModel user = await _userService.FindByIdConditionAsync(u => u.Id == feedbackVM.UserId);
+            UserDtoModel user = await _userService.FindByIdConditionAsync(u => u.UserId == feedbackVM.UserId);
 
             feedbackVM.CreateDate = DateTime.UtcNow;
             feedbackVM.Author = $"{user.Name} {user.Surname}";
@@ -61,7 +61,7 @@ namespace SAPex.Controllers
                 return await Task.FromResult(NotFound());
             }
 
-            UserDtoModel user = await _userService.FindByIdConditionAsync(u => u.Id == feedbackDtoCheck.UserId);
+            UserDtoModel user = await _userService.FindByIdConditionAsync(u => u.UserId == feedbackDtoCheck.UserId);
 
             FeedbackViewModel newFeedbackVM = new FeedbackViewModel
             {
