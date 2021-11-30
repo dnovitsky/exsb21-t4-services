@@ -49,7 +49,7 @@ namespace DataAccessLayer.Repositories
                 )
             ));
 
-            if(parametrs.SortField != "")
+            if (parametrs.SortField != "")
             {
                 pagedList.PageList = parametrs.SortField.ToLower() switch
                 {
@@ -66,12 +66,12 @@ namespace DataAccessLayer.Repositories
                     pagedList.PageList.OrderByDescending(s => s.Email).AsEnumerable()),
 
                     "status" => (SortingType == 0 ?
-                    pagedList.PageList.OrderBy(s => s.CandidateSandboxes.OrderBy(x => x.CandidateProcesses.OrderBy(z => z.Status.Name))).AsEnumerable() :
-                    pagedList.PageList.OrderByDescending(s => s.CandidateSandboxes.OrderByDescending(x => x.CandidateProcesses.OrderByDescending(z => z.Status.Name))).AsEnumerable()),
+                    pagedList.PageList.OrderBy(s => getStatusNameFromCandidateProcesses(s)).AsEnumerable() :
+                    pagedList.PageList.OrderByDescending(s => getStatusNameFromCandidateProcesses(s)).AsEnumerable()),
 
                     "sandbox" => (SortingType == 0 ?
-                    pagedList.PageList.OrderBy(s => s.CandidateSandboxes.OrderBy(x => x.Sandbox.Name)).AsEnumerable() :
-                    pagedList.PageList.OrderByDescending(s => s.CandidateSandboxes.OrderByDescending(x => x.Sandbox.Name)).AsEnumerable()),
+                    pagedList.PageList.OrderBy(s => getSandboxNameFromCandidateSandbox(s)).AsEnumerable() :
+                    pagedList.PageList.OrderByDescending(s => getSandboxNameFromCandidateSandbox(s)).AsEnumerable()),
 
                     _ => pagedList.PageList.OrderBy(s => s.Name).AsEnumerable(),
                 };
@@ -82,6 +82,21 @@ namespace DataAccessLayer.Repositories
             pagedList.CurrentPage = pageNumber;
 
             return pagedList;
+        }
+
+        private CandidateSandboxEntityModel getActualCandidateSandboxes(CandidateEntityModel candidateEM)
+        {
+            return candidateEM.CandidateSandboxes.Where(s => DateTime.Now < s.Sandbox.EndDate).FirstOrDefault();
+        }
+
+        private string getSandboxNameFromCandidateSandbox(CandidateEntityModel candidateEM)
+        {
+            return getActualCandidateSandboxes(candidateEM).Sandbox.Name;
+        }
+
+        private string getStatusNameFromCandidateProcesses(CandidateEntityModel candidateEM)
+        {
+            return getActualCandidateSandboxes(candidateEM).CandidateProcesses.LastOrDefault().Status.Name;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DbMigrations.EntityModels.BaseModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,19 +8,14 @@ using System.Threading.Tasks;
 
 namespace DbMigrations.EntityModels
 {
-    public class LanguageEntityModel
+    public class LanguageEntityModel : NameEntityModel
     {
-        public LanguageEntityModel()
+        public LanguageEntityModel() : base()
         {
             CandidateLanguages = new List<CandidateLanguageEntityModel>();
             UserLanguages = new List<UserLanguageEntityModel>();
             SandboxLanguages = new List<SandboxLanguageEntityModel>();
         }
-
-        [Key]
-        public Guid Id { get; set; }
-        [Required]
-        public string Name { get; set; }
 
         public virtual IList<CandidateLanguageEntityModel> CandidateLanguages  { get; set; }
         public virtual IList<UserLanguageEntityModel> UserLanguages { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DbMigrations.EntityModels.BaseModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,17 +8,12 @@ using System.Threading.Tasks;
 
 namespace DbMigrations.EntityModels
 {
-    public class StatusEntityModel
+    public class StatusEntityModel : NameEntityModel
     {
-        public StatusEntityModel()
+        public StatusEntityModel() : base()
         {
             CandidatesProcceses = new List<CandidateProccesEntityModel>();
         }
-
-        [Key]
-        public Guid Id { get; set; }
-        [Required]
-        public string Name { get; set; }
 
         public virtual IList<CandidateProccesEntityModel> CandidatesProcceses { get; set; }
     }

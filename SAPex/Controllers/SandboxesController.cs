@@ -9,6 +9,7 @@ using BusinessLogicLayer.Services;
 using DataAccessLayer.Service;
 using DbMigrations.Data;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using OfficeOpenXml;
@@ -99,16 +100,33 @@ namespace SAPex.Controllers
         }
 
         [HttpGet("export")]
-        public async Task<IActionResult> GetExcel([FromQuery] InputParametrsViewModel sandboxParametrs, [FromQuery] FilterParametrsViewModel filterParametrs)
+        public async Task<IActionResult> GetExcel(
+            [FromQuery] InputParametrsViewModel sandboxParametrs,
+            [FromQuery] FilterParametrsViewModel filterParametrs,
+            [FromHeader] IEnumerable<Guid> sandboxIds)
         {
             sandboxParametrs.PageNumber = 1;
             sandboxParametrs.PageSize = int.MaxValue;
 
-            PagedList<SandboxDtoModel> dtoPageListModels = await _sandboxService.GetPagedSandboxesAsync(
+            IList<SandboxExcelViewModel> viewModels = new List<SandboxExcelViewModel>();
+            PagedList<SandboxDtoModel> dtoPageListModels = new PagedList<SandboxDtoModel>();
+            IList<SandboxDtoModel> dtoModels = new List<SandboxDtoModel>();
+
+            if (sandboxIds.Any())
+            {
+                foreach (var id in sandboxIds)
+                {
+                    dtoModels.Add(await _sandboxService.FindSandboxByIdAsync(id));
+                }
+
+                dtoPageListModels.PageList = dtoModels;
+            }
+            else
+            {
+                dtoPageListModels = await _sandboxService.GetPagedSandboxesAsync(
                 _inputParamersMapper.MapFromViewToDto(sandboxParametrs),
                 _filterParametrsMapper.MapFromViewToDto(filterParametrs));
-
-            IList<SandboxExcelViewModel> viewModels = new List<SandboxExcelViewModel>();
+            }
 
             foreach (var item in dtoPageListModels.PageList)
             {
