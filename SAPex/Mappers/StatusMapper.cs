@@ -31,7 +31,7 @@ namespace SAPex.Mappers
 
         public IEnumerable<StatusViewModel> MapListToView(IEnumerable<StatusDtoModel> statusesVM)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<StatusDtoModel, LanguageViewModel>()
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<StatusDtoModel, StatusViewModel>()
                 .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                 .ForMember(x => x.Name, y => y.MapFrom(x => x.Name)));
             var mapper = new Mapper(config);
