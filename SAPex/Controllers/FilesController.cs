@@ -22,15 +22,15 @@ namespace SAPex.Controllers
         private readonly IFileService _fileService;
         private readonly IAwsS3Service _awsS3Service;
         private readonly AwsSettingsModel _awsconfig;
-        private readonly FileValidationSettingsModel _file_validation_config;
+        private readonly FileValidationSettingsModel _fileValidationConfig;
         private readonly RegionEndpoint _regconfig = RegionEndpoint.EUNorth1;
 
-        public FilesController(IFileService service, IAwsS3Service awss3service, IOptions<AwsSettingsModel> awsconfig, IOptions<FileValidationSettingsModel> file_validation_config)
+        public FilesController(IFileService service, IAwsS3Service awss3service, IOptions<AwsSettingsModel> awsconfig, IOptions<FileValidationSettingsModel> fileValidationConfig)
         {
             _awsS3Service = awss3service;
             _fileService = service;
             _awsconfig = awsconfig.Value;
-            _file_validation_config = file_validation_config.Value;
+            _fileValidationConfig = fileValidationConfig.Value;
             if (!Directory.Exists(_rootFilesPath))
             {
                 Directory.CreateDirectory(_rootFilesPath);
@@ -83,8 +83,8 @@ namespace SAPex.Controllers
             var fileDate = DateTime.Now.ToFileTimeUtc();
             var fileExt = Path.GetExtension(file.FileName);
             var fileName = $"{fileString}{"_"}{fileDate}{fileExt}";
-            var fileExtValidation = _file_validation_config.File_Extension.Split(" ");
-            var fileMaxSize = _file_validation_config.Max_File_Size * 1024 * 1024;
+            var fileExtValidation = _fileValidationConfig.FileExtension.Split(" ");
+            var fileMaxSize = _fileValidationConfig.MaxFileSize * 1024 * 1024;
 
             if (fileExtValidation.Any(fileExt.Contains) && file.Length < fileMaxSize)
             {

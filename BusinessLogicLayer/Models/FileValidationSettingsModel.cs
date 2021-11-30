@@ -2,8 +2,8 @@
 {
     public class FileValidationSettingsModel
     {
-        public string File_Extension { get; set; }
+        public string FileExtension { get; set; }
 
-        public long Max_File_Size { get; set; }
+        public long MaxFileSize { get; set; }
     }
 }
