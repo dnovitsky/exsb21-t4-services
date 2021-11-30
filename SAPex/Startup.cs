@@ -69,6 +69,8 @@ namespace SAPex
 
             services.Configure<AppSettingsModel>(Configuration.GetSection("AppSettings"));
             services.Configure<AwsSettingsModel>(Configuration.GetSection("AwsSettings"));
+            services.Configure<FileValidationSettingsModel>(Configuration.GetSection("FileValidationSettings"));
+
             services.Configure<GoogleSettingsModel>(Configuration.GetSection("GoogleSettings"));
             services.AddScoped<AuthUserService, AuthUserService>();
             services.AddScoped<AuthUserRefreshTokenService, AuthUserRefreshTokenService>();
@@ -118,9 +120,12 @@ namespace SAPex
             services.AddScoped<IStackTechnologyService, StackTechnologyService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFeedbackService, FeedbackService>();
+
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IUserSandboxService, UserSandboxService>();
             services.AddScoped<ILocationService, LocationService>();
+
+            services.AddScoped<IStatusService, StatusService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

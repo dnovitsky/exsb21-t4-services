@@ -22,6 +22,7 @@ namespace DataAccessLayer.Repositories
         const string StartRegistration = "startregistration";
         const string Endregistration = "endregistration";
         const string Status = "status";
+        char[] delimiters = { ',' };
         const string DataType = "d";
 
         public AppDbContext db;
@@ -52,39 +53,63 @@ namespace DataAccessLayer.Repositories
 
             PagedList<SandboxEntityModel> pagedList = new PagedList<SandboxEntityModel>();
 
-            pagedList.PageList = filterParametrs.SearchingDateField.ToLower() switch
+            pagedList.PageList = await Task.Run(() => db.Sandboxes.AsEnumerable());
+
+            if (filterParametrs.SearchingStringAll != string.Empty)
             {
-                CreateDate => await Task.Run(() => db.Sandboxes
-                .Where(s => s.Name.Contains(filterParametrs.FirstSearchingTextString) &&
-                s.Description.Contains(filterParametrs.SecondSearchingTextString) &&
-                s.CreateDate.ToString().Contains(filterParametrs.SearchingDateString)).AsEnumerable()),
+                string[] searchingWords = filterParametrs.SearchingStringAll.Split(delimiters);
 
-                StartDate => await Task.Run(() => db.Sandboxes
-                .Where(s => s.Name.Contains(filterParametrs.FirstSearchingTextString) &&
-                s.Description.Contains(filterParametrs.SecondSearchingTextString) &&
-                s.StartDate.ToString().Contains(filterParametrs.SearchingDateString)).AsEnumerable()),
+                IEnumerable<SandboxEntityModel> toUnion = new List<SandboxEntityModel>();
 
-                StartRegistration => await Task.Run(() => db.Sandboxes
-                .Where(s => s.Name.Contains(filterParametrs.FirstSearchingTextString) &&
-                s.Description.Contains(filterParametrs.SecondSearchingTextString) &&
-                s.StartRegistration.ToString().Contains(filterParametrs.SearchingDateString)).AsEnumerable()),
+                foreach (var str in searchingWords)
+                {
+                    toUnion = toUnion.Union(pagedList.PageList
+                        .Where(s => s.Name.ToLower().Contains(str.ToLower()) ||
+                        s.Description.ToLower().Contains(str.ToLower()) ||
+                        s.StartDate.ToString().ToLower().Contains(str.ToLower()) ||
+                        s.Status.ToString().ToLower().Contains(str.ToLower())).AsEnumerable());
+                }
 
-                _ => await Task.Run(() => db.Sandboxes
-                .Where(s => s.Name.Contains(filterParametrs.FirstSearchingTextString) &&
-                s.Description.Contains(filterParametrs.SecondSearchingTextString)).AsEnumerable()),
-            };
+                pagedList.PageList = toUnion;
+            }
+            
+            if (filterParametrs.SearchingDateString != string.Empty || 
+                filterParametrs.FirstSearchingTextField != string.Empty ||
+                filterParametrs.SecondSearchingTextField != string.Empty)
+            {
+                pagedList.PageList = filterParametrs.SearchingDateField.ToLower() switch
+                {
+                    CreateDate => pagedList.PageList
+                    .Where(s => s.Name.Contains(filterParametrs.FirstSearchingTextString) &&
+                    s.Description.Contains(filterParametrs.SecondSearchingTextString) &&
+                    s.CreateDate.ToString().Contains(filterParametrs.SearchingDateString)).AsEnumerable(),
+
+                    StartDate => pagedList.PageList
+                    .Where(s => s.Name.Contains(filterParametrs.FirstSearchingTextString) &&
+                    s.Description.Contains(filterParametrs.SecondSearchingTextString) &&
+                    s.StartDate.ToString().Contains(filterParametrs.SearchingDateString)).AsEnumerable(),
+
+                    StartRegistration => pagedList.PageList
+                    .Where(s => s.Name.Contains(filterParametrs.FirstSearchingTextString) &&
+                    s.Description.Contains(filterParametrs.SecondSearchingTextString) &&
+                    s.StartRegistration.ToString().Contains(filterParametrs.SearchingDateString)).AsEnumerable(),
+
+                    _ => pagedList.PageList
+                    .Where(s => s.Name.Contains(filterParametrs.FirstSearchingTextString) &&
+                    s.Description.Contains(filterParametrs.SecondSearchingTextString)).AsEnumerable(),
+                };
+            }
 
             if ( filterParametrs.SearchingStatus != SearchStatus.None)
             { 
                 pagedList.PageList = pagedList.PageList.Where(s => s.Status == (StatusName)filterParametrs.SearchingStatus).ToList();
             }
 
-            pagedList.PageList = pagedList.PageList
-                .Where(s => s.Name.ToLower().Contains(filterParametrs.SearchingStringAll.ToLower()) ||
-                s.Description.ToLower().Contains(filterParametrs.SearchingStringAll.ToLower()) ||
-                s.StartDate.ToString().ToLower().Contains(filterParametrs.SearchingStringAll.ToLower()) ||
-                s.Status.ToString().ToLower().Contains(filterParametrs.SearchingStringAll.ToLower())).AsEnumerable();
-
+            // pagedList.PageList = pagedList.PageList
+            //    .Where(s => s.Name.ToLower().Contains(filterParametrs.SearchingStringAll.ToLower()) ||
+            //    s.Description.ToLower().Contains(filterParametrs.SearchingStringAll.ToLower()) ||
+            //    s.StartDate.ToString().ToLower().Contains(filterParametrs.SearchingStringAll.ToLower()) ||
+            //    s.Status.ToString().ToLower().Contains(filterParametrs.SearchingStringAll.ToLower())).AsEnumerable();
 
             pagedList.PageList = parametrs.SortField.ToLower() switch
             {
@@ -120,7 +145,7 @@ namespace DataAccessLayer.Repositories
                 pagedList.PageList.OrderBy(s => s.Status).AsEnumerable() :
                 pagedList.PageList.OrderByDescending(s => s.Status).AsEnumerable()),
 
-                _ => pagedList.PageList.OrderBy(s => s.CreateDate).AsEnumerable(),
+                _ => pagedList.PageList.OrderBy(s => s.StartDate).AsEnumerable(),
             };
 
             pagedList.PageList = pagedList.PageList.Skip((pageNumber - 1) * pageSize).Take(pageSize);
