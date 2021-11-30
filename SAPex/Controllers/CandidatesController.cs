@@ -31,7 +31,7 @@ namespace SAPex.Controllers
             _candidateFilterParametrsMapper = new CandidateFilterParametrsMapper();
         }
 
-        [HttpGet("all")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             IEnumerable<CandidateDtoModel> candiddatesDto = await _service.GetAllCandidateAsync();
@@ -61,14 +61,15 @@ namespace SAPex.Controllers
             return await Task.FromResult(Conflict());
         }
 
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateCandidateViewModel requestData)
         {
-            var candidate = await _service.AddCandidateAsync(profile.MapNewCandidateToDto(requestData));
+            var candiddateDto = await _service.AddCandidateAsync(profile.MapNewCandidateToDto(requestData));
 
-            if (candidate != null)
+            if (candiddateDto != null)
             {
-                return await Task.FromResult(Ok(candidate));
+                var candidateVM = profile.MapCandidateDtoToVM(candiddateDto);
+                return await Task.FromResult(Ok(candidateVM));
             }
 
             return await Task.FromResult(Conflict());

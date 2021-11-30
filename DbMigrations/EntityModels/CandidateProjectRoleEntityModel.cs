@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DbMigrations.EntityModels.BaseModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,16 +8,12 @@ using System.Threading.Tasks;
 
 namespace DbMigrations.EntityModels
 {
-    public class CandidateProjectRoleEntityModel
+    public class CandidateProjectRoleEntityModel: NameEntityModel
     {
-        public CandidateProjectRoleEntityModel()
+        public CandidateProjectRoleEntityModel() : base()
         {
             CandidateSandboxes = new List<CandidateSandboxEntityModel>();
         }
-        [Key]
-        public Guid Id { get; set; }
-        [Required]
-        public string Name { get; set; }
 
         public virtual IList<CandidateSandboxEntityModel> CandidateSandboxes { get; set; }
     }
