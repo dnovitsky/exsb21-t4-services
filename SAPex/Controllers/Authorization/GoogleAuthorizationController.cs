@@ -8,11 +8,11 @@ namespace SAPex.Controllers.Authorization
     [ApiController]
     public class GoogleAuthorizationController : ControllerBase
     {
-        private readonly JwtService _authService;
+        private readonly AuthService _authService;
 
-        public GoogleAuthorizationController(JwtService authService)
+        public GoogleAuthorizationController(AuthService authService)
         {
-           _authService = authService;
+            _authService = authService;
         }
 
         [HttpGet]
