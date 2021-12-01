@@ -81,7 +81,7 @@ namespace SAPex
             services.Configure<MailSettingsModel>(Configuration.GetSection("MailSettings"));
             services.AddScoped<ISendMailService, SendMailService>();
 
-			services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(c =>
             {
                 var jwtSecurityScheme = new OpenApiSecurityScheme
                 {
@@ -121,11 +121,9 @@ namespace SAPex
             services.AddScoped<IStackTechnologyService, StackTechnologyService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFeedbackService, FeedbackService>();
-
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IUserSandboxService, UserSandboxService>();
             services.AddScoped<ILocationService, LocationService>();
-
             services.AddScoped<IStatusService, StatusService>();
         }
 
