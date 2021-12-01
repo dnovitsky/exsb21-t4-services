@@ -16,7 +16,7 @@ namespace BusinessLogicLayer.Interfaces
         Task<IEnumerable<CandidateDtoModel>> GetAllCandidateAsync();
         Task<IEnumerable<CandidateDtoModel>> FindCandidateAsync(Expression<Func<CandidateEntityModel, bool>> expression);
         Task<PagedList<CandidateDtoModel>> GetPagedCandidatesAsync(InputParametrsDtoModel parametrs, CandidateFilterParametrsDtoModel candidateFilterParametrs);
-        Task<bool> UpdateCandidateStatus(Guid candidateSandboxId, Guid newStatusId);
+        Task<bool> UpdateCandidateStatus(Guid candidateId, Guid candidateSandboxId, Guid newStatusId);
         Task<CandidateDtoModel> FindCandidateByIdAsync(Guid id);
         void DeleteCandidate(Guid id);
     }

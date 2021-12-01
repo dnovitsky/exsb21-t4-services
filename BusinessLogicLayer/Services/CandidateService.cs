@@ -135,12 +135,12 @@ namespace BusinessLogicLayer.Services
             return sandboxDtoList;
         }
 
-        public async Task<bool> UpdateCandidateStatus(Guid candidateSandboxId, Guid newStatusId)
+        public async Task<bool> UpdateCandidateStatus(Guid candidateId, Guid candidateSandboxId, Guid newStatusId)
         {
             var candidateSandboxe = await unitOfWork.CandidateSandboxes.FindByIdAsync(candidateSandboxId);
             var status = await unitOfWork.Statuses.FindByIdAsync(newStatusId);
 
-            if (candidateSandboxe != null && status != null)
+            if (candidateSandboxe != null && status != null && candidateSandboxe.CandidateId.Equals(candidateId))
             {
                 var process = new CandidateProccesEntityModel();
                 process.StatusId = newStatusId;

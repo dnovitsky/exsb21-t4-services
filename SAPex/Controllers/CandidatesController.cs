@@ -94,10 +94,10 @@ namespace SAPex.Controllers
             return await Task.FromResult(Ok(viewModels));
         }
 
-        [HttpPut("{candidateSandboxId}")]
-        public async Task<IActionResult> Put([FromRoute] Guid candidateSandboxId, [FromQuery] Guid newStatusId)
+        [HttpPut("{id}/candidateSandboxes/{candidateSandboxId}")]
+        public async Task<IActionResult> Put([FromRoute] Guid id, [FromRoute] Guid candidateSandboxId, [FromQuery] Guid newStatusId)
         {
-            var isUpdatedo = await _service.UpdateCandidateStatus(candidateSandboxId, newStatusId);
+            var isUpdatedo = await _service.UpdateCandidateStatus(id, candidateSandboxId, newStatusId);
 
             IActionResult actionResult = isUpdatedo ? Ok() : Conflict();
 
