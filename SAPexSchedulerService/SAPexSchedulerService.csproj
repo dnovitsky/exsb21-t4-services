@@ -8,10 +8,12 @@
     <None Remove="Hangfire" />
     <None Remove="Dapper" />
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
+    <None Remove="Hangfire.Dashboard.Authorization" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Hangfire" Version="1.7.27" />
     <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0" />
+    <PackageReference Include="Hangfire.Dashboard.Authorization" Version="3.0.0" />
   </ItemGroup>
 </Project>
