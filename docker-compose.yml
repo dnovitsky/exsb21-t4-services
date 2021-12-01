@@ -6,3 +6,10 @@ services:
     build:
       context: .
       dockerfile: SAPex/Dockerfile
+
+  sapexschedulerservice:
+    image: ${DOCKER_REGISTRY-}sapexschedulerservice
+    build:
+      context: .
+      dockerfile: SAPexSchedulerService/Dockerfile
+

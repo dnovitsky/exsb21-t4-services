@@ -9,7 +9,7 @@ namespace SAPexSchedulerService.Data
     public class AppDbContext : DbContext
     {
         private IDbConnection db;
-        public AppDbContext(IConfiguration configuration) => db = new SqlConnection(configuration.GetConnectionString("SAPExDbConnection"));
+        public AppDbContext(IConfiguration configuration) => db = new SqlConnection(Environment.GetEnvironmentVariable("MSSQL_CONNECTION_STRING"));
         public IDbConnection Db { get { return db; } }
     }
 }
