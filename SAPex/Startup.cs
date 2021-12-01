@@ -74,13 +74,14 @@ namespace SAPex
             services.Configure<GoogleSettingsModel>(Configuration.GetSection("GoogleSettings"));
             services.AddScoped<AuthUserService, AuthUserService>();
             services.AddScoped<AuthUserRefreshTokenService, AuthUserRefreshTokenService>();
+
             services.AddScoped<GoogleOAuthService, GoogleOAuthService>();
             services.AddScoped<JwtService, JwtService>();
             services.AddScoped<EventGoogleService, EventGoogleService>();
             services.Configure<MailSettingsModel>(Configuration.GetSection("MailSettings"));
             services.AddScoped<ISendMailService, SendMailService>();
 
-            services.AddSwaggerGen(c =>
+			services.AddSwaggerGen(c =>
             {
                 var jwtSecurityScheme = new OpenApiSecurityScheme
                 {
@@ -159,8 +160,9 @@ namespace SAPex
                 endpoints.MapControllers();
             });
 
-            dbContext.Database.EnsureDeleted();
             dbContext.Database.Migrate();
+
+            CleanHelper.CleanTablesData(Configuration.GetConnectionString("DefaultConnection"));
 
             List<IApplicationHelper> helpers = new ()
             {
