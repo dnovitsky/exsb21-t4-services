@@ -27,9 +27,9 @@ namespace SAPex.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetFeedbackById(Guid feedbackId)
+        public async Task<IActionResult> GetFeedbackById(Guid id)
         {
-            FeedbackViewModel feedbackVM = _mapper.DtoToView(await _feedbackService.GetFeedbackByIdAsync(feedbackId));
+            FeedbackViewModel feedbackVM = _mapper.DtoToView(await _feedbackService.GetFeedbackByIdAsync(id));
             return await Task.FromResult(Ok(feedbackVM));
         }
 
@@ -52,7 +52,7 @@ namespace SAPex.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, string userReview, int grade)
+        public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] FeedbackViewModel feedbackVM)
         {
             FeedbackDtoModel feedbackDtoCheck = await _feedbackService.GetFeedbackByIdAsync(id);
 
@@ -68,9 +68,9 @@ namespace SAPex.Controllers
                 Id = id,
                 UserId = feedbackDtoCheck.UserId,
                 Author = $"{user.Name} {user.Surname}",
-                Grade = grade,
+                Grade = feedbackVM.Grade,
                 CreateDate = DateTime.UtcNow,
-                UserReview = userReview,
+                UserReview = feedbackVM.UserReview,
                 CandidateProccesId = feedbackDtoCheck.CandidateProccesId,
             };
 

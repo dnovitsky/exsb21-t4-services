@@ -18,6 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SAPexAuthService.Models;
 using SAPexAuthService.Services;
+using SAPexGoogleSupportService.Interfaces;
 using SAPexGoogleSupportService.Models.Authorization;
 using SAPexGoogleSupportService.Services.Authorization;
 using SAPexGoogleSupportService.Services.Calendar;
@@ -71,12 +72,11 @@ namespace SAPex
             services.Configure<FileValidationSettingsModel>(Configuration.GetSection("FileValidationSettings"));
 
             services.Configure<GoogleSettingsModel>(Configuration.GetSection("GoogleSettings"));
-            services.AddScoped<AuthUserService, AuthUserService>();
-            services.AddScoped<AuthUserRefreshTokenService, AuthUserRefreshTokenService>();
-
-            services.AddScoped<GoogleOAuthService, GoogleOAuthService>();
-            services.AddScoped<JwtService, JwtService>();
+            services.AddScoped<AuthService, AuthService>();
+            services.AddScoped<AuthGoogleService, AuthGoogleService>();
+            services.AddScoped<IGoogleAccessTokenService, GoogleAccessTokenService>();
             services.AddScoped<EventGoogleService, EventGoogleService>();
+
             services.Configure<MailSettingsModel>(Configuration.GetSection("MailSettings"));
             services.AddScoped<ISendMailService, SendMailService>();
 
