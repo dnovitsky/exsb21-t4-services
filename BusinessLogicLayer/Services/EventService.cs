@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLogicLayer.DtoModels;
@@ -95,7 +94,6 @@ namespace BusinessLogicLayer.Services
                 return null;
             }
             var candidate = candidateSandbox.Candidate;
-            var googleToken = (await _unitOfWork.GoogleAccessTokens.FindByConditionAsync(x => x.UserId == owner.Id)).FirstOrDefault();
             var members = new List<EventMemberEntityModel>();
             var attendees = new List<AttendeeGoogleModel>
             {
@@ -171,15 +169,13 @@ namespace BusinessLogicLayer.Services
 
 
             var eventEntity = _mapper.Map<EventEntityModel>(value);
-            if (googleToken is not null)
+            var result = await _googleService.CreateAsync(owner.Id, eventGoogle);
+            if (result.Code != 200)
             {
-                eventGoogle = _googleService.Create(googleToken, eventGoogle);
-                if (eventGoogle == null)
-                {
-                    return null;
-                }
-                eventEntity.GoogleCalendarEventId = eventGoogle.Id;
+               return null;
             }
+            eventEntity.GoogleCalendarEventId = result.Data.Id;
+            
 
 
             eventEntity.Type = EventType.INTERVIEW;
@@ -212,11 +208,7 @@ namespace BusinessLogicLayer.Services
 
                 if (_event.Type == EventType.INTERVIEW)
                 {
-                    var googleToken = (await _unitOfWork.GoogleAccessTokens.FindByConditionAsync(x => x.UserId == user.Id)).FirstOrDefault();
-                    if (googleToken != null)
-                    {
-                        await _googleService.DeleteAsync(googleToken, _event.GoogleCalendarEventId);
-                    }
+                    await _googleService.DeleteAsync(user.Id, _event.GoogleCalendarEventId);
                 }
 
                 _unitOfWork.Events.Delete(_event.Id);
@@ -228,37 +220,36 @@ namespace BusinessLogicLayer.Services
 
         public async Task<bool> GetAllGoogleEventsAsync(Guid userId)
         {
-            var googleToken = (await _unitOfWork.GoogleAccessTokens.FindByConditionAsync(x => x.UserId == userId)).FirstOrDefault();
-            if (googleToken != null)
+
+            var result = await _googleService.GetAllAsync(userId);
+            if (result.Code != 200)
             {
-                var googleEvents = await _googleService.GetAllAsync(googleToken);
-                if (googleEvents != null)
-                {
-                    foreach (var googleEvent in googleEvents)
-                    {
-                        var events = await _unitOfWork.Events.FindByConditionAsync(x => x.GoogleCalendarEventId == googleEvent.Id);
-                        if (events.Any() || DateTime.Parse(googleEvent.Start.DateTime).ToUniversalTime() < DateTime.UtcNow)
-                        {
-                            continue;
-                        }
-                        var eventEntity = new EventEntityModel
-                        {
-                            GoogleCalendarEventId = googleEvent.Id,
-                            OwnerId = userId,
-                            Summary = googleEvent.Summary,
-                            Description = googleEvent.Description,
-                            StartTime = DateTime.Parse(googleEvent.Start.DateTime).ToUniversalTime(),
-                            EndTime = DateTime.Parse(googleEvent.End.DateTime).ToUniversalTime(),
-                            Type = EventType.GOOGLE,
-                            CandidateSandboxId = null,
-                        };
-                        eventEntity = await _unitOfWork.Events.CreateAsync(eventEntity);
-                    }
-                    await _unitOfWork.SaveAsync();
-                    return true;
-                }
+                return false;
             }
-            return false;
+            var googleEvents = result.Data;
+                
+            foreach (var googleEvent in googleEvents)
+            {
+               var events = await _unitOfWork.Events.FindByConditionAsync(x => x.GoogleCalendarEventId == googleEvent.Id);
+               if (events.Any() || DateTime.Parse(googleEvent.Start.DateTime).ToUniversalTime() < DateTime.UtcNow)
+               {
+                  continue;
+               }
+               var eventEntity = new EventEntityModel
+               {
+                   GoogleCalendarEventId = googleEvent.Id,
+                   OwnerId = userId,
+                   Summary = googleEvent.Summary,
+                   Description = googleEvent.Description,
+                   StartTime = DateTime.Parse(googleEvent.Start.DateTime).ToUniversalTime(),
+                   EndTime = DateTime.Parse(googleEvent.End.DateTime).ToUniversalTime(),
+                   Type = EventType.GOOGLE,
+                   CandidateSandboxId = null,
+               };
+               eventEntity = await _unitOfWork.Events.CreateAsync(eventEntity);
+            }
+            await _unitOfWork.SaveAsync();
+            return true;
         }
 
         private async Task<UserEntityModel> GetUserAsync(Guid userId)

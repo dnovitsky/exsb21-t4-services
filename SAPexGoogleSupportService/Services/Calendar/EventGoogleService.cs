@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using RestSharp;
+using SAPexGoogleSupportService.Interfaces;
+using SAPexGoogleSupportService.Models;
 using SAPexGoogleSupportService.Models.Authorization;
 using SAPexGoogleSupportService.Models.Calendar;
 
@@ -16,37 +18,58 @@ namespace SAPexGoogleSupportService.Services.Calendar
     {
         private readonly RestClient restClient = new();
         private readonly GoogleSettingsModel _googleSettings;
+        private readonly IGoogleAccessTokenService _googleTokenService;
 
-        public EventGoogleService(IOptions<GoogleSettingsModel> googleSettings)
+        public EventGoogleService(IGoogleAccessTokenService googleTokenService, IOptions<GoogleSettingsModel> googleSettings)
         {
             _googleSettings = googleSettings.Value;
+            _googleTokenService = googleTokenService;
         }
 
-        public async Task<List<EventGoogleModel>> GetAllAsync(GoogleAccessTokenEntityModel token)
+        public async Task<GoogleResponse<List<EventGoogleModel>>> GetAllAsync(Guid ownerId)
         {
-            RestRequest request = GetRequest(token);
+            var token = await _googleTokenService.FindByUserIdAsync(ownerId);
+            if (token.Code != 200)
+            {
+                return new GoogleResponse<List<EventGoogleModel>> { Code = 404, Message="Google Token Not Found"};
+            }
+            RestRequest request = GetRequest(token.Data);
             restClient.BaseUrl = new Uri(_googleSettings.google_calendar_events_uri);
             var response = await restClient.ExecuteGetAsync(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 JObject events = JObject.Parse(response.Content);
                 var allEvents = events["items"].ToObject<List<EventGoogleModel>>();
-                return allEvents;
+                return new GoogleResponse<List<EventGoogleModel>> { Data = allEvents, Code = 200};
             }
             return null;
         }
 
-        public async Task<bool> DeleteAsync(GoogleAccessTokenEntityModel token, string id)
+        public async Task<GoogleResponse<EventGoogleModel>> DeleteAsync(Guid ownerId, string id)
         {
-            RestRequest request = GetRequest(token);
+            var token = await _googleTokenService.FindByUserIdAsync(ownerId);
+            if (token.Code != 200)
+            {
+                return new GoogleResponse<EventGoogleModel> { Code = 404, Message = "Google Token Not Found" };
+            }
+            RestRequest request = GetRequest(token.Data);
             restClient.BaseUrl = new Uri($"{_googleSettings.google_calendar_events_uri}/{id}");
             var response = await restClient.ExecuteAsync(request, Method.DELETE);
-            return response.StatusCode == System.Net.HttpStatusCode.NoContent;
+            if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+            {
+                return new GoogleResponse<EventGoogleModel> { Code = 200, Message = "Event removed from google calendar" };
+            }
+            return new GoogleResponse<EventGoogleModel> { Code = 405, Message = "Event does not removed from google calendar" };
         }
 
-        public EventGoogleModel Create(GoogleAccessTokenEntityModel token, EventGoogleModel item)
+        public async Task<GoogleResponse<EventGoogleModel>> CreateAsync(Guid ownerId, EventGoogleModel item)
         {
-            RestRequest request = GetRequest(token);
+            var token = await _googleTokenService.FindByUserIdAsync(ownerId);
+            if (token.Code != 200)
+            {
+                return new GoogleResponse<EventGoogleModel> { Code = 404, Message = "Google Token Not Found" };
+            }
+            RestRequest request = GetRequest(token.Data);
 
             item.Start.DateTime = DateTime.Parse(item.Start.DateTime).ToString("yyyy-MM-dd'T'HH:mm:ss");
             item.End.DateTime = DateTime.Parse(item.End.DateTime).ToString("yyyy-MM-dd'T'HH:mm:ss");
@@ -60,17 +83,14 @@ namespace SAPexGoogleSupportService.Services.Calendar
 
             restClient.BaseUrl = new Uri($"{_googleSettings.google_calendar_events_uri}?sendUpdates=all");
             var response = restClient.Post(request);
-            // System.IO.File.WriteAllText("response.json", response.Content);
+
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 JObject googleEvent = JObject.Parse(response.Content);
-                return googleEvent.ToObject<EventGoogleModel>();
+                return new GoogleResponse<EventGoogleModel> { Code = 200, Data = googleEvent.ToObject<EventGoogleModel>() };
             }
-            return null;
+            return new GoogleResponse<EventGoogleModel> { Code = 405, Message = "Event does not created from google calendar" };
         }
-
-
-
 
         /*
         public GoogleCalendarEvent Get(string email, string id)
@@ -85,10 +105,16 @@ namespace SAPexGoogleSupportService.Services.Calendar
             }
             return null;
         }
-        
-        public bool Update(GoogleAccessTokenEntityModel tokens, EventGoogleModel item)
+        */
+
+        public async Task<GoogleResponse<EventGoogleModel>> Update(Guid ownerId, EventGoogleModel item)
         {
-            RestRequest request = GetRequest(tokens);
+            var token = await _googleTokenService.FindByUserIdAsync(ownerId);
+            if (token.Code != 200)
+            {
+                return new GoogleResponse<EventGoogleModel> { Code = 404, Message = "Google Token Not Found" };
+            }
+            RestRequest request = GetRequest(token.Data);
             item.Start.DateTime = DateTime.Parse(item.Start.DateTime).ToString("yyyy-MM-dd'T'HH:mm:ss.fffK");
             item.End.DateTime = DateTime.Parse(item.End.DateTime).ToString("yyyy-MM-dd'T'HH:mm:ss.fffK");
             var model = JsonConvert.SerializeObject(item, new JsonSerializerSettings
@@ -98,10 +124,17 @@ namespace SAPexGoogleSupportService.Services.Calendar
             request.AddParameter("application/json", model, ParameterType.RequestBody);
             restClient.BaseUrl = new System.Uri($"{_googleSettings.google_calendar_events_uri}/{item.Id}?sendUpdates=all");
             var response = restClient.Patch(request);
-            System.IO.File.WriteAllText("response.json", response.Content);
-            return response.StatusCode == System.Net.HttpStatusCode.OK;
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return new GoogleResponse<EventGoogleModel> { Code = 200, Message = "Event updated from google calendar" };
+
+            }
+            return new GoogleResponse<EventGoogleModel> { Code = 405, Message = "Event does not updated from google calendar" };
+
         }
-        */
+
+
+
         private RestRequest GetRequest(GoogleAccessTokenEntityModel tokens)
         {
             RestRequest request = new();

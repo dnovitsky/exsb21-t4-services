@@ -128,7 +128,8 @@ namespace BusinessLogicLayer.Services
             {
                 PageList = profile.MapCandidateEMListToCandidateDtoList(candidateList.PageList),
                 TotalPages = candidateList.TotalPages,
-                CurrentPage = candidateList.CurrentPage
+                CurrentPage = candidateList.CurrentPage,
+                TotalPageItems = candidateList.TotalPageItems
             };
 
             return sandboxDtoList;
