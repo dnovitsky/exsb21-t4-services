@@ -78,7 +78,7 @@ namespace DataAccessLayer.Repositories
             }
 
             pagedList.TotalPageItems = pagedList.PageList.Count();
-            pagedList.PageList = pagedList.PageList.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+            pagedList.PageList = pagedList.PageList.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
             pagedList.TotalPages = totalPages;
             pagedList.CurrentPage = pageNumber;
 
