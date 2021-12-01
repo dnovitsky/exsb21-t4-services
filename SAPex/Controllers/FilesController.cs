@@ -98,7 +98,7 @@ namespace SAPex.Controllers
                 bool fileDbRes = await _fileService.AddFileAsync(fileDtoModel);
                 if (fileDbRes && awsRes)
                 {
-                    return await Task.FromResult(Ok());
+                    return await Task.FromResult(Ok(fileDtoModel.Id));
                 }
                 else
                 {
