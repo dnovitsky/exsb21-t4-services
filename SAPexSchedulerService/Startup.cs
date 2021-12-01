@@ -30,7 +30,7 @@ namespace SAPexSchedulerService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<AppDbContext>();
-            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("HangfireConnection")));
+            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("HangfireDbConnection")));
             services.AddHangfireServer();
             services.AddScoped<ISandboxRepository, SandboxRepository>();
             services.AddScoped<IStatusService, StatusService>();
@@ -45,8 +45,20 @@ namespace SAPexSchedulerService
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-            app.UseHangfireDashboard();
+            var options = new DashboardOptions
+            {
+                Authorization = new[] {
+                    new DashboardAuthorization(new[]
+                    {
+                        new HangfireUserCredentials
+                        {
+                            Username = "admin@gmail.com",
+                            Password = "admin123456"
+                        }
+                    })
+                }
+            };
+            app.UseHangfireDashboard("/hangfire", options);
             RecurringJob.AddOrUpdate(() => statusService.StatusJob(), Cron.Minutely);
             app.UseRouting();
 
