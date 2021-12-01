@@ -178,6 +178,7 @@ namespace SAPex.Controllers
             }
 
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(dtoPageListModels.TotalPages));
+            Response.Headers.Add("X-Total-Page-Items", JsonConvert.SerializeObject(dtoPageListModels.TotalPageItems));
             return await Task.FromResult(Ok(viewModels));
         }
 

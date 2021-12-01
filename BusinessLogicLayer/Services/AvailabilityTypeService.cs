@@ -31,7 +31,8 @@ namespace BusinessLogicLayer.Services
             {
                 PageList = profile.mapListToDto(pagedListEM.PageList),
                 CurrentPage = pagedListEM.CurrentPage,
-                TotalPages = pagedListEM.TotalPages
+                TotalPages = pagedListEM.TotalPages,
+                TotalPageItems = pagedListEM.TotalPageItems
             };
             return pagedListDto;
         }

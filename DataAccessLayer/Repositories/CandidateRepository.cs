@@ -47,7 +47,7 @@ namespace DataAccessLayer.Repositories
                     ).Any()
                   ).Any()
                 )
-            ));
+            ).AsEnumerable());
 
             if (parametrs.SortField != "")
             {
@@ -77,7 +77,8 @@ namespace DataAccessLayer.Repositories
                 };
             }
 
-            pagedList.PageList = pagedList.PageList.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+            pagedList.TotalPageItems = pagedList.PageList.Count();
+            pagedList.PageList = pagedList.PageList.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
             pagedList.TotalPages = totalPages;
             pagedList.CurrentPage = pageNumber;
 

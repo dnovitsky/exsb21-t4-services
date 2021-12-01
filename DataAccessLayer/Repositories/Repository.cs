@@ -31,13 +31,15 @@ namespace DataAccessLayer.Repositories
         public async Task<PagedList<T>> GetPageAsync(int pagesize, int pagenumber)
         {
             IEnumerable<T> list = await set.ToListAsync();
-            int pages = (int)Math.Ceiling((double)list.Count()/(double)pagesize);
+            int totalPageItems = list.Count();
+            int pages = (int)Math.Ceiling((double)totalPageItems/(double)pagesize);
             IEnumerable<T> PageList = await set.Skip((pagenumber-1)*pagesize).Take(pagesize).ToListAsync();
             PagedList<T> pagedList = new PagedList<T>
             {
                 PageList = PageList,
                 CurrentPage = pagenumber,
-                TotalPages = pages
+                TotalPages = pages,
+                TotalPageItems = totalPageItems
             };
             return pagedList;
         }
