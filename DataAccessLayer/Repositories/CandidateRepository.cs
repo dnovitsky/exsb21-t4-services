@@ -47,7 +47,7 @@ namespace DataAccessLayer.Repositories
                     ).Any()
                   ).Any()
                 )
-            ));
+            ).AsEnumerable());
 
             if (parametrs.SortField != "")
             {
@@ -77,13 +77,30 @@ namespace DataAccessLayer.Repositories
                 };
             }
 
-            pagedList.PageList = pagedList.PageList.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+            pagedList.TotalPageItems = pagedList.PageList.Count();
+            pagedList.PageList = pagedList.PageList.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
             pagedList.TotalPages = totalPages;
             pagedList.CurrentPage = pageNumber;
 
             return pagedList;
         }
 
+        public IEnumerable<CandidateEntityModel> GetByUserId(Guid id)
+        {
+
+            UserEntityModel user = db.Users.Find(id);
+
+            IEnumerable<UserCandidateSandboxEntityModel> userCandidateSandboxes = user.UserCandidateSandboxes;
+
+            IList<CandidateEntityModel> candidates = new List<CandidateEntityModel> { };
+
+            foreach (var a in userCandidateSandboxes)
+            {
+                candidates.Add(db.Candidates.Find(a.CandidateSandbox.CandidateId));
+            }
+
+            return candidates;
+        }
         private CandidateSandboxEntityModel getActualCandidateSandboxes(CandidateEntityModel candidateEM)
         {
             return candidateEM.CandidateSandboxes.Where(s => DateTime.Now < s.Sandbox.EndDate).FirstOrDefault();

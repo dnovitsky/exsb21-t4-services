@@ -90,12 +90,18 @@ namespace SAPex.Controllers
             }
 
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(dtoPageListModels.TotalPages));
+            Response.Headers.Add("X-Total-Page-Items", JsonConvert.SerializeObject(dtoPageListModels.TotalPageItems));
             return await Task.FromResult(Ok(viewModels));
         }
 
-        [HttpPut("{id}")]
-        public void Put([FromRoute] Guid id, [FromBody] CandidateViewModel updateCandidateFields)
+        [HttpPut("{id}/candidatesandboxes/{candidateSandboxId}")]
+        public async Task<IActionResult> Put([FromRoute] Guid id, [FromRoute] Guid candidateSandboxId, [FromQuery] Guid newStatusId)
         {
+            var isUpdatedo = await _service.UpdateCandidateStatus(id, candidateSandboxId, newStatusId);
+
+            IActionResult actionResult = isUpdatedo ? Ok() : Conflict();
+
+            return await Task.FromResult(actionResult);
         }
 
         [HttpDelete("{id}")]

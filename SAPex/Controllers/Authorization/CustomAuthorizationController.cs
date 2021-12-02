@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SAPexAuthService.Models;
@@ -10,17 +11,17 @@ namespace SAPex.Controllers.Authorization
     [ApiController]
     public class CustomAuthorizationController : ControllerBase
     {
-        private readonly JwtService _jwtService;
+        private readonly AuthService _authService;
 
-        public CustomAuthorizationController(JwtService jwtService)
+        public CustomAuthorizationController(AuthService authService)
         {
-            _jwtService = jwtService;
+            _authService = authService;
         }
 
         [HttpPost("sign-in")]
         public async Task<ActionResult<TokenCredentialsModel>> AuthenticateAsync([FromBody] UserCredentialsModel credentials)
         {
-            var authResponse = await _jwtService.AuthenticateAsync(credentials);
+            var authResponse = await _authService.AuthenticateAsync(credentials);
             if (authResponse != null)
             {
                 return Ok(authResponse);
@@ -32,7 +33,7 @@ namespace SAPex.Controllers.Authorization
         [HttpPost("refresh-token")]
         public async Task<ActionResult<TokenCredentialsModel>> RefreshTokenAsync([FromBody] TokenCredentialsModel tokenRequest)
         {
-            var authResponse = await _jwtService.VerifyAndRefreshTokenAsync(tokenRequest);
+            var authResponse = await _authService.VerifyAndRefreshTokenAsync(tokenRequest);
             if (authResponse != null)
             {
                 return Ok(authResponse);
@@ -45,8 +46,9 @@ namespace SAPex.Controllers.Authorization
         [HttpGet("sign-out/{refreshToken}")]
         public async Task<ActionResult> RevokeTokenAsync(string refreshToken)
         {
-            if (await _jwtService.RevokeTokenAsync(refreshToken))
+            if (HttpContext.User.Identity is ClaimsIdentity identity)
             {
+                await _authService.RevokeTokenAsync(identity.FindFirst(ClaimTypes.Email).Value);
                 return Ok();
             }
 

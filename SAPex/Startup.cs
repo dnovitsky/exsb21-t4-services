@@ -18,6 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SAPexAuthService.Models;
 using SAPexAuthService.Services;
+using SAPexGoogleSupportService.Interfaces;
 using SAPexGoogleSupportService.Models.Authorization;
 using SAPexGoogleSupportService.Services.Authorization;
 using SAPexGoogleSupportService.Services.Calendar;
@@ -39,6 +40,7 @@ namespace SAPex
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
             services.AddAuthentication(options =>
@@ -64,6 +66,7 @@ namespace SAPex
             services.AddDbContext<AppDbContext>(options => options
                                                            .UseLazyLoadingProxies()
                                                            .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.Configure<AppSettingsModel>(Configuration.GetSection("AppSettings"));
@@ -71,12 +74,11 @@ namespace SAPex
             services.Configure<FileValidationSettingsModel>(Configuration.GetSection("FileValidationSettings"));
 
             services.Configure<GoogleSettingsModel>(Configuration.GetSection("GoogleSettings"));
-            services.AddScoped<AuthUserService, AuthUserService>();
-            services.AddScoped<AuthUserRefreshTokenService, AuthUserRefreshTokenService>();
-
-            services.AddScoped<GoogleOAuthService, GoogleOAuthService>();
-            services.AddScoped<JwtService, JwtService>();
+            services.AddScoped<AuthService, AuthService>();
+            services.AddScoped<AuthGoogleService, AuthGoogleService>();
+            services.AddScoped<IGoogleAccessTokenService, GoogleAccessTokenService>();
             services.AddScoped<EventGoogleService, EventGoogleService>();
+
             services.Configure<MailSettingsModel>(Configuration.GetSection("MailSettings"));
             services.AddScoped<ISendMailService, SendMailService>();
 
@@ -120,12 +122,12 @@ namespace SAPex
             services.AddScoped<IStackTechnologyService, StackTechnologyService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFeedbackService, FeedbackService>();
-
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IUserSandboxService, UserSandboxService>();
             services.AddScoped<ILocationService, LocationService>();
-
             services.AddScoped<IStatusService, StatusService>();
+
+            services.AddScoped<IUserCandidateSandboxService, UserCandidateSandboxService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -149,7 +151,7 @@ namespace SAPex
 
             // app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

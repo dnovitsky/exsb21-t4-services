@@ -8,6 +8,7 @@
     <Compile Remove="Models\Google\**" />
     <EmbeddedResource Remove="Models\Google\**" />
     <None Remove="Models\Google\**" />
+    <None Remove="Services\Utils\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Services\Utils\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />

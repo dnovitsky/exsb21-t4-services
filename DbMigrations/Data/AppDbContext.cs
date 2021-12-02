@@ -41,6 +41,7 @@ namespace DbMigrations.Data
         public DbSet<StatusEntityModel> Statuses { get; set; }
         public DbSet<TeamEntityModel> Teams { get; set; }
 
+        public DbSet<UserCandidateSandboxEntityModel> UserCandidateSandboxes { get; set; }
         public DbSet<UserEntityModel> Users { get; set; }
         public DbSet<UserFunctionalRoleEntityModel> UserFunctionalRoles { get; set; }
         public DbSet<UserLanguageEntityModel> UserLanguages { get; set; }

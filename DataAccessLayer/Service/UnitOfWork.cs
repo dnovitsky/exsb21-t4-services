@@ -48,6 +48,7 @@ namespace DataAccessLayer.Service
         private IGoogleAccessTokenRepository googleAccessTokens;
         private IEventRepository events;
         private IEventMemberRepository eventMembers;
+        private IUserCandidateSandboxRepository userCandidateSandboxes;
 
         public UnitOfWork(AppDbContext context)
         {
@@ -482,6 +483,18 @@ namespace DataAccessLayer.Service
                     eventMembers = new EventMemberRepository(context);
                 }
                 return eventMembers;
+            }
+        }
+
+        public IUserCandidateSandboxRepository UserCandidateSandboxes
+        {
+            get
+            {
+                if (userCandidateSandboxes == null)
+                {
+                    userCandidateSandboxes = new UserCandidateSandboxRepository(context);
+                }
+                return userCandidateSandboxes;
             }
         }
 
