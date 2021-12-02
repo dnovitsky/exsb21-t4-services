@@ -20,6 +20,8 @@ namespace DataAccessLayer.IRepositories
 
         IEnumerable<CandidateEntityModel> GetByUserId(Guid id);
 
+        IEnumerable<CandidateEntityModel> GetByUserIdSandboxId(Guid userId, Guid sandboxId);
+
         void Update(CandidateEntityModel item);
         void Delete(Guid id);
     }
