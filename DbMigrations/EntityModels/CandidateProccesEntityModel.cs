@@ -14,6 +14,7 @@ namespace DbMigrations.EntityModels
         public CandidateProccesEntityModel()
         {
             Feedbacks = new List<FeedbackEntityModel>();
+            СandidateProccessTestTasks = new List<CandidateProccessTestTasksEntityModel>();
         }
         [Key]
         public Guid Id { get; set; }
@@ -31,5 +32,7 @@ namespace DbMigrations.EntityModels
         public DateTime CreateDate { get; set; } = DateTime.Now;
 
         public virtual IList<FeedbackEntityModel> Feedbacks { get; set; }
+        
+        public virtual IList<CandidateProccessTestTasksEntityModel> СandidateProccessTestTasks { get; set; }
     }
 }

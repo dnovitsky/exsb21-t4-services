@@ -14,5 +14,7 @@ namespace SAPex.Models
         public DateTime CreateDate { get; set; }
 
         public IEnumerable<FeedbackViewModel> Feedbacks { get; set; }
+
+        public IEnumerable<CandidateProccessTestTasksViewModel>? СandidateProccessTestTasks { get; set; }
     }
 }

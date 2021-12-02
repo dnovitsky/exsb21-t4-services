@@ -11,8 +11,6 @@ namespace SAPex.Models
 
         public string Status { get; set; }
 
-        public string Description { get; set; }
-
         public string CreateDate { get; set; }
 
         public string StartDate { get; set; }
@@ -32,5 +30,7 @@ namespace SAPex.Models
         public string Recruiters { get; set; }
 
         public string Interviewers { get; set; }
+
+        public string Description { get; set; }
     }
 }
