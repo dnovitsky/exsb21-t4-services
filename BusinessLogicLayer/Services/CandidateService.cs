@@ -142,6 +142,12 @@ namespace BusinessLogicLayer.Services
             unitOfWork.SaveAsync();
         }
 
+        public async Task<IEnumerable<CandidateDtoModel>> GetCandidatesByUserIdAsync(Guid id)
+        {
+            IEnumerable<CandidateEntityModel> CandidatesEM = await Task.Run(() => unitOfWork.Candidates.GetByUserId(id));
+            return profile.MapCandidateEMListToCandidateDtoList(CandidatesEM);
+        }
+
         public void Dispose()
         {
             throw new NotImplementedException();

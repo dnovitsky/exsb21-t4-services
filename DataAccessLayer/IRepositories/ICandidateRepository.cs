@@ -18,6 +18,8 @@ namespace DataAccessLayer.IRepositories
         Task<PagedList<CandidateEntityModel>> GetPagedAsync(InputParametrsDalModel parametrs, CandidateFilterParametrsDalModel candidateFilterParametrs);
         Task<CandidateEntityModel> CreateAsync(CandidateEntityModel item);
 
+        IEnumerable<CandidateEntityModel> GetByUserId(Guid id);
+
         void Update(CandidateEntityModel item);
         void Delete(Guid id);
     }

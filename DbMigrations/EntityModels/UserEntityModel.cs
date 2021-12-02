@@ -15,6 +15,7 @@ namespace DbMigrations.EntityModels
             UserLanguages = new List<UserLanguageEntityModel>();
             Feedbacks = new List<FeedbackEntityModel>();
             UserStackTechnologies = new List<UserStackTechnologyEntityModel>();
+            UserCandidateSandboxes = new List<UserCandidateSandboxEntityModel>();
         }
 
         [Required]
@@ -37,7 +38,7 @@ namespace DbMigrations.EntityModels
         public virtual IList<UserFunctionalRoleEntityModel> UserRoles { get; set; }
         public virtual IList<UserLanguageEntityModel> UserLanguages { get; set; }
         public virtual IList<FeedbackEntityModel> Feedbacks { get; set; }
-
         public virtual IList<UserStackTechnologyEntityModel> UserStackTechnologies { get; set; }
+        public virtual IList<UserCandidateSandboxEntityModel> UserCandidateSandboxes { get; set; }
     }
 }
