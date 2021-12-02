@@ -18,15 +18,11 @@ namespace SAPexSchedulerService.Services
             var sandboxes = _repository.FindAll();
             foreach (var sandbox in sandboxes)
             {
-<<<<<<< HEAD
-                if (sandbox.StartRegistration <= now && now < sandbox.EndRegistration)
-=======
                 if (sandbox.Status == StatusName.Draft)
                 {
                     continue;
                 }
                 else if (sandbox.StartRegistration <= now && now < sandbox.EndRegistration)
->>>>>>> dev
                 {
                     sandbox.Status = StatusName.Registration;
                 }
