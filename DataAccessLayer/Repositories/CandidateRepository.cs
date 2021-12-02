@@ -101,6 +101,29 @@ namespace DataAccessLayer.Repositories
 
             return candidates;
         }
+
+        public IEnumerable<CandidateEntityModel> GetByUserIdSandboxId(Guid userId, Guid sandboxId)
+        {
+
+            UserEntityModel user = db.Users.Find(userId);
+            SandboxEntityModel sandbox = db.Sandboxes.Find(sandboxId);
+
+            IEnumerable<UserCandidateSandboxEntityModel> userCandidateSandboxes = user.UserCandidateSandboxes;
+            IList<CandidateEntityModel> candidatesByUserId = new List<CandidateEntityModel> { };
+            foreach (var a in userCandidateSandboxes)
+            {
+                candidatesByUserId.Add(db.Candidates.Find(a.CandidateSandbox.CandidateId));
+            }
+
+            IEnumerable<CandidateSandboxEntityModel> candidateSandboxes = sandbox.CandidateSandboxes;
+            IList<CandidateEntityModel> candidatesBySandboxId = new List<CandidateEntityModel> { };
+            foreach (var item in candidateSandboxes)
+            {
+                candidatesBySandboxId.Add(db.Candidates.Find(item.CandidateId));
+            }
+
+            return candidatesBySandboxId.Intersect(candidatesByUserId);
+        }
         private CandidateSandboxEntityModel getActualCandidateSandboxes(CandidateEntityModel candidateEM)
         {
             return candidateEM.CandidateSandboxes.Where(s => DateTime.Now < s.Sandbox.EndDate).FirstOrDefault();

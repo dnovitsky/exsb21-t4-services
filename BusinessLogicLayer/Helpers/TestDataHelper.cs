@@ -26,7 +26,19 @@ namespace BusinessLogicLayer.Helpers
                 Guid SandboxId5 = Guid.NewGuid();
                 Guid SandboxId6 = Guid.NewGuid();
                 Guid SandboxId7 = Guid.NewGuid();
-                Guid SandboxId8 = Guid.NewGuid();
+                Guid SandboxId9 = Guid.NewGuid();
+                Guid SandboxId10 = Guid.NewGuid();
+                Guid SandboxId11= Guid.NewGuid();
+                Guid SandboxId12 = Guid.NewGuid();
+                Guid SandboxId13 = Guid.NewGuid();
+                Guid SandboxId14 = Guid.NewGuid();
+                Guid SandboxId15 = Guid.NewGuid();
+                Guid SandboxId16 = Guid.NewGuid();
+                Guid SandboxId17 = Guid.NewGuid();
+                Guid SandboxId18 = Guid.NewGuid();
+                Guid SandboxId19 = Guid.NewGuid();
+                Guid SandboxId20 = Guid.NewGuid();
+                Guid SandboxId21 = Guid.NewGuid();
 
                 Guid LanguageId1 = Guid.Parse("4019D15B-37AD-4ABF-B5B3-2A57318608FE");
                 Guid LanguageId2 = Guid.NewGuid();
@@ -123,26 +135,26 @@ namespace BusinessLogicLayer.Helpers
                     {
                         Id = SandboxId1,
                         Name = ".Net & JS",
-                        MaxCandidates = 10,
-                        Description = "description .Net & JS",
-                        CreateDate = new DateTime(2021, 10, 1),
-                        StartDate = new DateTime(2021, 12, 2),
-                        EndDate = new DateTime(2021, 12, 30),
-                        StartRegistration = new DateTime(2021, 11, 11),
-                        EndRegistration = new DateTime(2021, 11, 30),
-                        Status = StatusName.Draft,
+                        MaxCandidates = 60,
+                        Description = "Two-month internship for aspiring students",
+                        CreateDate = new DateTime(2021, 9, 1),
+                        StartDate = new DateTime(2021, 10, 20),
+                        EndDate = new DateTime(2021, 12, 10),
+                        StartRegistration = new DateTime(2021, 10, 2),
+                        EndRegistration = new DateTime(2021, 10, 18),
+                        Status = StatusName.Active,
                     });;
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
                         Id = SandboxId2,
                         Name = "Python",
                         MaxCandidates = 22,
-                        Description = "description Python",
+                        Description = "Junior python developers are welcome to take part in exadel trainee",
                         CreateDate = new DateTime(2021, 11, 1),
-                        StartDate = new DateTime(2021, 12, 3),
-                        EndDate = new DateTime(2021, 12, 30),
-                        StartRegistration = new DateTime(2021, 11, 25),
-                        EndRegistration = new DateTime(2021, 11, 30),
+                        StartDate = new DateTime(2022, 1, 3),
+                        EndDate = new DateTime(2022, 1, 30),
+                        StartRegistration = new DateTime(2021, 12, 1),
+                        EndRegistration = new DateTime(2021, 12, 28),
                         Status = StatusName.Active,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
@@ -150,7 +162,9 @@ namespace BusinessLogicLayer.Helpers
                         Id = SandboxId3,
                         Name = "PHP",
                         MaxCandidates = 33,
-                        Description = "description PHP",
+                        Description = "PHP is a general - purpose scripting language especially suited to web development." +
+                        "It was originally created by Danish - Canadian programmer Rasmus Lerdorf in 1994." +
+                        "The PHP reference implementation is now produced by The PHP Group. ",
                         CreateDate = new DateTime(2021, 10, 1),
                         StartDate = new DateTime(2021, 12, 2),
                         EndDate = new DateTime(2021, 12, 30),
@@ -212,10 +226,168 @@ namespace BusinessLogicLayer.Helpers
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
-                        Id = SandboxId8,
-                        Name = "Devops",
+                        Id = SandboxId9,
+                        Name = "Basic QA",
                         MaxCandidates = 81,
-                        Description = "description Devops",
+                        Description = "For candidates without work experience",
+                        CreateDate = new DateTime(2021, 8, 1),
+                        StartDate = new DateTime(2021, 8, 2),
+                        EndDate = new DateTime(2021, 8, 3),
+                        StartRegistration = new DateTime(2021, 8, 4),
+                        EndRegistration = new DateTime(2021, 8, 5),
+                        Status = StatusName.Draft,
+                    });
+                    db.Sandboxes.Add(new SandboxEntityModel
+                    {
+                        Id = SandboxId10,
+                        Name = "JS & Java Sandbox",
+                        MaxCandidates = 81,
+                        Description = "Backend, Frontend, FullStack",
+                        CreateDate = new DateTime(2021, 8, 1),
+                        StartDate = new DateTime(2021, 8, 2),
+                        EndDate = new DateTime(2021, 8, 3),
+                        StartRegistration = new DateTime(2021, 8, 4),
+                        EndRegistration = new DateTime(2021, 8, 5),
+                        Status = StatusName.Draft,
+                    });
+                    db.Sandboxes.Add(new SandboxEntityModel
+                    {
+                        Id = SandboxId11,
+                        Name = "Pascal",
+                        MaxCandidates = 81,
+                        Description = "Pascal is an imperative and procedural programming language, " +
+                        "designed by Niklaus Wirth as a small, " +
+                        "efficient language intended to encourage good programming practices",
+                        CreateDate = new DateTime(2021, 8, 1),
+                        StartDate = new DateTime(2021, 8, 2),
+                        EndDate = new DateTime(2021, 8, 3),
+                        StartRegistration = new DateTime(2021, 8, 4),
+                        EndRegistration = new DateTime(2021, 8, 5),
+                        Status = StatusName.Draft,
+                    });
+                    db.Sandboxes.Add(new SandboxEntityModel
+                    {
+                        Id = SandboxId12,
+                        Name = ".Net",
+                        MaxCandidates = 81,
+                        Description = "Only Backend",
+                        CreateDate = new DateTime(2021, 8, 1),
+                        StartDate = new DateTime(2021, 8, 2),
+                        EndDate = new DateTime(2021, 8, 3),
+                        StartRegistration = new DateTime(2021, 8, 4),
+                        EndRegistration = new DateTime(2021, 8, 5),
+                        Status = StatusName.Draft,
+                    });
+                    db.Sandboxes.Add(new SandboxEntityModel
+                    {
+                        Id = SandboxId13,
+                        Name = "HR trainee",
+                        MaxCandidates = 81,
+                        Description = "Improve your soft skills",
+                        CreateDate = new DateTime(2021, 8, 1),
+                        StartDate = new DateTime(2021, 8, 2),
+                        EndDate = new DateTime(2021, 8, 3),
+                        StartRegistration = new DateTime(2021, 8, 4),
+                        EndRegistration = new DateTime(2021, 8, 5),
+                        Status = StatusName.Draft,
+                    });
+                    db.Sandboxes.Add(new SandboxEntityModel
+                    {
+                        Id = SandboxId14,
+                        Name = "Angular + Js",
+                        MaxCandidates = 81,
+                        Description = "Busy work schedule",
+                        CreateDate = new DateTime(2021, 8, 1),
+                        StartDate = new DateTime(2021, 8, 2),
+                        EndDate = new DateTime(2021, 8, 3),
+                        StartRegistration = new DateTime(2021, 8, 4),
+                        EndRegistration = new DateTime(2021, 8, 5),
+                        Status = StatusName.Draft,
+                    });
+                    db.Sandboxes.Add(new SandboxEntityModel
+                    {
+                        Id = SandboxId15,
+                        Name = "Javascript Basics",
+                        MaxCandidates = 81,
+                        Description = "Only students",
+                        CreateDate = new DateTime(2021, 8, 1),
+                        StartDate = new DateTime(2021, 8, 2),
+                        EndDate = new DateTime(2021, 8, 3),
+                        StartRegistration = new DateTime(2021, 8, 4),
+                        EndRegistration = new DateTime(2021, 8, 5),
+                        Status = StatusName.Draft,
+                    });
+                    db.Sandboxes.Add(new SandboxEntityModel
+                    {
+                        Id = SandboxId16,
+                        Name = "BA + QA",
+                        MaxCandidates = 81,
+                        Description = "",
+                        CreateDate = new DateTime(2021, 8, 1),
+                        StartDate = new DateTime(2021, 8, 2),
+                        EndDate = new DateTime(2021, 8, 3),
+                        StartRegistration = new DateTime(2021, 8, 4),
+                        EndRegistration = new DateTime(2021, 8, 5),
+                        Status = StatusName.Draft,
+                    });
+                    db.Sandboxes.Add(new SandboxEntityModel
+                    {
+                        Id = SandboxId17,
+                        Name = "GO",
+                        MaxCandidates = 81,
+                        Description = "",
+                        CreateDate = new DateTime(2021, 8, 1),
+                        StartDate = new DateTime(2021, 8, 2),
+                        EndDate = new DateTime(2021, 8, 3),
+                        StartRegistration = new DateTime(2021, 8, 4),
+                        EndRegistration = new DateTime(2021, 8, 5),
+                        Status = StatusName.Draft,
+                    });
+                    db.Sandboxes.Add(new SandboxEntityModel
+                    {
+                        Id = SandboxId18,
+                        Name = "Assembler",
+                        MaxCandidates = 81,
+                        Description = "",
+                        CreateDate = new DateTime(2021, 8, 1),
+                        StartDate = new DateTime(2021, 8, 2),
+                        EndDate = new DateTime(2021, 8, 3),
+                        StartRegistration = new DateTime(2021, 8, 4),
+                        EndRegistration = new DateTime(2021, 8, 5),
+                        Status = StatusName.Draft,
+                    });
+                    db.Sandboxes.Add(new SandboxEntityModel
+                    {
+                        Id = SandboxId19,
+                        Name = "HR & BA & Ruby",
+                        MaxCandidates = 81,
+                        Description = "description",
+                        CreateDate = new DateTime(2021, 8, 1),
+                        StartDate = new DateTime(2021, 8, 2),
+                        EndDate = new DateTime(2021, 8, 3),
+                        StartRegistration = new DateTime(2021, 8, 4),
+                        EndRegistration = new DateTime(2021, 8, 5),
+                        Status = StatusName.Draft,
+                    });
+                    db.Sandboxes.Add(new SandboxEntityModel
+                    {
+                        Id = SandboxId20,
+                        Name = "C++",
+                        MaxCandidates = 81,
+                        Description = "For begginers",
+                        CreateDate = new DateTime(2021, 8, 1),
+                        StartDate = new DateTime(2021, 8, 2),
+                        EndDate = new DateTime(2021, 8, 3),
+                        StartRegistration = new DateTime(2021, 8, 4),
+                        EndRegistration = new DateTime(2021, 8, 5),
+                        Status = StatusName.Draft,
+                    });
+                    db.Sandboxes.Add(new SandboxEntityModel
+                    {
+                        Id = SandboxId21,
+                        Name = "Java",
+                        MaxCandidates = 81,
+                        Description = "8 month trainee",
                         CreateDate = new DateTime(2021, 8, 1),
                         StartDate = new DateTime(2021, 8, 2),
                         EndDate = new DateTime(2021, 8, 3),
