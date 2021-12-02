@@ -65,6 +65,14 @@ namespace SAPex.Controllers
            return await Task.FromResult(Ok(_candidateMapper.MapCandidateDtoToVM(candidatesDto)));
         }
 
+        [HttpGet("{id}/candidates/sandbox")]
+        public async Task<IActionResult> GetCandidatesByRecruiterSandboxId(Guid id, [FromHeader] Guid sandboxId)
+        {
+            IEnumerable<CandidateDtoModel> candidatesDto = await _candidateService.GetCandidatesByUserIdSandboxIdAsync(id, sandboxId);
+
+            return await Task.FromResult(Ok(_candidateMapper.MapCandidateDtoToVM(candidatesDto)));
+        }
+
         [HttpPost("{id}/candidates")]
         public async Task<IActionResult> AssignCandidatesToRecruiter([FromRoute] Guid id, [FromBody] IEnumerable<Guid> candidateSandboxIds)
         {

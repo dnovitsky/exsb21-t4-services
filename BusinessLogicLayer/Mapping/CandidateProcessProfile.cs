@@ -9,6 +9,7 @@ namespace BusinessLogicLayer.Mapping
     {
         private readonly FeedbackProfile feedbackProfile = new FeedbackProfile();
         private readonly StatusProfile statusProfile = new StatusProfile();
+        private readonly CandidateProccessTestTasksProfile candidateProccessTestTasksProfile = new CandidateProccessTestTasksProfile();
 
         protected override Mapper DtoModelToEntityModelMapper()
         {
@@ -17,7 +18,8 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.Status, y => y.MapFrom(x => x.Status))
                     .ForMember(x => x.TestResult, y => y.MapFrom(x => x.TestResult))
                     .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate))
-                    .ForMember(x => x.Feedbacks, y => y.MapFrom(x => x.Feedbacks)));
+                    .ForMember(x => x.Feedbacks, y => y.MapFrom(x => x.Feedbacks))
+                    .ForMember(x => x.СandidateProccessTestTasks, y => y.MapFrom(x => candidateProccessTestTasksProfile.mapDtoListToEM(x.СandidateProccessTestTasks))));
 
             return new Mapper(config);
         }
@@ -29,7 +31,8 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.Status, y => y.MapFrom(x => statusProfile.mapToDto(x.Status)))
                     .ForMember(x => x.TestResult, y => y.MapFrom(x => x.TestResult))
                     .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate))
-                    .ForMember(x => x.Feedbacks, y => y.MapFrom(x => feedbackProfile.mapListToDto(x.Feedbacks))));
+                    .ForMember(x => x.Feedbacks, y => y.MapFrom(x => feedbackProfile.mapListToDto(x.Feedbacks)))
+                    .ForMember(x => x.СandidateProccessTestTasks, y => y.MapFrom(x => candidateProccessTestTasksProfile.mapListToDto(x.СandidateProccessTestTasks))));
 
             return new Mapper(config);
         }

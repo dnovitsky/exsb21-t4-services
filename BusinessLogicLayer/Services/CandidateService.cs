@@ -161,6 +161,12 @@ namespace BusinessLogicLayer.Services
             return profile.MapCandidateEMListToCandidateDtoList(CandidatesEM);
         }
 
+        public async Task<IEnumerable<CandidateDtoModel>> GetCandidatesByUserIdSandboxIdAsync(Guid userId, Guid sandboxId)
+        {
+            IEnumerable<CandidateEntityModel> CandidatesEM = await Task.Run(() => unitOfWork.Candidates.GetByUserIdSandboxId(userId, sandboxId));
+            return profile.MapCandidateEMListToCandidateDtoList(CandidatesEM);
+        }
+
         public void Dispose()
         {
             throw new NotImplementedException();
