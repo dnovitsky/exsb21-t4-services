@@ -179,7 +179,8 @@ namespace SAPex.Controllers.Mapping
                     .ForMember(x => x.Status, y => y.MapFrom(x => _statusMapper.MapDtoToView(x.Status)))
                     .ForMember(x => x.TestResult, y => y.MapFrom(x => x.TestResult))
                     .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate))
-                    .ForMember(x => x.Feedbacks, y => y.MapFrom(x => _feedbackMapper.MapListToView(x.Feedbacks))));
+                    .ForMember(x => x.Feedbacks, y => y.MapFrom(x => _feedbackMapper.MapListToView(x.Feedbacks)))
+                    .ForMember(x => x.СandidateProccessTestTasks, y => y.MapFrom(x => CandidateProccessTestTasksProfile(x.СandidateProccessTestTasks))));
 
             var mapper = new Mapper(config);
 
@@ -204,6 +205,24 @@ namespace SAPex.Controllers.Mapping
 
             CandidateProjectRoleViewModel candidateProjectRole = mapper.Map<CandidateProjectRoleDtoModel, CandidateProjectRoleViewModel>(candidateProjectRoleDM);
             return candidateProjectRole;
+        }
+
+        private IEnumerable<CandidateProccessTestTasksViewModel> CandidateProccessTestTasksProfile(IEnumerable<CandidateProccessTestTasksDtoModel> candidateProccessTestTasksDM)
+        {
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateProccessTestTasksDtoModel, CandidateProccessTestTasksViewModel>()
+                    .ForMember(x => x.TestFileId, y => y.MapFrom(x => x.TestFileId)));
+
+            var mapper = new Mapper(config);
+
+            IList<CandidateProccessTestTasksViewModel> candidateProccessTestTasksVM = new List<CandidateProccessTestTasksViewModel>() { };
+
+            foreach (var candidateProccessTestTask in candidateProccessTestTasksDM)
+            {
+                CandidateProccessTestTasksViewModel candidateProccessTestTaskVM = mapper.Map<CandidateProccessTestTasksDtoModel, CandidateProccessTestTasksViewModel>(candidateProccessTestTask);
+                candidateProccessTestTasksVM.Add(candidateProccessTestTaskVM);
+            }
+
+            return candidateProccessTestTasksVM;
         }
     }
 }
