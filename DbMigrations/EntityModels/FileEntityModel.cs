@@ -10,6 +10,11 @@ namespace DbMigrations.EntityModels
 {
     public class FileEntityModel
     {
+        public FileEntityModel()
+        {
+            СandidateProccessTestTasks = new List<CandidateProccessTestTasksEntityModel>();
+        }
+
         [Key]
         public Guid Id { get; set; }
 
@@ -19,5 +24,7 @@ namespace DbMigrations.EntityModels
 
         [Required]
         public DateTime CreateDate { get; set; }
+
+        public virtual IList<CandidateProccessTestTasksEntityModel> СandidateProccessTestTasks { get; set; }
     }
 }
