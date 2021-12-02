@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DbMigrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211202135410_AddCandidateProccessTestTasksMigration")]
+    [Migration("20211202144638_AddCandidateProccessTestTasksMigration")]
     partial class AddCandidateProccessTestTasksMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -443,7 +443,15 @@ namespace DbMigrations.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("StackTechnologyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("TestTaskType")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("StackTechnologyId");
 
                     b.ToTable("Files");
                 });
@@ -1186,6 +1194,15 @@ namespace DbMigrations.Migrations
                     b.Navigation("CandidateProcces");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DbMigrations.EntityModels.FileEntityModel", b =>
+                {
+                    b.HasOne("DbMigrations.EntityModels.StackTechnologyEntityModel", "StackTechnology")
+                        .WithMany()
+                        .HasForeignKey("StackTechnologyId");
+
+                    b.Navigation("StackTechnology");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.GoogleAccessTokenEntityModel", b =>
