@@ -34,7 +34,7 @@ namespace BusinessLogicLayer.Services
                 var candidates = await unitOfWork.Candidates.FindByConditionAsync(x => x.Email == candidateDto.Email && x.Phone == candidateDto.PhoneNumber);
                 if (candidates.Any())
                 {
-                    return null;
+                    return await AddNewCandidateSandbox(candidates.FirstOrDefault(), candidateDto);
                 }
 
 
@@ -164,6 +164,35 @@ namespace BusinessLogicLayer.Services
         public void Dispose()
         {
             throw new NotImplementedException();
+        }
+
+        private async Task<CandidateDtoModel> AddNewCandidateSandbox(CandidateEntityModel candidateEM, CreateCandidateDtoModel newCandidateData)
+        {
+            var candidateSanbox = await unitOfWork.CandidateSandboxes.FindByConditionAsync(x => x.SandboxId.Equals(newCandidateData.SandboxId));
+            var sandbox = await unitOfWork.Sandboxes.FindByIdAsync(newCandidateData.SandboxId);
+            var currentDate = DateTime.Now;
+
+            if (!candidateSanbox.Any() && sandbox != null && sandbox.StartDate <= currentDate && currentDate <= sandbox.EndDate)
+            {
+                var candidateSandBoxe = await unitOfWork.CandidateSandboxes.CreateAsync(profile.MapNewCandidateSandBoxToEM(candidateEM.Id, newCandidateData));
+                await unitOfWork.SaveAsync();
+
+                var defaultStatuses = await unitOfWork.Statuses.FindByConditionAsync(x => x.Name == "Draft");
+                StatusEntityModel defaultStatuse = defaultStatuses.FirstOrDefault();
+                var candidateProcess = await unitOfWork.CandidateProcceses.CreateAsync(profile.MapNewCandidateProcessEM(candidateSandBoxe.Id, defaultStatuse.Id, newCandidateData));
+                await unitOfWork.SaveAsync();
+
+                /*
+                    var defaultLanguages = await unitOfWork.Languages.FindByConditionAsync(x => x.Name == "English");
+                    LanguageEntityModel defaultLanguage = defaultLanguages.FirstOrDefault();
+                    var candidateLanguage = await unitOfWork.CandidateLanguages.CreateAsync(profile.MapNewCandidateLanguagesEM(candidate.Id, defaultLanguage.Id, newCandidateData));
+                    await unitOfWork.SaveAsync();
+                */
+
+                return profile.MapCandidateEMToCandidateDto(candidateEM);
+            }
+
+            return null;
         }
     }
 }
