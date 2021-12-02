@@ -18,6 +18,8 @@ namespace DbMigrations.EntityModels
         [Key]
         public Guid Id { get; set; }
 
+        [Required]
+        public TestTask TestTaskType { get; set; }
 
         [Required]
         public string FileName { get; set; }
@@ -26,5 +28,15 @@ namespace DbMigrations.EntityModels
         public DateTime CreateDate { get; set; }
 
         public virtual IList<CandidateProccessTestTasksEntityModel> СandidateProccessTestTasks { get; set; }
+
+        public Guid? StackTechnologyId { get; set; }
+
+        public virtual StackTechnologyEntityModel StackTechnology { get; set; }
+    }
+    public enum TestTask
+    {
+        Other,
+        TestTaskTemplate,
+        TestTaskResult
     }
 }
