@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,7 +30,11 @@ namespace SAPexSchedulerService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<AppDbContext>();
+<<<<<<< HEAD
             services.AddHangfire(x => x.UseSqlServerStorage(Environment.GetEnvironmentVariable("MSSQL_HANGFIRE_CONNECTION_STRING")));
+=======
+            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("HangfireDbConnection")));
+>>>>>>> dev
             services.AddHangfireServer();
             services.AddScoped<ISandboxRepository, SandboxRepository>();
             services.AddScoped<IStatusService, StatusService>();
