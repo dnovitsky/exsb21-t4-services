@@ -66,6 +66,7 @@ namespace SAPex
             services.AddDbContext<AppDbContext>(options => options
                                                            .UseLazyLoadingProxies()
                                                            .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.Configure<AppSettingsModel>(Configuration.GetSection("AppSettings"));
@@ -121,11 +122,9 @@ namespace SAPex
             services.AddScoped<IStackTechnologyService, StackTechnologyService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFeedbackService, FeedbackService>();
-
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IUserSandboxService, UserSandboxService>();
             services.AddScoped<ILocationService, LocationService>();
-
             services.AddScoped<IStatusService, StatusService>();
 
             services.AddScoped<IUserCandidateSandboxService, UserCandidateSandboxService>();
@@ -152,7 +151,7 @@ namespace SAPex
 
             // app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
