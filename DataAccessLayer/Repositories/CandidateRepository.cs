@@ -85,6 +85,22 @@ namespace DataAccessLayer.Repositories
             return pagedList;
         }
 
+        public IEnumerable<CandidateEntityModel> GetByUserId(Guid id)
+        {
+
+            UserEntityModel user = db.Users.Find(id);
+
+            IEnumerable<UserCandidateSandboxEntityModel> userCandidateSandboxes = user.UserCandidateSandboxes;
+
+            IList<CandidateEntityModel> candidates = new List<CandidateEntityModel> { };
+
+            foreach (var a in userCandidateSandboxes)
+            {
+                candidates.Add(db.Candidates.Find(a.CandidateSandbox.CandidateId));
+            }
+
+            return candidates;
+        }
         private CandidateSandboxEntityModel getActualCandidateSandboxes(CandidateEntityModel candidateEM)
         {
             return candidateEM.CandidateSandboxes.Where(s => DateTime.Now < s.Sandbox.EndDate).FirstOrDefault();

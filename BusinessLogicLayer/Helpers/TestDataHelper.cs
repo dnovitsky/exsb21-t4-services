@@ -1134,6 +1134,31 @@ namespace BusinessLogicLayer.Helpers
                     });
                     db.SaveChanges();
                 }
+
+                if (!db.UserCandidateSandboxes.Any())
+                {
+                    db.UserCandidateSandboxes.Add(new UserCandidateSandboxEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        UserId = UserId3,
+                        CandidateSandboxId = candidateSandboxId1
+                    });
+
+                    db.UserCandidateSandboxes.Add(new UserCandidateSandboxEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        UserId = UserId3,
+                        CandidateSandboxId = candidateSandboxId2
+                    });
+
+                    db.UserCandidateSandboxes.Add(new UserCandidateSandboxEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        UserId = UserId3,
+                        CandidateSandboxId = candidateSandboxId3
+                    });
+                    db.SaveChanges();
+                }
             }
         }
     }

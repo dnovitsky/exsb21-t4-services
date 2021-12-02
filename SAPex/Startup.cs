@@ -126,6 +126,8 @@ namespace SAPex
             services.AddScoped<IUserSandboxService, UserSandboxService>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<IStatusService, StatusService>();
+
+            services.AddScoped<IUserCandidateSandboxService, UserCandidateSandboxService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
