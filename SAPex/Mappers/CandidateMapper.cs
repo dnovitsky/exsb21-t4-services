@@ -99,10 +99,13 @@ namespace SAPex.Controllers.Mapping
 
             IList<CandidateViewModel> candidateVMList = new List<CandidateViewModel>() { };
 
-            foreach (var candidate in candidateDM)
+            if (candidateDM != null)
             {
-                CandidateViewModel candidateVM = mapper.Map<CandidateDtoModel, CandidateViewModel>(candidate);
-                candidateVMList.Add(candidateVM);
+                foreach (var candidate in candidateDM)
+                {
+                    CandidateViewModel candidateVM = mapper.Map<CandidateDtoModel, CandidateViewModel>(candidate);
+                    candidateVMList.Add(candidateVM);
+                }
             }
 
             return candidateVMList;

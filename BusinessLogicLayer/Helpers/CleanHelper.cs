@@ -42,6 +42,7 @@ namespace BusinessLogicLayer.Helpers
                 db.CandidatesProcceses.RemoveRange(db.CandidatesProcceses);
 
                 db.Feedbacks.RemoveRange(db.Feedbacks);
+                db.UserCandidateSandboxes.RemoveRange(db.UserCandidateSandboxes);
 
                 db.SaveChanges();
             }

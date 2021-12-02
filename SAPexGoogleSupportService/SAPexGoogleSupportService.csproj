@@ -12,6 +12,8 @@
     <None Remove="Services\Authorization\" />
     <None Remove="Services\Calendar\" />
     <None Remove="RestSharp" />
+    <None Remove="Interfaces\" />
+    <None Remove="Interfaces\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -20,6 +22,8 @@
     <Folder Include="Models\Authorization\" />
     <Folder Include="Services\Authorization\" />
     <Folder Include="Services\Calendar\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Interfaces\Base\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DbMigrations\DbMigrations.csproj" />

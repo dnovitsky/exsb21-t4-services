@@ -18,5 +18,6 @@ namespace DataAccessLayer.Service
         public IEnumerable<T> PageList { get; set; }
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
+        public int TotalPageItems { get; set; }
     }
 }

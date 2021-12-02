@@ -65,7 +65,8 @@ namespace BusinessLogicLayer.Services
             {
                 PageList = profile.mapListToDto(sandboxList.PageList),
                 TotalPages = sandboxList.TotalPages,
-                CurrentPage = sandboxList.CurrentPage
+                CurrentPage = sandboxList.CurrentPage,
+                TotalPageItems = sandboxList.TotalPageItems
             };
 
             return sandboxDtoList;

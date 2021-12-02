@@ -40,6 +40,8 @@ namespace DataAccessLayer.Service
         IEventRepository Events { get; }
         IGoogleAccessTokenRepository GoogleAccessTokens { get; }
         IEventMemberRepository EventMembers { get; }
+
+        IUserCandidateSandboxRepository UserCandidateSandboxes { get; }
         Task SaveAsync();
 
         public void Save();
