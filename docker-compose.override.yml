@@ -22,5 +22,16 @@ services:
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
     depends_on:
       - db
-
-  
+ sapexschedulerservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - MSSQL_CONNECTION_STRING=Server=db,1433;Database=SAPExDb;User Id=SA;Password=MyPass@word
+      - MSSQL_HANGFIRE_CONNECTION_STRING=Server=db,1433;Database=master;User Id=SA;Password=MyPass@word
+    ports:
+      - "9091:80"
+    volumes:
+      - ~/.aspnet/https:/root/.aspnet/https:ro
+      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
+    depends_on:
+      - db

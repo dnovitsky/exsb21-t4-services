@@ -25,6 +25,7 @@ namespace DataAccessLayer.Service
         private ICandidateTechSkillRepository candidateTechSkills;
         private IFeedbackRepository feedbacks;
         private IFileRepository files;
+        private ICandidateProccessTestTasksRepository candidateProccessTestTasks;
         private IFormRepository forms;
         private IFunctionalRoleRepository functionalRoles;
         private ILanguageLevelRepository languageLevels;
@@ -183,6 +184,17 @@ namespace DataAccessLayer.Service
                     files = new FileRepository(context);
                 }
                 return files;
+            }
+        }
+        public ICandidateProccessTestTasksRepository CandidateProccessTestTasks
+        {
+            get
+            {
+                if (candidateProccessTestTasks == null)
+                {
+                    candidateProccessTestTasks = new CandidateProccessTestTasksRepository(context);
+                }
+                return candidateProccessTestTasks;
             }
         }
         public IFunctionalRoleRepository FunctionalRoles
