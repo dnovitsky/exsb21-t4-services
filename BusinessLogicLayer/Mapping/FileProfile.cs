@@ -16,7 +16,9 @@ namespace BusinessLogicLayer.Mapping
             var config = new MapperConfiguration(cfg => cfg.CreateMap<FileDtoModel, FileEntityModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.FileName, y => y.MapFrom(x => x.FileName))
-                    .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate)));
+                    .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate))
+                    .ForMember(x => x.TestTaskType, y => y.MapFrom(x => x.TestTaskType))
+                    .ForMember(x => x.StackTechnologyId, y => y.MapFrom(x => x.StackTechnologyId)));
             var mapper = new Mapper(config);
 
             FileEntityModel file = mapper.Map<FileDtoModel, FileEntityModel>(fileDto);
@@ -28,7 +30,9 @@ namespace BusinessLogicLayer.Mapping
             var config = new MapperConfiguration(cfg => cfg.CreateMap<FileEntityModel, FileDtoModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.FileName, y => y.MapFrom(x => x.FileName))
-                    .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate)));
+                    .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate))
+                    .ForMember(x => x.TestTaskType, y => y.MapFrom(x => x.TestTaskType))
+                    .ForMember(x => x.StackTechnologyId, y => y.MapFrom(x => x.StackTechnologyId)));
             var mapper = new Mapper(config);
 
             FileDtoModel file = mapper.Map<FileEntityModel, FileDtoModel>(fileEM);
@@ -40,7 +44,9 @@ namespace BusinessLogicLayer.Mapping
             var config = new MapperConfiguration(cfg => cfg.CreateMap<FileEntityModel, FileDtoModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.FileName, y => y.MapFrom(x => x.FileName))
-                    .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate)));
+                    .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate))
+                    .ForMember(x => x.TestTaskType, y => y.MapFrom(x => x.TestTaskType))
+                    .ForMember(x => x.StackTechnologyId, y => y.MapFrom(x => x.StackTechnologyId)));
             var mapper = new Mapper(config);
 
 

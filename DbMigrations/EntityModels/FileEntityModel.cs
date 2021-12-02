@@ -13,11 +13,23 @@ namespace DbMigrations.EntityModels
         [Key]
         public Guid Id { get; set; }
 
+        [Required]
+        public TestTask TestTaskType { get; set; }
 
         [Required]
         public string FileName { get; set; }
 
         [Required]
         public DateTime CreateDate { get; set; }
+
+        public Guid? StackTechnologyId { get; set; }
+
+        public virtual StackTechnologyEntityModel StackTechnology { get; set; }
+    }
+    public enum TestTask
+    {
+        Other,
+        TestTaskTemplate,
+        TestTaskResult
     }
 }
