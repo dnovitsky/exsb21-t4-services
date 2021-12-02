@@ -60,6 +60,7 @@ namespace DbMigrations.Data
         {
             CandidateSandboxConfiguration.OnModelCreating(modelBuilder);
             UserTeamConfiguration.OnModelCreating(modelBuilder);
+            CandidateProccessTestTasksConfiguration.OnModelCreating(modelBuilder);
         }
 
     }
