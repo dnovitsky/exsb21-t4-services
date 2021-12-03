@@ -30,7 +30,7 @@ namespace SAPexGoogleSupportService.Services.Authorization
             var token = (await _unitOfWork.GoogleAccessTokens.FindByConditionAsync(x => x.UserId == userId)).FirstOrDefault();
             long expires = token.Created_in + (token.Expires_in * 1000);
             long now = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-            if (expires >= now)
+            if (expires <= now)
             {
                 var updatedToken = await _authGoogleService.UpdateAsync(token);
                 token.Created_in = now;
