@@ -24,7 +24,7 @@ namespace SAPex.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> TestResultValidationAsync(/* [FromHeader] String documentType, TODO review with FE */[FromQuery] TestResultsViewModel testResultsViewModel)
+        public async Task<IActionResult> TestResultValidationAsync([FromQuery] TestResultsViewModel testResultsViewModel)
         {
             var candiddatesDto = await _candidateservice.GetAllCandidateAsync();
             var candidateDto = candiddatesDto.Where(c => c.Email == testResultsViewModel.Email).FirstOrDefault();
