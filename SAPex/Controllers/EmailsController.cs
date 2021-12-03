@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLogicLayer.DtoModels;
 using BusinessLogicLayer.Interfaces;
+using DbMigrations.EntityModels.DataTypes;
 using Microsoft.AspNetCore.Mvc;
 using SAPex.Models;
 
@@ -22,27 +23,23 @@ namespace SAPex.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<EmailViewModel>> GetAllAsync()
+        [HttpGet("filter")]
+        public async Task<IEnumerable<EmailViewModel>> GetAllFilterAsync([FromQuery] EmailStatusType status = EmailStatusType.ReadyForSend)
         {
-            var emails = await _emailService.GetAllAsync();
+            var emails = await _emailService.GetAllFilterAsync(status);
             return _mapper.Map<IEnumerable<EmailViewModel>>(emails);
         }
 
-        [HttpPost]
-        public async Task<EmailViewModel> CreateAsync([FromBody] EmailViewModel email)
+        [HttpPut("{id}/send")]
+        public async Task<IActionResult> SendAsync([FromRoute] Guid id)
         {
-            var dto = _mapper.Map<EmailDtoModel>(email);
-            dto = await _emailService.CreateAsync(dto);
-            return _mapper.Map<EmailViewModel>(dto);
-        }
+            var isSent = await _emailService.SendAsync(id);
+            if (isSent)
+            {
+                return Ok();
+            }
 
-        [HttpPut]
-        public async Task<EmailViewModel> UpdateAsync([FromBody] EmailViewModel email)
-        {
-            var dto = _mapper.Map<EmailDtoModel>(email);
-            dto = await _emailService.UpdateAsync(dto);
-            return _mapper.Map<EmailViewModel>(dto);
+            return BadRequest();
         }
     }
 }

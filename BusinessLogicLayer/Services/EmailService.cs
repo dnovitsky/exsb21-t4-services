@@ -6,6 +6,8 @@ using BusinessLogicLayer.DtoModels;
 using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.Service;
 using DbMigrations.EntityModels;
+using DbMigrations.EntityModels.DataTypes;
+using SAPexSMTPMailService.Interfaces;
 
 namespace BusinessLogicLayer.Services
 {
@@ -13,16 +15,18 @@ namespace BusinessLogicLayer.Services
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ISendMailService _mailService;
 
-        public EmailService(IUnitOfWork unitOfWork, IMapper mapper)
+        public EmailService(IUnitOfWork unitOfWork, ISendMailService mailService, IMapper mapper)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _mailService = mailService;
         }
 
-        public async Task<IEnumerable<EmailDtoModel>> GetAllAsync()
+        public async Task<IEnumerable<EmailDtoModel>> GetAllFilterAsync(EmailStatusType status)
         {
-            var emails = await _unitOfWork.Emails.GetAllAsync();
+            var emails = await _unitOfWork.Emails.FindByConditionAsync(x=>x.Status == status);
             return _mapper.Map<IEnumerable<EmailDtoModel>>(emails);
         }
 
@@ -34,16 +38,40 @@ namespace BusinessLogicLayer.Services
             return email;
         }
 
-        public async Task<EmailDtoModel> UpdateAsync(EmailDtoModel email)
+        public async Task<EmailDtoModel> UpdateAsync(Guid id, EmailDtoModel email)
         {
-            var emailEntity = _mapper.Map<EmailEntityModel>(email);
-            _unitOfWork.Emails.Update(emailEntity);
-            await _unitOfWork.SaveAsync();
-            return _mapper.Map<EmailDtoModel>(emailEntity);
+            var emailById = await _unitOfWork.Emails.FindByIdAsync(id);
+            if (emailById != null)
+            {
+                emailById.EmailFrom = email.EmailFrom;
+                emailById.Head = email.Head;
+                emailById.Message = email.Message;
+                emailById.EmailTo = email.EmailTo;
+                emailById.Status = email.Status;
+                _unitOfWork.Emails.Update(emailById);
+                await _unitOfWork.SaveAsync();
+                return _mapper.Map<EmailDtoModel>(emailById);
+            }
+            return null;
         }
 
-
-
-
+        public async Task<bool> SendAsync(Guid id)
+        {
+            var emailEntity = await _unitOfWork.Emails.FindByIdAsync(id);
+            if (emailEntity != null)
+            {
+                var emailDto = _mapper.Map<EmailDtoModel>(emailEntity);
+                emailDto.Status = EmailStatusType.InProcess;
+                await UpdateAsync(emailEntity.Id, emailDto);
+                bool sent = _mailService.MainProcess(emailDto.Head, emailDto.Message, emailDto.EmailTo);
+                if (sent)
+                {
+                    emailDto.Status = EmailStatusType.Sent;
+                    await UpdateAsync(emailDto.Id, emailDto);
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
