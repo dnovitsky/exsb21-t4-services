@@ -6,6 +6,7 @@ namespace DbMigrations.EntityModels.DataTypes
         None = 0,
         ReadyForSend = 1,
         InProcess = 2,
-        Sent = 3
+        Sent = 3,
+        Fail = 4
     }
 }

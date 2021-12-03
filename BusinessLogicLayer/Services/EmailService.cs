@@ -15,13 +15,16 @@ namespace BusinessLogicLayer.Services
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ISendMailService _mailService;
 
-        public EmailService(IUnitOfWork unitOfWork, ISendMailService mailService, IMapper mapper)
+        public EmailService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
-            _mailService = mailService;
+        }
+        public async Task<EmailDtoModel> GetByIdAsync(Guid id)
+        {
+            var entity = await _unitOfWork.Emails.FindByIdAsync(id);
+            return _mapper.Map<EmailDtoModel>(entity);
         }
 
         public async Task<IEnumerable<EmailDtoModel>> GetAllFilterAsync(EmailStatusType status)
@@ -55,23 +58,6 @@ namespace BusinessLogicLayer.Services
             return null;
         }
 
-        public async Task<bool> SendAsync(Guid id)
-        {
-            var emailEntity = await _unitOfWork.Emails.FindByIdAsync(id);
-            if (emailEntity != null)
-            {
-                var emailDto = _mapper.Map<EmailDtoModel>(emailEntity);
-                emailDto.Status = EmailStatusType.InProcess;
-                await UpdateAsync(emailEntity.Id, emailDto);
-                bool sent = _mailService.MainProcess(emailDto.Head, emailDto.Message, emailDto.EmailTo);
-                if (sent)
-                {
-                    emailDto.Status = EmailStatusType.Sent;
-                    await UpdateAsync(emailDto.Id, emailDto);
-                    return true;
-                }
-            }
-            return false;
-        }
+        
     }
 }

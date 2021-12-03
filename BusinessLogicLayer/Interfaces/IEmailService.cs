@@ -11,6 +11,6 @@ namespace BusinessLogicLayer.Interfaces
         public Task<IEnumerable<EmailDtoModel>> GetAllFilterAsync(EmailStatusType status);
         public Task<EmailDtoModel> CreateAsync(EmailDtoModel email);
         public Task<EmailDtoModel> UpdateAsync(Guid id, EmailDtoModel email);
-        public Task<bool> SendAsync(Guid id);
+        public Task<EmailDtoModel> GetByIdAsync(Guid id);
     }
 }
