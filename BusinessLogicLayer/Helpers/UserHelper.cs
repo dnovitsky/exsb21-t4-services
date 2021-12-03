@@ -51,7 +51,7 @@ namespace BusinessLogicLayer.Helpers
                     Name = "Nurmukhammad",
                     Surname = "Sunatullaev",
                     Email = "developer.noor.cullen@gmail.com",
-                    Password = "interviewer123456",
+                    Password = "recruiter123456",
                     LocationId = null,
                     Phone = "+998998756292",
                     Skype = "Skype:username"
