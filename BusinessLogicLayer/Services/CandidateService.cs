@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Services
@@ -15,7 +14,7 @@ namespace BusinessLogicLayer.Services
     public class CandidateService : ICandidateService
     {
         protected readonly CandidateProfile profile;
-        protected readonly LocationProfile locationProfile = new LocationProfile();
+        protected readonly LocationProfile locationProfile;
         private readonly IUnitOfWork unitOfWork;
         private readonly InputParametrsProfile inputParametrsProfile;
         private readonly CandidateFilterParametrsMapper candidateFilterParametrsProfile;
@@ -26,6 +25,7 @@ namespace BusinessLogicLayer.Services
             this.profile = new CandidateProfile(unitOfWork);
             inputParametrsProfile = new InputParametrsProfile();
             candidateFilterParametrsProfile = new CandidateFilterParametrsMapper();
+            locationProfile = new LocationProfile();
         }
         public async Task<CandidateDtoModel> AddCandidateAsync(CreateCandidateDtoModel candidateDto)
         {
@@ -34,27 +34,14 @@ namespace BusinessLogicLayer.Services
                 var candidates = await unitOfWork.Candidates.FindByConditionAsync(x => x.Email == candidateDto.Email && x.Phone == candidateDto.PhoneNumber);
                 if (candidates.Any())
                 {
-                    return null;
+                    return await AddNewCandidateSandbox(candidates.FirstOrDefault(), candidateDto);
                 }
 
+                var location = await GetLocation(candidateDto);
 
-                var locations = await unitOfWork.Locations.FindByConditionAsync(x => x.Name == candidateDto.Location);
-                LocationEntityModel location = null;
+                // var candidateEM = await unitOfWork.Candidates.CreateAsync(profile.MapNewCandidateToEM(location.Id, candidateDto));
 
-                if (locations.Any())
-                {
-                    location = locations.FirstOrDefault();
-                }
-                else
-                {
-                    location = new LocationEntityModel(candidateDto.Location.ToLower());
-                    await unitOfWork.Locations.CreateAsync(location);
-                    await unitOfWork.SaveAsync();
-                }
-
-                // var candidate = await unitOfWork.Candidates.CreateAsync(profile.MapNewCandidateToEM(location.Id, candidateDto));
-
-                var candidateEM = await unitOfWork.Candidates.CreateAsync( new CandidateEntityModel()
+                CandidateEntityModel candidateEM = await unitOfWork.Candidates.CreateAsync( new CandidateEntityModel()
                 {
                     Id = Guid.NewGuid(),
                     Name = candidateDto.Name,
@@ -71,18 +58,10 @@ namespace BusinessLogicLayer.Services
                 {
                     await unitOfWork.SaveAsync();
 
-                    var candidateSandBoxe = await unitOfWork.CandidateSandboxes.CreateAsync(profile.MapNewCandidateSandBoxToEM(candidateEM.Id, candidateDto));
-                    await unitOfWork.SaveAsync();
+                    var candidateSandBoxe = await CreateNewCandidateSandbox(candidateEM, candidateDto);
 
-                    var defaultStatuses = await unitOfWork.Statuses.FindByConditionAsync(x => x.Name == "Draft");
-                    StatusEntityModel defaultStatuse = defaultStatuses.FirstOrDefault();
-                    var candidateProcess = await unitOfWork.CandidateProcceses.CreateAsync(profile.MapNewCandidateProcessEM(candidateSandBoxe.Id, defaultStatuse.Id, candidateDto));
-                    await unitOfWork.SaveAsync();
-
-                    var defaultLanguages = await unitOfWork.Languages.FindByConditionAsync(x => x.Name == "English");
-                    LanguageEntityModel defaultLanguage = defaultLanguages.FirstOrDefault();
-                    var candidateLanguage = await unitOfWork.CandidateLanguages.CreateAsync(profile.MapNewCandidateLanguagesEM(candidateEM.Id, defaultLanguage.Id, candidateDto));
-                    await unitOfWork.SaveAsync();
+                    await CreateCandidateProcessForCandidateSandbox(candidateSandBoxe, candidateDto);
+                    await CreateCandidateLanguage(candidateEM, candidateDto);
 
                     return profile.MapCandidateEMToCandidateDto(candidateEM);
                 }
@@ -161,9 +140,80 @@ namespace BusinessLogicLayer.Services
             return profile.MapCandidateEMListToCandidateDtoList(CandidatesEM);
         }
 
+        public async Task<IEnumerable<CandidateDtoModel>> GetCandidatesByUserIdSandboxIdAsync(Guid userId, Guid sandboxId)
+        {
+            IEnumerable<CandidateEntityModel> CandidatesEM = await Task.Run(() => unitOfWork.Candidates.GetByUserIdSandboxId(userId, sandboxId));
+            return profile.MapCandidateEMListToCandidateDtoList(CandidatesEM);
+        }
+
         public void Dispose()
         {
             throw new NotImplementedException();
+        }
+
+        private async Task<CandidateDtoModel> AddNewCandidateSandbox(CandidateEntityModel candidateEM, CreateCandidateDtoModel candidateDto)
+        {
+            var isCanAddNewSandbox = !candidateEM.CandidateSandboxes.Where(x => x.SandboxId.Equals(candidateDto.SandboxId)).Any();
+            var sandbox = await unitOfWork.Sandboxes.FindByIdAsync(candidateDto.SandboxId);
+            var currentDate = DateTime.Now;
+
+            if (isCanAddNewSandbox && sandbox != null && currentDate <= sandbox.StartDate && currentDate <= sandbox.EndDate)
+            {
+                var candidateSandBoxe = await CreateNewCandidateSandbox(candidateEM, candidateDto);
+
+                await CreateCandidateProcessForCandidateSandbox(candidateSandBoxe, candidateDto);
+
+                return profile.MapCandidateEMToCandidateDto(candidateEM);
+            }
+
+                return null;
+        }
+
+        private async Task<CandidateSandboxEntityModel> CreateNewCandidateSandbox(CandidateEntityModel candidateEM, CreateCandidateDtoModel candidateDto)
+        {
+            var candidateSandBoxe = await unitOfWork.CandidateSandboxes.CreateAsync(profile.MapNewCandidateSandBoxToEM(candidateEM.Id, candidateDto));
+            await unitOfWork.SaveAsync();
+
+            return candidateSandBoxe;
+        }
+
+        private async Task<CandidateProccesEntityModel> CreateCandidateProcessForCandidateSandbox(CandidateSandboxEntityModel candidateSandBoxe, CreateCandidateDtoModel candidateDto)
+        {
+            var defaultStatuses = await unitOfWork.Statuses.FindByConditionAsync(x => x.Name == "Draft");
+            StatusEntityModel defaultStatuse = defaultStatuses.FirstOrDefault();
+            var candidateProcceses = await unitOfWork.CandidateProcceses.CreateAsync(profile.MapNewCandidateProcessEM(candidateSandBoxe.Id, defaultStatuse.Id, candidateDto));
+            await unitOfWork.SaveAsync();
+
+            return candidateProcceses;
+        }
+
+        private async Task<CandidateLanguageEntityModel> CreateCandidateLanguage(CandidateEntityModel candidateEM, CreateCandidateDtoModel candidateDto)
+        {
+            var defaultLanguages = await unitOfWork.Languages.FindByConditionAsync(x => x.Name == "English");
+            LanguageEntityModel defaultLanguage = defaultLanguages.FirstOrDefault();
+            var candidateLanguages = await unitOfWork.CandidateLanguages.CreateAsync(profile.MapNewCandidateLanguagesEM(candidateEM.Id, defaultLanguage.Id, candidateDto));
+            await unitOfWork.SaveAsync();
+
+            return candidateLanguages;
+        }
+
+        private async Task<LocationEntityModel> GetLocation(CreateCandidateDtoModel candidateDto)
+        {
+            var locations = await unitOfWork.Locations.FindByConditionAsync(x => x.Name == candidateDto.Location);
+            LocationEntityModel location = null;
+
+            if (locations.Any())
+            {
+                location = locations.FirstOrDefault();
+            }
+            else
+            {
+                location = new LocationEntityModel(candidateDto.Location.ToLower());
+                await unitOfWork.Locations.CreateAsync(location);
+                await unitOfWork.SaveAsync();
+            }
+
+            return location;
         }
     }
 }

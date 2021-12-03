@@ -10,14 +10,33 @@ namespace DbMigrations.EntityModels
 {
     public class FileEntityModel
     {
+        public FileEntityModel()
+        {
+            СandidateProccessTestTasks = new List<CandidateProccessTestTasksEntityModel>();
+        }
+
         [Key]
         public Guid Id { get; set; }
 
+        [Required]
+        public TestTask TestTaskType { get; set; }
 
         [Required]
         public string FileName { get; set; }
 
         [Required]
         public DateTime CreateDate { get; set; }
+
+        public virtual IList<CandidateProccessTestTasksEntityModel> СandidateProccessTestTasks { get; set; }
+
+        public Guid? StackTechnologyId { get; set; }
+
+        public virtual StackTechnologyEntityModel StackTechnology { get; set; }
+    }
+    public enum TestTask
+    {
+        Other,
+        TestTaskTemplate,
+        TestTaskResult
     }
 }
