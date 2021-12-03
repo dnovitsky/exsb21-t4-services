@@ -7,7 +7,6 @@ using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.Service;
 using DbMigrations.EntityModels;
 using DbMigrations.EntityModels.DataTypes;
-using SAPexSMTPMailService.Interfaces;
 
 namespace BusinessLogicLayer.Services
 {
