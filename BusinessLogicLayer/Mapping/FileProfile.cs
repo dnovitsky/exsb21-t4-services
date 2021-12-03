@@ -17,7 +17,7 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.FileName, y => y.MapFrom(x => x.FileName))
                     .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate))
-                    .ForMember(x => x.TestTaskType, y => y.MapFrom(x => x.TestTaskType))
+                    .ForMember(x => x.Category, y => y.MapFrom(x => x.Category))
                     .ForMember(x => x.StackTechnologyId, y => y.MapFrom(x => x.StackTechnologyId)));
             var mapper = new Mapper(config);
 
@@ -31,7 +31,7 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.FileName, y => y.MapFrom(x => x.FileName))
                     .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate))
-                    .ForMember(x => x.TestTaskType, y => y.MapFrom(x => x.TestTaskType))
+                    .ForMember(x => x.Category, y => y.MapFrom(x => x.Category))
                     .ForMember(x => x.StackTechnologyId, y => y.MapFrom(x => x.StackTechnologyId)));
             var mapper = new Mapper(config);
 
@@ -45,7 +45,7 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.FileName, y => y.MapFrom(x => x.FileName))
                     .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate))
-                    .ForMember(x => x.TestTaskType, y => y.MapFrom(x => x.TestTaskType))
+                    .ForMember(x => x.Category, y => y.MapFrom(x => x.Category))
                     .ForMember(x => x.StackTechnologyId, y => y.MapFrom(x => x.StackTechnologyId)));
             var mapper = new Mapper(config);
 
