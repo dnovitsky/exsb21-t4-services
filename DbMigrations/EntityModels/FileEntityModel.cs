@@ -19,7 +19,7 @@ namespace DbMigrations.EntityModels
         public Guid Id { get; set; }
 
         [Required]
-        public TestTask TestTaskType { get; set; }
+        public FileCategory Category { get; set; }
 
         [Required]
         public string FileName { get; set; }
@@ -33,7 +33,7 @@ namespace DbMigrations.EntityModels
 
         public virtual StackTechnologyEntityModel StackTechnology { get; set; }
     }
-    public enum TestTask
+    public enum FileCategory
     {
         Other,
         TestTaskTemplate,
