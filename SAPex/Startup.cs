@@ -126,6 +126,7 @@ namespace SAPex
             services.AddScoped<IUserSandboxService, UserSandboxService>();
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<IStatusService, StatusService>();
+            services.AddScoped<IEmailService, EmailService>();
 
             services.AddScoped<IUserCandidateSandboxService, UserCandidateSandboxService>();
         }
