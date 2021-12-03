@@ -11,10 +11,10 @@ namespace BusinessLogicLayer.DtoModels
         public Guid Id { get; set; }
         public string FileName { get; set; }
         public DateTime CreateDate { get; set; }
-        public TestTask TestTaskType { get; set; }
+        public FileCategory Category { get; set; }
         public Guid? StackTechnologyId { get; set; }
     }
-    public enum TestTask
+    public enum FileCategory
     {
         Other,
         TestTaskTemplate,
