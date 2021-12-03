@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using SAPexSchedulerService.Data;
+using SAPexSchedulerService.Interfaces.Services;
 using SAPexSchedulerService.Repositories;
 using SAPexSchedulerService.Services;
 
@@ -34,11 +29,12 @@ namespace SAPexSchedulerService
             services.AddHangfireServer();
             services.AddScoped<ISandboxRepository, SandboxRepository>();
             services.AddScoped<IStatusService, StatusService>();
+            services.AddScoped<IEmailSendService, EmailSendService>();
             services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IStatusService statusService)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider provider, IRecurringJobManager manager)
         {
             if (env.IsDevelopment())
             {
@@ -59,7 +55,8 @@ namespace SAPexSchedulerService
                 }
             };
             app.UseHangfireDashboard("/hangfire", options);
-            RecurringJob.AddOrUpdate(() => statusService.StatusJob(), Cron.Minutely);
+            manager.AddOrUpdate("status-job",() => provider.GetService<IStatusService>().Run(), Cron.Daily);
+            manager.AddOrUpdate("email-job",() => provider.GetService<IEmailSendService>().Run(), Cron.Minutely);
             app.UseRouting();
 
             app.UseAuthorization();
