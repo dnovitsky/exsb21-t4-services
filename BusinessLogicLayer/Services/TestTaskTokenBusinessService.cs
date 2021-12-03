@@ -15,7 +15,7 @@ namespace BusinessLogicLayer.Services
     {
         private readonly string secretString = "PDv7DrqznYL6nv7DrqzjnQYO9JxIsWdcjnQYL6nu0f";
 
-        public string GetJwtToken(string email)
+        public string GetToken(string email)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(secretString);
@@ -26,8 +26,6 @@ namespace BusinessLogicLayer.Services
             {
 
                 Subject = new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.Email, email) }),
-                Expires = DateTime.UtcNow.AddMinutes(20), // _appSettings.ExpMinute
-
 
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key),
@@ -53,29 +51,21 @@ namespace BusinessLogicLayer.Services
             };
         }
 
-        public string GetEmailByToken(string JWTtoken)
+        public string GetEmailByToken(string token)
         {
             try
             {
-                JwtSecurityTokenHandler jwtTokenHandler = new();
-                var tokenInVerification = jwtTokenHandler.ValidateToken(JWTtoken, GetTokenValidationParameters(), out var validatedToken);
+                JwtSecurityTokenHandler tokenHandler = new();
+                var tokenInVerification = tokenHandler.ValidateToken(token, GetTokenValidationParameters(), out var validatedToken);
 
-                if (validatedToken is JwtSecurityToken jwtSecurityToken)
+                if (validatedToken is JwtSecurityToken checkToken)
                 {
-                    var result = jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
+                    var result = checkToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
 
                     if (!result)
                     {
                         return null;
                     }
-                }
-
-                var utcExpiryDate = long.Parse(tokenInVerification.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
-                var expiryDate = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(utcExpiryDate).ToUniversalTime();
-
-                if (expiryDate < DateTime.UtcNow)
-                {
-                   return null;
                 }
 
                 string email = tokenInVerification.FindFirst(ClaimTypes.Email.ToString()).Value;

@@ -8,7 +8,7 @@ namespace BusinessLogicLayer.Interfaces
 {
     public interface ITestTaskTokenBusinessService
     {
-        public string GetJwtToken(string email);
+        public string GetToken(string email);
         public string GetEmailByToken(string JWTtoken);
     }
 }
