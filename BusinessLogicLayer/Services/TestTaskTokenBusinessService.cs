@@ -73,9 +73,9 @@ namespace BusinessLogicLayer.Services
                 var utcExpiryDate = long.Parse(tokenInVerification.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
                 var expiryDate = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(utcExpiryDate).ToUniversalTime();
 
-                if (expiryDate > DateTime.UtcNow)
+                if (expiryDate < DateTime.UtcNow)
                 {
-                   // return null;
+                   return null;
                 }
 
                 string email = tokenInVerification.FindFirst(ClaimTypes.Email.ToString()).Value;
