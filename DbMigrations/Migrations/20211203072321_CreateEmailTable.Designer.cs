@@ -4,14 +4,16 @@ using DbMigrations.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DbMigrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211203072321_CreateEmailTable")]
+    partial class CreateEmailTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -460,9 +462,6 @@ namespace DbMigrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Category")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -472,6 +471,9 @@ namespace DbMigrations.Migrations
 
                     b.Property<Guid?>("StackTechnologyId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("TestTaskType")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -1100,11 +1102,11 @@ namespace DbMigrations.Migrations
                         .HasForeignKey("TestFileId")
                         .IsRequired();
 
-                    b.Navigation("СandidateProcess");
-
                     b.Navigation("CandidateRequestTestFile");
 
                     b.Navigation("TestFile");
+
+                    b.Navigation("СandidateProcess");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateSandboxEntityModel", b =>
@@ -1494,9 +1496,9 @@ namespace DbMigrations.Migrations
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateProccesEntityModel", b =>
                 {
-                    b.Navigation("СandidateProccessTestTasks");
-
                     b.Navigation("Feedbacks");
+
+                    b.Navigation("СandidateProccessTestTasks");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateProjectRoleEntityModel", b =>

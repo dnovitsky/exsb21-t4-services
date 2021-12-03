@@ -55,6 +55,8 @@ namespace DbMigrations.Data
         public DbSet<EventEntityModel> Events { get; set; }
         public DbSet<GoogleAccessTokenEntityModel> GoogleAccessTokens { get; set; }
         public DbSet<EventMemberEntityModel> EventMembers { get; set; }
+        public DbSet<EmailEntityModel> Emails { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
