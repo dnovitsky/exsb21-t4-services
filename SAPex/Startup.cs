@@ -172,6 +172,7 @@ namespace SAPex
                 new RoleHelper(dbContext),
                 new UserRoleHelper(dbContext),
                 new PasswordHelper(dbContext),
+                new EventHelper(dbContext),
             };
             helpers.ForEach(helper => helper.CreateTestData());
 
