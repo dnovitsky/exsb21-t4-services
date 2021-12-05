@@ -52,8 +52,7 @@ namespace SAPex.Controllers
         }
 
         [HttpPost("free-time")]
-
-        // [Authorize(Roles = "Interviewer")]
+        [Authorize(Roles = "Interviewer")]
         public async Task<ActionResult<EventViewModel>> PostAsync([FromBody] CreateEventViewModel eventView)
         {
             EventDtoModel eventDto = _mapper.Map<EventDtoModel>(eventView);
@@ -66,9 +65,22 @@ namespace SAPex.Controllers
             return BadRequest();
         }
 
-        [HttpPost("interview-time")]
+        [HttpPut("free-time/{id}")]
+        [Authorize(Roles = "Interviewer")]
+        public async Task<ActionResult<EventViewModel>> PutAsync([FromRoute]Guid id, [FromBody] CreateEventViewModel eventView)
+        {
+            EventDtoModel eventDto = _mapper.Map<EventDtoModel>(eventView);
+            eventDto = await _eventService.UpdateEventAsync(id, eventDto);
+            if (eventDto != null)
+            {
+                return Ok(_mapper.Map<EventViewModel>(eventDto));
+            }
 
-        // [Authorize(Roles = "Recruiter")]
+            return BadRequest();
+        }
+
+        [HttpPost("interview-time")]
+        [Authorize(Roles = "Recruiter")]
         public async Task<ActionResult<InterviewEventViewModel>> PostAsync([FromBody] CreateInterviewEventViewModel eventView)
         {
             EventDtoModel eventDto = _mapper.Map<EventDtoModel>(eventView);

@@ -46,8 +46,9 @@ namespace BusinessLogicLayer.Services
 
         public async Task<IEnumerable<EventDtoModel>> GetAllUserFilterAsync(Guid userId, DateTime start, DateTime end, EventType type)
         {
-            var eventEntities = await _unitOfWork.Events.FindByConditionAsync(x => x.OwnerId == userId && start.ToUniversalTime() <= x.StartTime && x.EndTime <= end.ToUniversalTime() && x.Type == type);
-            return _mapper.Map<IEnumerable<EventDtoModel>>(eventEntities);
+            var eventEntities = await GetAllByUserIdAsync(userId);//_unitOfWork.Events.FindByConditionAsync(x => x.OwnerId == userId && start.ToUniversalTime() <= x.StartTime && x.EndTime <= end.ToUniversalTime() && x.Type == type);
+            var result = eventEntities.Where(x => start.ToUniversalTime() <= x.StartTime && x.EndTime <= end.ToUniversalTime() && x.Type == type);
+            return _mapper.Map<IEnumerable<EventDtoModel>>(result);
         }
 
         public async Task<IEnumerable<EventDtoModel>> GetAllByUserIdAsync(Guid userId)
@@ -87,7 +88,7 @@ namespace BusinessLogicLayer.Services
             var owner = await GetUserAsync(value.OwnerId);
             var candidateSandbox = await GetCandidateSandboxAsync(value.CandidateSandboxId);
 
-            if (await HasAnyBlockedInterviewTimeAsync(value) || owner == null || candidateSandbox == null)
+            if (owner == null || candidateSandbox == null)
             {
                 return null;
             }
@@ -187,9 +188,23 @@ namespace BusinessLogicLayer.Services
             return _mapper.Map<EventDtoModel>(eventEntity);
         }
 
-        public Task<EventDtoModel> UpdateEventAsync(EventDtoModel value)
+        public async Task<EventDtoModel> UpdateEventAsync(Guid id, EventDtoModel eventDto)
         {
-            throw new NotImplementedException();
+            var eventById = await _unitOfWork.Events.FindByIdAsync(id);
+            if (eventById != null)
+            {
+                eventById.OwnerId = eventDto.OwnerId;
+                eventById.Summary = eventDto.Summary;
+                eventById.Description = eventDto.Description;
+                eventById.StartTime = eventDto.StartTime;
+                eventById.EndTime = eventDto.EndTime;
+                eventById.CandidateSandboxId = null;
+                eventById.Type = EventType.FREE;
+                _unitOfWork.Events.Update(eventById);
+                await _unitOfWork.SaveAsync();
+                return _mapper.Map<EventDtoModel>(eventById);
+            }
+            return null;
         }
 
         public async Task<bool> DeleteEventAsync(string email, Guid eventId)
@@ -274,7 +289,6 @@ namespace BusinessLogicLayer.Services
                     value.StartTime <= x.StartTime &&
                     value.EndTime >= x.EndTime
                 ));
-            //var interviews = await _unitOfWork.EventMembers.FindByConditionAsync(x => x.MemberId == value.OwnerId);
             return results.Any();
         }
 
