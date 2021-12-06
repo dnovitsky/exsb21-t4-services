@@ -23,12 +23,14 @@ namespace SAPex.Controllers
         private readonly ICandidateService _service;
         private readonly InputParametrsMapper _inputParamersMapper;
         private readonly CandidateFilterParametrsMapper _candidateFilterParametrsMapper;
+        private readonly ICandidateProcessTestTaskService _candidateProcessTestTaskService;
 
-        public CandidatesController(ICandidateService service)
+        public CandidatesController(ICandidateService service, ICandidateProcessTestTaskService candidateProcessTestTaskService)
         {
             _service = service;
             _inputParamersMapper = new InputParametrsMapper();
             _candidateFilterParametrsMapper = new CandidateFilterParametrsMapper();
+            _candidateProcessTestTaskService = candidateProcessTestTaskService;
         }
 
         [HttpGet]
@@ -97,9 +99,9 @@ namespace SAPex.Controllers
         [HttpPut("{id}/candidatesandboxes/{candidateSandboxId}")]
         public async Task<IActionResult> Put([FromRoute] Guid id, [FromRoute] Guid candidateSandboxId, [FromQuery] Guid newStatusId)
         {
-            var isUpdatedo = await _service.UpdateCandidateStatus(id, candidateSandboxId, newStatusId);
+            var isUpdated = await _service.UpdateCandidateStatus(id, candidateSandboxId, newStatusId);
 
-            IActionResult actionResult = isUpdatedo ? Ok() : Conflict();
+            IActionResult actionResult = isUpdated ? Ok() : Conflict();
 
             return await Task.FromResult(actionResult);
         }
@@ -107,6 +109,29 @@ namespace SAPex.Controllers
         [HttpDelete("{id}")]
         public void Delete([FromRoute] Guid id)
         {
+        }
+
+        [HttpPost("send-test-task")]
+        public async Task<IActionResult> Post([FromBody] IList<Guid> processIdList)
+        {
+            try
+            {
+                var tokenList = new List<string>() { };
+
+                foreach (var processId in processIdList)
+                {
+                    var token = await _candidateProcessTestTaskService.GenerateCandidateProcessTestTaskTokens(processId, DateTime.UtcNow);
+                    tokenList.Add(token);
+                }
+
+                // call email service
+
+                return await Task.FromResult(Ok());
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(Conflict());
+            }
         }
     }
 }

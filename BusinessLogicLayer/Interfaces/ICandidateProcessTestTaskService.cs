@@ -12,9 +12,10 @@ namespace BusinessLogicLayer.Interfaces
     {
         Task<CandidateProcessTestTaskDtoModel> CreateCandidateProcessTestTaskAsync(CandidateProcessTestTaskDtoModel candidateProccessTestTaskDM);
         Task<string> AddCandidateResponseTestFileAsync(Guid candidateProccessTestTaskId, Guid candidateResponseTestFileId);
-        Task<CandidateProcessTestTaskDtoModel> GetCandidateProcessTestTaskByIdAsync(Guid candidateProccessTestTaskId);
+        public Task<IEnumerable<CandidateProcessTestTaskDtoModel>> GetCandidateProcessTestTasksByCandidateProcessIdAsync(Guid candidateProcessId);
         Task<IEnumerable<CandidateProcessTestTaskDtoModel>> GetCandidateProcessTestTasksAsync();
         Task<string> UpdateCandidateProcessTestTaskAsync(Guid candidateProccessTestTaskId, UpdateCandidateProcessTestTaskDtoModel updateCandidateProccessTestTaskDM);
         Task<bool> DeleteCandidateProcessTestTaskAsync(Guid candidateProccessTestTaskId);
+        Task<string> GenerateCandidateProcessTestTaskTokens(Guid processId, DateTime endTestDate);
     }
 }
