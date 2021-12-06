@@ -129,6 +129,8 @@ namespace SAPex
             services.AddScoped<IEmailService, EmailService>();
 
             services.AddScoped<IUserCandidateSandboxService, UserCandidateSandboxService>();
+            services.AddScoped<IAppSettingService, AppSettingService>();
+            services.AddScoped<ITestTaskRouteService, TestTaskRouteService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
