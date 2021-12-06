@@ -15,6 +15,6 @@ namespace BusinessLogicLayer.DtoModels
         public DateTime CreateDate { get; set; }
 
         public IEnumerable<FeedbackDtoModel> Feedbacks { get; set; }
-        public IEnumerable<CandidateProccessTestTaskDtoModel>? СandidateProccessTestTasks { get; set; }
+        public IEnumerable<CandidateProcessTestTaskDtoModel>? СandidateProccessTestTasks { get; set; }
     }
 }

@@ -324,32 +324,6 @@ namespace DbMigrations.Migrations
                     b.ToTable("CandidateTechSkills");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.EmailEntityModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("EmailFrom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmailTo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Head")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Message")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Emails");
-                });
-
             modelBuilder.Entity("DbMigrations.EntityModels.EventEntityModel", b =>
                 {
                     b.Property<Guid>("Id")

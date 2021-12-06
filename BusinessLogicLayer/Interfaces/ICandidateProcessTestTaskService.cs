@@ -10,10 +10,11 @@ namespace BusinessLogicLayer.Interfaces
 {
     public interface ICandidateProcessTestTaskService
     {
-        Task<CandidateProccessTestTaskDtoModel> CreateCandidateProcessTestTaskAsync(CandidateProccessTestTaskDtoModel candidateProccessTestTaskDM);
-        Task<CandidateProccessTestTaskDtoModel> GetCandidateProcessTestTaskByIdAsync(Guid candidateProccessTestTaskId);
-        Task<IEnumerable<CandidateProccessTestTaskDtoModel>> GetCandidateProcessTestTasksAsync();
-        Task<CandidateProccessTestTaskDtoModel> UpdateCandidateProcessTestTaskAsync(Guid candidateProccessTestTaskId, UpdateCandidateProccessTestTaskDtoModel updateCandidateProccessTestTaskDM);
+        Task<CandidateProcessTestTaskDtoModel> CreateCandidateProcessTestTaskAsync(CandidateProcessTestTaskDtoModel candidateProccessTestTaskDM);
+        Task<string> AddCandidateResponseTestFileAsync(Guid candidateProccessTestTaskId, Guid candidateResponseTestFileId);
+        Task<CandidateProcessTestTaskDtoModel> GetCandidateProcessTestTaskByIdAsync(Guid candidateProccessTestTaskId);
+        Task<IEnumerable<CandidateProcessTestTaskDtoModel>> GetCandidateProcessTestTasksAsync();
+        Task<string> UpdateCandidateProcessTestTaskAsync(Guid candidateProccessTestTaskId, UpdateCandidateProcessTestTaskDtoModel updateCandidateProccessTestTaskDM);
         Task<bool> DeleteCandidateProcessTestTaskAsync(Guid candidateProccessTestTaskId);
     }
 }

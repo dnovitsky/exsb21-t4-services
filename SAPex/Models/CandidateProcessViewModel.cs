@@ -15,6 +15,6 @@ namespace SAPex.Models
 
         public IEnumerable<FeedbackViewModel> Feedbacks { get; set; }
 
-        public IEnumerable<CandidateProccessTestTasksViewModel>? СandidateProccessTestTasks { get; set; }
+        public IEnumerable<CandidateProcessTestTasksViewModel>? СandidateProccessTestTasks { get; set; }
     }
 }

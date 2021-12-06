@@ -10,14 +10,14 @@ namespace DataAccessLayer.Service
         IAccessRepository Accesses { get; }
         IAvailabilityTypeRepository AvailabilityTypes { get; }
         ICandidateLanguageRepository CandidateLanguages { get; }
-        ICandidateProccesRepository CandidateProcceses { get; }
+        ICandidateProcesRepository CandidateProcceses { get; }
         ICandidateProjectRoleRepository CandidateProjectRoles { get; }
         ICandidateRepository Candidates { get; }
         ICandidateSandboxRepository CandidateSandboxes { get; }
         ICandidateTechSkillRepository CandidateTechSkills { get; }
         IFeedbackRepository Feedbacks { get; }
         IFileRepository Files { get; }
-        ICandidateProccessTestTaskRepository CandidateProccessTestTasks { get; }
+        ICandidateProcessTestTaskRepository CandidateProccessTestTasks { get; }
         IFormRepository Forms { get; }
         IFunctionalRoleRepository FunctionalRoles { get; }
         ILanguageLevelRepository LanguageLevels { get; }

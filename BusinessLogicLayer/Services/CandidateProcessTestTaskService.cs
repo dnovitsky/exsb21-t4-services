@@ -14,96 +14,119 @@ namespace BusinessLogicLayer.Services
     public class CandidateProcessTestTaskService : ICandidateProcessTestTaskService
     {
         private readonly IUnitOfWork unitOfWork;
-        protected readonly CandidateProccessTestTasksProfile profile;
+        protected readonly CandidateProcessTestTasksProfile profile;
+        private readonly TestTaskTokenBusinessService testTaskTokenService;
 
         public CandidateProcessTestTaskService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
-            this.profile = new CandidateProccessTestTasksProfile();
+            this.profile = new CandidateProcessTestTasksProfile();
+            this.testTaskTokenService = new TestTaskTokenBusinessService();
         }
 
-        public async Task<CandidateProccessTestTaskDtoModel> CreateCandidateProcessTestTaskAsync(CandidateProccessTestTaskDtoModel candidateProccessTestTaskDM)
+        public async Task<CandidateProcessTestTaskDtoModel> CreateCandidateProcessTestTaskAsync(CandidateProcessTestTaskDtoModel candidateProccessTestTaskDM)
         {
-            var candidateProccessTestTaskEM = await unitOfWork.CandidateProccessTestTasks.CreateAsync( new CandidateProccessTestTaskEntityModel()
-            {
-                CandidateProcessId = candidateProccessTestTaskDM.CandidateProcessId,
-                TestFileId = candidateProccessTestTaskDM.TestFileId,
-                EndTestDate = candidateProccessTestTaskDM.EndTestDate,
-                LinkDownloadToken = candidateProccessTestTaskDM.LinkDownloadToken
-            });
-            await unitOfWork.SaveAsync();
+            var candidateProcessId = candidateProccessTestTaskDM.CandidateProcessId;
+            var candidateProcess = await unitOfWork.CandidateProcceses.FindByIdAsync(candidateProcessId);
 
-            return profile.mapToDto(candidateProccessTestTaskEM);
+            if (candidateProcess != null)
+            {
+                var email = candidateProcess.CandidateSandbox.Candidate.Email;
+                var candidateProccessTestTaskEM = await unitOfWork.CandidateProccessTestTasks.CreateAsync(new CandidateProcessTestTaskEntityModel()
+                {
+                    CandidateProcessId = candidateProcessId,
+                    TestFileId = candidateProccessTestTaskDM.TestFileId,
+                    EndTestDate = candidateProccessTestTaskDM.EndTestDate,
+                    LinkDownloadToken = testTaskTokenService.GetToken(email)
+                });
+                await unitOfWork.SaveAsync();
+
+                return profile.mapToDto(candidateProccessTestTaskEM);
+            }
+
+            return null;
         }
 
-        public async Task<string> AddCandidateResponseTestFileAsync(Guid candidateProccessTestTaskId, Guid candidateResponseTestFileId, string email)
+        public async Task<string> AddCandidateResponseTestFileAsync(Guid candidateProccessTestTaskId, Guid candidateResponseTestFileId)
         {
             try
             {
                 var candidateProccessTestTaskEM = await unitOfWork.CandidateProccessTestTasks.FindByIdAsync(candidateProccessTestTaskId);
-                
-                if(isValid(email))
+                var email = getEmailFromCandidateProccessTestTask(candidateProccessTestTaskEM);
+
+                if (isValid(candidateProccessTestTaskEM, email))
                 {
                     candidateProccessTestTaskEM.CandidateResponseTestFileId = candidateResponseTestFileId;
+                    candidateProccessTestTaskEM.LinkDownloadToken = testTaskTokenService.GetToken(email);
                     await unitOfWork.SaveAsync();
 
-                    return "Added";
+                    return "Added candidate test file";
                 }
 
-                return candidateProccessTestTaskEM == null ? "User dosn't exist" : "Not Valid";
+                return "Data is invalid";
 
             }
             catch (Exception ex)
             {
-                return ex.ToString();
+                return "User does not exist";// ex.ToString();
             }
         }
 
-        public async Task<CandidateProccessTestTaskDtoModel> GetCandidateProcessTestTaskByIdAsync(Guid candidateProccessTestTaskId)
+        public async Task<CandidateProcessTestTaskDtoModel> GetCandidateProcessTestTaskByIdAsync(Guid candidateProccessTestTaskId)
         {
             var candidateProccessTestTaskEM = await unitOfWork.CandidateProccessTestTasks.FindByIdAsync(candidateProccessTestTaskId);
             return profile.mapToDto(candidateProccessTestTaskEM);
         }
 
-        public async Task<IEnumerable<CandidateProccessTestTaskDtoModel>> GetCandidateProcessTestTasksAsync()
+        public async Task<IEnumerable<CandidateProcessTestTaskDtoModel>> GetCandidateProcessTestTasksAsync()
         {
             var candidateProccessTestTasksEM = await unitOfWork.CandidateProccessTestTasks.GetAllAsync();
             return profile.mapListToDto(candidateProccessTestTasksEM);
         }
 
-        public async Task<CandidateProccessTestTaskDtoModel> UpdateCandidateProcessTestTaskAsync(Guid candidateProccessTestTaskId, UpdateCandidateProccessTestTaskDtoModel updateCandidateProccessTestTaskDM)
+        public async Task<string> UpdateCandidateProcessTestTaskAsync(Guid candidateProccessTestTaskId, UpdateCandidateProcessTestTaskDtoModel updateCandidateProccessTestTaskDM)
         {
-            var isUpdated = false;
-            var candidateProccessTestTaskEM = await unitOfWork.CandidateProccessTestTasks.FindByIdAsync(candidateProccessTestTaskId);
+            try
+            {
+                var isUpdated = false;
+                var candidateProccessTestTaskEM = await unitOfWork.CandidateProccessTestTasks.FindByIdAsync(candidateProccessTestTaskId);
+                var email = getEmailFromCandidateProccessTestTask(candidateProccessTestTaskEM);
 
-            if(updateCandidateProccessTestTaskDM.TestFileId != null)
-            {
-                candidateProccessTestTaskEM.TestFileId = (Guid)updateCandidateProccessTestTaskDM.TestFileId;
-                isUpdated = true;
-            }
-            if (updateCandidateProccessTestTaskDM.EndTestDate != null)
-            {
-                candidateProccessTestTaskEM.EndTestDate = (DateTime)updateCandidateProccessTestTaskDM.EndTestDate;
-                isUpdated = true;
-            }
-            if (updateCandidateProccessTestTaskDM.CandidateResponseTestFileId != null)
-            {
-                candidateProccessTestTaskEM.CandidateResponseTestFileId = (Guid)updateCandidateProccessTestTaskDM.CandidateResponseTestFileId;
-                isUpdated = true;
-            }
-            if (updateCandidateProccessTestTaskDM.LinkDownloadToken != "")
-            {
-                candidateProccessTestTaskEM.LinkDownloadToken = updateCandidateProccessTestTaskDM.LinkDownloadToken;
-                isUpdated = true;
-            }
+                if (updateCandidateProccessTestTaskDM.TestFileId != null)
+                {
+                    candidateProccessTestTaskEM.TestFileId = (Guid)updateCandidateProccessTestTaskDM.TestFileId;
+                    isUpdated = true;
+                }
+                if (updateCandidateProccessTestTaskDM.EndTestDate != null && DateTime.Now <= candidateProccessTestTaskEM.EndTestDate)
+                {
+                    candidateProccessTestTaskEM.EndTestDate = (DateTime)updateCandidateProccessTestTaskDM.EndTestDate;
+                    isUpdated = true;
+                }
+                if (updateCandidateProccessTestTaskDM.CandidateResponseTestFileId != null && isValid(candidateProccessTestTaskEM, email))
+                {
+                    candidateProccessTestTaskEM.CandidateResponseTestFileId = (Guid)updateCandidateProccessTestTaskDM.CandidateResponseTestFileId;
+                    isUpdated = true;
+                }
+                if (updateCandidateProccessTestTaskDM.LinkDownloadToken != "")
+                {
+                    candidateProccessTestTaskEM.LinkDownloadToken = updateCandidateProccessTestTaskDM.LinkDownloadToken;
+                    isUpdated = true;
+                }
 
-            if(isUpdated)
-            {
-                unitOfWork.CandidateProccessTestTasks.Update(candidateProccessTestTaskEM);
-                await unitOfWork.SaveAsync();
-            }
+                if (isUpdated)
+                {
+                    unitOfWork.CandidateProccessTestTasks.Update(candidateProccessTestTaskEM);
+                    await unitOfWork.SaveAsync();
 
-            return profile.mapToDto(candidateProccessTestTaskEM);
+                    return "Updated data for candidate process test task";
+                }
+
+                return "Data is invalid";
+            }
+            catch (Exception ex)
+            {
+                return "User does not exist";
+            }
         }
 
         public async Task<bool> DeleteCandidateProcessTestTaskAsync(Guid candidateProccessTestTaskId)
@@ -121,9 +144,18 @@ namespace BusinessLogicLayer.Services
 
         }
 
-        private bool isValid(string email)
+        private bool isValid(CandidateProcessTestTaskEntityModel candidateProccessTestTaskEM, string email)
         {
-            return true;
+            var token = candidateProccessTestTaskEM.LinkDownloadToken;
+
+            return candidateProccessTestTaskEM.CandidateResponseTestFileId == null 
+                && DateTime.Now <= candidateProccessTestTaskEM.EndTestDate 
+                && testTaskTokenService.GetEmailByToken(token).Equals(email);
+        }
+
+        private string getEmailFromCandidateProccessTestTask(CandidateProcessTestTaskEntityModel candidateProccessTestTaskEM)
+        {
+            return candidateProccessTestTaskEM.СandidateProcess.CandidateSandbox.Candidate.Email;
         }
     }
 }

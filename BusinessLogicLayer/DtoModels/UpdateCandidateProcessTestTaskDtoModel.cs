@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.DtoModels
 {
-    public class UpdateCandidateProccessTestTaskDtoModel
+    public class UpdateCandidateProcessTestTaskDtoModel
     {
         public Nullable<Guid> TestFileId { get; set; } = null;
 

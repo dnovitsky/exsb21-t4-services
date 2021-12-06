@@ -5,11 +5,11 @@ using DbMigrations.EntityModels;
 
 namespace BusinessLogicLayer.Mapping
 {
-    public class CandidateProccessTestTasksProfile : BaseProfile<CandidateProccessTestTaskDtoModel, CandidateProccessTestTaskEntityModel>
+    public class CandidateProcessTestTasksProfile : BaseProfile<CandidateProcessTestTaskDtoModel, CandidateProcessTestTaskEntityModel>
     {
         protected override Mapper DtoModelToEntityModelMapper()
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateProccessTestTaskDtoModel, CandidateProccessTestTaskEntityModel>()
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateProcessTestTaskDtoModel, CandidateProcessTestTaskEntityModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                     .ForMember(x => x.CandidateProcessId, y => y.MapFrom(x => x.CandidateProcessId))
                     .ForMember(x => x.TestFileId, y => y.MapFrom(x => x.TestFileId))
@@ -23,7 +23,7 @@ namespace BusinessLogicLayer.Mapping
 
         protected override Mapper EntityModelToDtoModelMapper()
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateProccessTestTaskEntityModel, CandidateProccessTestTaskDtoModel>()
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateProcessTestTaskEntityModel, CandidateProcessTestTaskDtoModel>()
                 .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
                 .ForMember(x => x.CandidateProcessId, y => y.MapFrom(x => x.CandidateProcessId))
                 .ForMember(x => x.TestFileId, y => y.MapFrom(x => x.TestFileId))

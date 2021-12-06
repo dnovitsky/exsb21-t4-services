@@ -1,37 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DbMigrations.EntityModels
+namespace BusinessLogicLayer.DtoModels
 {
-    public class CandidateProccessTestTaskEntityModel
+    public class CandidateProcessTestTaskDtoModel
     {
-        public CandidateProccessTestTaskEntityModel() { }
+        public CandidateProcessTestTaskDtoModel() { }
 
-        public CandidateProccessTestTaskEntityModel(Guid candidateProcessId, Guid testFileId, DateTime endTestDate)
+        public CandidateProcessTestTaskDtoModel(Guid candidateProcessId, Guid testFileId, DateTime endTestDate, string linkDownloadToken = "")
         {
             CandidateProcessId = candidateProcessId;
             TestFileId = testFileId;
-            SendTestDate = DateTime.Now;
             EndTestDate = endTestDate;
+            LinkDownloadToken = linkDownloadToken;
         }
-        
-        [Key]
+
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        [Required]
         public Guid CandidateProcessId { get; set; }
-        public virtual CandidateProccesEntityModel СandidateProcess { get; set; }
 
-        [Required]
         public Guid TestFileId { get; set; }
-        public virtual FileEntityModel TestFile { get; set; }
 
         public Nullable<Guid> CandidateResponseTestFileId { get; set; } = null;
-        public virtual FileEntityModel CandidateResponseTestFile { get; set; }
 
         public DateTime SendTestDate { get; set; } = DateTime.Now;
 

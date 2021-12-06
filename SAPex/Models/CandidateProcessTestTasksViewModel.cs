@@ -2,7 +2,7 @@
 
 namespace SAPex.Models
 {
-    public class CandidateProccessTestTasksViewModel
+    public class CandidateProcessTestTasksViewModel
     {
         public Guid TestFileId { get; set; }
     }

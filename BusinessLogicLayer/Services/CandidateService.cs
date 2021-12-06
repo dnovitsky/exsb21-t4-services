@@ -121,7 +121,7 @@ namespace BusinessLogicLayer.Services
 
             if (candidateSandboxe != null && status != null && candidateSandboxe.CandidateId.Equals(candidateId))
             {
-                var process = new CandidateProccesEntityModel();
+                var process = new CandidateProcesEntityModel();
                 process.StatusId = newStatusId;
                 process.CandidateSandboxId = candidateSandboxId;
                 
@@ -177,7 +177,7 @@ namespace BusinessLogicLayer.Services
             return candidateSandBoxe;
         }
 
-        private async Task<CandidateProccesEntityModel> CreateCandidateProcessForCandidateSandbox(CandidateSandboxEntityModel candidateSandBoxe, CreateCandidateDtoModel candidateDto)
+        private async Task<CandidateProcesEntityModel> CreateCandidateProcessForCandidateSandbox(CandidateSandboxEntityModel candidateSandBoxe, CreateCandidateDtoModel candidateDto)
         {
             var defaultStatuses = await unitOfWork.Statuses.FindByConditionAsync(x => x.Name == "Draft");
             StatusEntityModel defaultStatuse = defaultStatuses.FirstOrDefault();
