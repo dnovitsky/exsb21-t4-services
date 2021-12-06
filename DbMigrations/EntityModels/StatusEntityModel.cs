@@ -12,9 +12,9 @@ namespace DbMigrations.EntityModels
     {
         public StatusEntityModel() : base()
         {
-            CandidatesProcceses = new List<CandidateProccesEntityModel>();
+            CandidatesProcceses = new List<CandidateProcesEntityModel>();
         }
 
-        public virtual IList<CandidateProccesEntityModel> CandidatesProcceses { get; set; }
+        public virtual IList<CandidateProcesEntityModel> CandidatesProcceses { get; set; }
     }
 }

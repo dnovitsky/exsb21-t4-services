@@ -1,5 +1,6 @@
 using System;
 using SAPexSchedulerService.Data.Base;
+using SAPexSchedulerService.Interfaces.Services;
 using SAPexSchedulerService.Repositories;
 
 namespace SAPexSchedulerService.Services
@@ -12,7 +13,7 @@ namespace SAPexSchedulerService.Services
             _repository = repository;
         }
 
-        public void StatusJob()
+        public void Run()
         {
             var now = DateTime.Now;
             var sandboxes = _repository.FindAll();

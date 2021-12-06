@@ -57,6 +57,17 @@ namespace SAPex.Controllers
             return await Task.FromResult(Ok(_mapper.MapRecruiterFromDtoToView(recruiterDto)));
         }
 
+        [HttpGet("sandboxrecruiter")]
+        public async Task<IActionResult> GetRecruitersByCandidateSandboxId(Guid candidateId, Guid sandboxId)
+        {
+            Guid candidateSandboxId = Guid.NewGuid();
+            IEnumerable<UserDtoModel> recruiters = await _userService
+                .FindByUserCandidateSandboxConditionAsync(x => (x.CandidateSandbox.CandidateId == candidateId && x.CandidateSandbox.SandboxId == sandboxId),
+                "Recruiter");
+
+            return await Task.FromResult(Ok(recruiters));
+        }
+
         [HttpGet("{id}/candidates")]
         public async Task<IActionResult> GetCandidatesByRecruiterId(Guid id)
         {

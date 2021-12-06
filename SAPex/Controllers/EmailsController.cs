@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLogicLayer.DtoModels;
@@ -27,10 +28,15 @@ namespace SAPex.Controllers
         }
 
         [HttpGet("filter")]
-        public async Task<IEnumerable<EmailViewModel>> GetAllFilterAsync([FromQuery] EmailStatusType status = EmailStatusType.ReadyForSend)
+        public async Task<ActionResult<IEnumerable<EmailViewModel>>> GetAllFilterAsync([FromQuery] EmailStatusType status = EmailStatusType.ReadyForSend)
         {
             var emails = await _emailService.GetAllFilterAsync(status);
-            return _mapper.Map<IEnumerable<EmailViewModel>>(emails);
+            if (emails.Any())
+            {
+                return Ok(_mapper.Map<IEnumerable<EmailViewModel>>(emails));
+            }
+
+            return NoContent();
         }
 
         [HttpPut("{id}/send")]

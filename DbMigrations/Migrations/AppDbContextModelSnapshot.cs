@@ -60,6 +60,25 @@ namespace DbMigrations.Migrations
                     b.ToTable("AccessForms");
                 });
 
+            modelBuilder.Entity("DbMigrations.EntityModels.AppSettingEntityModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppSettings");
+                });
+
             modelBuilder.Entity("DbMigrations.EntityModels.AvailabilityTypeEntityModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -194,7 +213,7 @@ namespace DbMigrations.Migrations
                     b.ToTable("CandidatesProcceses");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.CandidateProccessTestTasksEntityModel", b =>
+            modelBuilder.Entity("DbMigrations.EntityModels.CandidateProccessTestTaskEntityModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -203,8 +222,7 @@ namespace DbMigrations.Migrations
                     b.Property<Guid>("CandidateProcessId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CandidateRequestTestFileId")
-                        .IsRequired()
+                    b.Property<Guid?>("CandidateResponseTestFileId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("EndTestDate")
@@ -223,11 +241,11 @@ namespace DbMigrations.Migrations
 
                     b.HasIndex("CandidateProcessId");
 
-                    b.HasIndex("CandidateRequestTestFileId");
+                    b.HasIndex("CandidateResponseTestFileId");
 
                     b.HasIndex("TestFileId");
 
-                    b.ToTable("CandidateProccessTestTasksEntityModel");
+                    b.ToTable("CandidateProccessTestTasks");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateProjectRoleEntityModel", b =>
@@ -323,32 +341,6 @@ namespace DbMigrations.Migrations
                     b.HasIndex("SkillId");
 
                     b.ToTable("CandidateTechSkills");
-                });
-
-            modelBuilder.Entity("DbMigrations.EntityModels.EmailEntityModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("EmailFrom")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmailTo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Head")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Message")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Emails");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.EventEntityModel", b =>
@@ -1082,29 +1074,27 @@ namespace DbMigrations.Migrations
                     b.Navigation("Status");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.CandidateProccessTestTasksEntityModel", b =>
+            modelBuilder.Entity("DbMigrations.EntityModels.CandidateProccessTestTaskEntityModel", b =>
                 {
                     b.HasOne("DbMigrations.EntityModels.CandidateProccesEntityModel", "СandidateProcess")
                         .WithMany("СandidateProccessTestTasks")
                         .HasForeignKey("CandidateProcessId")
                         .IsRequired();
 
-                    b.HasOne("DbMigrations.EntityModels.FileEntityModel", "CandidateRequestTestFile")
+                    b.HasOne("DbMigrations.EntityModels.FileEntityModel", "CandidateResponseTestFile")
                         .WithMany()
-                        .HasForeignKey("CandidateRequestTestFileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CandidateResponseTestFileId");
 
                     b.HasOne("DbMigrations.EntityModels.FileEntityModel", "TestFile")
                         .WithMany("СandidateProccessTestTasks")
                         .HasForeignKey("TestFileId")
                         .IsRequired();
 
-                    b.Navigation("СandidateProcess");
-
-                    b.Navigation("CandidateRequestTestFile");
+                    b.Navigation("CandidateResponseTestFile");
 
                     b.Navigation("TestFile");
+
+                    b.Navigation("СandidateProcess");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateSandboxEntityModel", b =>
@@ -1494,9 +1484,9 @@ namespace DbMigrations.Migrations
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateProccesEntityModel", b =>
                 {
-                    b.Navigation("СandidateProccessTestTasks");
-
                     b.Navigation("Feedbacks");
+
+                    b.Navigation("СandidateProccessTestTasks");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateProjectRoleEntityModel", b =>
