@@ -1348,6 +1348,12 @@ namespace BusinessLogicLayer.Helpers
                         Name = "TestResultUrl",
                         Value = "localhost:4200/upload-files"
                     });
+                    db.AppSettings.Add(new AppSettingEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "TestTaskLifeTime",
+                        Value = "48 hours"
+                    });
                     db.SaveChanges();
                 }
             }

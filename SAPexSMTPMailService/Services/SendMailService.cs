@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using SAPexSMTPMailService.Models;
 using SAPexSMTPMailService.Interfaces;
+using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.DtoModels;
 
 namespace SAPexSMTPMailService.Services
 {
@@ -18,13 +20,17 @@ namespace SAPexSMTPMailService.Services
         public static MailAddress to;
         public static SmtpClient smtp;
         public static MailMessage m;
+        private readonly IEmailBuilderService emailBuilderService;
+        private readonly ICandidateService candidateService;
 
-        public SendMailService(IOptions<MailSettingsModel> settings)
+        public SendMailService(IOptions<MailSettingsModel> settings, IEmailBuilderService emailBuilderService, ICandidateService candidateService)
         {
             _mailSettingsModel = settings.Value;
+            this.emailBuilderService = emailBuilderService;
+            this.candidateService = candidateService;
         }
 
-        public bool MainProcess(string head, string message, string mailTo)
+        public async Task<bool> MainProcess(Guid candidateId, Guid sandboxId)
         {
             try
             {
@@ -33,8 +39,14 @@ namespace SAPexSMTPMailService.Services
                 string cfgHost = _mailSettingsModel.SMTPHost;
                 int cfgPort = _mailSettingsModel.SMTPPort;
 
+                string head = await emailBuilderService.BuildEmailSubject(sandboxId);
+
+                string message = await emailBuilderService.BuildEmailBody(candidateId, sandboxId);
+
+                CandidateDtoModel candidate = await candidateService.FindCandidateByIdAsync(candidateId);
+
                 CreateSMTPClient(address, password, cfgHost, cfgPort);
-                SendMessage(address, head, message, mailTo);
+                SendMessage(address, head, message, candidate.Email);
                 return true;
             }
             catch

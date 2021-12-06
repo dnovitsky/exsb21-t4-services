@@ -40,7 +40,7 @@ namespace SAPex.Controllers
         }
 
         [HttpPut("{id}/send")]
-        public async Task<IActionResult> SendAsync([FromRoute] Guid id)
+        public async Task<IActionResult> SendAsync([FromRoute] Guid id, Guid candidateId, Guid sandboxId)
         {
             var emailDto = await _emailService.GetByIdAsync(id);
 
@@ -51,7 +51,7 @@ namespace SAPex.Controllers
 
             emailDto.Status = EmailStatusType.InProcess;
             await _emailService.UpdateAsync(id, emailDto);
-            bool sent = _mailService.MainProcess(emailDto.Head, emailDto.Message, emailDto.EmailTo);
+            bool sent = await _mailService.MainProcess(candidateId, sandboxId);
             if (sent)
             {
                 emailDto.Status = EmailStatusType.Sent;

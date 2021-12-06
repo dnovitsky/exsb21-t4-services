@@ -8,6 +8,6 @@ namespace SAPexSMTPMailService.Interfaces
 {
     public interface ISendMailService
     {
-        bool MainProcess(string head, string message, string mailTo);
+        Task<bool> MainProcess(Guid candidateId, Guid sandboxId);
     }
 }

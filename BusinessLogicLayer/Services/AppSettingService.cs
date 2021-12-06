@@ -50,7 +50,7 @@ namespace BusinessLogicLayer.Services
 
         public async Task<IEnumerable<AppSettingDtoModel>> GetAllAppSettingAsync()
         {
-            IEnumerable<AppSettingEntityModel> AppSettingsEM = await Task.Run(() => unitOfWork.AppSettings.GetAllAsync());
+            IEnumerable<AppSettingEntityModel> AppSettingsEM = await unitOfWork.AppSettings.GetAllAsync();
             return profile.mapListToDto(AppSettingsEM);
         }
 
