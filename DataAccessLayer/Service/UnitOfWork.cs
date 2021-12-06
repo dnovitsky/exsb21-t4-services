@@ -16,6 +16,7 @@ namespace DataAccessLayer.Service
 
         private IAccessFormRepository accessForms;
         private IAccessRepository accesses;
+        private IAppSettingRepository appSettings;
         private IAvailabilityTypeRepository availabilityTypes;
         private ICandidateLanguageRepository candidateLanguages;
         private ICandidateProcesRepository candidateProcceses;
@@ -80,6 +81,17 @@ namespace DataAccessLayer.Service
             }
         }
 
+        public IAppSettingRepository AppSettings
+        {
+            get
+            {
+                if(appSettings == null)
+                {
+                    appSettings = new AppSettingRepository(context);
+                }
+                return appSettings;
+            }
+        }
         public IAvailabilityTypeRepository AvailabilityTypes
         {
             get

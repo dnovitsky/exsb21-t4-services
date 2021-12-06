@@ -17,7 +17,7 @@ namespace BusinessLogicLayer.Interfaces
         Task<EventDtoModel> CreateFreeEventAsync(EventDtoModel eventDto);
         Task<EventDtoModel> CreateEventAsync(EventDtoModel eventDto);
 
-        Task<EventDtoModel> UpdateEventAsync(EventDtoModel eventDto);
+        Task<EventDtoModel> UpdateEventAsync(Guid id, EventDtoModel eventDto);
 
         Task<bool> DeleteEventAsync(string email, Guid eventId);
 
