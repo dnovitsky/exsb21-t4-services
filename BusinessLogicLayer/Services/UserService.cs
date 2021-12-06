@@ -90,6 +90,31 @@ namespace BusinessLogicLayer.Services
             return profile.mapListToDto(usersByConditionBySandboxId);
         }
 
+        public async Task<IEnumerable<UserDtoModel>> FindByUserCandidateSandboxConditionAsync(
+            Expression<Func<UserCandidateSandboxEntityModel, bool>> expression,
+            string userFunctionalRoleName)
+        {
 
+            IEnumerable<UserCandidateSandboxEntityModel> usersCandidateSandbox = await unitOfWork.UserCandidateSandboxes.FindByConditionAsync(expression);
+            IList<UserEntityModel> users = new List<UserEntityModel>();
+
+            foreach (var item in usersCandidateSandbox)
+            {
+                IEnumerable<UserFunctionalRoleEntityModel> userFunctionalRoles = await unitOfWork.UserFunctionalRoles.FindByConditionAsync(x => x.UserId == item.UserId);
+
+                if( userFunctionalRoles != null)
+                {
+                    UserFunctionalRoleEntityModel userFuncRole = userFunctionalRoles.Where(x => x.FunctionalRole.Name == userFunctionalRoleName).FirstOrDefault();
+                    if (userFuncRole != null)
+                    {
+                        UserEntityModel user = await unitOfWork.Users.FindByIdAsync(item.UserId);
+                        users.Add(user);
+                    }
+                }
+                
+            }
+
+            return profile.mapListToDto(users);
+        }
     }
 }
