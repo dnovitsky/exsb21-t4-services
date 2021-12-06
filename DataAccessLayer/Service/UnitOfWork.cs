@@ -50,7 +50,7 @@ namespace DataAccessLayer.Service
         private IEventRepository events;
         private IEventMemberRepository eventMembers;
         private IUserCandidateSandboxRepository userCandidateSandboxes;
-
+        private IEmailRepository emails;
         public UnitOfWork(AppDbContext context)
         {
             this.context = context;
@@ -507,6 +507,17 @@ namespace DataAccessLayer.Service
                     userCandidateSandboxes = new UserCandidateSandboxRepository(context);
                 }
                 return userCandidateSandboxes;
+            }
+        }
+        public IEmailRepository Emails
+        {
+            get
+            {
+                if (emails == null)
+                {
+                    emails = new EmailRepository(context);
+                }
+                return emails;
             }
         }
 

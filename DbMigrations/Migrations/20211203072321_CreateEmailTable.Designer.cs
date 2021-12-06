@@ -4,14 +4,16 @@ using DbMigrations.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DbMigrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211203072321_CreateEmailTable")]
+    partial class CreateEmailTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -194,7 +196,7 @@ namespace DbMigrations.Migrations
                     b.ToTable("CandidatesProcceses");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.CandidateProccessTestTaskEntityModel", b =>
+            modelBuilder.Entity("DbMigrations.EntityModels.CandidateProccessTestTasksEntityModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -203,7 +205,8 @@ namespace DbMigrations.Migrations
                     b.Property<Guid>("CandidateProcessId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CandidateResponseTestFileId")
+                    b.Property<Guid?>("CandidateRequestTestFileId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("EndTestDate")
@@ -222,11 +225,11 @@ namespace DbMigrations.Migrations
 
                     b.HasIndex("CandidateProcessId");
 
-                    b.HasIndex("CandidateResponseTestFileId");
+                    b.HasIndex("CandidateRequestTestFileId");
 
                     b.HasIndex("TestFileId");
 
-                    b.ToTable("CandidateProccessTestTasks");
+                    b.ToTable("CandidateProccessTestTasksEntityModel");
                 });
 
             modelBuilder.Entity("DbMigrations.EntityModels.CandidateProjectRoleEntityModel", b =>
@@ -459,9 +462,6 @@ namespace DbMigrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Category")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -471,6 +471,9 @@ namespace DbMigrations.Migrations
 
                     b.Property<Guid?>("StackTechnologyId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("TestTaskType")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -1081,23 +1084,25 @@ namespace DbMigrations.Migrations
                     b.Navigation("Status");
                 });
 
-            modelBuilder.Entity("DbMigrations.EntityModels.CandidateProccessTestTaskEntityModel", b =>
+            modelBuilder.Entity("DbMigrations.EntityModels.CandidateProccessTestTasksEntityModel", b =>
                 {
                     b.HasOne("DbMigrations.EntityModels.CandidateProccesEntityModel", "СandidateProcess")
                         .WithMany("СandidateProccessTestTasks")
                         .HasForeignKey("CandidateProcessId")
                         .IsRequired();
 
-                    b.HasOne("DbMigrations.EntityModels.FileEntityModel", "CandidateResponseTestFile")
+                    b.HasOne("DbMigrations.EntityModels.FileEntityModel", "CandidateRequestTestFile")
                         .WithMany()
-                        .HasForeignKey("CandidateResponseTestFileId");
+                        .HasForeignKey("CandidateRequestTestFileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DbMigrations.EntityModels.FileEntityModel", "TestFile")
                         .WithMany("СandidateProccessTestTasks")
                         .HasForeignKey("TestFileId")
                         .IsRequired();
 
-                    b.Navigation("CandidateResponseTestFile");
+                    b.Navigation("CandidateRequestTestFile");
 
                     b.Navigation("TestFile");
 

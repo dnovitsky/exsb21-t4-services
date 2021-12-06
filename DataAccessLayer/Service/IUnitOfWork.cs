@@ -43,6 +43,7 @@ namespace DataAccessLayer.Service
         IEventMemberRepository EventMembers { get; }
 
         IUserCandidateSandboxRepository UserCandidateSandboxes { get; }
+        IEmailRepository Emails { get; }
         Task SaveAsync();
 
         public void Save();
