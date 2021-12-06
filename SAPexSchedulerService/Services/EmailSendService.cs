@@ -13,7 +13,7 @@ namespace SAPexSchedulerService.Services
         public  void  Run()
         {
             RestClient restClient = new();
-            restClient.BaseUrl = new Uri($"https://localhost:5001/api/emails/filter?status={EmailStatusType.ReadyForSend}");
+            restClient.BaseUrl = new Uri($"http://64.227.114.210:9090/api/emails/filter?status={EmailStatusType.ReadyForSend}");
             var responseEmails = restClient.Get(new RestRequest());
             if (responseEmails.StatusCode == System.Net.HttpStatusCode.OK)
             {
@@ -21,7 +21,7 @@ namespace SAPexSchedulerService.Services
                 IEnumerable<EmailModel> emails= emailsJson.ToObject<IEnumerable<EmailModel>>();
                 foreach (var email in emails)
                 {
-                    restClient.BaseUrl = new Uri($"https://localhost:5001/api/emails/{email.Id}/send");
+                    restClient.BaseUrl = new Uri($"http://64.227.114.210:9090/api/emails/{email.Id}/send");
                     var response = restClient.Put(new RestRequest());
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
