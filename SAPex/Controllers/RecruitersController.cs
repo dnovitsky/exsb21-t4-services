@@ -57,7 +57,7 @@ namespace SAPex.Controllers
             return await Task.FromResult(Ok(_mapper.MapRecruiterFromDtoToView(recruiterDto)));
         }
 
-        [HttpGet("candidateSandbox")]
+        [HttpGet("sandboxrecruiter")]
         public async Task<IActionResult> GetRecruitersByCandidateSandboxId(Guid candidateId, Guid sandboxId)
         {
             Guid candidateSandboxId = Guid.NewGuid();
