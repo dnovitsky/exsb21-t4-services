@@ -207,9 +207,9 @@ namespace SAPex.Controllers.Mapping
             return candidateProjectRole;
         }
 
-        private IEnumerable<CandidateProccessTestTasksViewModel> CandidateProccessTestTasksProfile(IEnumerable<CandidateProccessTestTasksDtoModel> candidateProccessTestTasksDM)
+        private IEnumerable<CandidateProccessTestTasksViewModel> CandidateProccessTestTasksProfile(IEnumerable<CandidateProccessTestTaskDtoModel> candidateProccessTestTasksDM)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateProccessTestTasksDtoModel, CandidateProccessTestTasksViewModel>()
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateProccessTestTaskDtoModel, CandidateProccessTestTasksViewModel>()
                     .ForMember(x => x.TestFileId, y => y.MapFrom(x => x.TestFileId)));
 
             var mapper = new Mapper(config);
@@ -218,7 +218,7 @@ namespace SAPex.Controllers.Mapping
 
             foreach (var candidateProccessTestTask in candidateProccessTestTasksDM)
             {
-                CandidateProccessTestTasksViewModel candidateProccessTestTaskVM = mapper.Map<CandidateProccessTestTasksDtoModel, CandidateProccessTestTasksViewModel>(candidateProccessTestTask);
+                CandidateProccessTestTasksViewModel candidateProccessTestTaskVM = mapper.Map<CandidateProccessTestTaskDtoModel, CandidateProccessTestTasksViewModel>(candidateProccessTestTask);
                 candidateProccessTestTasksVM.Add(candidateProccessTestTaskVM);
             }
 

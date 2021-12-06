@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace DbMigrations.EntityModels
 {
-    public static class CandidateProccessTestTasksConfiguration
+    public static class CandidateProccessTestTaskConfiguration
     {
         public static void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CandidateProccessTestTasksEntityModel>()
+            modelBuilder.Entity<CandidateProccessTestTaskEntityModel>()
                 .HasOne(d => d.СandidateProcess)
                 .WithMany(p => p.СandidateProccessTestTasks)
                 .HasForeignKey(d => d.CandidateProcessId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
-            modelBuilder.Entity<CandidateProccessTestTasksEntityModel>()
+            modelBuilder.Entity<CandidateProccessTestTaskEntityModel>()
                 .HasOne(d => d.TestFile)
                 .WithMany(p => p.СandidateProccessTestTasks)
                 .HasForeignKey(d => d.TestFileId)

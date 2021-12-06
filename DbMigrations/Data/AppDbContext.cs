@@ -13,7 +13,7 @@ namespace DbMigrations.Data
 
         public DbSet<AccessFormEntityModel> AccessForms { get; set;}
 
-        public DbSet<AvailabilityTypeEntityModel> AvailabilityTypes { get; set; }        
+        public DbSet<AvailabilityTypeEntityModel> AvailabilityTypes { get; set; }
 
         public DbSet<CandidateEntityModel> Candidates { get; set; }
         public DbSet<CandidateLanguageEntityModel> CandidateLanguages { get; set; }
@@ -56,11 +56,13 @@ namespace DbMigrations.Data
         public DbSet<GoogleAccessTokenEntityModel> GoogleAccessTokens { get; set; }
         public DbSet<EventMemberEntityModel> EventMembers { get; set; }
 
+        public DbSet<CandidateProccessTestTaskEntityModel> CandidateProccessTestTasks { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             CandidateSandboxConfiguration.OnModelCreating(modelBuilder);
             UserTeamConfiguration.OnModelCreating(modelBuilder);
-            CandidateProccessTestTasksConfiguration.OnModelCreating(modelBuilder);
+            CandidateProccessTestTaskConfiguration.OnModelCreating(modelBuilder);
         }
 
     }

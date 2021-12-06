@@ -14,7 +14,7 @@ namespace DbMigrations.EntityModels
         public CandidateProccesEntityModel()
         {
             Feedbacks = new List<FeedbackEntityModel>();
-            СandidateProccessTestTasks = new List<CandidateProccessTestTasksEntityModel>();
+            СandidateProccessTestTasks = new List<CandidateProccessTestTaskEntityModel>();
         }
         [Key]
         public Guid Id { get; set; }
@@ -33,6 +33,6 @@ namespace DbMigrations.EntityModels
 
         public virtual IList<FeedbackEntityModel> Feedbacks { get; set; }
         
-        public virtual IList<CandidateProccessTestTasksEntityModel> СandidateProccessTestTasks { get; set; }
+        public virtual IList<CandidateProccessTestTaskEntityModel> СandidateProccessTestTasks { get; set; }
     }
 }

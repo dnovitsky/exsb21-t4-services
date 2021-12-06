@@ -17,7 +17,7 @@ namespace DataAccessLayer.Service
         ICandidateTechSkillRepository CandidateTechSkills { get; }
         IFeedbackRepository Feedbacks { get; }
         IFileRepository Files { get; }
-        ICandidateProccessTestTasksRepository CandidateProccessTestTasks { get; }
+        ICandidateProccessTestTaskRepository CandidateProccessTestTasks { get; }
         IFormRepository Forms { get; }
         IFunctionalRoleRepository FunctionalRoles { get; }
         ILanguageLevelRepository LanguageLevels { get; }

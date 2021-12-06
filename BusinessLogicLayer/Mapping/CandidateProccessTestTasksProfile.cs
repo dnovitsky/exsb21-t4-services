@@ -5,20 +5,32 @@ using DbMigrations.EntityModels;
 
 namespace BusinessLogicLayer.Mapping
 {
-    public class CandidateProccessTestTasksProfile : BaseProfile<CandidateProccessTestTasksDtoModel, CandidateProccessTestTasksEntityModel>
+    public class CandidateProccessTestTasksProfile : BaseProfile<CandidateProccessTestTaskDtoModel, CandidateProccessTestTaskEntityModel>
     {
         protected override Mapper DtoModelToEntityModelMapper()
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateProccessTestTasksDtoModel, CandidateProccessTestTasksEntityModel>()
-                    .ForMember(x => x.TestFileId, y => y.MapFrom(x => x.TestFileId)));
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateProccessTestTaskDtoModel, CandidateProccessTestTaskEntityModel>()
+                    .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
+                    .ForMember(x => x.CandidateProcessId, y => y.MapFrom(x => x.CandidateProcessId))
+                    .ForMember(x => x.TestFileId, y => y.MapFrom(x => x.TestFileId))
+                    .ForMember(x => x.CandidateResponseTestFileId, y => y.MapFrom(x => x.CandidateResponseTestFileId))
+                    .ForMember(x => x.SendTestDate, y => y.MapFrom(x => x.SendTestDate))
+                    .ForMember(x => x.EndTestDate, y => y.MapFrom(x => x.EndTestDate))
+                    .ForMember(x => x.LinkDownloadToken, y => y.MapFrom(x => x.LinkDownloadToken)));
 
             return new Mapper(config);
         }
 
         protected override Mapper EntityModelToDtoModelMapper()
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateProccessTestTasksEntityModel, CandidateProccessTestTasksDtoModel>()
-                    .ForMember(x => x.TestFileId, y => y.MapFrom(x => x.TestFileId)));
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateProccessTestTaskEntityModel, CandidateProccessTestTaskDtoModel>()
+                .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
+                .ForMember(x => x.CandidateProcessId, y => y.MapFrom(x => x.CandidateProcessId))
+                .ForMember(x => x.TestFileId, y => y.MapFrom(x => x.TestFileId))
+                .ForMember(x => x.CandidateResponseTestFileId, y => y.MapFrom(x => x.CandidateResponseTestFileId))
+                .ForMember(x => x.SendTestDate, y => y.MapFrom(x => x.SendTestDate))
+                .ForMember(x => x.EndTestDate, y => y.MapFrom(x => x.EndTestDate))
+                .ForMember(x => x.LinkDownloadToken, y => y.MapFrom(x => x.LinkDownloadToken)));
 
             return new Mapper(config);
         }
