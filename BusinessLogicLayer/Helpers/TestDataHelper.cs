@@ -1334,6 +1334,22 @@ namespace BusinessLogicLayer.Helpers
                     db.SaveChanges();
                 }
 
+                if (!db.AppSettings.Any())
+                {
+                    db.AppSettings.Add(new AppSettingEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "TestTaskUrl",
+                        Value = "localhost:4200/download-files"
+                    });
+                    db.AppSettings.Add(new AppSettingEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "TestResultUrl",
+                        Value = "localhost:4200/upload-files"
+                    });
+                    db.SaveChanges();
+                }
             }
         }
     }

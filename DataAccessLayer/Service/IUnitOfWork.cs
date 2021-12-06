@@ -8,6 +8,7 @@ namespace DataAccessLayer.Service
     {
         IAccessFormRepository AccessForms { get; }
         IAccessRepository Accesses { get; }
+        IAppSettingRepository AppSettings { get; }
         IAvailabilityTypeRepository AvailabilityTypes { get; }
         ICandidateLanguageRepository CandidateLanguages { get; }
         ICandidateProccesRepository CandidateProcceses { get; }
