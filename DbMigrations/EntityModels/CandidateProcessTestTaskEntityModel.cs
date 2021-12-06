@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace DbMigrations.EntityModels
 {
-    public class CandidateProccessTestTasksEntityModel
+    public class CandidateProcessTestTaskEntityModel
     {
-        public CandidateProccessTestTasksEntityModel(Guid candidateProcessId, Guid testFileId, DateTime endTestDate)
+        public CandidateProcessTestTaskEntityModel() { }
+
+        public CandidateProcessTestTaskEntityModel(Guid candidateProcessId, Guid testFileId, DateTime endTestDate)
         {
             CandidateProcessId = candidateProcessId;
             TestFileId = testFileId;
@@ -18,24 +20,23 @@ namespace DbMigrations.EntityModels
         }
         
         [Key]
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
         public Guid CandidateProcessId { get; set; }
-        public virtual CandidateProccesEntityModel СandidateProcess { get; set; }
+        public virtual CandidateProcesEntityModel СandidateProcess { get; set; }
 
         [Required]
         public Guid TestFileId { get; set; }
         public virtual FileEntityModel TestFile { get; set; }
 
-        [Required]
-        public  Nullable<Guid> CandidateRequestTestFileId { get; set; }
-        public virtual FileEntityModel CandidateRequestTestFile { get; set; }
+        public Nullable<Guid> CandidateResponseTestFileId { get; set; } = null;
+        public virtual FileEntityModel CandidateResponseTestFile { get; set; }
 
-        public DateTime SendTestDate { get; set; }
+        public DateTime SendTestDate { get; set; } = DateTime.Now;
 
         public DateTime EndTestDate { get; set; }
 
-        public string LinkDownloadToken { get; set; }
+        public string LinkDownloadToken { get; set; } = "";
     }
 }

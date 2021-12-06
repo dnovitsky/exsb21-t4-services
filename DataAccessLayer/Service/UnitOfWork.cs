@@ -19,14 +19,14 @@ namespace DataAccessLayer.Service
         private IAppSettingRepository appSettings;
         private IAvailabilityTypeRepository availabilityTypes;
         private ICandidateLanguageRepository candidateLanguages;
-        private ICandidateProccesRepository candidateProcceses;
+        private ICandidateProcesRepository candidateProcceses;
         private ICandidateProjectRoleRepository candidateProjectRoles;
         private ICandidateRepository candidates;
         private ICandidateSandboxRepository candidateSandboxes;
         private ICandidateTechSkillRepository candidateTechSkills;
         private IFeedbackRepository feedbacks;
         private IFileRepository files;
-        private ICandidateProccessTestTasksRepository candidateProccessTestTasks;
+        private ICandidateProcessTestTaskRepository candidateProccessTestTasks;
         private IFormRepository forms;
         private IFunctionalRoleRepository functionalRoles;
         private ILanguageLevelRepository languageLevels;
@@ -116,13 +116,13 @@ namespace DataAccessLayer.Service
             }
         }
 
-        public ICandidateProccesRepository CandidateProcceses
+        public ICandidateProcesRepository CandidateProcceses
         {
             get
             {
                 if (candidateProcceses == null)
                 {
-                    candidateProcceses = new CandidateProccesRepository(context);
+                    candidateProcceses = new CandidateProcesRepository(context);
                 }
                 return candidateProcceses;
             }
@@ -198,13 +198,13 @@ namespace DataAccessLayer.Service
                 return files;
             }
         }
-        public ICandidateProccessTestTasksRepository CandidateProccessTestTasks
+        public ICandidateProcessTestTaskRepository CandidateProccessTestTasks
         {
             get
             {
                 if (candidateProccessTestTasks == null)
                 {
-                    candidateProccessTestTasks = new CandidateProccessTestTasksRepository(context);
+                    candidateProccessTestTasks = new CandidateProcessTestTaskRepository(context);
                 }
                 return candidateProccessTestTasks;
             }

@@ -1238,7 +1238,7 @@ namespace BusinessLogicLayer.Helpers
 
                 if (!db.CandidatesProcceses.Any())
                 {
-                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
+                    db.CandidatesProcceses.Add(new CandidateProcesEntityModel
                     {
                         Id = candidateProcessId1,
                         StatusId = statusGuid1,
@@ -1246,7 +1246,7 @@ namespace BusinessLogicLayer.Helpers
                         TestResult = "",
                         CreateDate = DateTime.UtcNow
                     });
-                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
+                    db.CandidatesProcceses.Add(new CandidateProcesEntityModel
                     {
                         Id = candidateProcessId2,
                         StatusId = statusGuid2,
@@ -1254,7 +1254,7 @@ namespace BusinessLogicLayer.Helpers
                         TestResult = "",
                         CreateDate = DateTime.UtcNow
                     });
-                    db.CandidatesProcceses.Add(new CandidateProccesEntityModel
+                    db.CandidatesProcceses.Add(new CandidateProcesEntityModel
                     {
                         Id = candidateProcessId3,
                         StatusId = statusGuid3,

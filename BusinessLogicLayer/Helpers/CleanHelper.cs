@@ -41,6 +41,7 @@ namespace BusinessLogicLayer.Helpers
                 db.CandidateProjectRoles.RemoveRange(db.CandidateProjectRoles);
                 db.CandidateSandboxes.RemoveRange(db.CandidateSandboxes);
                 db.CandidatesProcceses.RemoveRange(db.CandidatesProcceses);
+                db.CandidateProccessTestTasks.RemoveRange(db.CandidateProccessTestTasks);
 
                 db.Feedbacks.RemoveRange(db.Feedbacks);
                 db.UserCandidateSandboxes.RemoveRange(db.UserCandidateSandboxes);

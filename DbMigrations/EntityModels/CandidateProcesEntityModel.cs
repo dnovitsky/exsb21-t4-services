@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 namespace DbMigrations.EntityModels
 {
     
-    public class CandidateProccesEntityModel
+    public class CandidateProcesEntityModel
     {
-        public CandidateProccesEntityModel()
+        public CandidateProcesEntityModel()
         {
             Feedbacks = new List<FeedbackEntityModel>();
-            СandidateProccessTestTasks = new List<CandidateProccessTestTasksEntityModel>();
+            СandidateProccessTestTasks = new List<CandidateProcessTestTaskEntityModel>();
         }
         [Key]
         public Guid Id { get; set; }
@@ -33,6 +33,6 @@ namespace DbMigrations.EntityModels
 
         public virtual IList<FeedbackEntityModel> Feedbacks { get; set; }
         
-        public virtual IList<CandidateProccessTestTasksEntityModel> СandidateProccessTestTasks { get; set; }
+        public virtual IList<CandidateProcessTestTaskEntityModel> СandidateProccessTestTasks { get; set; }
     }
 }

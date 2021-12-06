@@ -12,7 +12,7 @@ namespace DbMigrations.EntityModels
     {
         public FileEntityModel()
         {
-            СandidateProccessTestTasks = new List<CandidateProccessTestTasksEntityModel>();
+            СandidateProccessTestTasks = new List<CandidateProcessTestTaskEntityModel>();
         }
 
         [Key]
@@ -27,7 +27,7 @@ namespace DbMigrations.EntityModels
         [Required]
         public DateTime CreateDate { get; set; }
 
-        public virtual IList<CandidateProccessTestTasksEntityModel> СandidateProccessTestTasks { get; set; }
+        public virtual IList<CandidateProcessTestTaskEntityModel> СandidateProccessTestTasks { get; set; }
 
         public Guid? StackTechnologyId { get; set; }
 

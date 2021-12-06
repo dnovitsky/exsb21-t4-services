@@ -90,16 +90,16 @@ namespace BusinessLogicLayer.Mapping
             return candidateLanguageEM;
         }
 
-        public CandidateProccesEntityModel MapNewCandidateProcessEM(Guid candidateSandboxId, Guid defaultStatusId, CreateCandidateDtoModel candidateDto)
+        public CandidateProcesEntityModel MapNewCandidateProcessEM(Guid candidateSandboxId, Guid defaultStatusId, CreateCandidateDtoModel candidateDto)
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<CreateCandidateDtoModel, CandidateProccesEntityModel>()
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<CreateCandidateDtoModel, CandidateProcesEntityModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => Guid.NewGuid()))
                     .ForMember(x => x.TestResult, y => y.MapFrom(x => ""))
                     .ForMember(x => x.StatusId, y => y.MapFrom(x => defaultStatusId))
                     .ForMember(x => x.CandidateSandboxId, y => y.MapFrom(x => candidateSandboxId)));
             var mapper = new Mapper(config);
 
-            CandidateProccesEntityModel candidateProcessEM = mapper.Map<CreateCandidateDtoModel, CandidateProccesEntityModel>(candidateDto);
+            CandidateProcesEntityModel candidateProcessEM = mapper.Map<CreateCandidateDtoModel, CandidateProcesEntityModel>(candidateDto);
             return candidateProcessEM;
         }
 

@@ -129,6 +129,8 @@ namespace SAPex
             services.AddScoped<IEmailService, EmailService>();
 
             services.AddScoped<IUserCandidateSandboxService, UserCandidateSandboxService>();
+
+            services.AddScoped<ICandidateProcessTestTaskService, CandidateProcessTestTaskService>();
             services.AddScoped<IAppSettingService, AppSettingService>();
             services.AddScoped<ITestTaskRouteService, TestTaskRouteService>();
         }

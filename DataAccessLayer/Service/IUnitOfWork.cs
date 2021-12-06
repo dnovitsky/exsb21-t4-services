@@ -11,14 +11,14 @@ namespace DataAccessLayer.Service
         IAppSettingRepository AppSettings { get; }
         IAvailabilityTypeRepository AvailabilityTypes { get; }
         ICandidateLanguageRepository CandidateLanguages { get; }
-        ICandidateProccesRepository CandidateProcceses { get; }
+        ICandidateProcesRepository CandidateProcceses { get; }
         ICandidateProjectRoleRepository CandidateProjectRoles { get; }
         ICandidateRepository Candidates { get; }
         ICandidateSandboxRepository CandidateSandboxes { get; }
         ICandidateTechSkillRepository CandidateTechSkills { get; }
         IFeedbackRepository Feedbacks { get; }
         IFileRepository Files { get; }
-        ICandidateProccessTestTasksRepository CandidateProccessTestTasks { get; }
+        ICandidateProcessTestTaskRepository CandidateProccessTestTasks { get; }
         IFormRepository Forms { get; }
         IFunctionalRoleRepository FunctionalRoles { get; }
         ILanguageLevelRepository LanguageLevels { get; }

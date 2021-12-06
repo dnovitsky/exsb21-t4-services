@@ -13,13 +13,15 @@ namespace DbMigrations.Data
 
         public DbSet<AccessFormEntityModel> AccessForms { get; set;}
 
+
         public DbSet<AppSettingEntityModel> AppSettings { get; set; }
 
         public DbSet<AvailabilityTypeEntityModel> AvailabilityTypes { get; set; }        
 
+
         public DbSet<CandidateEntityModel> Candidates { get; set; }
         public DbSet<CandidateLanguageEntityModel> CandidateLanguages { get; set; }
-        public DbSet<CandidateProccesEntityModel> CandidatesProcceses { get; set; }
+        public DbSet<CandidateProcesEntityModel> CandidatesProcceses { get; set; }
         public DbSet<CandidateProjectRoleEntityModel> CandidateProjectRoles { get; set; }
         public DbSet<CandidateSandboxEntityModel> CandidateSandboxes { get; set; }
         public DbSet<CandidateTechSkillEntityModel> CandidateTechSkills { get; set; }
@@ -60,11 +62,13 @@ namespace DbMigrations.Data
         public DbSet<EmailEntityModel> Emails { get; set; }
 
 
+        public DbSet<CandidateProcessTestTaskEntityModel> CandidateProccessTestTasks { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             CandidateSandboxConfiguration.OnModelCreating(modelBuilder);
             UserTeamConfiguration.OnModelCreating(modelBuilder);
-            CandidateProccessTestTasksConfiguration.OnModelCreating(modelBuilder);
+            CandidateProcessTestTaskConfiguration.OnModelCreating(modelBuilder);
         }
 
     }
