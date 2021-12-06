@@ -13,6 +13,8 @@ namespace DbMigrations.Data
 
         public DbSet<AccessFormEntityModel> AccessForms { get; set;}
 
+        public DbSet<AppSettingEntityModel> AppSettings { get; set; }
+
         public DbSet<AvailabilityTypeEntityModel> AvailabilityTypes { get; set; }        
 
         public DbSet<CandidateEntityModel> Candidates { get; set; }
