@@ -36,7 +36,7 @@ namespace BusinessLogicLayer.Services
                 {
                     CandidateProcessId = candidateProcessId,
                     TestFileId = candidateProccessTestTaskDM.TestFileId,
-                    EndTestDate = candidateProccessTestTaskDM.EndTestDate,
+                    EndTestDate = candidateProccessTestTaskDM.EndTestDate.ToUniversalTime(),
                     LinkDownloadToken = testTaskTokenService.GetToken(email)
                 });
                 await unitOfWork.SaveAsync();
@@ -57,7 +57,6 @@ namespace BusinessLogicLayer.Services
                 if (isValid(candidateProccessTestTaskEM, email))
                 {
                     candidateProccessTestTaskEM.CandidateResponseTestFileId = candidateResponseTestFileId;
-                    candidateProccessTestTaskEM.LinkDownloadToken = testTaskTokenService.GetToken(email);
                     await unitOfWork.SaveAsync();
 
                     return "Added candidate test file";
@@ -91,6 +90,7 @@ namespace BusinessLogicLayer.Services
                 var isUpdated = false;
                 var candidateProccessTestTaskEM = await unitOfWork.CandidateProccessTestTasks.FindByIdAsync(candidateProccessTestTaskId);
                 var email = getEmailFromCandidateProccessTestTask(candidateProccessTestTaskEM);
+                var currentToken = candidateProccessTestTaskEM.LinkDownloadToken;
 
                 if (updateCandidateProccessTestTaskDM.TestFileId != null)
                 {
@@ -107,7 +107,7 @@ namespace BusinessLogicLayer.Services
                     candidateProccessTestTaskEM.CandidateResponseTestFileId = (Guid)updateCandidateProccessTestTaskDM.CandidateResponseTestFileId;
                     isUpdated = true;
                 }
-                if (updateCandidateProccessTestTaskDM.LinkDownloadToken != "")
+                if (updateCandidateProccessTestTaskDM.LinkDownloadToken != "" && testTaskTokenService.GetEmailByToken(currentToken).Equals(email))
                 {
                     candidateProccessTestTaskEM.LinkDownloadToken = updateCandidateProccessTestTaskDM.LinkDownloadToken;
                     isUpdated = true;
@@ -149,7 +149,7 @@ namespace BusinessLogicLayer.Services
             var token = candidateProccessTestTaskEM.LinkDownloadToken;
 
             return candidateProccessTestTaskEM.CandidateResponseTestFileId == null 
-                && DateTime.Now <= candidateProccessTestTaskEM.EndTestDate 
+                && DateTime.UtcNow <= candidateProccessTestTaskEM.EndTestDate
                 && testTaskTokenService.GetEmailByToken(token).Equals(email);
         }
 
