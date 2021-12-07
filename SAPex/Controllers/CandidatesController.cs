@@ -10,6 +10,7 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SAPex.Controllers.Mapping;
+using SAPex.Helpers;
 using SAPex.Mappers;
 using SAPex.Models;
 
@@ -23,14 +24,14 @@ namespace SAPex.Controllers
         private readonly ICandidateService _service;
         private readonly InputParametrsMapper _inputParamersMapper;
         private readonly CandidateFilterParametrsMapper _candidateFilterParametrsMapper;
-        private readonly ICandidateProcessTestTaskService _candidateProcessTestTaskService;
+        private readonly TestTaskEmailForCandidateProcess _testTaskEmailForCandidateProcess;
 
-        public CandidatesController(ICandidateService service, ICandidateProcessTestTaskService candidateProcessTestTaskService)
+        public CandidatesController(ICandidateService service, TestTaskEmailForCandidateProcess testTaskEmailForCandidateProcess)
         {
             _service = service;
             _inputParamersMapper = new InputParametrsMapper();
             _candidateFilterParametrsMapper = new CandidateFilterParametrsMapper();
-            _candidateProcessTestTaskService = candidateProcessTestTaskService;
+            _testTaskEmailForCandidateProcess = testTaskEmailForCandidateProcess;
         }
 
         [HttpGet]
@@ -116,13 +117,7 @@ namespace SAPex.Controllers
         {
             try
             {
-                var tokenList = new List<string>() { };
-
-                foreach (var processId in processIdList)
-                {
-                    var token = await _candidateProcessTestTaskService.GenerateCandidateProcessTestTaskTokens(processId, DateTime.UtcNow);
-                    tokenList.Add(token);
-                }
+                var tokens = await _testTaskEmailForCandidateProcess.GetCandidateProcessTestTaskTokens(processIdList, DateTime.UtcNow);
 
                 // call email service
 

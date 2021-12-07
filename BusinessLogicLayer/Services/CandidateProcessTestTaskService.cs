@@ -74,10 +74,10 @@ namespace BusinessLogicLayer.Services
             }
         }
 
-        public async Task<IEnumerable<CandidateProcessTestTaskDtoModel>> GetCandidateProcessTestTasksByCandidateProcessIdAsync(Guid candidateProcessId)
+        public async Task<CandidateProcessTestTaskDtoModel> GetCandidateProcessTestTasksByCandidateProcessIdAsync(Guid candidateProcessId)
         {
             var candidateProccessTestTasksEM = await unitOfWork.CandidateProccessTestTasks.FindByConditionAsync(x => x.CandidateProcessId.Equals(candidateProcessId));
-            return profile.mapListToDto(candidateProccessTestTasksEM);
+            return profile.mapToDto(candidateProccessTestTasksEM.LastOrDefault());
         }
 
         public async Task<IEnumerable<CandidateProcessTestTaskDtoModel>> GetCandidateProcessTestTasksAsync()
@@ -143,29 +143,6 @@ namespace BusinessLogicLayer.Services
             catch (Exception ex)
             {
                 return false;
-            }
-        }
-
-        public async Task<string> GenerateCandidateProcessTestTaskTokens(Guid processId, DateTime endTestDate)
-        {
-            try
-            {
-                var candidateProcess = await unitOfWork.CandidateProcceses.FindByIdAsync(processId);
-                var fileEM = (await unitOfWork.Files.GetAllAsync()).FirstOrDefault();
-                var email = candidateProcess.CandidateSandbox.Candidate.Email;
-                var token = testTaskTokenService.GetToken(email);
-                var candidateProcessTestTask = await this.CreateCandidateProcessTestTaskAsync( new CandidateProcessTestTaskDtoModel(
-                    processId,
-                    fileEM.Id,
-                    endTestDate,
-                    token
-                ));
-
-                return candidateProcessTestTask.Token;
-            }
-            catch
-            {
-                return null;
             }
         }
 

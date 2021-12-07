@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SAPex.Helpers;
 using SAPexAuthService.Models;
 using SAPexAuthService.Services;
 using SAPexGoogleSupportService.Interfaces;
@@ -133,6 +134,8 @@ namespace SAPex
             services.AddScoped<ICandidateProcessTestTaskService, CandidateProcessTestTaskService>();
             services.AddScoped<IAppSettingService, AppSettingService>();
             services.AddScoped<ITestTaskRouteService, TestTaskRouteService>();
+            services.AddScoped<ITestTaskTokenBusinessService, TestTaskTokenBusinessService>();
+            services.AddScoped<TestTaskEmailForCandidateProcess, TestTaskEmailForCandidateProcess>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
