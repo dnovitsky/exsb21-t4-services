@@ -57,7 +57,6 @@ namespace SAPexAuthService.Services
             if (validToken != null)
             {
                 var user = validToken.User;
-                _unitOfWork.UserRefreshTokens.Delete(validToken.Id);
                 return await GetTokenCredentialsModelAsync(user);
             }
             return null;
