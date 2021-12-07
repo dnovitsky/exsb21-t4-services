@@ -40,7 +40,7 @@ namespace BusinessLogicLayer.Helpers
                 {
                     Name = "Bill",
                     Surname = "York",
-                    Email = "interviewer@gmail.com",
+                    Email = "interviewer.sapex.2021@gmail.com",
                     Password = "interviewer123456",
                     LocationId = null,
                     Phone = "+998998756292",

@@ -28,6 +28,11 @@ namespace SAPexGoogleSupportService.Services.Authorization
         public async Task<GoogleResponse<GoogleAccessTokenEntityModel>> FindByUserIdAsync(Guid userId)
         {
             var token = (await _unitOfWork.GoogleAccessTokens.FindByConditionAsync(x => x.UserId == userId)).FirstOrDefault();
+            if (token == null)
+            {
+                return new GoogleResponse<GoogleAccessTokenEntityModel> { Message = "Token not found", Code = 404 };
+            }
+
             long expires = token.Created_in + (token.Expires_in * 1000);
             long now = DateTimeOffset.Now.ToUnixTimeMilliseconds();
             if (expires <= now)
