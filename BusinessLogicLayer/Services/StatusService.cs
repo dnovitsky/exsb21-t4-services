@@ -5,6 +5,7 @@ using DataAccessLayer.Service;
 using DbMigrations.EntityModels;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Services
@@ -31,6 +32,20 @@ namespace BusinessLogicLayer.Services
         {
             IEnumerable<StatusEntityModel> statusesEM = await unitOfWork.Statuses.GetAllAsync();
             return profile.mapListToDto(statusesEM);
+        }
+
+        public async Task<StatusDtoModel> FindStatusByConditionAsync(Expression<Func<StatusEntityModel, bool>> expression)
+        {
+            
+            IEnumerable<StatusEntityModel> statusesEM = await unitOfWork.Statuses.FindByConditionAsync(expression);
+            StatusEntityModel statusEM = null;
+
+            foreach (var a in statusesEM)
+            {
+                statusEM = a;
+            }
+
+            return profile.mapToDto(statusEM);
         }
     }
 }
