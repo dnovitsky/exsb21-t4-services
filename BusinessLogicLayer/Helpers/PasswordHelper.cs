@@ -17,10 +17,19 @@ namespace BusinessLogicLayer.Helpers
         {
             { "manager@gmail.com" , "manager123456" },
             { "mentor@gmail.com","mentor123456" },
-            { "interviewer@gmail.com","interviewer123456" },
-            { "developer.noor.cullen@gmail.com","interviewer123456"},
+            { "interviewer.sapex.2021@gmail.com","interviewer123456" },
+            { "developer.noor.cullen@gmail.com","recruiter123456"},
             { "recruiter@gmail.com","recruiter123456" },
             { "admin@gmail.com","admin123456" },
+            { "JohnConnor@gmail.com","123456"},
+            { "Korben@gmail.com", "123456"},
+            { "Forrest@gmail.com", "123456"},
+            { "Jeffrey@gmail.com", "123456"},
+            { "Elen@gmail.com", "123456"},
+            { "JohnMc@gmail.com", "123456"},
+            { "Tyler@gmail.com", "123456"},
+            { "Harry@gmail.com", "123456"},
+            { "James@gmail.com", "123456"},
         };
      
         public void CreateTestData()

@@ -1281,7 +1281,7 @@ namespace BusinessLogicLayer.Helpers
                         CandidateProccesId = candidateProcessId1
                     });
 
-                    UserEntityModel user2 = db.Users.Where(u => u.Email == "interviewer@gmail.com").FirstOrDefault();
+                    UserEntityModel user2 = db.Users.Where(u => u.Email == "interviewer.sapex.2021@gmail.com").FirstOrDefault();
 
                     db.Feedbacks.Add(new FeedbackEntityModel
                     {

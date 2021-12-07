@@ -17,7 +17,7 @@ namespace BusinessLogicLayer.Helpers
         {
             { "manager@gmail.com" , "EDU manager" },
             { "mentor@gmail.com","Mentor" },
-            { "interviewer@gmail.com","Interviewer" },
+            { "interviewer.sapex.2021@gmail.com","Interviewer" },
             { "developer.noor.cullen@gmail.com","Recruiter"},
             { "recruiter@gmail.com","Recruiter" },
             { "admin@gmail.com","Admin" },

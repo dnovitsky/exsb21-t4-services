@@ -17,14 +17,9 @@ namespace BusinessLogicLayer.Helpers
             return await Task.Run(() => candidate.Name + " " + candidate.Surname);
         }
 
-        public async static Task<string> GenerateDownloadLink(TestTaskRoutModel testTaskRout)
+        public async static Task<string> GenerateLoadLink(TestTaskRoutModel testTaskRout)
         {
             return await Task.Run(() => testTaskRout.DownloadUrl + "/" + testTaskRout.Token);
-        }
-
-        public async static Task<string> GenerateUpDownloadLink(TestTaskRoutModel testTaskRout)
-        {
-            return await Task.Run(() => testTaskRout.UploadUrl + "?" + testTaskRout.Token);
         }
     }
 }

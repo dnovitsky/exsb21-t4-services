@@ -22,11 +22,11 @@ namespace BusinessLogicLayer.Services
 
         public async Task<string> GetDownloadUrl()
         {
-            return await TemplateHelper.GenerateDownloadLink(_testTaskRoutModel);
+            return await TemplateHelper.GenerateLoadLink(_testTaskRoutModel);
         }
         public async Task<string> GetUploadPageUrl()
         {
-            return await TemplateHelper.GenerateUpDownloadLink(_testTaskRoutModel);
+            return await TemplateHelper.GenerateLoadLink(_testTaskRoutModel);
         }
     }
 }
