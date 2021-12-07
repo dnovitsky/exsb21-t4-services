@@ -65,7 +65,7 @@ namespace BusinessLogicLayer.Helpers
         {
             foreach (var dic in events)
             {
-                var user = _dbContext.Users.Where(x => x.Email == "interviewer@gmail.com").FirstOrDefault();
+                var user = _dbContext.Users.Where(x => x.Email == "interviewer.sapex.2021@gmail.com").FirstOrDefault();
                 dic.OwnerId = user.Id;
                 dic.CandidateSandboxId = null;
                 _dbContext.Events.Add(dic);
