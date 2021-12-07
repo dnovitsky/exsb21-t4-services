@@ -111,6 +111,23 @@ namespace SAPex.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+
+        public async Task<IActionResult> UpdateFileCategory(Guid id, int fileCategory)
+        {
+            FileDtoModel fileDtoModel = await _fileService.FindFileByIdAsync(id);
+
+            if (fileDtoModel == null)
+            {
+                return await Task.FromResult(NotFound());
+            }
+
+            fileDtoModel.Category = (FileCategory)fileCategory;
+            bool check = await _fileService.UpdateFileCategory(fileDtoModel);
+
+            return await Task.FromResult(Ok(check));
+        }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteFileAsync([FromRoute] Guid id)
         {

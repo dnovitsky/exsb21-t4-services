@@ -55,6 +55,23 @@ namespace BusinessLogicLayer.Services
         public void DeleteFileById(Guid id)
         {
             unitOfWork.Files.Delete(id);
+            unitOfWork.Save();
+        }
+
+        public async Task<bool> UpdateFileCategory(FileDtoModel fileDto)
+        {
+            try
+            {
+                FileEntityModel fileEM = profile.mapToEM(fileDto);
+                unitOfWork.Files.Delete(fileEM.Id);
+                await unitOfWork.Files.CreateAsync(fileEM);
+                await unitOfWork.SaveAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }
