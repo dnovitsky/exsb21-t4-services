@@ -1,11 +1,14 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BusinessLogicLayer;
 using BusinessLogicLayer.DtoModels;
+using BusinessLogicLayer.Helpers;
 using BusinessLogicLayer.Interfaces;
+using BusinessLogicLayer.Models;
 using DataAccessLayer.Service;
 using DbMigrations.EntityModels;
+using DbMigrations.EntityModels.DataTypes;
 
 namespace SAPex.Helpers
 {
@@ -15,16 +18,25 @@ namespace SAPex.Helpers
         private readonly ICandidateProcessTestTaskService _candidateProcessTestTaskService;
         private readonly ITestTaskTokenBusinessService _testTaskTokenService;
         private readonly ITestTaskRouteService _testTaskRouteService;
+        private readonly IEmailBuilderService _emailBuilderService;
+        private readonly IEmailService _emailService;
+        private readonly IAppSettingService _appSettingService;
 
         public TestTaskEmailForCandidateProcess(IUnitOfWork unitOfWork,
             ICandidateProcessTestTaskService candidateProcessTestTaskService,
             ITestTaskTokenBusinessService testTaskTokenService,
-            ITestTaskRouteService testTaskRouteService)
+            ITestTaskRouteService testTaskRouteService,
+            IEmailBuilderService emailBuilderService,
+            IEmailService emailService,
+            IAppSettingService appSettingService)
         {
             _unitOfWork = unitOfWork;
             _candidateProcessTestTaskService = candidateProcessTestTaskService;
             _testTaskTokenService = testTaskTokenService;
             _testTaskRouteService = testTaskRouteService;
+            _emailBuilderService = emailBuilderService;
+            _emailService = emailService;
+            _appSettingService = appSettingService;
         }
 
         public async Task<bool> SendTestTaskEmailForCandidate(IList<Guid> processIds)
@@ -33,9 +45,11 @@ namespace SAPex.Helpers
             {
                 foreach (var processId in processIds)
                 {
-                    var candidateTestTaskEmailData = await GenerateCandidateTestTaskEmailData(processId);
-
-                    // call email service
+                    var isEmailSend = await GenerateCandidateTestTaskEmailData(processId);
+                    if (!isEmailSend)
+                    {
+                        return false;
+                    }
                 }
 
                 return true;
@@ -46,45 +60,71 @@ namespace SAPex.Helpers
             }
         }
 
-        private async Task<TestTaskEmailCandidateModel> GenerateCandidateTestTaskEmailData(Guid processId)
+        private async Task<bool> GenerateCandidateTestTaskEmailData(Guid processId)
         {
             try
             {
-                DateTime endTestDate = DateTime.UtcNow.AddDays(2);
-
                 var candidateProcess = await _unitOfWork.CandidateProcceses.FindByIdAsync(processId);
                 var candidateSandbox = candidateProcess.CandidateSandbox;
-                var candidateProcessTestTask = await GetCandidateProcessTestTask(candidateProcess, endTestDate);
-                var token = candidateProcessTestTask.Token;
+                var candidate = candidateSandbox.Candidate;
 
-                return new TestTaskEmailCandidateModel()
+                var testTaskDownloadUrl = await GetCurrentValueByNameFromAppSetting("TestTaskUrl");
+                var testTaskUploadUrl = await GetCurrentValueByNameFromAppSetting("TestResultUrl");
+                var testTaskLifeTime = await GetCurrentValueByNameFromAppSetting("TestTaskLifeTime");
+                var sapexEmail = await GetCurrentValueByNameFromAppSetting("TestTasksSapexEmail");
+
+                var candidateProcessTestTask = await CreateCandidateProcessTestTask(candidateProcess, testTaskLifeTime);
+
+                _testTaskRouteService.Init(new TestTaskRoutModel()
                 {
-                    Name = candidateSandbox.Candidate.Name + " " + candidateSandbox.Candidate.Surname,
+                    DownloadUrl = testTaskDownloadUrl,
+                    UploadUrl = testTaskUploadUrl,
+                    Token = candidateProcessTestTask.Token,
+                });
+
+                _emailBuilderService.Init(new EmailBodyBuilderModel()
+                {
+                    Name = await TemplateHelper.GenerateName(candidate),
                     SandboxName = candidateSandbox.Sandbox.Name,
-                    DownloadUrl = await _testTaskRouteService.GetDownloadUrl(token),
-                    UploadPageUrl = await _testTaskRouteService.GetUploadPageUrl(token),
-                    EndTime = (candidateProcessTestTask.SendTestDate - endTestDate).TotalHours.ToString(),
-                };
+                    TestTaskDownloadUrl = await _testTaskRouteService.GetDownloadUrl(),
+                    TestTaskUploadUrl = await _testTaskRouteService.GetUploadPageUrl(),
+                    TestTaskLifeTime = testTaskLifeTime,
+                });
+
+                await _emailService.CreateAsync(new EmailDtoModel()
+                {
+                    Id = Guid.NewGuid(),
+                    EmailFrom = sapexEmail,
+                    Head = await _emailBuilderService.BuildEmailSubject(),
+                    Message = await _emailBuilderService.BuildEmailBody(),
+                    EmailTo = candidate.Email,
+                    Status = EmailStatusType.None,
+                });
+
+                return true;
             }
             catch
             {
-                return null;
+                return false;
             }
         }
 
-        private async Task<CandidateProcessTestTaskDtoModel> GetCandidateProcessTestTask(CandidateProcesEntityModel candidateProcess, DateTime endTestDate)
+        private async Task<CandidateProcessTestTaskDtoModel> CreateCandidateProcessTestTask(CandidateProcesEntityModel candidateProcess, string endTestDate)
         {
             try
             {
                 List<FileEntityModel> files = (List<FileEntityModel>)await _unitOfWork.Files.GetAllAsync();
-                var file = files.Count > 0 ? files[0] : null;
+                var file = files.Count > 0 ? files[0] : null; // From App setting?
                 var email = candidateProcess.CandidateSandbox.Candidate.Email;
                 var token = _testTaskTokenService.GetToken(email);
+                var startDate = DateTime.UtcNow;
+                var endDate = startDate + TimeSpan.FromMilliseconds(startDate.Millisecond + double.Parse(endTestDate));
 
                 var candidateProcessTestTask = await _candidateProcessTestTaskService.CreateCandidateProcessTestTaskAsync(new CandidateProcessTestTaskDtoModel(
                     candidateProcess.Id,
                     file.Id,
-                    endTestDate,
+                    startDate,
+                    endDate,
                     token));
 
                 return candidateProcessTestTask;
@@ -93,6 +133,12 @@ namespace SAPex.Helpers
             {
                 return null;
             }
+        }
+
+        private async Task<string> GetCurrentValueByNameFromAppSetting(string name)
+        {
+            var appSettings = (List<AppSettingDtoModel>)(await _appSettingService.FindAppSettingAsync(x => x.Name == name));
+            return appSettings.Count > 0 ? appSettings[0].Value : null;
         }
     }
 }

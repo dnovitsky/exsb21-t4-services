@@ -1348,6 +1348,18 @@ namespace BusinessLogicLayer.Helpers
                         Name = "TestResultUrl",
                         Value = "localhost:4200/upload-files"
                     });
+                    db.AppSettings.Add(new AppSettingEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "TestTaskLifeTime",
+                        Value = (2 * (24 * 60 * 60 * 1000)).ToString()
+                    });
+                    db.AppSettings.Add(new AppSettingEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = "TestTasksSapexEmail",
+                        Value = "testtasks@sapex.com"
+                    });
                     db.SaveChanges();
                 }
             }

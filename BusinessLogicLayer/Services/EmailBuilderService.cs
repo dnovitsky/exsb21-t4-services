@@ -10,12 +10,13 @@ namespace BusinessLogicLayer.Services
 {
     public class EmailBuilderService : IEmailBuilderService
     {
-        EmailBodyBuilderModel emailBodyBuilderModel;
+        private EmailBodyBuilderModel emailBodyBuilderModel;
 
-        public EmailBuilderService(EmailBodyBuilderModel emailBodyBuilderModel)
+        public void Init(EmailBodyBuilderModel emailBodyBuilderModel)
         {
             this.emailBodyBuilderModel = emailBodyBuilderModel;
         }
+
         public Task<string> BuildEmailBody()
         {
             StringBuilder message = new StringBuilder();

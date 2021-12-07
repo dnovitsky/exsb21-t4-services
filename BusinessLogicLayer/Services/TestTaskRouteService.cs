@@ -1,4 +1,5 @@
-﻿using BusinessLogicLayer.Interfaces;
+﻿using BusinessLogicLayer.Helpers;
+using BusinessLogicLayer.Interfaces;
 using DataAccessLayer.Service;
 using System;
 using System.Collections.Generic;
@@ -10,26 +11,22 @@ namespace BusinessLogicLayer.Services
 {
     public class TestTaskRouteService : ITestTaskRouteService
     {
-        private readonly IUnitOfWork unitOfWork;
+        private TestTaskRoutModel _testTaskRoutModel;
 
-        public TestTaskRouteService(IUnitOfWork unitOfWork)
+        public TestTaskRouteService() { }
+
+        public void Init(TestTaskRoutModel testTaskRoutModel)
         {
-            this.unitOfWork = unitOfWork;
+            _testTaskRoutModel = testTaskRoutModel;
         }
 
-        public async Task<string> GetDownloadUrl(string token)
+        public async Task<string> GetDownloadUrl()
         {
-            string serverUrl = (await unitOfWork.AppSettings.FindByConditionAsync(x => x.Name == "TestTaskUrl")).FirstOrDefault().Value;
-            string downloadUrl = serverUrl +"/"+ token;
-            string downloadUrl = serverUrl + candidateToken;
-            return downloadUrl;
+            return await TemplateHelper.GenerateDownloadLink(_testTaskRoutModel);
         }
-        public async Task<string> GetUploadPageUrl(string token)
         public async Task<string> GetUploadPageUrl()
         {
-            string uploadPageUrl = serverUrl +"?"+ token;
-            string uploadPageUrl = serverUrl + candidateToken;
-            return uploadPageUrl;
+            return await TemplateHelper.GenerateUpDownloadLink(_testTaskRoutModel);
         }
     }
 }

@@ -10,10 +10,11 @@ namespace BusinessLogicLayer.DtoModels
     {
         public CandidateProcessTestTaskDtoModel() { }
 
-        public CandidateProcessTestTaskDtoModel(Guid candidateProcessId, Guid testFileId, DateTime endTestDate, string token = "")
+        public CandidateProcessTestTaskDtoModel(Guid candidateProcessId, Guid testFileId, DateTime startTestDate, DateTime endTestDate, string token = "")
         {
             CandidateProcessId = candidateProcessId;
             TestFileId = testFileId;
+            SendTestDate = startTestDate;
             EndTestDate = endTestDate;
             Token = token;
         }
