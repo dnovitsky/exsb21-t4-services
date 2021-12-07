@@ -130,6 +130,7 @@ namespace SAPex
             services.AddScoped<IUserCandidateSandboxService, UserCandidateSandboxService>();
             services.AddScoped<ICandidateProcessTestTaskService, CandidateProcessTestTaskService>();
             services.AddScoped<IAppSettingService, AppSettingService>();
+<<<<<<< HEAD
             services.AddScoped<ITestTaskRouteService, TestTaskRouteService>();
         }
 
@@ -173,6 +174,52 @@ namespace SAPex
                 new UserHelper(dbContext),
                 new RoleHelper(dbContext),
                 new UserRoleHelper(dbContext),
+=======
+            services.AddScoped<ITestTaskRouteService, TestTaskRouteService>();
+            services.AddScoped<ICandidateSandboxService, CandidateSandboxService>();
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AppDbContext dbContext)
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "SAPex API v1");
+            });
+
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
+            }
+
+            // app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
+            dbContext.Database.Migrate();
+
+            CleanHelper.CleanTablesData(Configuration.GetConnectionString("DefaultConnection"));
+
+            List<IApplicationHelper> helpers = new ()
+            {
+                new UserHelper(dbContext),
+                new RoleHelper(dbContext),
+                new UserRoleHelper(dbContext),
+>>>>>>> dev
                 new PasswordHelper(dbContext),
                 new EventHelper(dbContext),
             };
