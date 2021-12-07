@@ -78,10 +78,18 @@ namespace BusinessLogicLayer.Helpers
                 Guid skillGuid1 = Guid.NewGuid();
                 Guid skillGuid2 = Guid.NewGuid();
                 Guid skillGuid3 = Guid.NewGuid();
-
                 Guid statusGuid1 = Guid.NewGuid();
                 Guid statusGuid2 = Guid.NewGuid();
                 Guid statusGuid3 = Guid.NewGuid();
+                Guid statusGuid4 = Guid.NewGuid();
+                Guid statusGuid5 = Guid.NewGuid();
+                Guid statusGuid6 = Guid.NewGuid();
+                Guid statusGuid7 = Guid.NewGuid();
+                Guid statusGuid8 = Guid.NewGuid();
+                Guid statusGuid9 = Guid.NewGuid();
+                Guid statusGuid10 = Guid.NewGuid();
+                Guid statusGuid11 = Guid.NewGuid();
+                Guid statusGuid12 = Guid.NewGuid();
 
                 Guid availabilityType1 = Guid.NewGuid();
                 Guid availabilityType2 = Guid.NewGuid();
@@ -868,62 +876,74 @@ namespace BusinessLogicLayer.Helpers
                     db.Statuses.Add(new StatusEntityModel
                     {
                         Id = statusGuid1,
-                        Name = "Draft"
-                    });
-                    db.Statuses.Add(new StatusEntityModel
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = "Rejected"
-                    });
-                    db.Statuses.Add(new StatusEntityModel
-                    {
-                        Id = Guid.Parse("406E7A53-C5EA-4F25-99A5-0EA3F25AF0BC"),
-                        Name = "Need verification"
+                        Name = "Draft",
+                        OrderLevel = 0
                     });
                     db.Statuses.Add(new StatusEntityModel
                     {
                         Id = statusGuid2,
-                        Name = "Need a recruiter"
-                    });
-                    db.Statuses.Add(new StatusEntityModel
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = "Interview Soft"
-                    });
-                    db.Statuses.Add(new StatusEntityModel
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = "Interview Tech"
+                        Name = "Rejected",
+                        OrderLevel = 1
                     });
                     db.Statuses.Add(new StatusEntityModel
                     {
                         Id = statusGuid3,
-                        Name = "Approved"
+                        Name = "Test",
+                        OrderLevel = 2
                     });
                     db.Statuses.Add(new StatusEntityModel
                     {
-                        Id = Guid.NewGuid(),
-                        Name = "Questionable"
+                        Id = statusGuid4,
+                        Name = "Need Verification",
+                        OrderLevel = 3
                     });
                     db.Statuses.Add(new StatusEntityModel
                     {
-                        Id = Guid.NewGuid(),
-                        Name = "Sandbox"
+                        Id = statusGuid5,
+                        Name = "Need Recruiter",
+                        OrderLevel = 4
                     });
                     db.Statuses.Add(new StatusEntityModel
                     {
-                        Id = Guid.NewGuid(),
-                        Name = "Final interview"
+                        Id = statusGuid6,
+                        Name = "Interview Soft",
+                        OrderLevel = 5
                     });
                     db.Statuses.Add(new StatusEntityModel
                     {
-                        Id = Guid.NewGuid(),
-                        Name = "Enroll in the internship"
+                        Id = statusGuid7,
+                        Name = "Interview Tech",
+                        OrderLevel = 6
                     });
                     db.Statuses.Add(new StatusEntityModel
                     {
-                        Id = Guid.NewGuid(),
-                        Name = "Recruit"
+                        Id = statusGuid8,
+                        Name = "Interview Rejected",
+                        OrderLevel = 7
+                    });
+                    db.Statuses.Add(new StatusEntityModel
+                    {
+                        Id = statusGuid9,
+                        Name = "In Processing",
+                        OrderLevel = 8
+                    });
+                    db.Statuses.Add(new StatusEntityModel
+                    {
+                        Id = statusGuid10,
+                        Name = "Approved",
+                        OrderLevel = 9
+                    });
+                    db.Statuses.Add(new StatusEntityModel
+                    {
+                        Id = statusGuid11,
+                        Name = "Questionable",
+                        OrderLevel = 10
+                    });
+                    db.Statuses.Add(new StatusEntityModel
+                    {
+                        Id = statusGuid12,
+                        Name = "Rejected",
+                        OrderLevel = 11
                     });
                     db.SaveChanges();
                 }
