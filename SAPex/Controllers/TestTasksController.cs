@@ -25,7 +25,8 @@ namespace SAPex.Controllers
         public async Task<IActionResult> GetTestTask([FromRoute] string token)
         {
             var candidateprocesstasks = await _candidatettservise.GetCandidateProcessTestTasksAsync();
-            var candidateprocesstask = candidateprocesstasks.Where(c => c.LinkDownloadToken == token).FirstOrDefault();
+
+            var candidateprocesstask = candidateprocesstasks.Where(c => c != null && c.LinkDownloadToken == token).FirstOrDefault();
 
             if (candidateprocesstask == null)
             {
@@ -35,11 +36,6 @@ namespace SAPex.Controllers
             if (candidateprocesstask.EndTestDate < DateTime.UtcNow)
             {
                 return await Task.FromResult(BadRequest("The task has timed out"));
-            }
-
-            if (candidateprocesstask.TestFileId == Guid.Empty)
-            {
-                return await Task.FromResult(NotFound());
             }
 
             return RedirectToAction("DownloadFile", "Files", new { id = candidateprocesstask.TestFileId });
