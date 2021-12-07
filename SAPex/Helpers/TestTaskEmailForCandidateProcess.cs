@@ -14,21 +14,29 @@ namespace SAPex.Helpers
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICandidateProcessTestTaskService _candidateProcessTestTaskService;
         private readonly ITestTaskTokenBusinessService _testTaskTokenService;
+        private readonly ITestTaskRouteService _testTaskRouteService;
 
-        public TestTaskEmailForCandidateProcess(IUnitOfWork unitOfWork, ICandidateProcessTestTaskService candidateProcessTestTaskService, ITestTaskTokenBusinessService testTaskTokenService)
+        public TestTaskEmailForCandidateProcess(IUnitOfWork unitOfWork,
+            ICandidateProcessTestTaskService candidateProcessTestTaskService,
+            ITestTaskTokenBusinessService testTaskTokenService,
+            ITestTaskRouteService testTaskRouteService)
         {
             _unitOfWork = unitOfWork;
             _candidateProcessTestTaskService = candidateProcessTestTaskService;
             _testTaskTokenService = testTaskTokenService;
+            _testTaskRouteService = testTaskRouteService;
         }
 
         public async Task<bool> SendTestTaskEmailForCandidate(IList<Guid> processIds)
         {
             try
             {
-                var tokens = await GetCandidateProcessTestTaskTokens(processIds, DateTime.UtcNow);
+                foreach (var processId in processIds)
+                {
+                    var candidateTestTaskEmailData = await GenerateCandidateTestTaskEmailData(processId);
 
-                // call email service
+                    // call email service
+                }
 
                 return true;
             }
@@ -38,19 +46,25 @@ namespace SAPex.Helpers
             }
         }
 
-        private async Task<IList<string>> GetCandidateProcessTestTaskTokens(IList<Guid> processIds, DateTime endTestDate)
+        private async Task<TestTaskEmailCandidateModel> GenerateCandidateTestTaskEmailData(Guid processId)
         {
             try
             {
-                var tokenList = new List<string>() { };
+                DateTime endTestDate = DateTime.UtcNow.AddDays(2);
 
-                foreach (var processId in processIds)
+                var candidateProcess = await _unitOfWork.CandidateProcceses.FindByIdAsync(processId);
+                var candidateSandbox = candidateProcess.CandidateSandbox;
+                var candidateProcessTestTask = await GetCandidateProcessTestTask(candidateProcess, endTestDate);
+                var token = candidateProcessTestTask.Token;
+
+                return new TestTaskEmailCandidateModel()
                 {
-                    var token = await GetCandidateProcessTestTaskToken(processId, endTestDate);
-                    tokenList.Add(token);
-                }
-
-                return tokenList;
+                    Name = candidateSandbox.Candidate.Name + " " + candidateSandbox.Candidate.Surname,
+                    SandboxName = candidateSandbox.Sandbox.Name,
+                    DownloadUrl = await _testTaskRouteService.GetDownloadUrl(token),
+                    UploadPageUrl = await _testTaskRouteService.GetUploadPageUrl(token),
+                    EndTime = (candidateProcessTestTask.SendTestDate - endTestDate).TotalHours.ToString(),
+                };
             }
             catch
             {
@@ -58,23 +72,22 @@ namespace SAPex.Helpers
             }
         }
 
-        private async Task<string> GetCandidateProcessTestTaskToken(Guid processId, DateTime endTestDate)
+        private async Task<CandidateProcessTestTaskDtoModel> GetCandidateProcessTestTask(CandidateProcesEntityModel candidateProcess, DateTime endTestDate)
         {
             try
             {
-                var candidateProcess = await _unitOfWork.CandidateProcceses.FindByIdAsync(processId);
                 List<FileEntityModel> files = (List<FileEntityModel>)await _unitOfWork.Files.GetAllAsync();
                 var file = files.Count > 0 ? files[0] : null;
                 var email = candidateProcess.CandidateSandbox.Candidate.Email;
                 var token = _testTaskTokenService.GetToken(email);
 
                 var candidateProcessTestTask = await _candidateProcessTestTaskService.CreateCandidateProcessTestTaskAsync(new CandidateProcessTestTaskDtoModel(
-                    processId,
+                    candidateProcess.Id,
                     file.Id,
                     endTestDate,
                     token));
 
-                return candidateProcessTestTask.Token;
+                return candidateProcessTestTask;
             }
             catch
             {

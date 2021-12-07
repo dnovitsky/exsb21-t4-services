@@ -17,19 +17,17 @@ namespace BusinessLogicLayer.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<string> GetDownloadUrl()
+        public async Task<string> GetDownloadUrl(string candidateToken)
         {
             string serverUrl = (await unitOfWork.AppSettings.FindByConditionAsync(x => x.Name == "TestTaskUrl")).FirstOrDefault().Value;
-            string candidateToken = string.Empty; // = await unitOfWork.??? 
-            string downloadUrl = serverUrl + candidateToken;
+            string downloadUrl = serverUrl + "/" + candidateToken;
             return downloadUrl;
         }
 
-        public async Task<string> GetUploadPageUrl()
+        public async Task<string> GetUploadPageUrl(string candidateToken)
         {
             string serverUrl = (await unitOfWork.AppSettings.FindByConditionAsync(x => x.Name == "TestResultUrl")).FirstOrDefault().Value;
-            string candidateToken = string.Empty; // = await unitOfWork.??? 
-            string uploadPageUrl = serverUrl + candidateToken;
+            string uploadPageUrl = serverUrl + "/" + candidateToken;
             return uploadPageUrl;
         }
     }
