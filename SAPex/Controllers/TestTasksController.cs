@@ -1,5 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using BusinessLogicLayer.DtoModels;
+using BusinessLogicLayer.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SAPex.Models;
 
 namespace SAPex.Controllers
 {
@@ -7,10 +14,35 @@ namespace SAPex.Controllers
     [ApiController]
     public class TestTasksController : ControllerBase
     {
-        [HttpGet("{token}")]
-        public async Task<IActionResult> Get([FromRoute] string token)
+        private readonly ICandidateProcessTestTaskService _candidatettservise;
+
+        public TestTasksController(ICandidateProcessTestTaskService service)
         {
-            return await Task.FromResult(Ok());
+            _candidatettservise = service;
+        }
+
+        [HttpGet("{token}")]
+        public async Task<IActionResult> GetTestTask([FromRoute] string token)
+        {
+            var candidateprocesstasks = await _candidatettservise.GetCandidateProcessTestTasksAsync();
+            var candidateprocesstask = candidateprocesstasks.Where(c => c.LinkDownloadToken == token).FirstOrDefault();
+
+            if (candidateprocesstask == null)
+            {
+                return await Task.FromResult(NotFound());
+            }
+
+            if (candidateprocesstask.EndTestDate < DateTime.UtcNow)
+            {
+                return await Task.FromResult(BadRequest("The task has timed out"));
+            }
+
+            if (candidateprocesstask.TestFileId == Guid.Empty)
+            {
+                return await Task.FromResult(NotFound());
+            }
+
+            return RedirectToAction("DownloadFile", "Files", new { id = candidateprocesstask.TestFileId });
         }
     }
 }
