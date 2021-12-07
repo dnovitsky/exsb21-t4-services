@@ -91,7 +91,7 @@ namespace SAPex.Controllers
                 bool awsRes = await _awsS3Service.AddFileToAwsAsync(_awsconfig, file, fileName);
 
                 FileDtoModel fileDtoModel = new ();
-                fileDtoModel.Id = new Guid();
+                fileDtoModel.Id = Guid.NewGuid();
                 fileDtoModel.FileName = fileName;
                 fileDtoModel.CreateDate = DateTime.UtcNow;
 
