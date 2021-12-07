@@ -27,7 +27,7 @@ namespace BusinessLogicLayer.Services
         public async Task<string> GetUploadPageUrl(string token)
         {
             string serverUrl = (await unitOfWork.AppSettings.FindByConditionAsync(x => x.Name == "TestResultUrl")).FirstOrDefault().Value;
-            string uploadPageUrl = serverUrl +"?"+ token;
+            string uploadPageUrl = serverUrl +"/"+ token;
             return uploadPageUrl;
         }
     }
