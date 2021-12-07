@@ -1340,7 +1340,7 @@ namespace BusinessLogicLayer.Helpers
                     {
                         Id = Guid.NewGuid(),
                         Name = "TestTaskUrl",
-                        Value = "localhost:4200/download-files"
+                        Value = "http://64.227.114.210:9090/api/testtasks"
                     });
                     db.AppSettings.Add(new AppSettingEntityModel
                     {
