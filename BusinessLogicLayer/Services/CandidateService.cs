@@ -51,7 +51,7 @@ namespace BusinessLogicLayer.Services
                     Skype = candidateDto.Skype,
                     Phone = candidateDto.PhoneNumber,
                     ProfessionaCertificates = candidateDto.ProfessionaCertificates,
-                    AdditionalSkills = candidateDto.AdditionalSkills,
+                    AdditionalSkills = candidateDto.AdditionalSkills
                 });
 
                 if (candidateEM != null)
@@ -118,8 +118,12 @@ namespace BusinessLogicLayer.Services
         {
             var candidateSandboxe = await unitOfWork.CandidateSandboxes.FindByIdAsync(candidateSandboxId);
             var status = await unitOfWork.Statuses.FindByIdAsync(newStatusId);
+            var isStatusValid = candidateSandboxe != null
+                && status != null
+                && candidateSandboxe.CandidateId.Equals(candidateId)
+                && !candidateSandboxe.CandidateProcesses.Where(x => x.StatusId.Equals(newStatusId)).Any();
 
-            if (candidateSandboxe != null && status != null && candidateSandboxe.CandidateId.Equals(candidateId))
+            if (isStatusValid)
             {
                 var process = new CandidateProcesEntityModel();
                 process.StatusId = newStatusId;
