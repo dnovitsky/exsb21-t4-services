@@ -117,11 +117,10 @@ namespace SAPex.Controllers
         {
             try
             {
-                var tokens = await _testTaskEmailForCandidateProcess.GetCandidateProcessTestTaskTokens(processIdList, DateTime.UtcNow);
+                var isSend = await _testTaskEmailForCandidateProcess.SendTestTaskEmailForCandidate(processIdList);
+                IActionResult actionResult = isSend ? Ok("Test tasks have been sent by mail") : Conflict();
 
-                // call email service
-
-                return await Task.FromResult(Ok());
+                return await Task.FromResult(actionResult);
             }
             catch (Exception ex)
             {

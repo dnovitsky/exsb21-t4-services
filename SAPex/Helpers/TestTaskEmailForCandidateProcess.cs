@@ -22,7 +22,43 @@ namespace SAPex.Helpers
             _testTaskTokenService = testTaskTokenService;
         }
 
-        public async Task<string> GetCandidateProcessTestTaskToken(Guid processId, DateTime endTestDate)
+        public async Task<bool> SendTestTaskEmailForCandidate(IList<Guid> processIds)
+        {
+            try
+            {
+                var tokens = await GetCandidateProcessTestTaskTokens(processIds, DateTime.UtcNow);
+
+                // call email service
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        private async Task<IList<string>> GetCandidateProcessTestTaskTokens(IList<Guid> processIds, DateTime endTestDate)
+        {
+            try
+            {
+                var tokenList = new List<string>() { };
+
+                foreach (var processId in processIds)
+                {
+                    var token = await GetCandidateProcessTestTaskToken(processId, endTestDate);
+                    tokenList.Add(token);
+                }
+
+                return tokenList;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private async Task<string> GetCandidateProcessTestTaskToken(Guid processId, DateTime endTestDate)
         {
             try
             {
@@ -39,26 +75,6 @@ namespace SAPex.Helpers
                     token));
 
                 return candidateProcessTestTask.Token;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public async Task<IList<string>> GetCandidateProcessTestTaskTokens(IList<Guid> processIds, DateTime endTestDate)
-        {
-            try
-            {
-                var tokenList = new List<string>() { };
-
-                foreach (var processId in processIds)
-                {
-                    var token = await GetCandidateProcessTestTaskToken(processId, endTestDate);
-                    tokenList.Add(token);
-                }
-
-                return tokenList;
             }
             catch
             {
