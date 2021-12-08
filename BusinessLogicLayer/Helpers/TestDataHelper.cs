@@ -1461,19 +1461,19 @@ namespace BusinessLogicLayer.Helpers
                     {
                         Id = Guid.NewGuid(),
                         Name = "TestTaskUrl",
-                        Value = "http://64.227.114.210:9090/api/testtasks"
+                        Value = "http://64.227.114.210:9090/api/testtasks/"
                     });
                     db.AppSettings.Add(new AppSettingEntityModel
                     {
                         Id = Guid.NewGuid(),
                         Name = "TestResultUrl",
-                        Value = "localhost:4200/upload-files"
+                        Value = "localhost:4200/upload-files/"
                     });
                     db.AppSettings.Add(new AppSettingEntityModel
                     {
                         Id = Guid.NewGuid(),
                         Name = "TestTaskLifeTime",
-                        Value = (2 * (24 * 60 * 60 * 1000)).ToString()
+                        Value = "48"
                     });
                     db.AppSettings.Add(new AppSettingEntityModel
                     {

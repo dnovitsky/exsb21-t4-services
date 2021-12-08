@@ -1,8 +1,5 @@
 ﻿using BusinessLogicLayer.Interfaces;
 using BusinessLogicLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,41 +7,39 @@ namespace BusinessLogicLayer.Services
 {
     public class EmailBuilderService : IEmailBuilderService
     {
-        private EmailBodyBuilderModel emailBodyBuilderModel;
+        private EmailBodyBuilderModel model;
 
         public void Init(EmailBodyBuilderModel emailBodyBuilderModel)
         {
-            this.emailBodyBuilderModel = emailBodyBuilderModel;
-        }
-
-        public Task<string> BuildEmailBody()
-        {
-            StringBuilder message = new StringBuilder();
-
-            string header = $"\t Hello dear {emailBodyBuilderModel.Name}, we are happy to tell you that you have passed the next stage of the internship {emailBodyBuilderModel.SandboxName}";
-
-            message.Append(header);
-
-            string text = $"\n\tIf u want continue your adventure you should download test task from" +
-                $"\n{emailBodyBuilderModel.TestTaskDownloadUrl}" +
-                $"\n\tAfter that you should upload your solution at" +
-                $"\n{emailBodyBuilderModel.TestTaskUploadUrl}" +
-                $"\n\tYou have {emailBodyBuilderModel.TestTaskLifeTime} hours to upload your solution.";
-
-            message.Append(text);
-
-            string signature = $"\n\n\tWith best wishes, your Exadel Education Department";
-
-            message.Append(signature);
-
-            return Task.FromResult(message.ToString());
+            this.model = emailBodyBuilderModel;
         }
 
         public Task<string> BuildEmailSubject()
         {
-            StringBuilder subject = new StringBuilder($"Hello {emailBodyBuilderModel.Name}, you will go to the next stage in {emailBodyBuilderModel.SandboxName}");
+            var subject = $"Exadel Education Department: test task from {model.SandboxName} sandbox.";
+            return Task.FromResult(subject);
+        }
 
-            return Task.FromResult(subject.ToString());
+        public Task<string> BuildEmailBody()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            string header = $"Hello dear {model.Name},";
+            sb.Append(header);
+
+            sb.AppendFormat("<br>we are happy to tell you that you have passed the next stage of the internship {0}", model.SandboxName);
+            sb.Append("<br><br>");
+            sb.AppendFormat("If you want continue your adventure you should download test task from {0} .", model.TestTaskDownloadUrl);
+            sb.Append("<br><br>");
+            sb.AppendFormat("After that you should upload your solution at {0}", model.TestTaskUploadUrl);
+            sb.Append("<br><br>");
+            sb.AppendFormat("You have {0} hours to upload your solution.", model.TestTaskLifeTime);
+
+            string signature = $"With best wishes,<br>your Exadel Education Department";
+            sb.Append("<br><br><br><br>");
+            sb.Append(signature);
+
+            return Task.FromResult(sb.ToString());
         }
     }
 }
