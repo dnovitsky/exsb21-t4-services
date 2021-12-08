@@ -174,6 +174,17 @@ namespace SAPex
             dbContext.Database.Migrate();
 
             CleanHelper.CleanTablesData(Environment.GetEnvironmentVariable("MSSQL_CONNECTION_STRING"));
+
+            List<IApplicationHelper> helpers = new ()
+            {
+                new UserHelper(dbContext),
+                new RoleHelper(dbContext),
+                new UserRoleHelper(dbContext),
+                new PasswordHelper(dbContext),
+                new EventHelper(dbContext),
+            };
+            helpers.ForEach(helper => helper.CreateTestData());
+
             TestDataHelper.InitTestData(Environment.GetEnvironmentVariable("MSSQL_CONNECTION_STRING"));
         }
     }
