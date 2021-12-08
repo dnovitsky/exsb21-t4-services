@@ -26,20 +26,13 @@ namespace BusinessLogicLayer.Mapping.BaseMappings
         {
             var mapper = EntityModelToDtoModelMapper();
 
-            IList<T> listDto = new List<T>()
-            {
-                mapper.Map<E, T>(values.FirstOrDefault())
-            };
+            IList<T> listDto = new List<T>() { };
 
             int i = 0;
             foreach (var avail in values)
             {
-                if (i != 0)
-                {
-                    T dto = mapper.Map<E, T>(avail);
-                    listDto.Add(dto);
-                }
-                i++;
+                T dto = mapper.Map<E, T>(avail);
+                listDto.Add(dto);
             }
             return listDto;
         }
@@ -48,20 +41,12 @@ namespace BusinessLogicLayer.Mapping.BaseMappings
         {
             var mapper = DtoModelToEntityModelMapper();
 
-            IList<T> listEM = new List<T>()
-            {
-                mapper.Map<E, T>(values.FirstOrDefault())
-            };
+            IList<T> listEM = new List<T>() { };
 
-            int i = 0;
             foreach (var avail in values)
             {
-                if (i != 0)
-                {
-                    T em = mapper.Map<E, T>(avail);
-                    listEM.Add(em);
-                }
-                i++;
+                T em = mapper.Map<E, T>(avail);
+                listEM.Add(em);
             }
             return listEM;
         }
@@ -70,20 +55,13 @@ namespace BusinessLogicLayer.Mapping.BaseMappings
         {
             var mapper = DtoModelToEntityModelMapper();
 
-            IList<E> listEM = new List<E>()
-            {
-                mapper.Map<T, E>(values.FirstOrDefault())
-            };
+            IList<E> listEM = new List<E>() { };
 
             int i = 0;
             foreach (var avail in values)
             {
-                if (i != 0)
-                {
-                    E em = mapper.Map<T, E>(avail);
-                    listEM.Add(em);
-                }
-                i++;
+                E em = mapper.Map<T, E>(avail);
+                listEM.Add(em);
             }
             return listEM;
         }

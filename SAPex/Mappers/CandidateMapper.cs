@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLogicLayer.DtoModels;
+using BusinessLogicLayer.Interfaces;
 using SAPex.Mappers;
 using SAPex.Models;
 
@@ -18,8 +19,13 @@ namespace SAPex.Controllers.Mapping
         private SkillMapper _skillMapper;
         private FeedbackMapper _feedbackMapper;
         private StatusMapper _statusMapper;
+        private StackTechnologyMapper _stackTechnologyMapper;
+        private IStackTechnologyService _stackTechnologyService;
+        private ILanguageService _languageService;
+        private IUserService _userService;
 
-        public CandidateMapper()
+        public CandidateMapper(IStackTechnologyService stackTechnologyService, ILanguageService languageService,
+            IUserService userService)
         {
             _sandboxMapper = new SandboxMapper();
             _locationMapper = new LocationMapper();
@@ -28,6 +34,10 @@ namespace SAPex.Controllers.Mapping
             _skillMapper = new SkillMapper();
             _feedbackMapper = new FeedbackMapper();
             _statusMapper = new StatusMapper();
+            _stackTechnologyMapper = new StackTechnologyMapper();
+            _stackTechnologyService = stackTechnologyService;
+            _languageService = languageService;
+            _userService = userService;
         }
 
         public CreateCandidateDtoModel MapNewCandidateToDto(CreateCandidateViewModel candidateVM)
@@ -154,8 +164,15 @@ namespace SAPex.Controllers.Mapping
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateSandboxDtoModel, CandidateSandboxeViewModel>()
                     .ForMember(x => x.Id, y => y.MapFrom(x => x.Id))
-                    .ForMember(x => x.Sandbox, y => y.MapFrom(x => _sandboxMapper.MapSbFromDtoToView(x.Sandbox)))
+
+                    .ForMember(x => x.Motivation, y => y.MapFrom(x => x.Motivation))
                     .ForMember(x => x.CurrentJob, y => y.MapFrom(x => x.CurrentJob))
+                    .ForMember(x => x.TimeContact, y => y.MapFrom(x => x.TimeContact))
+                    .ForMember(x => x.IsJoinToExadel, y => y.MapFrom(x => x.IsJoinToExadel))
+                    .ForMember(x => x.IsAgreement, y => y.MapFrom(x => x.IsAgreement))
+                    .ForMember(x => x.PrimaryTechnology, y => y.MapFrom(x => _stackTechnologyMapper.MapStackTechnologyFromDtoToView(x.PrimaryTechnology)))
+
+                    .ForMember(x => x.Sandbox, y => y.MapFrom(x => SandboxMapper(x)))
                     .ForMember(x => x.CandidateProjectRole, y => y.MapFrom(x => MapCandidateProjectRoleDtoToVM(x.CandidateProjectRole)))
                     .ForMember(x => x.CandidateProcesses, y => y.MapFrom(x => MapCandidateProcessesDtoToVM(x.CandidateProcesses))));
 
@@ -170,6 +187,19 @@ namespace SAPex.Controllers.Mapping
             }
 
             return candidateDtoList;
+        }
+
+        private SandboxViewModel SandboxMapper(CandidateSandboxDtoModel candidateSandbox)
+        {
+            var sandboxId = candidateSandbox.Sandbox.Id;
+            IEnumerable<StackTechnologyDtoModel> stackTechnologyDtoModels = _stackTechnologyService.GetStackTechnologiesBySandboxIdAsync(sandboxId).Result;
+            IEnumerable<LanguageDtoModel> languageDtoModels = _languageService.GetLanguagesBySandboxIdAsync(sandboxId).Result;
+            IEnumerable<UserDtoModel> mentorDtoModels = _userService.GetUsersBySandboxIdConditionFuncRole(s => s.FunctionalRole.Name == "Mentor", sandboxId).Result;
+            IEnumerable<UserDtoModel> recruiterDtoModels = _userService.GetUsersBySandboxIdConditionFuncRole(s => s.FunctionalRole.Name == "Recruiter", sandboxId).Result;
+            IEnumerable<UserDtoModel> interwieverDtoModels = _userService.GetUsersBySandboxIdConditionFuncRole(s => s.FunctionalRole.Name == "Interviewer", sandboxId).Result;
+
+            return _sandboxMapper.MapFromDtoToView(candidateSandbox.Sandbox, languageDtoModels, stackTechnologyDtoModels,
+                            mentorDtoModels, recruiterDtoModels, interwieverDtoModels);
         }
 
         private IEnumerable<CandidateProcessViewModel> MapCandidateProcessesDtoToVM(IEnumerable<CandidateProcessDtoModel> candidateProcessesDtoModel)
