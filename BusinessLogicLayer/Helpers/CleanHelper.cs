@@ -18,33 +18,33 @@ namespace BusinessLogicLayer.Helpers
             using (AppDbContext db = new AppDbContext(options))
             {
                 // db.RemoveRange(db);
-                // db.Events.RemoveRange(db.Events);
-                // db.Locations.RemoveRange(db.Locations);
-                // db.Sandboxes.RemoveRange(db.Sandboxes);
-                // db.AvailabilityTypes.RemoveRange(db.AvailabilityTypes);
-                // db.LanguageLevels.RemoveRange(db.LanguageLevels);
-                // .Languages.RemoveRange(db.Languages);
-                // db.StackTechnologies.RemoveRange(db.StackTechnologies);
-                // db.Users.RemoveRange(db.Users);
+                db.Events.RemoveRange(db.Events);
+                db.Locations.RemoveRange(db.Locations);
+                db.Sandboxes.RemoveRange(db.Sandboxes);
+                db.AvailabilityTypes.RemoveRange(db.AvailabilityTypes);
+                db.LanguageLevels.RemoveRange(db.LanguageLevels);
+                db.Languages.RemoveRange(db.Languages);
+                db.StackTechnologies.RemoveRange(db.StackTechnologies);
+                db.Users.RemoveRange(db.Users);
 
-                //db.SandboxStackTechnologies.RemoveRange(db.SandboxStackTechnologies);
-                //db.SandboxLanguages.RemoveRange(db.SandboxLanguages);
-                //db.UserSandBoxes.RemoveRange(db.UserSandBoxes);
-                //db.UserFunctionalRoles.RemoveRange(db.UserFunctionalRoles);
+                db.SandboxStackTechnologies.RemoveRange(db.SandboxStackTechnologies);
+                db.SandboxLanguages.RemoveRange(db.SandboxLanguages);
+                db.UserSandBoxes.RemoveRange(db.UserSandBoxes);
+                db.UserFunctionalRoles.RemoveRange(db.UserFunctionalRoles);
 
-                //db.Statuses.RemoveRange(db.Statuses);
-                //db.Skills.RemoveRange(db.Skills);
+                db.Statuses.RemoveRange(db.Statuses);
+                db.Skills.RemoveRange(db.Skills);
 
-                //db.Candidates.RemoveRange(db.Candidates);
-                //db.CandidateLanguages.RemoveRange(db.CandidateLanguages);
-                //db.CandidateTechSkills.RemoveRange(db.CandidateTechSkills);
-                //db.CandidateProjectRoles.RemoveRange(db.CandidateProjectRoles);
-                //db.CandidateSandboxes.RemoveRange(db.CandidateSandboxes);
-                //db.CandidatesProcceses.RemoveRange(db.CandidatesProcceses);
-                //db.CandidateProccessTestTasks.RemoveRange(db.CandidateProccessTestTasks);
+                db.Candidates.RemoveRange(db.Candidates);
+                db.CandidateLanguages.RemoveRange(db.CandidateLanguages);
+                db.CandidateTechSkills.RemoveRange(db.CandidateTechSkills);
+                db.CandidateProjectRoles.RemoveRange(db.CandidateProjectRoles);
+                db.CandidateSandboxes.RemoveRange(db.CandidateSandboxes);
+                db.CandidatesProcceses.RemoveRange(db.CandidatesProcceses);
+                db.CandidateProccessTestTasks.RemoveRange(db.CandidateProccessTestTasks);
 
-                //db.Feedbacks.RemoveRange(db.Feedbacks);
-                //db.UserCandidateSandboxes.RemoveRange(db.UserCandidateSandboxes);
+                db.Feedbacks.RemoveRange(db.Feedbacks);
+                db.UserCandidateSandboxes.RemoveRange(db.UserCandidateSandboxes);
                 db.AppSettings.RemoveRange(db.AppSettings);
 
                 db.SaveChanges();
