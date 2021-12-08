@@ -8,7 +8,7 @@ namespace DbMigrations.EntityModels
     {
         public CandidateSandboxEntityModel()
         {
-            CandidateProcesses = new List<CandidateProccesEntityModel>();
+            CandidateProcesses = new List<CandidateProcesEntityModel>();
             UserCandidateSandboxes = new List<UserCandidateSandboxEntityModel>();
         }
 
@@ -49,7 +49,7 @@ namespace DbMigrations.EntityModels
         public Guid AvailabilityTypeId { get; set; }
         public virtual AvailabilityTypeEntityModel AvailabilityType { get; set; }
 
-        public virtual IList<CandidateProccesEntityModel> CandidateProcesses { get; set; }
+        public virtual IList<CandidateProcesEntityModel> CandidateProcesses { get; set; }
 
         public virtual IList<UserCandidateSandboxEntityModel> UserCandidateSandboxes { get; set; }
     }

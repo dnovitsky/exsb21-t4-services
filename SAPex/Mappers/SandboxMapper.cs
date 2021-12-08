@@ -172,7 +172,19 @@ namespace SAPex.Mappers
                     DataTable tableViewModels = (DataTable)JsonConvert.
                     DeserializeObject(JsonConvert.SerializeObject(viewModels), typeof(DataTable));
                     sheet.Cells.LoadFromDataTable(tableViewModels, true, OfficeOpenXml.Table.TableStyles.None);
-                    sheet.Cells.AutoFitColumns();
+                    sheet.Column(1).Width = 20;
+                    sheet.Column(2).Width = 15;
+                    sheet.Column(3).Width = 15;
+                    sheet.Column(4).Width = 15;
+                    sheet.Column(5).Width = 15;
+                    sheet.Column(6).Width = 20;
+                    sheet.Column(7).Width = 20;
+                    sheet.Column(8).Width = 20;
+                    sheet.Column(9).Width = 20;
+                    sheet.Column(10).Width = 45;
+                    sheet.Column(11).Width = 45;
+                    sheet.Column(12).Width = 45;
+                    sheet.Column(13).Width = 60;
                 }
 
                 excelFile.Save();

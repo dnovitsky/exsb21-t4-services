@@ -91,7 +91,7 @@ namespace SAPex.Controllers
                 bool awsRes = await _awsS3Service.AddFileToAwsAsync(_awsconfig, file, fileName);
 
                 FileDtoModel fileDtoModel = new ();
-                fileDtoModel.Id = new Guid();
+                fileDtoModel.Id = Guid.NewGuid();
                 fileDtoModel.FileName = fileName;
                 fileDtoModel.CreateDate = DateTime.UtcNow;
 
@@ -109,6 +109,23 @@ namespace SAPex.Controllers
             {
                 return await Task.FromResult(ValidationProblem());
             }
+        }
+
+        [HttpPut("{id}")]
+
+        public async Task<IActionResult> UpdateFileCategory(Guid id, int fileCategory)
+        {
+            FileDtoModel fileDtoModel = await _fileService.FindFileByIdAsync(id);
+
+            if (fileDtoModel == null)
+            {
+                return await Task.FromResult(NotFound());
+            }
+
+            fileDtoModel.Category = (FileCategory)fileCategory;
+            bool check = await _fileService.UpdateFileCategory(fileDtoModel);
+
+            return await Task.FromResult(Ok(check));
         }
 
         [HttpDelete("{id}")]

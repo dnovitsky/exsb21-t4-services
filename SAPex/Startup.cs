@@ -128,6 +128,11 @@ namespace SAPex
             services.AddScoped<IEmailService, EmailService>();
 
             services.AddScoped<IUserCandidateSandboxService, UserCandidateSandboxService>();
+            services.AddScoped<ICandidateProcessTestTaskService, CandidateProcessTestTaskService>();
+            services.AddScoped<IAppSettingService, AppSettingService>();
+            services.AddScoped<ITestTaskRouteService, TestTaskRouteService>();
+            services.AddScoped<ITestTaskRouteService, TestTaskRouteService>();
+            services.AddScoped<ICandidateSandboxService, CandidateSandboxService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -171,6 +176,7 @@ namespace SAPex
                 new RoleHelper(dbContext),
                 new UserRoleHelper(dbContext),
                 new PasswordHelper(dbContext),
+                new EventHelper(dbContext),
             };
             helpers.ForEach(helper => helper.CreateTestData());
 
