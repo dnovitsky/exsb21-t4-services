@@ -21,6 +21,7 @@ namespace SAPex.Helpers
         private readonly IEmailBuilderService _emailBuilderService;
         private readonly IEmailService _emailService;
         private readonly IAppSettingService _appSettingService;
+        private int _testTaskFileCategory = (int)BusinessLogicLayer.DtoModels.FileCategory.TestTaskTemplate;
 
         public TestTaskEmailForCandidateProcess(IUnitOfWork unitOfWork,
             ICandidateProcessTestTaskService candidateProcessTestTaskService,
@@ -114,7 +115,7 @@ namespace SAPex.Helpers
             try
             {
                 List<FileEntityModel> files = (List<FileEntityModel>)await _unitOfWork.Files.GetAllAsync();
-                var file = files.Count > 0 ? files[0] : null; // From App setting?
+                var file = files.Count > 0 ? files.Find(x => (int)x.Category == _testTaskFileCategory) : null;
                 var email = candidateProcess.CandidateSandbox.Candidate.Email;
                 var token = _testTaskTokenService.GetToken(email, candidateProcess.Id);
                 var startDate = DateTime.UtcNow;
