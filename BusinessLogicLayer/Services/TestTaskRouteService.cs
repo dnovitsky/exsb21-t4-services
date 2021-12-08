@@ -11,22 +11,22 @@ namespace BusinessLogicLayer.Services
 {
     public class TestTaskRouteService : ITestTaskRouteService
     {
-        private TestTaskRoutModel _testTaskRoutModel;
+        private TestTaskRoutModel _model;
 
         public TestTaskRouteService() { }
 
         public void Init(TestTaskRoutModel testTaskRoutModel)
         {
-            _testTaskRoutModel = testTaskRoutModel;
+            _model = testTaskRoutModel;
         }
 
         public async Task<string> GetDownloadUrl()
         {
-            return await TemplateHelper.GenerateLoadLink(_testTaskRoutModel);
+            return $"{_model.DownloadUrl}{_model.Token}";
         }
         public async Task<string> GetUploadPageUrl()
         {
-            return await TemplateHelper.GenerateLoadLink(_testTaskRoutModel);
+            return $"{_model.UploadUrl}{_model.Token}";
         }
     }
 }

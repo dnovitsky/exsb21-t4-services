@@ -67,7 +67,7 @@ namespace SAPexSMTPMailService.Services
                 to = new MailAddress(mailTo);
                 m = new MailMessage(from, to);
                 m.Subject = head;
-                m.Body = $"<h2>{message}</h2>";
+                m.Body = message;
                 m.IsBodyHtml = true;
                 smtp.Send(m);
                 Console.WriteLine("Message was sent!");
