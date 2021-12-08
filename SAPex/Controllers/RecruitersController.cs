@@ -96,7 +96,7 @@ namespace SAPex.Controllers
         public async Task<IActionResult> AssignCandidatesToRecruiter([FromRoute] Guid id, [FromBody] IEnumerable<Guid> candidateSandboxIds)
         {
             await _userCandidateSandboxService.AddUserCandidateSandboxesAsync(id, candidateSandboxIds);
-            StatusDtoModel status = await _statusService.FindStatusByConditionAsync(x => x.Name == "Questionable"); // Test
+            StatusDtoModel status = await _statusService.FindStatusByConditionAsync(x => x.Name == "Test");
 
             if (candidateSandboxIds != null)
             {
