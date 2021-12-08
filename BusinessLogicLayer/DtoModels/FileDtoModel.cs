@@ -12,6 +12,8 @@ namespace BusinessLogicLayer.DtoModels
         public string FileName { get; set; }
         public DateTime CreateDate { get; set; }
         public FileCategory Category { get; set; }
+
+        public string CategoryName { get; set; }
         public Guid? StackTechnologyId { get; set; }
     }
     public enum FileCategory
