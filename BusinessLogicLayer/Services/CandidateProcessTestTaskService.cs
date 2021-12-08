@@ -37,7 +37,7 @@ namespace BusinessLogicLayer.Services
                     CandidateProcessId = candidateProcessId,
                     TestFileId = candidateProccessTestTaskDM.TestFileId,
                     EndTestDate = candidateProccessTestTaskDM.EndTestDate.ToUniversalTime(),
-                    LinkDownloadToken = testTaskTokenService.GetToken(email)
+                    LinkDownloadToken = testTaskTokenService.GetToken(email, candidateProcessId)
                 });
                 await unitOfWork.SaveAsync();
 
