@@ -20,13 +20,13 @@ namespace SAPex.Controllers
     [Route("api/candidates")]
     public class CandidatesController : ControllerBase
     {
-        protected readonly CandidateMapper _profile;
         private readonly ICandidateService _service;
         private readonly InputParametrsMapper _inputParamersMapper;
         private readonly CandidateFilterParametrsMapper _candidateFilterParametrsMapper;
         private readonly TestTaskEmailForCandidateProcess _testTaskEmailForCandidateProcess;
+        private readonly CandidateMapper _profile;
 
-        public CandidatesController(ICandidateService service, CandidateMapper profile, TestTaskEmailForCandidateProcess testTaskEmailForCandidateProcess)
+        public CandidatesController(ICandidateService service, TestTaskEmailForCandidateProcess testTaskEmailForCandidateProcess, CandidateMapper profile)
         {
             _service = service;
             _inputParamersMapper = new InputParametrsMapper();
