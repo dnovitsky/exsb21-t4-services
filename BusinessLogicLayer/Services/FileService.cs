@@ -58,13 +58,15 @@ namespace BusinessLogicLayer.Services
             unitOfWork.Save();
         }
 
-        public bool UpdateFileCategory(FileDtoModel fileDto)
+        public async Task<bool> UpdateFileCategory(Guid id, int fileCategory)
         {
             try
             {
-                FileEntityModel fileEM = profile.mapToEM(fileDto);
+                var fileEM = await unitOfWork.Files.FindByIdAsync(id);
+                fileEM.Category = (DbMigrations.EntityModels.FileCategory)fileCategory;
+
                 unitOfWork.Files.Update(fileEM);
-                unitOfWork.Save();
+                await unitOfWork.SaveAsync();
                 return true;
             }
             catch (Exception ex)
