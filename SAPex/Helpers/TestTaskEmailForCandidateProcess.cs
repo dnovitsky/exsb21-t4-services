@@ -116,7 +116,7 @@ namespace SAPex.Helpers
                 List<FileEntityModel> files = (List<FileEntityModel>)await _unitOfWork.Files.GetAllAsync();
                 var file = files.Count > 0 ? files[0] : null; // From App setting?
                 var email = candidateProcess.CandidateSandbox.Candidate.Email;
-                var token = _testTaskTokenService.GetToken(email);
+                var token = _testTaskTokenService.GetToken(email, candidateProcess.Id);
                 var startDate = DateTime.UtcNow;
                 var endDate = startDate + TimeSpan.FromMilliseconds(startDate.Millisecond + double.Parse(endTestDate));
 
