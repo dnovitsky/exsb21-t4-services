@@ -10,5 +10,7 @@ namespace SAPex.Models
         public string Email { get; set; }
 
         public Guid FileId { get; set; }
+
+        public string Token { get; set; }
     }
 }

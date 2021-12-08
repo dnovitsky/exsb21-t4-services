@@ -15,7 +15,7 @@ namespace BusinessLogicLayer.Services
     {
         private readonly string secretString = "PDv7DrqznYL6nv7DrqzjnQYO9JxIsWdcjnQYL6nu0f";
 
-        public string GetToken(string email)
+        public string GetToken(string email, Guid candidateProccesId)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(secretString);
@@ -24,8 +24,10 @@ namespace BusinessLogicLayer.Services
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-
-                Subject = new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.Email, email) }),
+                Subject = new ClaimsIdentity(new Claim[] { 
+                    new Claim(ClaimTypes.Email, email),
+                    new Claim(JwtRegisteredClaimNames.Jti, candidateProccesId.ToString())
+                }),
 
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key),
@@ -77,6 +79,33 @@ namespace BusinessLogicLayer.Services
                 return null;
             }
         }
-    
+
+        public Guid? GetIdByToken(string token)
+        {
+            try
+            {
+                JwtSecurityTokenHandler tokenHandler = new();
+                var tokenInVerification = tokenHandler.ValidateToken(token, GetTokenValidationParameters(), out var validatedToken);
+
+                if (validatedToken is JwtSecurityToken checkToken)
+                {
+                    var result = checkToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
+
+                    if (!result)
+                    {
+                        return null;
+                    }
+                }
+
+                Guid id = new Guid(tokenInVerification.FindFirst(JwtRegisteredClaimNames.Jti).Value);
+
+                return id;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
     }
 }

@@ -148,10 +148,10 @@ namespace BusinessLogicLayer.Helpers
                         MaxCandidates = 60,
                         Description = "Two-month internship for aspiring students",
                         CreateDate = new DateTime(2021, 9, 1),
-                        StartDate = new DateTime(2021, 10, 20),
-                        EndDate = new DateTime(2021, 12, 10),
-                        StartRegistration = new DateTime(2021, 10, 2),
-                        EndRegistration = new DateTime(2021, 10, 18),
+                        StartDate = new DateTime(2022, 1, 20),
+                        EndDate = new DateTime(2022, 3, 10),
+                        StartRegistration = new DateTime(2021, 12, 5),
+                        EndRegistration = new DateTime(2021, 12, 18),
                         Status = StatusName.Active,
                     });;
                     db.Sandboxes.Add(new SandboxEntityModel
@@ -172,9 +172,7 @@ namespace BusinessLogicLayer.Helpers
                         Id = SandboxId3,
                         Name = "PHP",
                         MaxCandidates = 33,
-                        Description = "PHP is a general - purpose scripting language especially suited to web development." +
-                        "It was originally created by Danish - Canadian programmer Rasmus Lerdorf in 1994." +
-                        "The PHP reference implementation is now produced by The PHP Group. ",
+                        Description = "PHP is a general - purpose scripting language! ",
                         CreateDate = new DateTime(2021, 10, 1),
                         StartDate = new DateTime(2021, 12, 2),
                         EndDate = new DateTime(2021, 12, 30),
@@ -200,12 +198,12 @@ namespace BusinessLogicLayer.Helpers
                         Id = SandboxId5,
                         Name = "QA",
                         MaxCandidates = 56,
-                        Description = "description QA",
+                        Description = "Talented QAs are welcome",
                         CreateDate = new DateTime(2021, 5, 1),
-                        StartDate = new DateTime(2021, 11, 16),
-                        EndDate = new DateTime(2021, 11, 30),
-                        StartRegistration = new DateTime(2021, 10, 10),
-                        EndRegistration = new DateTime(2021, 10, 15),
+                        StartDate = new DateTime(2021, 12, 16),
+                        EndDate = new DateTime(2021, 12, 30),
+                        StartRegistration = new DateTime(2021, 7, 10),
+                        EndRegistration = new DateTime(2021, 7, 15),
                         Status = StatusName.Active,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
@@ -227,12 +225,12 @@ namespace BusinessLogicLayer.Helpers
                         Name = "Manager",
                         MaxCandidates = 77,
                         Description = "description Manager",
-                        CreateDate = new DateTime(2021, 7, 1),
-                        StartDate = new DateTime(2021, 7, 2),
-                        EndDate = new DateTime(2021, 7, 3),
-                        StartRegistration = new DateTime(2021, 7, 4),
-                        EndRegistration = new DateTime(2021, 7, 5),
-                        Status = StatusName.Draft,
+                        CreateDate = new DateTime(2018, 7, 1),
+                        StartDate = new DateTime(2019, 7, 2),
+                        EndDate = new DateTime(2019, 7, 3),
+                        StartRegistration = new DateTime(2019, 7, 4),
+                        EndRegistration = new DateTime(2019, 7, 5),
+                        Status = StatusName.Active,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
@@ -240,12 +238,12 @@ namespace BusinessLogicLayer.Helpers
                         Name = "Basic QA",
                         MaxCandidates = 81,
                         Description = "For candidates without work experience",
-                        CreateDate = new DateTime(2021, 8, 1),
-                        StartDate = new DateTime(2021, 8, 2),
-                        EndDate = new DateTime(2021, 8, 3),
-                        StartRegistration = new DateTime(2021, 8, 4),
-                        EndRegistration = new DateTime(2021, 8, 5),
-                        Status = StatusName.Draft,
+                        CreateDate = new DateTime(2010, 8, 1),
+                        StartDate = new DateTime(2010, 3, 2),
+                        EndDate = new DateTime(2010, 4, 22),
+                        StartRegistration = new DateTime(2010, 12, 4),
+                        EndRegistration = new DateTime(2010, 12, 30),
+                        Status = StatusName.Active,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
@@ -254,26 +252,24 @@ namespace BusinessLogicLayer.Helpers
                         MaxCandidates = 81,
                         Description = "Backend, Frontend, FullStack",
                         CreateDate = new DateTime(2021, 8, 1),
-                        StartDate = new DateTime(2021, 8, 2),
-                        EndDate = new DateTime(2021, 8, 3),
-                        StartRegistration = new DateTime(2021, 8, 4),
-                        EndRegistration = new DateTime(2021, 8, 5),
-                        Status = StatusName.Draft,
+                        StartDate = new DateTime(2022, 3, 5),
+                        EndDate = new DateTime(2021, 4, 5),
+                        StartRegistration = new DateTime(2021, 12, 3),
+                        EndRegistration = new DateTime(2021, 12, 20),
+                        Status = StatusName.Active,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
                         Id = SandboxId11,
                         Name = "Pascal",
                         MaxCandidates = 81,
-                        Description = "Pascal is an imperative and procedural programming language, " +
-                        "designed by Niklaus Wirth as a small, " +
-                        "efficient language intended to encourage good programming practices",
+                        Description = "Pascal is an imperative and procedural programming language",
                         CreateDate = new DateTime(2021, 8, 1),
-                        StartDate = new DateTime(2021, 8, 2),
-                        EndDate = new DateTime(2021, 8, 3),
+                        StartDate = new DateTime(2021, 12, 12),
+                        EndDate = new DateTime(2021, 12, 30),
                         StartRegistration = new DateTime(2021, 8, 4),
                         EndRegistration = new DateTime(2021, 8, 5),
-                        Status = StatusName.Draft,
+                        Status = StatusName.Active,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
@@ -281,12 +277,12 @@ namespace BusinessLogicLayer.Helpers
                         Name = ".Net",
                         MaxCandidates = 81,
                         Description = "Only Backend",
-                        CreateDate = new DateTime(2021, 8, 1),
-                        StartDate = new DateTime(2021, 8, 2),
-                        EndDate = new DateTime(2021, 8, 3),
-                        StartRegistration = new DateTime(2021, 8, 4),
-                        EndRegistration = new DateTime(2021, 8, 5),
-                        Status = StatusName.Draft,
+                        CreateDate = new DateTime(2018, 8, 1),
+                        StartDate = new DateTime(2018, 8, 2),
+                        EndDate = new DateTime(2018, 8, 3),
+                        StartRegistration = new DateTime(2018, 8, 4),
+                        EndRegistration = new DateTime(2018, 8, 5),
+                        Status = StatusName.Active,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
@@ -294,12 +290,12 @@ namespace BusinessLogicLayer.Helpers
                         Name = "HR trainee",
                         MaxCandidates = 81,
                         Description = "Improve your soft skills",
-                        CreateDate = new DateTime(2021, 8, 1),
-                        StartDate = new DateTime(2021, 8, 2),
-                        EndDate = new DateTime(2021, 8, 3),
-                        StartRegistration = new DateTime(2021, 8, 4),
-                        EndRegistration = new DateTime(2021, 8, 5),
-                        Status = StatusName.Draft,
+                        CreateDate = new DateTime(2015, 8, 1),
+                        StartDate = new DateTime(2015, 8, 2),
+                        EndDate = new DateTime(2015, 8, 3),
+                        StartRegistration = new DateTime(2015, 8, 4),
+                        EndRegistration = new DateTime(2015, 8, 5),
+                        Status = StatusName.Active,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
@@ -308,11 +304,11 @@ namespace BusinessLogicLayer.Helpers
                         MaxCandidates = 81,
                         Description = "Busy work schedule",
                         CreateDate = new DateTime(2021, 8, 1),
-                        StartDate = new DateTime(2021, 8, 2),
-                        EndDate = new DateTime(2021, 8, 3),
-                        StartRegistration = new DateTime(2021, 8, 4),
-                        EndRegistration = new DateTime(2021, 8, 5),
-                        Status = StatusName.Draft,
+                        StartDate = new DateTime(2022, 2, 2),
+                        EndDate = new DateTime(2022, 3, 3),
+                        StartRegistration = new DateTime(2021, 10, 4),
+                        EndRegistration = new DateTime(2021, 10, 5),
+                        Status = StatusName.Active,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
@@ -321,11 +317,11 @@ namespace BusinessLogicLayer.Helpers
                         MaxCandidates = 81,
                         Description = "Only students",
                         CreateDate = new DateTime(2021, 8, 1),
-                        StartDate = new DateTime(2021, 8, 2),
-                        EndDate = new DateTime(2021, 8, 3),
-                        StartRegistration = new DateTime(2021, 8, 4),
-                        EndRegistration = new DateTime(2021, 8, 5),
-                        Status = StatusName.Draft,
+                        StartDate = new DateTime(2022, 5, 2),
+                        EndDate = new DateTime(2021, 6, 3),
+                        StartRegistration = new DateTime(2021, 12, 4),
+                        EndRegistration = new DateTime(2021, 12, 17),
+                        Status = StatusName.Active,
                     });
                     db.Sandboxes.Add(new SandboxEntityModel
                     {
@@ -671,14 +667,7 @@ namespace BusinessLogicLayer.Helpers
                     {
                         Id = Guid.NewGuid(),
                         SandboxId = SandboxId2,
-                        StackTechnologyId = StackTechnologyId2
-                    });
-
-                    db.SandboxStackTechnologies.Add(new SandboxStackTechnologyEntityModel
-                    {
-                        Id = Guid.NewGuid(),
-                        SandboxId = SandboxId2,
-                        StackTechnologyId = StackTechnologyId3
+                        StackTechnologyId = StackTechnologyId5
                     });
 
                     db.SandboxStackTechnologies.Add(new SandboxStackTechnologyEntityModel
@@ -686,6 +675,42 @@ namespace BusinessLogicLayer.Helpers
                         Id = Guid.NewGuid(),
                         SandboxId = SandboxId3,
                         StackTechnologyId = StackTechnologyId4
+                    });
+                    db.SandboxStackTechnologies.Add(new SandboxStackTechnologyEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        SandboxId = SandboxId9,
+                        StackTechnologyId = StackTechnologyId1
+                    });
+                    db.SandboxStackTechnologies.Add(new SandboxStackTechnologyEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        SandboxId = SandboxId9,
+                        StackTechnologyId = StackTechnologyId2
+                    });
+                    db.SandboxStackTechnologies.Add(new SandboxStackTechnologyEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        SandboxId = SandboxId10,
+                        StackTechnologyId = StackTechnologyId2
+                    });
+                    db.SandboxStackTechnologies.Add(new SandboxStackTechnologyEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        SandboxId = SandboxId10,
+                        StackTechnologyId = StackTechnologyId3
+                    });
+                    db.SandboxStackTechnologies.Add(new SandboxStackTechnologyEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        SandboxId = SandboxId15,
+                        StackTechnologyId = StackTechnologyId2
+                    });
+                    db.SandboxStackTechnologies.Add(new SandboxStackTechnologyEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        SandboxId = SandboxId14,
+                        StackTechnologyId = StackTechnologyId2
                     });
                     db.SaveChanges();
 
@@ -718,7 +743,7 @@ namespace BusinessLogicLayer.Helpers
                     {
                         Id = Guid.NewGuid(),
                         SandboxId = SandboxId2,
-                        LanguageId = LanguageId3
+                        LanguageId = LanguageId2
                     });
 
                     db.SandboxLanguages.Add(new SandboxLanguageEntityModel
@@ -733,6 +758,54 @@ namespace BusinessLogicLayer.Helpers
                         Id = Guid.NewGuid(),
                         SandboxId = SandboxId3,
                         LanguageId = LanguageId4
+                    });
+                    db.SandboxLanguages.Add(new SandboxLanguageEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        SandboxId = SandboxId9,
+                        LanguageId = LanguageId1
+                    });
+                    db.SandboxLanguages.Add(new SandboxLanguageEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        SandboxId = SandboxId9,
+                        LanguageId = LanguageId2
+                    });
+                    db.SandboxLanguages.Add(new SandboxLanguageEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        SandboxId = SandboxId10,
+                        LanguageId = LanguageId1
+                    });
+                    db.SandboxLanguages.Add(new SandboxLanguageEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        SandboxId = SandboxId10,
+                        LanguageId = LanguageId2
+                    });
+                    db.SandboxLanguages.Add(new SandboxLanguageEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        SandboxId = SandboxId15,
+                        LanguageId = LanguageId1
+                    });
+                    db.SandboxLanguages.Add(new SandboxLanguageEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        SandboxId = SandboxId15,
+                        LanguageId = LanguageId2
+                    });
+                    db.SandboxLanguages.Add(new SandboxLanguageEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        SandboxId = SandboxId14,
+                        LanguageId = LanguageId1
+                    });
+                    db.SandboxLanguages.Add(new SandboxLanguageEntityModel
+                    {
+                        Id = Guid.NewGuid(),
+                        SandboxId = SandboxId14,
+                        LanguageId = LanguageId2
                     });
                 }
                 db.SaveChanges();
@@ -1360,7 +1433,7 @@ namespace BusinessLogicLayer.Helpers
                     {
                         Id = Guid.NewGuid(),
                         Name = "TestTaskUrl",
-                        Value = "localhost:4200/download-files"
+                        Value = "http://64.227.114.210:9090/api/testtasks"
                     });
                     db.AppSettings.Add(new AppSettingEntityModel
                     {

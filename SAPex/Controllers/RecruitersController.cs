@@ -18,17 +18,23 @@ namespace SAPex.Controllers
         private readonly IUserService _userService;
         private readonly IUserCandidateSandboxService _userCandidateSandboxService;
         private readonly ICandidateService _candidateService;
+        private readonly IStatusService _statusService;
+        private readonly ICandidateSandboxService _candidateSandboxService;
         private readonly RecruiterMapper _mapper = new RecruiterMapper();
         private readonly CandidateMapper _candidateMapper;
 
         public RecruitersController(IUserService userService,
             IUserCandidateSandboxService userCandidateSandboxService,
             ICandidateService candidateService,
+            IStatusService statusService,
+            ICandidateSandboxService candidateSandboxService,
             CandidateMapper candidateMapper)
         {
             _userService = userService;
             _userCandidateSandboxService = userCandidateSandboxService;
             _candidateService = candidateService;
+            _statusService = statusService;
+            _candidateSandboxService = candidateSandboxService;
             _candidateMapper = candidateMapper;
         }
 
@@ -90,6 +96,16 @@ namespace SAPex.Controllers
         public async Task<IActionResult> AssignCandidatesToRecruiter([FromRoute] Guid id, [FromBody] IEnumerable<Guid> candidateSandboxIds)
         {
             await _userCandidateSandboxService.AddUserCandidateSandboxesAsync(id, candidateSandboxIds);
+            StatusDtoModel status = await _statusService.FindStatusByConditionAsync(x => x.Name == "Test");
+
+            if (candidateSandboxIds != null)
+            {
+                foreach (var candSandId in candidateSandboxIds)
+                {
+                    var candidateSandbox = await _candidateSandboxService.GetByIdAsync(candSandId);
+                    await _candidateService.UpdateCandidateStatus(candidateSandbox.CandidateId, candSandId, status.Id);
+                }
+            }
 
             return await Task.FromResult(Ok());
         }
