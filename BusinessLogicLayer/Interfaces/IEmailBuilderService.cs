@@ -12,5 +12,7 @@ namespace BusinessLogicLayer.Interfaces
         Task<string> BuildEmailSubject();
 
         Task<string> BuildEmailBody();
+
+        void Init(EmailBodyBuilderModel emailBodyBuilderModel);
     }
 }

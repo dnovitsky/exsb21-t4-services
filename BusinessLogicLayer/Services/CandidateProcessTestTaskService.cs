@@ -37,7 +37,7 @@ namespace BusinessLogicLayer.Services
                     CandidateProcessId = candidateProcessId,
                     TestFileId = candidateProccessTestTaskDM.TestFileId,
                     EndTestDate = candidateProccessTestTaskDM.EndTestDate.ToUniversalTime(),
-                    LinkDownloadToken = testTaskTokenService.GetToken(email, candidateProcessId)
+                    Token = candidateProccessTestTaskDM.Token
                 });
                 await unitOfWork.SaveAsync();
 
@@ -47,19 +47,22 @@ namespace BusinessLogicLayer.Services
             return null;
         }
 
-        public async Task<string> AddCandidateResponseTestFileAsync(Guid candidateProccessTestTaskId, Guid candidateResponseTestFileId)
+        public async Task<string> AddCandidateResponseTestFileAsync(Guid candidateProccessId, Guid candidateResponseTestFileId)
         {
             try
             {
-                var candidateProccessTestTaskEM = await unitOfWork.CandidateProccessTestTasks.FindByIdAsync(candidateProccessTestTaskId);
-                var email = getEmailFromCandidateProccessTestTask(candidateProccessTestTaskEM);
+                var candidateProccessTestTasksEM = await unitOfWork.CandidateProccessTestTasks.FindByConditionAsync(x => x.CandidateProcessId.Equals(candidateProccessId));
+                var email = getEmailFromCandidateProccessTestTask(candidateProccessTestTasksEM.FirstOrDefault());
 
-                if (isValid(candidateProccessTestTaskEM, email))
+                foreach (var candidateProccessTestTaskEM in candidateProccessTestTasksEM)
                 {
-                    candidateProccessTestTaskEM.CandidateResponseTestFileId = candidateResponseTestFileId;
-                    await unitOfWork.SaveAsync();
+                    if (isValid(candidateProccessTestTaskEM, email))
+                    {
+                        candidateProccessTestTaskEM.CandidateResponseTestFileId = candidateResponseTestFileId;
+                        await unitOfWork.SaveAsync();
 
-                    return "Added candidate test file";
+                        return "Added candidate test file";
+                    }
                 }
 
                 return "Data is invalid";
@@ -71,10 +74,10 @@ namespace BusinessLogicLayer.Services
             }
         }
 
-        public async Task<CandidateProcessTestTaskDtoModel> GetCandidateProcessTestTaskByIdAsync(Guid candidateProccessTestTaskId)
+        public async Task<CandidateProcessTestTaskDtoModel> GetCandidateProcessTestTasksByCandidateProcessIdAsync(Guid candidateProcessId)
         {
-            var candidateProccessTestTaskEM = await unitOfWork.CandidateProccessTestTasks.FindByIdAsync(candidateProccessTestTaskId);
-            return profile.mapToDto(candidateProccessTestTaskEM);
+            var candidateProccessTestTasksEM = await unitOfWork.CandidateProccessTestTasks.FindByConditionAsync(x => x.CandidateProcessId.Equals(candidateProcessId));
+            return profile.mapToDto(candidateProccessTestTasksEM.LastOrDefault());
         }
 
         public async Task<IEnumerable<CandidateProcessTestTaskDtoModel>> GetCandidateProcessTestTasksAsync()
@@ -90,7 +93,7 @@ namespace BusinessLogicLayer.Services
                 var isUpdated = false;
                 var candidateProccessTestTaskEM = await unitOfWork.CandidateProccessTestTasks.FindByIdAsync(candidateProccessTestTaskId);
                 var email = getEmailFromCandidateProccessTestTask(candidateProccessTestTaskEM);
-                var currentToken = candidateProccessTestTaskEM.LinkDownloadToken;
+                var currentToken = candidateProccessTestTaskEM.Token;
 
                 if (updateCandidateProccessTestTaskDM.TestFileId != null)
                 {
@@ -107,9 +110,9 @@ namespace BusinessLogicLayer.Services
                     candidateProccessTestTaskEM.CandidateResponseTestFileId = (Guid)updateCandidateProccessTestTaskDM.CandidateResponseTestFileId;
                     isUpdated = true;
                 }
-                if (updateCandidateProccessTestTaskDM.LinkDownloadToken != "" && testTaskTokenService.GetEmailByToken(currentToken).Equals(email))
+                if (updateCandidateProccessTestTaskDM.Token != "" && testTaskTokenService.GetEmailByToken(currentToken).Equals(email))
                 {
-                    candidateProccessTestTaskEM.LinkDownloadToken = updateCandidateProccessTestTaskDM.LinkDownloadToken;
+                    candidateProccessTestTaskEM.Token = updateCandidateProccessTestTaskDM.Token;
                     isUpdated = true;
                 }
 
@@ -141,12 +144,11 @@ namespace BusinessLogicLayer.Services
             {
                 return false;
             }
-
         }
 
         private bool isValid(CandidateProcessTestTaskEntityModel candidateProccessTestTaskEM, string email)
         {
-            var token = candidateProccessTestTaskEM.LinkDownloadToken;
+            var token = candidateProccessTestTaskEM.Token;
 
             return candidateProccessTestTaskEM.CandidateResponseTestFileId == null 
                 && DateTime.UtcNow <= candidateProccessTestTaskEM.EndTestDate

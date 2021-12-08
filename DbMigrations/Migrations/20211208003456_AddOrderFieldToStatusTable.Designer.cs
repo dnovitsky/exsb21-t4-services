@@ -4,14 +4,16 @@ using DbMigrations.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DbMigrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211208003456_AddOrderFieldToStatusTable")]
+    partial class AddOrderFieldToStatusTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,14 +230,14 @@ namespace DbMigrations.Migrations
                     b.Property<DateTime>("EndTestDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("LinkDownloadToken")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("SendTestDate")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("TestFileId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Token")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

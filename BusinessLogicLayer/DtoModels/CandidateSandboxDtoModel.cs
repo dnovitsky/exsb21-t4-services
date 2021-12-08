@@ -10,7 +10,17 @@ namespace BusinessLogicLayer.DtoModels
     {
         public Guid Id { get; set; }
 
+        public string Motivation { get; set; }
+
         public string CurrentJob { get; set; }
+
+        public string TimeContact { get; set; }
+
+        public bool IsJoinToExadel { get; set; }
+
+        public bool IsAgreement { get; set; }
+
+        public StackTechnologyDtoModel PrimaryTechnology { get; set; }
 
         public SandboxDtoModel Sandbox { get; set; }
 
