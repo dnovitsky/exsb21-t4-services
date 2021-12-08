@@ -8,13 +8,12 @@ using System.Threading.Tasks;
 
 namespace DbMigrations.EntityModels
 {
-    public class StatusEntityModel : NameEntityModel
+    public class StatusEntityModel : OrderLevelEntityModel
     {
         public StatusEntityModel() : base()
         {
             CandidatesProcceses = new List<CandidateProcesEntityModel>();
         }
-
         public virtual IList<CandidateProcesEntityModel> CandidatesProcceses { get; set; }
     }
 }

@@ -9,9 +9,19 @@ namespace SAPex.Models
     {
         public Guid Id { get; set; }
 
-        public SandboxViewModel Sandbox { get; set; }
+        public string Motivation { get; set; }
 
         public string CurrentJob { get; set; }
+
+        public string TimeContact { get; set; }
+
+        public bool IsJoinToExadel { get; set; }
+
+        public bool IsAgreement { get; set; }
+
+        public StackTechnologyViewModel PrimaryTechnology { get; set; }
+
+        public SandboxViewModel Sandbox { get; set; }
 
         public IEnumerable<CandidateProcessViewModel> CandidateProcesses { get; set; }
 

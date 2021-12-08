@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SAPex.Controllers.Mapping;
 using SAPexAuthService.Models;
 using SAPexAuthService.Services;
 using SAPexGoogleSupportService.Interfaces;
@@ -127,6 +128,8 @@ namespace SAPex
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<IStatusService, StatusService>();
             services.AddScoped<IEmailService, EmailService>();
+
+            services.AddScoped<CandidateMapper, CandidateMapper>();
 
             services.AddScoped<IUserCandidateSandboxService, UserCandidateSandboxService>();
 
