@@ -874,6 +874,34 @@ namespace BusinessLogicLayer.Helpers
                         UserId = UserId9,
                         SandBoxId = SandboxId3,
                     });
+
+                    db.UserSandBoxes.Add(new UserSandBoxEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId1,
+                        SandBoxId = SandboxId9,
+                    });
+
+                    db.UserSandBoxes.Add(new UserSandBoxEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId2,
+                        SandBoxId = SandboxId9,
+                    });
+
+                    db.UserSandBoxes.Add(new UserSandBoxEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId3,
+                        SandBoxId = SandboxId9,
+                    });
+
+                    db.UserSandBoxes.Add(new UserSandBoxEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId4,
+                        SandBoxId = SandboxId9,
+                    });
                 }
                 db.SaveChanges();
 
@@ -1433,19 +1461,19 @@ namespace BusinessLogicLayer.Helpers
                     {
                         Id = Guid.NewGuid(),
                         Name = "TestTaskUrl",
-                        Value = "http://64.227.114.210:9090/api/testtasks"
+                        Value = "http://64.227.114.210:9090/api/testtasks/"
                     });
                     db.AppSettings.Add(new AppSettingEntityModel
                     {
                         Id = Guid.NewGuid(),
                         Name = "TestResultUrl",
-                        Value = "localhost:4200/upload-files"
+                        Value = "localhost:4200/upload-files/"
                     });
                     db.AppSettings.Add(new AppSettingEntityModel
                     {
                         Id = Guid.NewGuid(),
                         Name = "TestTaskLifeTime",
-                        Value = (2 * (24 * 60 * 60 * 1000)).ToString()
+                        Value = "48"
                     });
                     db.AppSettings.Add(new AppSettingEntityModel
                     {

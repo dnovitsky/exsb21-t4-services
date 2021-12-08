@@ -27,5 +27,12 @@ namespace BusinessLogicLayer.Services
             CandidateSandboxEntityModel candidateSandbox = await unitOfWork.CandidateSandboxes.FindByIdAsync(id);
             return candidateSandbox;
         }
+
+        public async Task<CandidateSandboxEntityModel> GetByProccessIdAsync(Guid processId)
+        {
+            var candidateProccess = await unitOfWork.CandidateProcceses.FindByIdAsync(processId);
+            CandidateSandboxEntityModel candidateSandbox = await unitOfWork.CandidateSandboxes.FindByIdAsync(candidateProccess.CandidateSandboxId);
+            return candidateSandbox;
+        }
     }
 }

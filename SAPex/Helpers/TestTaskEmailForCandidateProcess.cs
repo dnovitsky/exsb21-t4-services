@@ -85,7 +85,7 @@ namespace SAPex.Helpers
 
                 _emailBuilderService.Init(new EmailBodyBuilderModel()
                 {
-                    Name = await TemplateHelper.GenerateName(candidate),
+                    Name = await TemplateHelper.GenerateFullName(candidate),
                     SandboxName = candidateSandbox.Sandbox.Name,
                     TestTaskDownloadUrl = await _testTaskRouteService.GetDownloadUrl(),
                     TestTaskUploadUrl = await _testTaskRouteService.GetUploadPageUrl(),
@@ -99,7 +99,7 @@ namespace SAPex.Helpers
                     Head = await _emailBuilderService.BuildEmailSubject(),
                     Message = await _emailBuilderService.BuildEmailBody(),
                     EmailTo = candidate.Email,
-                    Status = EmailStatusType.None,
+                    Status = EmailStatusType.ReadyForSend,
                 });
 
                 return true;
@@ -110,7 +110,8 @@ namespace SAPex.Helpers
             }
         }
 
-        private async Task<CandidateProcessTestTaskDtoModel> CreateCandidateProcessTestTask(CandidateProcesEntityModel candidateProcess, string endTestDate)
+        private async Task<CandidateProcessTestTaskDtoModel> CreateCandidateProcessTestTask(
+            CandidateProcesEntityModel candidateProcess, string timePeriod)
         {
             try
             {
@@ -119,7 +120,7 @@ namespace SAPex.Helpers
                 var email = candidateProcess.CandidateSandbox.Candidate.Email;
                 var token = _testTaskTokenService.GetToken(email, candidateProcess.Id);
                 var startDate = DateTime.UtcNow;
-                var endDate = startDate + TimeSpan.FromMilliseconds(startDate.Millisecond + double.Parse(endTestDate));
+                var endDate = startDate.AddDays(Convert.ToDouble(timePeriod));
 
                 var candidateProcessTestTask = await _candidateProcessTestTaskService.CreateCandidateProcessTestTaskAsync(new CandidateProcessTestTaskDtoModel(
                     candidateProcess.Id,
