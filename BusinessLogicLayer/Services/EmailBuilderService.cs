@@ -29,9 +29,9 @@ namespace BusinessLogicLayer.Services
 
             sb.AppendFormat("<br>we are happy to tell you that you have passed the next stage of the internship {0}", model.SandboxName);
             sb.Append("<br><br>");
-            sb.AppendFormat("If you want continue your adventure you should download test task from {0} .", model.TestTaskDownloadUrl);
+            sb.AppendFormat("If you want continue your adventure you should download test task from <a href='{0}'>here</a>.", model.TestTaskDownloadUrl);
             sb.Append("<br><br>");
-            sb.AppendFormat("After that you should upload your solution at {0}", model.TestTaskUploadUrl);
+            sb.AppendFormat("After that you should upload your solution at <a href='{0}'>this page</a>.", model.TestTaskUploadUrl);
             sb.Append("<br><br>");
             sb.AppendFormat("You have {0} hours to upload your solution.", model.TestTaskLifeTime);
 

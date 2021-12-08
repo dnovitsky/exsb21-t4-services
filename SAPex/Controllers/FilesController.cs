@@ -123,7 +123,7 @@ namespace SAPex.Controllers
             }
 
             fileDtoModel.Category = (FileCategory)fileCategory;
-            bool check = await _fileService.UpdateFileCategory(fileDtoModel);
+            bool check = _fileService.UpdateFileCategory(fileDtoModel);
 
             return await Task.FromResult(Ok(check));
         }

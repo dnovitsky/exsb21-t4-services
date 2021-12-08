@@ -1467,7 +1467,7 @@ namespace BusinessLogicLayer.Helpers
                     {
                         Id = Guid.NewGuid(),
                         Name = "TestResultUrl",
-                        Value = "localhost:4200/upload-files/"
+                        Value = "http://localhost:5001/upload-files/"
                     });
                     db.AppSettings.Add(new AppSettingEntityModel
                     {
