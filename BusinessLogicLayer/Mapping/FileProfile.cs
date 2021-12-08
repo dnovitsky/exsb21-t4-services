@@ -32,6 +32,7 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.FileName, y => y.MapFrom(x => x.FileName))
                     .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate))
                     .ForMember(x => x.Category, y => y.MapFrom(x => x.Category))
+                    .ForMember(x => x.CategoryName, y => y.MapFrom(x => x.Category.ToString()))
                     .ForMember(x => x.StackTechnologyId, y => y.MapFrom(x => x.StackTechnologyId)));
             var mapper = new Mapper(config);
 
@@ -46,6 +47,7 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.FileName, y => y.MapFrom(x => x.FileName))
                     .ForMember(x => x.CreateDate, y => y.MapFrom(x => x.CreateDate))
                     .ForMember(x => x.Category, y => y.MapFrom(x => x.Category))
+                    .ForMember(x => x.CategoryName, y => y.MapFrom(x => x.Category.ToString()))
                     .ForMember(x => x.StackTechnologyId, y => y.MapFrom(x => x.StackTechnologyId)));
             var mapper = new Mapper(config);
 

@@ -12,6 +12,8 @@ namespace BusinessLogicLayer.Interfaces
         Task<bool> AddFileAsync(FileDtoModel fileDto);
         Task<IEnumerable<FileDtoModel>> GetAllFilesAsync();
         Task<FileDtoModel> FindFileByIdAsync(Guid id);
+
+        Task<bool> UpdateFileCategory(FileDtoModel fileDto);
         void DeleteFileById(Guid id);
 
     }
