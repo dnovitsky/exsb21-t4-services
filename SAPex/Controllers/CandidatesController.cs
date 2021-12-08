@@ -20,17 +20,18 @@ namespace SAPex.Controllers
     [Route("api/candidates")]
     public class CandidatesController : ControllerBase
     {
-        protected readonly CandidateMapper profile = new CandidateMapper();
+        protected readonly CandidateMapper _profile;
         private readonly ICandidateService _service;
         private readonly InputParametrsMapper _inputParamersMapper;
         private readonly CandidateFilterParametrsMapper _candidateFilterParametrsMapper;
         private readonly TestTaskEmailForCandidateProcess _testTaskEmailForCandidateProcess;
 
-        public CandidatesController(ICandidateService service, TestTaskEmailForCandidateProcess testTaskEmailForCandidateProcess)
+        public CandidatesController(ICandidateService service, CandidateMapper profile, TestTaskEmailForCandidateProcess testTaskEmailForCandidateProcess)
         {
             _service = service;
             _inputParamersMapper = new InputParametrsMapper();
             _candidateFilterParametrsMapper = new CandidateFilterParametrsMapper();
+            _profile = profile;
             _testTaskEmailForCandidateProcess = testTaskEmailForCandidateProcess;
         }
 
@@ -41,7 +42,7 @@ namespace SAPex.Controllers
 
             if (candiddatesDto != null)
             {
-                var candidatesVM = profile.MapCandidateDtoToVM(candiddatesDto);
+                var candidatesVM = _profile.MapCandidateDtoToVM(candiddatesDto);
 
                 return await Task.FromResult(Ok(candidatesVM));
             }
@@ -56,7 +57,7 @@ namespace SAPex.Controllers
 
             if (candiddateDto != null)
             {
-                var candidateVM = profile.MapCandidateDtoToVM(candiddateDto);
+                var candidateVM = _profile.MapCandidateDtoToVM(candiddateDto);
 
                 return await Task.FromResult(Ok(candidateVM));
             }
@@ -67,11 +68,11 @@ namespace SAPex.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateCandidateViewModel requestData)
         {
-            var candiddateDto = await _service.AddCandidateAsync(profile.MapNewCandidateToDto(requestData));
+            var candiddateDto = await _service.AddCandidateAsync(_profile.MapNewCandidateToDto(requestData));
 
             if (candiddateDto != null)
             {
-                var candidateVM = profile.MapCandidateDtoToVM(candiddateDto);
+                var candidateVM = _profile.MapCandidateDtoToVM(candiddateDto);
                 return await Task.FromResult(Ok(candidateVM));
             }
 
@@ -89,7 +90,7 @@ namespace SAPex.Controllers
 
             foreach (var item in dtoPageListModels.PageList)
             {
-                viewModels.Add(profile.MapCandidateDtoToVM(item));
+                viewModels.Add(_profile.MapCandidateDtoToVM(item));
             }
 
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(dtoPageListModels.TotalPages));
