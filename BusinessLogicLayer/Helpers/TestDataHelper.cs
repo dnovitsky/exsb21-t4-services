@@ -882,7 +882,7 @@ namespace BusinessLogicLayer.Helpers
                     db.Statuses.Add(new StatusEntityModel
                     {
                         Id = statusGuid2,
-                        Name = "Rejected",
+                        Name = "Rejected by a recruiter",
                         OrderLevel = 1
                     });
                     db.Statuses.Add(new StatusEntityModel
@@ -912,19 +912,19 @@ namespace BusinessLogicLayer.Helpers
                     db.Statuses.Add(new StatusEntityModel
                     {
                         Id = statusGuid7,
-                        Name = "Interview Tech",
+                        Name = "Interview Rejected",
                         OrderLevel = 6
                     });
                     db.Statuses.Add(new StatusEntityModel
                     {
                         Id = statusGuid8,
-                        Name = "Interview Rejected",
+                        Name = "Interview Tech",
                         OrderLevel = 7
                     });
                     db.Statuses.Add(new StatusEntityModel
                     {
                         Id = statusGuid9,
-                        Name = "In Processing",
+                        Name = "Participant",
                         OrderLevel = 8
                     });
                     db.Statuses.Add(new StatusEntityModel

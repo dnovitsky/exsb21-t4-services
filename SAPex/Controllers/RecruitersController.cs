@@ -19,15 +19,17 @@ namespace SAPex.Controllers
         private readonly IUserCandidateSandboxService _userCandidateSandboxService;
         private readonly ICandidateService _candidateService;
         private readonly RecruiterMapper _mapper = new RecruiterMapper();
-        private readonly CandidateMapper _candidateMapper = new CandidateMapper();
+        private readonly CandidateMapper _candidateMapper;
 
         public RecruitersController(IUserService userService,
             IUserCandidateSandboxService userCandidateSandboxService,
-            ICandidateService candidateService)
+            ICandidateService candidateService,
+            CandidateMapper candidateMapper)
         {
             _userService = userService;
             _userCandidateSandboxService = userCandidateSandboxService;
             _candidateService = candidateService;
+            _candidateMapper = candidateMapper;
         }
 
         [HttpGet]

@@ -118,12 +118,13 @@ namespace BusinessLogicLayer.Services
         {
             var candidateSandboxe = await unitOfWork.CandidateSandboxes.FindByIdAsync(candidateSandboxId);
             var status = await unitOfWork.Statuses.FindByIdAsync(newStatusId);
-            var isStatusValid = candidateSandboxe != null
+            var candidatStatuses = candidateSandboxe.CandidateProcesses.Select(x => x.Status);
+            var isValid = candidateSandboxe != null
                 && status != null
                 && candidateSandboxe.CandidateId.Equals(candidateId)
-                && !candidateSandboxe.CandidateProcesses.Where(x => x.StatusId.Equals(newStatusId)).Any();
+                && await IsValidStatus(status, candidatStatuses);
 
-            if (isStatusValid)
+            if (isValid)
             {
                 var process = new CandidateProcesEntityModel();
                 process.StatusId = newStatusId;
@@ -218,6 +219,19 @@ namespace BusinessLogicLayer.Services
             }
 
             return location;
+        }
+
+        private async Task<bool> IsValidStatus(StatusEntityModel newStatus, IEnumerable<StatusEntityModel> statuses)
+        {
+            return await Task.Run(() => {
+                var orderLevel = newStatus.OrderLevel;
+                if(!statuses.Where(x => x.Id.Equals(newStatus.Id)).Any())
+                {
+                    return true;
+                }
+
+                return false;
+            });
         }
     }
 }

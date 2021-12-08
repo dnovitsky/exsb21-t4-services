@@ -14,7 +14,6 @@ namespace DbMigrations.EntityModels
         {
             CandidatesProcceses = new List<CandidateProcesEntityModel>();
         }
-        public Nullable<int> Progress { get; set; } = null;
         public virtual IList<CandidateProcesEntityModel> CandidatesProcceses { get; set; }
     }
 }

@@ -134,9 +134,9 @@ namespace DataAccessLayer.Repositories
             return getActualCandidateSandboxes(candidateEM).Sandbox.Name;
         }
 
-        private string getStatusNameFromCandidateProcesses(CandidateEntityModel candidateEM)
+        private int getStatusNameFromCandidateProcesses(CandidateEntityModel candidateEM)
         {
-            return getActualCandidateSandboxes(candidateEM).CandidateProcesses.LastOrDefault().Status.Name;
+            return getActualCandidateSandboxes(candidateEM).CandidateProcesses.LastOrDefault().Status.OrderLevel;
         }
     }
 }
