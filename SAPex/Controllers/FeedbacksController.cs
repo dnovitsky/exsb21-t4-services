@@ -18,12 +18,24 @@ namespace SAPex.Controllers
     {
         private readonly IFeedbackService _feedbackService;
         private readonly IUserService _userService;
+        private readonly ICandidateSandboxService _candidateSandboxService;
+        private readonly IUserSandboxService _userSandboxService;
+        private readonly IStatusService _statusService;
+        private readonly ICandidateService _candidateService;
         private readonly FeedbackMapper _mapper = new FeedbackMapper();
 
-        public FeedbacksController(IFeedbackService service, IUserService userService)
+        public FeedbacksController(IFeedbackService service, IUserService userService,
+            ICandidateSandboxService candidateSandboxService,
+            IStatusService statusService,
+            ICandidateService candidateService,
+            IUserSandboxService userSandboxService)
         {
             _feedbackService = service;
             _userService = userService;
+            _candidateSandboxService = candidateSandboxService;
+            _statusService = statusService;
+            _candidateService = candidateService;
+            _userSandboxService = userSandboxService;
         }
 
         [HttpGet("{id}")]
@@ -45,6 +57,15 @@ namespace SAPex.Controllers
 
             feedbackVM.CreateDate = DateTime.UtcNow;
             feedbackVM.Author = $"{user.Name} {user.Surname}";
+
+            if (user.Roles.FirstOrDefault() == "Recruiter")
+            {
+                StatusDtoModel status = await _statusService.FindStatusByConditionAsync(x => x.Name == "Participant");
+                Guid processId = feedbackVM.CandidateProccesId;
+                var candidateSandbox = await _candidateSandboxService.GetByProccessIdAsync(processId);
+
+                await _candidateService.UpdateCandidateStatus(candidateSandbox.CandidateId, candidateSandbox.Id, status.Id);
+            }
 
             FeedbackDtoModel feedbackDto = _mapper.ViewToDto(feedbackVM);
             Guid feedbackId = await _feedbackService.CreateFeedbackAsync(feedbackDto);

@@ -17,14 +17,20 @@ namespace SAPex.Controllers
         private readonly ICandidateService _candidateservice;
         private readonly ICandidateProcessTestTaskService _candidateProcessTestTaskService;
         private readonly IFileService _fileService;
+        private readonly IStatusService _statusService;
+        private readonly ICandidateSandboxService _candidateSandboxService;
 
         public TestResultsController(ICandidateService candidateservice,
             IFileService fileservice,
-            ICandidateProcessTestTaskService candidateProcessTestTaskService)
+            ICandidateProcessTestTaskService candidateProcessTestTaskService,
+            IStatusService statusService,
+            ICandidateSandboxService candidateSandboxService)
         {
             _candidateservice = candidateservice;
             _fileService = fileservice;
             _candidateProcessTestTaskService = candidateProcessTestTaskService;
+            _statusService = statusService;
+            _candidateSandboxService = candidateSandboxService;
         }
 
         [HttpPost]
@@ -33,6 +39,7 @@ namespace SAPex.Controllers
             var fileId = testResultsViewModel.FileId;
             var token = testResultsViewModel.Token;
 
+            StatusDtoModel status = await _statusService.FindStatusByConditionAsync(x => x.Name == "Need verification");
             var candidateprocesstasks = await _candidateProcessTestTaskService.GetCandidateProcessTestTasksAsync();
             var candidateprocesstask = candidateprocesstasks.Where(c => c != null && c.Token == token).FirstOrDefault();
 
@@ -45,6 +52,12 @@ namespace SAPex.Controllers
             {
                 return await Task.FromResult(BadRequest("The task has timed out"));
             }
+
+            Guid processId = candidateprocesstask.CandidateProcessId;
+
+            var candidateSandbox = await _candidateSandboxService.GetByProccessIdAsync(processId);
+
+            await _candidateservice.UpdateCandidateStatus(candidateSandbox.CandidateId, candidateSandbox.Id, status.Id);
 
             await _candidateProcessTestTaskService.AddCandidateResponseTestFileAsync(candidateprocesstask.Id, fileId);
 

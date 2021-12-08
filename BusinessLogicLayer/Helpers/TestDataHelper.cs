@@ -874,6 +874,34 @@ namespace BusinessLogicLayer.Helpers
                         UserId = UserId9,
                         SandBoxId = SandboxId3,
                     });
+
+                    db.UserSandBoxes.Add(new UserSandBoxEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId1,
+                        SandBoxId = SandboxId9,
+                    });
+
+                    db.UserSandBoxes.Add(new UserSandBoxEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId2,
+                        SandBoxId = SandboxId9,
+                    });
+
+                    db.UserSandBoxes.Add(new UserSandBoxEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId3,
+                        SandBoxId = SandboxId9,
+                    });
+
+                    db.UserSandBoxes.Add(new UserSandBoxEntityModel
+                    {
+                        Id = new Guid(),
+                        UserId = UserId4,
+                        SandBoxId = SandboxId9,
+                    });
                 }
                 db.SaveChanges();
 
