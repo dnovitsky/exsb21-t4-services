@@ -10,6 +10,7 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SAPex.Controllers.Mapping;
+using SAPex.Helpers;
 using SAPex.Mappers;
 using SAPex.Models;
 
@@ -19,17 +20,19 @@ namespace SAPex.Controllers
     [Route("api/candidates")]
     public class CandidatesController : ControllerBase
     {
-        protected readonly CandidateMapper _profile;
         private readonly ICandidateService _service;
         private readonly InputParametrsMapper _inputParamersMapper;
         private readonly CandidateFilterParametrsMapper _candidateFilterParametrsMapper;
+        private readonly TestTaskEmailForCandidateProcess _testTaskEmailForCandidateProcess;
+        private readonly CandidateMapper _profile;
 
-        public CandidatesController(ICandidateService service, CandidateMapper profile)
+        public CandidatesController(ICandidateService service, TestTaskEmailForCandidateProcess testTaskEmailForCandidateProcess, CandidateMapper profile)
         {
             _service = service;
             _inputParamersMapper = new InputParametrsMapper();
             _candidateFilterParametrsMapper = new CandidateFilterParametrsMapper();
             _profile = profile;
+            _testTaskEmailForCandidateProcess = testTaskEmailForCandidateProcess;
         }
 
         [HttpGet]
@@ -98,9 +101,9 @@ namespace SAPex.Controllers
         [HttpPut("{id}/candidatesandboxes/{candidateSandboxId}")]
         public async Task<IActionResult> Put([FromRoute] Guid id, [FromRoute] Guid candidateSandboxId, [FromQuery] Guid newStatusId)
         {
-            var isUpdatedo = await _service.UpdateCandidateStatus(id, candidateSandboxId, newStatusId);
+            var isUpdated = await _service.UpdateCandidateStatus(id, candidateSandboxId, newStatusId);
 
-            IActionResult actionResult = isUpdatedo ? Ok() : Conflict();
+            IActionResult actionResult = isUpdated ? Ok() : Conflict();
 
             return await Task.FromResult(actionResult);
         }
@@ -108,6 +111,22 @@ namespace SAPex.Controllers
         [HttpDelete("{id}")]
         public void Delete([FromRoute] Guid id)
         {
+        }
+
+        [HttpPost("send-test-task")]
+        public async Task<IActionResult> Post([FromBody] IList<Guid> processIdList)
+        {
+            try
+            {
+                var isSend = await _testTaskEmailForCandidateProcess.SendTestTaskEmailForCandidate(processIdList);
+                IActionResult actionResult = isSend ? Ok("Test tasks have been sent by mail") : Conflict();
+
+                return await Task.FromResult(actionResult);
+            }
+            catch (Exception ex)
+            {
+                return await Task.FromResult(Conflict());
+            }
         }
     }
 }

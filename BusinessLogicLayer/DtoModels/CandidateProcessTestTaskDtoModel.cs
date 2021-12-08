@@ -10,12 +10,13 @@ namespace BusinessLogicLayer.DtoModels
     {
         public CandidateProcessTestTaskDtoModel() { }
 
-        public CandidateProcessTestTaskDtoModel(Guid candidateProcessId, Guid testFileId, DateTime endTestDate, string linkDownloadToken = "")
+        public CandidateProcessTestTaskDtoModel(Guid candidateProcessId, Guid testFileId, DateTime startTestDate, DateTime endTestDate, string token = "")
         {
             CandidateProcessId = candidateProcessId;
             TestFileId = testFileId;
+            SendTestDate = startTestDate;
             EndTestDate = endTestDate;
-            LinkDownloadToken = linkDownloadToken;
+            Token = token;
         }
 
         public Guid Id { get; set; } = Guid.NewGuid();
@@ -30,6 +31,6 @@ namespace BusinessLogicLayer.DtoModels
 
         public DateTime EndTestDate { get; set; }
 
-        public string LinkDownloadToken { get; set; } = "";
+        public string Token { get; set; } = "";
     }
 }

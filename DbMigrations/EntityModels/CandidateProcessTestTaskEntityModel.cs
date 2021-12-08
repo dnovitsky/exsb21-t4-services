@@ -37,6 +37,6 @@ namespace DbMigrations.EntityModels
 
         public DateTime EndTestDate { get; set; }
 
-        public string LinkDownloadToken { get; set; } = "";
+        public string Token { get; set; } = "";
     }
 }

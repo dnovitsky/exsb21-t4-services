@@ -24,6 +24,10 @@ namespace SAPex.Controllers.Mapping
         private ILanguageService _languageService;
         private IUserService _userService;
 
+        public CandidateMapper()
+        {
+        }
+
         public CandidateMapper(IStackTechnologyService stackTechnologyService, ILanguageService languageService,
             IUserService userService)
         {

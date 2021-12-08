@@ -41,8 +41,7 @@ namespace SAPex.Controllers
 
             StatusDtoModel status = await _statusService.FindStatusByConditionAsync(x => x.Name == "Need verification");
             var candidateprocesstasks = await _candidateProcessTestTaskService.GetCandidateProcessTestTasksAsync();
-
-            var candidateprocesstask = candidateprocesstasks.Where(c => c != null && c.LinkDownloadToken == token).FirstOrDefault();
+            var candidateprocesstask = candidateprocesstasks.Where(c => c != null && c.Token == token).FirstOrDefault();
 
             if (candidateprocesstask == null)
             {

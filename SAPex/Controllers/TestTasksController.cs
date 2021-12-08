@@ -26,7 +26,7 @@ namespace SAPex.Controllers
         {
             var candidateprocesstasks = await _candidatettservise.GetCandidateProcessTestTasksAsync();
 
-            var candidateprocesstask = candidateprocesstasks.Where(c => c != null && c.LinkDownloadToken == token).FirstOrDefault();
+            var candidateprocesstask = candidateprocesstasks.Where(c => c != null && c.Token == token).FirstOrDefault();
 
             if (candidateprocesstask == null)
             {
