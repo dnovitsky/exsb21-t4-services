@@ -244,7 +244,8 @@ namespace SAPex.Controllers.Mapping
         private IEnumerable<CandidateProcessTestTasksViewModel> CandidateProccessTestTasksProfile(IEnumerable<CandidateProcessTestTaskDtoModel> candidateProccessTestTasksDM)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<CandidateProcessTestTaskDtoModel, CandidateProcessTestTasksViewModel>()
-                    .ForMember(x => x.TestFileId, y => y.MapFrom(x => x.TestFileId)));
+                    .ForMember(x => x.TestFileId, y => y.MapFrom(x => x.TestFileId))
+                    .ForMember(x => x.ResponseTestFileId, y => y.MapFrom(x => x.CandidateResponseTestFileId)));
 
             var mapper = new Mapper(config);
 

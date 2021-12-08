@@ -128,20 +128,16 @@ namespace SAPex
             services.AddScoped<ILocationService, LocationService>();
             services.AddScoped<IStatusService, StatusService>();
             services.AddScoped<IEmailService, EmailService>();
-
+			services.AddScoped<IEmailBuilderService, EmailBuilderService>();
             services.AddScoped<IUserCandidateSandboxService, UserCandidateSandboxService>();
+            services.AddScoped<ICandidateSandboxService, CandidateSandboxService>();
+            services.AddScoped<CandidateMapper, CandidateMapper>();
             services.AddScoped<ICandidateProcessTestTaskService, CandidateProcessTestTaskService>();
             services.AddScoped<IAppSettingService, AppSettingService>();
             services.AddScoped<ITestTaskRouteService, TestTaskRouteService>();
-            services.AddScoped<ICandidateSandboxService, CandidateSandboxService>();
-
-            services.AddScoped<CandidateMapper, CandidateMapper>();
-
             services.AddScoped<ITestTaskTokenBusinessService, TestTaskTokenBusinessService>();
             services.AddScoped<TestTaskEmailForCandidateProcess, TestTaskEmailForCandidateProcess>();
             services.AddScoped<ICandidateSandboxService, CandidateSandboxService>();
-
-            services.AddScoped<IEmailBuilderService, EmailBuilderService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -178,17 +174,6 @@ namespace SAPex
             dbContext.Database.Migrate();
 
             CleanHelper.CleanTablesData(Environment.GetEnvironmentVariable("MSSQL_CONNECTION_STRING"));
-
-            List<IApplicationHelper> helpers = new ()
-            {
-                new UserHelper(dbContext),
-                new RoleHelper(dbContext),
-                new UserRoleHelper(dbContext),
-                new PasswordHelper(dbContext),
-                new EventHelper(dbContext),
-            };
-            helpers.ForEach(helper => helper.CreateTestData());
-
             TestDataHelper.InitTestData(Environment.GetEnvironmentVariable("MSSQL_CONNECTION_STRING"));
         }
     }
