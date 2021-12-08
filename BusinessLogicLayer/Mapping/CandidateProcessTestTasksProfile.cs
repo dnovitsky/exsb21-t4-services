@@ -16,7 +16,7 @@ namespace BusinessLogicLayer.Mapping
                     .ForMember(x => x.CandidateResponseTestFileId, y => y.MapFrom(x => x.CandidateResponseTestFileId))
                     .ForMember(x => x.SendTestDate, y => y.MapFrom(x => x.SendTestDate))
                     .ForMember(x => x.EndTestDate, y => y.MapFrom(x => x.EndTestDate))
-                    .ForMember(x => x.LinkDownloadToken, y => y.MapFrom(x => x.LinkDownloadToken)));
+                    .ForMember(x => x.Token, y => y.MapFrom(x => x.Token)));
 
             return new Mapper(config);
         }
@@ -30,7 +30,7 @@ namespace BusinessLogicLayer.Mapping
                 .ForMember(x => x.CandidateResponseTestFileId, y => y.MapFrom(x => x.CandidateResponseTestFileId))
                 .ForMember(x => x.SendTestDate, y => y.MapFrom(x => x.SendTestDate))
                 .ForMember(x => x.EndTestDate, y => y.MapFrom(x => x.EndTestDate))
-                .ForMember(x => x.LinkDownloadToken, y => y.MapFrom(x => x.LinkDownloadToken)));
+                .ForMember(x => x.Token, y => y.MapFrom(x => x.Token)));
 
             return new Mapper(config);
         }

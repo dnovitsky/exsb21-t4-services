@@ -8,7 +8,8 @@ namespace BusinessLogicLayer.Interfaces
 {
     public interface ITestTaskRouteService
     {
-        Task<string> GetDownloadUrl(string token);
-        Task<string> GetUploadPageUrl(string token);
+        void Init(TestTaskRoutModel testTaskRoutModel);
+        Task<string> GetDownloadUrl();
+        Task<string> GetUploadPageUrl();
     }
 }

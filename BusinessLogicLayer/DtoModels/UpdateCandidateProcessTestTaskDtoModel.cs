@@ -14,6 +14,6 @@ namespace BusinessLogicLayer.DtoModels
 
         public Nullable<DateTime> EndTestDate { get; set; } = null;
 
-        public string LinkDownloadToken { get; set; } = "";
+        public string Token { get; set; } = "";
     }
 }
