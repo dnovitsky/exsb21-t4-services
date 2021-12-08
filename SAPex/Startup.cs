@@ -178,6 +178,16 @@ namespace SAPex
 
             CleanHelper.CleanTablesData(Configuration.GetConnectionString("DefaultConnection"));
 
+            List<IApplicationHelper> helpers = new ()
+            {
+                new UserHelper(dbContext),
+                new RoleHelper(dbContext),
+                new UserRoleHelper(dbContext),
+                new PasswordHelper(dbContext),
+                new EventHelper(dbContext),
+            };
+            helpers.ForEach(helper => helper.CreateTestData());
+
             TestDataHelper.InitTestData(Configuration.GetConnectionString("DefaultConnection"));
         }
     }
