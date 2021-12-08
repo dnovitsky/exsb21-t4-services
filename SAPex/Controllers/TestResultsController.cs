@@ -39,6 +39,12 @@ namespace SAPex.Controllers
             var fileId = testResultsViewModel.FileId;
             var token = testResultsViewModel.Token;
 
+            FileDtoModel fileDtoModel = await _fileService.FindFileByIdAsync(fileId);
+            if (fileDtoModel == null)
+            {
+                return await Task.FromResult(NotFound());
+            }
+
             StatusDtoModel status = await _statusService.FindStatusByConditionAsync(x => x.Name == "Need verification");
             var candidateprocesstasks = await _candidateProcessTestTaskService.GetCandidateProcessTestTasksAsync();
             var candidateprocesstask = candidateprocesstasks.Where(c => c != null && c.Token == token).FirstOrDefault();
@@ -54,12 +60,13 @@ namespace SAPex.Controllers
             }
 
             Guid processId = candidateprocesstask.CandidateProcessId;
-
             var candidateSandbox = await _candidateSandboxService.GetByProccessIdAsync(processId);
 
             await _candidateservice.UpdateCandidateStatus(candidateSandbox.CandidateId, candidateSandbox.Id, status.Id);
 
             await _candidateProcessTestTaskService.AddCandidateResponseTestFileAsync(candidateprocesstask.Id, fileId);
+
+            await _fileService.UpdateFileCategory(fileId, (int)FileCategory.TestTaskResult);
 
             return await Task.FromResult(Ok());
         }

@@ -116,15 +116,12 @@ namespace SAPex.Controllers
         public async Task<IActionResult> UpdateFileCategory(Guid id, int fileCategory)
         {
             FileDtoModel fileDtoModel = await _fileService.FindFileByIdAsync(id);
-
             if (fileDtoModel == null)
             {
                 return await Task.FromResult(NotFound());
             }
 
-            fileDtoModel.Category = (FileCategory)fileCategory;
-            bool check = await _fileService.UpdateFileCategory(fileDtoModel);
-
+            bool check = await _fileService.UpdateFileCategory(id, fileCategory);
             return await Task.FromResult(Ok(check));
         }
 
