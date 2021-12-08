@@ -11,5 +11,6 @@ namespace BusinessLogicLayer.Interfaces
     public interface ICandidateSandboxService
     {
         Task<CandidateSandboxEntityModel> GetByIdAsync(Guid id);
+        Task<CandidateSandboxEntityModel> GetByProccessIdAsync(Guid processId);
     }
 }
