@@ -99,7 +99,7 @@ namespace SAPex.Helpers
                     Head = await _emailBuilderService.BuildEmailSubject(),
                     Message = await _emailBuilderService.BuildEmailBody(),
                     EmailTo = candidate.Email,
-                    Status = EmailStatusType.None,
+                    Status = EmailStatusType.ReadyForSend,
                 });
 
                 return true;
