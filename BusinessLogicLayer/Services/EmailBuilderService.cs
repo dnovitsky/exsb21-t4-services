@@ -29,7 +29,7 @@ namespace BusinessLogicLayer.Services
                 $"\n{emailBodyBuilderModel.TestTaskDownloadUrl}" +
                 $"\n\tAfter that you should upload your solution at" +
                 $"\n{emailBodyBuilderModel.TestTaskUploadUrl}" +
-                $"\n\tYou have {emailBodyBuilderModel.TestTaskUploadUrl} hours to upload your solution.";
+                $"\n\tYou have {emailBodyBuilderModel.TestTaskLifeTime} hours to upload your solution.";
 
             message.Append(text);
 
