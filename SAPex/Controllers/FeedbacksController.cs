@@ -58,7 +58,25 @@ namespace SAPex.Controllers
             feedbackVM.CreateDate = DateTime.UtcNow;
             feedbackVM.Author = $"{user.Name} {user.Surname}";
 
+            if (user.Roles.FirstOrDefault() == "EDU Manager" && user.Roles.FirstOrDefault() == "Admin")
+            {
+                StatusDtoModel status = await _statusService.FindStatusByConditionAsync(x => x.Name == "Need Recruiter");
+                Guid processId = feedbackVM.CandidateProccesId;
+                var candidateSandbox = await _candidateSandboxService.GetByProccessIdAsync(processId);
+
+                await _candidateService.UpdateCandidateStatus(candidateSandbox.CandidateId, candidateSandbox.Id, status.Id);
+            }
+
             if (user.Roles.FirstOrDefault() == "Recruiter")
+            {
+                StatusDtoModel status = await _statusService.FindStatusByConditionAsync(x => x.Name == "Interview Tech");
+                Guid processId = feedbackVM.CandidateProccesId;
+                var candidateSandbox = await _candidateSandboxService.GetByProccessIdAsync(processId);
+
+                await _candidateService.UpdateCandidateStatus(candidateSandbox.CandidateId, candidateSandbox.Id, status.Id);
+            }
+
+            if (user.Roles.FirstOrDefault() == "Interviewer")
             {
                 StatusDtoModel status = await _statusService.FindStatusByConditionAsync(x => x.Name == "Participant");
                 Guid processId = feedbackVM.CandidateProccesId;
