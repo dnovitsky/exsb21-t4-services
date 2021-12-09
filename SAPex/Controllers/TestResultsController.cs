@@ -46,6 +46,7 @@ namespace SAPex.Controllers
             }
 
             StatusDtoModel status = await _statusService.FindStatusByConditionAsync(x => x.Name == "Need verification");
+
             var candidateprocesstasks = await _candidateProcessTestTaskService.GetCandidateProcessTestTasksAsync();
             var candidateprocesstask = candidateprocesstasks.Where(c => c != null && c.Token == token).FirstOrDefault();
 
@@ -62,9 +63,9 @@ namespace SAPex.Controllers
             Guid processId = candidateprocesstask.CandidateProcessId;
             var candidateSandbox = await _candidateSandboxService.GetByProccessIdAsync(processId);
 
-            await _candidateservice.UpdateCandidateStatus(candidateSandbox.CandidateId, candidateSandbox.Id, status.Id);
+            await _candidateservice.UpdateCandidateStatusToNeedVerification(candidateSandbox.CandidateId, candidateSandbox.Id, status.Id, processId);
 
-            await _candidateProcessTestTaskService.AddCandidateResponseTestFileAsync(candidateprocesstask.Id, fileId);
+            await _candidateProcessTestTaskService.AddCandidateResponseTestFileAsync(processId, fileId);
 
             await _fileService.UpdateFileCategory(fileId, (int)FileCategory.TestTaskResult);
 
