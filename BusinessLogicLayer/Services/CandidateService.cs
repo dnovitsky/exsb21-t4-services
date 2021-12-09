@@ -139,6 +139,31 @@ namespace BusinessLogicLayer.Services
             return false;
         }
 
+        public async Task<bool> UpdateCandidateStatusToNeedVerification(Guid candidateId, Guid candidateSandboxId, Guid newStatusId, Guid currentCandidateProccessId)
+        {
+            var candidateSandboxe = await unitOfWork.CandidateSandboxes.FindByIdAsync(candidateSandboxId);
+            var status = await unitOfWork.Statuses.FindByIdAsync(newStatusId);
+            var candidatStatuses = candidateSandboxe.CandidateProcesses.Select(x => x.Status);
+            var isValid = candidateSandboxe != null
+                && status != null
+                && candidateSandboxe.CandidateId.Equals(candidateId)
+                && await IsValidStatus(status, candidatStatuses);
+
+            if (isValid)
+            {
+                var candidateProcces = candidateSandboxe.CandidateProcesses.Where(x => x.Id == currentCandidateProccessId).FirstOrDefault();
+                candidateProcces.StatusId = newStatusId;
+
+
+                unitOfWork.CandidateProcceses.Update(candidateProcces);
+                await unitOfWork.SaveAsync();
+
+                return true;
+            }
+
+            return false;
+        }
+
         public async Task<IEnumerable<CandidateDtoModel>> GetCandidatesByUserIdAsync(Guid id)
         {
             IEnumerable<CandidateEntityModel> CandidatesEM = await Task.Run(() => unitOfWork.Candidates.GetByUserId(id));
