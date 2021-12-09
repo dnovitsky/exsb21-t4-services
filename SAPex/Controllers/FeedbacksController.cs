@@ -58,7 +58,7 @@ namespace SAPex.Controllers
             feedbackVM.CreateDate = DateTime.UtcNow;
             feedbackVM.Author = $"{user.Name} {user.Surname}";
 
-            if (user.Roles.FirstOrDefault() == "EDU Manager" && user.Roles.FirstOrDefault() == "Admin")
+            if (user.Roles.FirstOrDefault() == "EDU Manager" || user.Roles.FirstOrDefault() == "Admin")
             {
                 StatusDtoModel status = await _statusService.FindStatusByConditionAsync(x => x.Name == "Need Recruiter");
                 Guid processId = feedbackVM.CandidateProccesId;
