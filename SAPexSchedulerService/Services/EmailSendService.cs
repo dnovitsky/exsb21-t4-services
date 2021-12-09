@@ -16,7 +16,7 @@ namespace SAPexSchedulerService.Services
         public void Run()
         {
             RestClient restClient = new();
-            restClient.BaseUrl = new Uri($"{apiHost}filter?status={EmailStatusType.ReadyForSend}");
+            restClient.BaseUrl = new Uri($"{apiHost}filter?status=1");
             var responseEmails = restClient.Get(new RestRequest());
             if (responseEmails.StatusCode == System.Net.HttpStatusCode.OK)
             {
